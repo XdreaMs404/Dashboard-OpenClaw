@@ -1,0 +1,5 @@
+project: BMAD Total Dev-Only
+workflow: bmm
+phase: planning
+status: initialized
+next: prd

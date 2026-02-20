@@ -1,0 +1,11 @@
+
+> bmad-total-app@0.1.0 test:e2e
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/smoke.spec.js:3:1 › basic app smoke on data URL (277ms)
+  ✓  2 [chromium] › tests/e2e/normalize-user-name.spec.js:92:1 › normalize user name flow covers empty/loading/error/success states (1.2s)
+
+  2 passed (2.5s)

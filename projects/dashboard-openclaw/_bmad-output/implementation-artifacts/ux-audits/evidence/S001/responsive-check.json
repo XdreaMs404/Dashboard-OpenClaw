@@ -1,0 +1,67 @@
+{
+  "storyId": "S001",
+  "runAt": "2026-02-19T18:22:07.377Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 375,
+        "height": 812
+      },
+      "initialState": "empty",
+      "errorText": "Le nom utilisateur est vide après normalisation",
+      "successText": "ÉLODIE Martin",
+      "focusOnInput": true,
+      "hasHorizontalOverflow": false,
+      "ariaLiveSuccess": "polite",
+      "ariaLiveState": "polite",
+      "visible": {
+        "input": true,
+        "button": true,
+        "state": true
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "initialState": "empty",
+      "errorText": "Le nom utilisateur est vide après normalisation",
+      "successText": "ÉLODIE Martin",
+      "focusOnInput": true,
+      "hasHorizontalOverflow": false,
+      "ariaLiveSuccess": "polite",
+      "ariaLiveState": "polite",
+      "visible": {
+        "input": true,
+        "button": true,
+        "state": true
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "initialState": "empty",
+      "errorText": "Le nom utilisateur est vide après normalisation",
+      "successText": "ÉLODIE Martin",
+      "focusOnInput": true,
+      "hasHorizontalOverflow": false,
+      "ariaLiveSuccess": "polite",
+      "ariaLiveState": "polite",
+      "visible": {
+        "input": true,
+        "button": true,
+        "state": true
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

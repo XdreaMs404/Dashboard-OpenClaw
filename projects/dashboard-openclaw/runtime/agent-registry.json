@@ -1,0 +1,160 @@
+{
+  "version": "2.0.0",
+  "strategy": "hybrid",
+  "generatedBy": "setup-persistent-core-agents.sh",
+  "notes": [
+    "core agents are persistent OpenClaw agents with dedicated workspaces",
+    "workers remain runtime/ephemeral by default",
+    "canonical orchestration order is H01->H23 (see docs/BMAD-HYPER-ORCHESTRATION-THEORY.md)"
+  ],
+  "canonical": {
+    "source": "/root/.openclaw/workspace/docs/BMAD-HYPER-ORCHESTRATION-THEORY.md",
+    "forbidFutureVersionSplit": true,
+    "order": [
+      "H01","H02","H03","H04","H05","H06","H07","H08","H09","H10","H11","H12",
+      "H13","H14","H15","H16","H17","H18","H19","H20","H21","H22","H23"
+    ]
+  },
+  "persistentCoreAgents": [
+    {
+      "role": "BRAINSTORMING_COACH",
+      "agentId": "bmad-brainstorm",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-brainstorm",
+      "status": "READY"
+    },
+    {
+      "role": "ANALYST",
+      "agentId": "bmad-analyst",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-analyst",
+      "status": "READY"
+    },
+    {
+      "role": "PM",
+      "agentId": "bmad-pm",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-pm",
+      "status": "READY"
+    },
+    {
+      "role": "UX_DESIGNER",
+      "agentId": "bmad-ux-designer",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-ux-designer",
+      "status": "READY"
+    },
+    {
+      "role": "ARCHITECT",
+      "agentId": "bmad-architect",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-architect",
+      "status": "READY"
+    },
+    {
+      "role": "SM",
+      "agentId": "bmad-sm",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-sm",
+      "status": "READY"
+    },
+    {
+      "role": "DEV",
+      "agentId": "bmad-dev",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-dev",
+      "status": "READY"
+    },
+    {
+      "role": "TEA",
+      "agentId": "bmad-tea",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-tea",
+      "status": "READY"
+    },
+    {
+      "role": "REVIEWER",
+      "agentId": "bmad-reviewer",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-reviewer",
+      "status": "READY"
+    },
+    {
+      "role": "UX_QA_AUDITOR",
+      "agentId": "bmad-ux-qa",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-ux-qa",
+      "status": "READY"
+    },
+    {
+      "role": "TECH_WRITER",
+      "agentId": "bmad-tech-writer",
+      "workspace": "/root/.openclaw/workspace/agents-core/bmad-tech-writer",
+      "status": "READY"
+    }
+  ],
+  "runtimeWorkers": [
+    {
+      "role": "WEB_RESEARCH_WORKER",
+      "label": "bmad-worker-web-research",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-web-research.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-web-research.source.md"
+    },
+    {
+      "role": "FACT_CHECK_WORKER",
+      "label": "bmad-worker-fact-check",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-fact-check.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-fact-check.source.md"
+    },
+    {
+      "role": "COMPETITIVE_SCAN_WORKER",
+      "label": "bmad-worker-competitive-scan",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-competitive-scan.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-competitive-scan.source.md"
+    },
+    {
+      "role": "SECURITY_DEPENDENCY_WORKER",
+      "label": "bmad-worker-security-dependency",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-security-dependency.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-security-dependency.source.md"
+    },
+    {
+      "role": "TEST_GENERATION_WORKER",
+      "label": "bmad-worker-test-generation",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-test-generation.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-test-generation.source.md"
+    },
+    {
+      "role": "EDGE_CASE_WORKER",
+      "label": "bmad-worker-edge-case",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-edge-case.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-edge-case.source.md"
+    },
+    {
+      "role": "BENCHMARK_PERF_WORKER",
+      "label": "bmad-worker-benchmark-perf",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-benchmark-perf.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-benchmark-perf.source.md"
+    },
+    {
+      "role": "DOC_CONSISTENCY_WORKER",
+      "label": "bmad-worker-doc-consistency",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-doc-consistency.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-doc-consistency.source.md"
+    },
+    {
+      "role": "VISUAL_QA_WORKER",
+      "label": "bmad-worker-visual-qa",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-visual-qa.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-visual-qa.source.md"
+    },
+    {
+      "role": "ACCESSIBILITY_AUDIT_WORKER",
+      "label": "bmad-worker-accessibility-audit",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-accessibility-audit.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-accessibility-audit.source.md"
+    },
+    {
+      "role": "RESPONSIVE_AUDIT_WORKER",
+      "label": "bmad-worker-responsive-audit",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-responsive-audit.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-responsive-audit.source.md"
+    },
+    {
+      "role": "DESIGN_CONSISTENCY_WORKER",
+      "label": "bmad-worker-design-consistency",
+      "promptPath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-design-consistency.md",
+      "sourcePath": "/root/.openclaw/workspace/bmad-total/runtime/worker-prompts/bmad-worker-design-consistency.source.md"
+    }
+  ]
+}

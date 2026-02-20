@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0",
+  "model": "AQCD",
+  "scoreWeights": {
+    "qualityTech": 0.3,
+    "designExcellence": 0.25,
+    "autonomy": 0.25,
+    "costEfficiency": 0.2
+  },
+  "autonomyWeights": {
+    "A1": 0.35,
+    "A2": 0.25,
+    "A3": 0.2,
+    "A4": 0.2
+  },
+  "qualityTechWeights": {
+    "Q1": 0.3,
+    "Q2": 0.25,
+    "Q3": 0.2,
+    "Q4": 0.15,
+    "Q5": 0.1
+  },
+  "costEfficiencyWeights": {
+    "C1": 0.3,
+    "C2": 0.3,
+    "C3": 0.2,
+    "C4": 0.2
+  },
+  "designWeights": {
+    "D1": 0.25,
+    "D2": 0.2,
+    "D3": 0.15,
+    "D4": 0.15,
+    "D5": 0.15,
+    "D6": 0.1
+  },
+  "thresholds": {
+    "designExcellenceMin": 80,
+    "accessibilityD2Min": 85,
+    "qualityTechKillSwitchMin": 65,
+    "designKillSwitchMin": 75,
+    "costWasteMaxPct": 25
+  },
+  "uxGate": {
+    "requiredChecks": [
+      "designSystemCompliance",
+      "accessibilityAA",
+      "responsiveCoverage",
+      "interactionStates",
+      "visualHierarchy",
+      "perceivedPerformance"
+    ],
+    "requiredStates": [
+      "loading",
+      "empty",
+      "error",
+      "success"
+    ],
+    "requiredEvidenceMin": 3,
+    "wcagTarget": "2.2-AA"
+  }
+}
