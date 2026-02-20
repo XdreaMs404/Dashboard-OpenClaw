@@ -2,7 +2,7 @@
   "model": "AQCD",
   "window": "story",
   "windowRef": "S000",
-  "updatedAt": "2026-02-19T19:04:37.794Z",
+  "updatedAt": "2026-02-20T15:19:58.357Z",
   "scores": {
     "autonomy": 0,
     "qualityTech": 0,
@@ -24,7 +24,7 @@
     "costWasteHigh": false
   },
   "inputs": {
-    "metricsPath": "/root/.openclaw/workspace/bmad-total/_bmad-output/implementation-artifacts/scorecards/aqcd-metrics.json",
-    "configPath": "/root/.openclaw/workspace/bmad-total/config/hyper-orchestration.config.json"
+    "metricsPath": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/scorecards/aqcd-metrics.json",
+    "configPath": "/root/.openclaw/workspace/projects/dashboard-openclaw/config/hyper-orchestration.config.json"
   }
 }

@@ -3,7 +3,7 @@
 | ID | Epic | Titre | Status |
 |---|---|---|---|
 | S001 | E01 | Normalisation de nom utilisateur | DONE |
-| S002 | E01 | Validateur de transitions autorisées + blocage sans notification de phase | TODO |
+| S002 | E01 | Validateur de transitions autorisées + blocage sans notification de phase | DONE |
 | S003 | E01 | Story 3 | TODO |
 | S004 | E01 | Story 4 | TODO |
 | S005 | E01 | Story 5 | TODO |

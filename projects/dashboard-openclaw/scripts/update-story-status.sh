@@ -14,3 +14,6 @@ awk -F'|' -v sid="$SID" -v st="$NEW_STATUS" 'BEGIN{OFS="|"}
   print
 }' "$IDX" > "$TMP"
 mv "$TMP" "$IDX"
+
+# Keep sprint-status.yaml aligned with STORIES_INDEX
+bash "$CONTROL_ROOT/scripts/sync-sprint-status.sh" >/dev/null

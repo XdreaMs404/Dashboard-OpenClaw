@@ -1,0 +1,29 @@
+{
+  "storyId": "S002",
+  "epicId": "E01",
+  "verdict": "PASS",
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "scores": {
+    "designExcellence": 90,
+    "D2": 88
+  },
+  "evidence": [
+    "Audit visuel desktop/mobile: grille, typographie et spacing alignés au design system sans divergence critique.",
+    "Contrôle accessibilité AA: contrastes conformes sur composants principaux, focus visible et navigation clavier validée.",
+    "Validation des états UI: loading, empty, error et success observés avec feedback clair et hiérarchie cohérente."
+  ],
+  "updatedAt": "2026-02-20T16:13:00Z"
+}

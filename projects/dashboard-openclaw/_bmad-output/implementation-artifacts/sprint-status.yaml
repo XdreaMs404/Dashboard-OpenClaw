@@ -1,12 +1,13 @@
 generated: auto
-project: BMAD Total Dev-Only
+project: Dashboard OpenClaw
 tracking_system: file-system
-story_location: "/root/.openclaw/workspace/bmad-total/_bmad-output/implementation-artifacts"
+story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
+updated_at_utc: "2026-02-20T16:17:53Z"
 
 development_status:
-  epic-1: backlog
-  1-01-story-1: backlog
-  1-02-story-2: backlog
+  epic-1: in-progress
+  1-01-normalisation-de-nom-utilisateur: done
+  1-02-validateur-de-transitions-autorisees-blocage-sans-notification-de-phase: done
   1-03-story-3: backlog
   1-04-story-4: backlog
   1-05-story-5: backlog
