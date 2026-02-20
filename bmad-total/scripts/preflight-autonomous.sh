@@ -72,7 +72,11 @@ if command -v git >/dev/null 2>&1; then
     if git -C /root/.openclaw/workspace push --dry-run origin HEAD:master >/dev/null 2>&1; then
       ok "git push auth check: OK"
     else
-      warn "git push auth check failed (credentials likely missing)"
+      if [[ "$remote_url" == git@github.com:* ]]; then
+        warn "git push auth check failed (SSH key likely not added to GitHub account yet)"
+      else
+        warn "git push auth check failed (credentials likely missing)"
+      fi
     fi
   else
     warn "git remote origin not configured"
