@@ -1,0 +1,43 @@
+{
+  "storyId": "S000",
+  "epicId": "E00",
+  "verdict": "CONCERNS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 0,
+    "D2": 0,
+    "D3": 0,
+    "D4": 0,
+    "D5": 0,
+    "D6": 0,
+    "designExcellence": 0
+  },
+  "checks": {
+    "designSystemCompliance": false,
+    "accessibilityAA": false,
+    "responsiveCoverage": false,
+    "interactionStates": false,
+    "visualHierarchy": false,
+    "perceivedPerformance": false
+  },
+  "stateCoverage": {
+    "loading": false,
+    "empty": false,
+    "error": false,
+    "success": false
+  },
+  "evidence": [
+    "app/path/to/screenshot-or-report-1",
+    "app/path/to/screenshot-or-report-2",
+    "app/path/to/screenshot-or-report-3"
+  ],
+  "issues": [
+    "Describe UX/UI issues here"
+  ],
+  "requiredFixes": [
+    "Describe mandatory corrections here"
+  ],
+  "notes": "",
+  "updatedAt": ""
+}

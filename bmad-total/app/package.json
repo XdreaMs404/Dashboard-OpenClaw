@@ -1,0 +1,21 @@
+{
+  "name": "bmad-total-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "node ./scripts/lint.mjs",
+    "typecheck": "node ./scripts/typecheck.mjs",
+    "test": "vitest run",
+    "test:edge": "vitest run tests/edge",
+    "test:e2e": "playwright test",
+    "test:coverage": "vitest run --coverage",
+    "build": "node ./scripts/build.mjs",
+    "security:deps": "npm audit --audit-level=high"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "vitest": "^4.0.18"
+  }
+}
