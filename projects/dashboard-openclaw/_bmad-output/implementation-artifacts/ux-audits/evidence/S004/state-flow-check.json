@@ -1,0 +1,49 @@
+{
+  "storyId": "S004",
+  "runAt": "2026-02-21T11:47:06.800Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "transition-blocked",
+      "finalState": "error",
+      "reasonCode": "TRANSITION_NOT_ALLOWED",
+      "reason": "Transition non autorisée: fromPhase=H03, toPhase=H05, expectedToPhase=H04.",
+      "missingList": [
+        "—"
+      ]
+    },
+    {
+      "scenario": "missing-prerequisites",
+      "finalState": "error",
+      "reasonCode": "PHASE_PREREQUISITES_MISSING",
+      "reason": "Checklist de prérequis absente, vide ou invalide (tableau requis).",
+      "missingList": [
+        "—"
+      ]
+    },
+    {
+      "scenario": "incomplete-prerequisites",
+      "finalState": "error",
+      "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
+      "reason": "Prérequis requis incomplets: PR-002.",
+      "missingList": [
+        "PR-002"
+      ]
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "reasonCode": "OK",
+      "reason": "Prérequis validés pour transition H03 -> H04.",
+      "missingList": [
+        "—"
+      ]
+    }
+  ],
+  "pass": true
+}
