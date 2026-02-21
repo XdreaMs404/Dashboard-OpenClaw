@@ -1,0 +1,56 @@
+{
+  "storyId": "S007",
+  "runAt": "2026-02-21T14:49:06.454Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "reasonCode": "INVALID_SLA_ALERT_INPUT",
+      "reason": "history doit être un tableau pour évaluer la récurrence SLA.",
+      "severity": "none",
+      "correctiveActions": [
+        "—"
+      ]
+    },
+    {
+      "scenario": "sla-warning",
+      "finalState": "error",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification hors SLA: elapsedMs=610000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+      "severity": "warning",
+      "correctiveActions": [
+        "PUBLISH_PHASE_NOTIFY",
+        "REVALIDATE_TRANSITION"
+      ]
+    },
+    {
+      "scenario": "sla-critical",
+      "finalState": "error",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+      "severity": "critical",
+      "correctiveActions": [
+        "PUBLISH_PHASE_NOTIFY",
+        "REVALIDATE_TRANSITION",
+        "ESCALATE_TO_PM"
+      ]
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "reasonCode": "OK",
+      "reason": "Transition autorisée H04 -> H05.",
+      "severity": "none",
+      "correctiveActions": [
+        "—"
+      ]
+    }
+  ],
+  "pass": true
+}

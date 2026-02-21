@@ -1,0 +1,105 @@
+[TEA] START 2026-02-21T14:51:10Z
+
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
+
+✅ Lint OK
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
+✅ Typecheck (syntax) OK
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-history.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-guards-orchestrator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-validator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-sla-alert.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-state-projection.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-prerequisites-validator.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/unit/core.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m      Tests [22m [1m[32m146 passed[39m[22m[90m (146)[39m
+[2m   Start at [22m 14:51:12
+[2m   Duration [22m 889ms[2m (transform 223ms, setup 0ms, import 548ms, tests 172ms, environment 2ms)[22m
+
+
+Running 13 tests using 2 workers
+
+  ✓   2 [chromium] › tests/e2e/normalize-user-name.spec.js:92:1 › normalize user name flow covers empty/loading/error/success states (1.3s)
+  ✓   1 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:272:1 › phase guards demo covers empty/loading/error/success with explicit reason, plan and failure diagnostics (1.8s)
+  ✓   3 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:335:1 › phase guards demo keeps rendered content without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓   4 [chromium] › tests/e2e/phase-prerequisites-validator.spec.js:237:1 › phase prerequisites demo covers empty/loading/error/success with explicit blocking reason and missing list (2.0s)
+  ✓   5 [chromium] › tests/e2e/phase-prerequisites-validator.spec.js:299:1 › phase prerequisites demo keeps success rendering without horizontal overflow on mobile/tablet/desktop (1.6s)
+  ✓   6 [chromium] › tests/e2e/phase-sla-alert.spec.js:274:1 › phase SLA alert demo covers empty/loading/error/success with reason, severity and correctiveActions (2.1s)
+  ✓   7 [chromium] › tests/e2e/phase-sla-alert.spec.js:345:1 › phase SLA alert demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓   8 [chromium] › tests/e2e/phase-state-projection.spec.js:224:1 › phase state projection demo covers empty/loading/error/success with required phase fields (1.6s)
+  ✓   9 [chromium] › tests/e2e/phase-state-projection.spec.js:285:1 › phase state projection success payload stays without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  10 [chromium] › tests/e2e/phase-transition-history.spec.js:249:1 › transition history demo covers empty/loading/error/success with reason and history rows (1.7s)
+  ✓  11 [chromium] › tests/e2e/phase-transition-history.spec.js:304:1 › transition history demo stays readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  13 [chromium] › tests/e2e/smoke.spec.js:3:1 › basic app smoke on data URL (207ms)
+  ✓  12 [chromium] › tests/e2e/phase-transition-validator.spec.js:129:1 › phase transition demo covers empty/loading/error/success and shows blocking reason (1.5s)
+
+  13 passed (12.1s)
+
+> bmad-total-app@0.1.0 test:coverage
+> vitest run --coverage
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-history.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-guards-orchestrator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-validator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-sla-alert.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/core.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-prerequisites-validator.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-state-projection.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m      Tests [22m [1m[32m146 passed[39m[22m[90m (146)[39m
+[2m   Start at [22m 14:51:27
+[2m   Duration [22m 1.10s[2m (transform 184ms, setup 0ms, import 515ms, tests 176ms, environment 2ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.64 |    97.97 |     100 |   99.63 |                   
+ core.js           |     100 |      100 |     100 |     100 |                   
+ index.js          |       0 |        0 |       0 |       0 |                   
+ ...rchestrator.js |     100 |      100 |     100 |     100 |                   
+ ...s-validator.js |    98.8 |    97.59 |     100 |   98.79 | 48                
+ ...e-sla-alert.js |     100 |    97.05 |     100 |     100 | 57,63,106,366     
+ ...-projection.js |     100 |    97.59 |     100 |     100 | 16,155            
+ ...ion-history.js |     100 |    98.52 |     100 |     100 | 72,157            
+ ...n-validator.js |   97.36 |    95.34 |     100 |   97.36 | 16                
+-------------------|---------|----------|---------|---------|-------------------
+
+> bmad-total-app@0.1.0 build
+> node ./scripts/build.mjs
+
+✅ Build OK
+
+> bmad-total-app@0.1.0 security:deps
+> npm audit --audit-level=high
+
+found 0 vulnerabilities
+[TEA] END 2026-02-21T14:51:29Z

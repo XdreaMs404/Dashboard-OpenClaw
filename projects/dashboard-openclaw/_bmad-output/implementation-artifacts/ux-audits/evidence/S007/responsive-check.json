@@ -1,0 +1,112 @@
+{
+  "storyId": "S007",
+  "runAt": "2026-02-21T14:49:07.386Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S007/responsive-mobile.png",
+      "state": "error",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+      "severity": "critical",
+      "correctiveActions": [
+        "PUBLISH_PHASE_NOTIFY",
+        "REVALIDATE_TRANSITION",
+        "ESCALATE_TO_PM"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "severity": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S007/responsive-tablet.png",
+      "state": "error",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+      "severity": "critical",
+      "correctiveActions": [
+        "PUBLISH_PHASE_NOTIFY",
+        "REVALIDATE_TRANSITION",
+        "ESCALATE_TO_PM"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "severity": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S007/responsive-desktop.png",
+      "state": "error",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+      "severity": "critical",
+      "correctiveActions": [
+        "PUBLISH_PHASE_NOTIFY",
+        "REVALIDATE_TRANSITION",
+        "ESCALATE_TO_PM"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "severity": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
