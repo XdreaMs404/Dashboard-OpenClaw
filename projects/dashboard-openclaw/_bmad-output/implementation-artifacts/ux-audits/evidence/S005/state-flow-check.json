@@ -1,0 +1,57 @@
+{
+  "storyId": "S005",
+  "runAt": "2026-02-21T13:14:46.422Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "blocked-prerequisites",
+      "finalState": "error",
+      "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
+      "reason": "Prérequis requis incomplets: PR-002.",
+      "failedCommand": "—",
+      "commands": [
+        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 3",
+        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 3"
+      ],
+      "failedResult": [
+        "—"
+      ]
+    },
+    {
+      "scenario": "execution-failed",
+      "finalState": "error",
+      "reasonCode": "GUARD_EXECUTION_FAILED",
+      "reason": "Échec exécution guard: command=bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1, exitCode=17.",
+      "failedCommand": "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1",
+      "commands": [
+        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 1",
+        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1"
+      ],
+      "failedResult": [
+        "command=bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1",
+        "exitCode=17",
+        "stderr=ultra quality guard failed"
+      ]
+    },
+    {
+      "scenario": "success-simulation",
+      "finalState": "success",
+      "reasonCode": "OK",
+      "reason": "Simulation guards prête pour la phase 2.",
+      "failedCommand": "—",
+      "commands": [
+        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 2",
+        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 2"
+      ],
+      "failedResult": [
+        "—"
+      ]
+    }
+  ],
+  "pass": true
+}

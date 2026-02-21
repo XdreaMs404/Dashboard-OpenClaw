@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:272:1 › phase guards demo covers empty/loading/error/success with explicit reason, plan and failure diagnostics (1.8s)
+  ✓  1 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:335:1 › phase guards demo keeps rendered content without horizontal overflow on mobile/tablet/desktop (1.9s)
+
+  2 passed (3.2s)

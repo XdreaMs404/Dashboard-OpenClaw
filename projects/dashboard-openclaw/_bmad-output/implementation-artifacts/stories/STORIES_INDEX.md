@@ -6,7 +6,7 @@
 | S002 | E01 | Validateur de transitions autorisées + blocage sans notification de phase | DONE |
 | S003 | E01 | Story 3 | DONE |
 | S004 | E01 | Story 4 | DONE |
-| S005 | E01 | Story 5 | TODO |
+| S005 | E01 | Story 5 | DONE |
 | S006 | E01 | Story 6 | TODO |
 | S007 | E01 | Story 7 | TODO |
 | S008 | E01 | Story 8 | TODO |
