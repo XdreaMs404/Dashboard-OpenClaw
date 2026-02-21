@@ -12,7 +12,7 @@
 | S008 | E01 | Story 8 | DONE |
 | S009 | E01 | Story 9 | DONE |
 | S010 | E01 | Story 10 | DONE |
-| S011 | E02 | Story 11 | TODO |
+| S011 | E02 | Story 11 | DONE |
 | S012 | E02 | Story 12 | TODO |
 | S013 | E02 | Story 13 | TODO |
 | S014 | E02 | Story 14 | TODO |

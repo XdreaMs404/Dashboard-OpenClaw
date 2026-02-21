@@ -1,0 +1,106 @@
+{
+  "storyId": "S011",
+  "runAt": "2026-02-21T21:12:33.569Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S011/responsive-mobile.png",
+      "state": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Ingestion bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
+      "counts": "requested=1 | ingested=0 | rejected=1",
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S011/responsive-tablet.png",
+      "state": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Ingestion bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
+      "counts": "requested=1 | ingested=0 | rejected=1",
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S011/responsive-desktop.png",
+      "state": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Ingestion bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
+      "counts": "requested=1 | ingested=0 | rejected=1",
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

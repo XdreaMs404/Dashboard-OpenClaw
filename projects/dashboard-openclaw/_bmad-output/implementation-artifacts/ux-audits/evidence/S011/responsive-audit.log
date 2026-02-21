@@ -1,0 +1,5 @@
+[S011] Responsive UX audit 2026-02-21T21:12:33.569Z
+- mobile: pass=true overflow.max=0 state=error reasonCode=ARTIFACT_METADATA_INVALID
+- tablet: pass=true overflow.max=0 state=error reasonCode=ARTIFACT_METADATA_INVALID
+- desktop: pass=true overflow.max=0 state=error reasonCode=ARTIFACT_METADATA_INVALID
+allPass=true

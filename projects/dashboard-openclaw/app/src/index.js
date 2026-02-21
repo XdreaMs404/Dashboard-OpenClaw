@@ -2,6 +2,7 @@ import { clamp, normalizeEmail, normalizeUserName, safeDivide } from './core.js'
 import { validatePhasePrerequisites } from './phase-prerequisites-validator.js';
 import { orchestratePhaseGuards } from './phase-guards-orchestrator.js';
 import { buildPhaseStateProjection } from './phase-state-projection.js';
+import { ingestBmadArtifacts } from './artifact-ingestion-pipeline.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
 import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
@@ -17,6 +18,7 @@ export {
   evaluatePhaseProgressionAlert,
   evaluatePhaseSlaAlert,
   evaluatePhaseTransitionOverride,
+  ingestBmadArtifacts,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
