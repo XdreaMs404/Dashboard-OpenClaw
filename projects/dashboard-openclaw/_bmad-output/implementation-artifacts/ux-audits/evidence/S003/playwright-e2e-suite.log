@@ -1,0 +1,10 @@
+
+Running 5 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/normalize-user-name.spec.js:92:1 › normalize user name flow covers empty/loading/error/success states (1.2s)
+  ✓  2 [chromium] › tests/e2e/phase-state-projection.spec.js:224:1 › phase state projection demo covers empty/loading/error/success with required phase fields (1.7s)
+  ✓  3 [chromium] › tests/e2e/phase-state-projection.spec.js:285:1 › phase state projection success payload stays without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  5 [chromium] › tests/e2e/smoke.spec.js:3:1 › basic app smoke on data URL (182ms)
+  ✓  4 [chromium] › tests/e2e/phase-transition-validator.spec.js:129:1 › phase transition demo covers empty/loading/error/success and shows blocking reason (1.6s)
+
+  5 passed (4.7s)

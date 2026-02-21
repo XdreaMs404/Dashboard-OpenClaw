@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/phase-state-projection.spec.js:162:1 › phase state projection demo covers empty/loading/error/success with required phase fields (1.8s)
+
+  1 passed (3.0s)

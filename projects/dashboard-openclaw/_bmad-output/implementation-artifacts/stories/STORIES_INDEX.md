@@ -4,7 +4,7 @@
 |---|---|---|---|
 | S001 | E01 | Normalisation de nom utilisateur | DONE |
 | S002 | E01 | Validateur de transitions autorisées + blocage sans notification de phase | DONE |
-| S003 | E01 | Story 3 | TODO |
+| S003 | E01 | Story 3 | DONE |
 | S004 | E01 | Story 4 | TODO |
 | S005 | E01 | Story 5 | TODO |
 | S006 | E01 | Story 6 | TODO |

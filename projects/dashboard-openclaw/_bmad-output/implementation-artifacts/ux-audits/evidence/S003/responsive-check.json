@@ -1,0 +1,73 @@
+{
+  "storyId": "S003",
+  "runAt": "2026-02-21T10:46:27.225Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "state": "success",
+      "ownerText": "Alex",
+      "statusText": "done",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "hasAlertRole": true,
+      "hasHorizontalOverflow": false,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "success": 0,
+        "max": 0
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S003/responsive-mobile.png",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "state": "success",
+      "ownerText": "Alex",
+      "statusText": "done",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "hasAlertRole": true,
+      "hasHorizontalOverflow": false,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "success": 0,
+        "max": 0
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S003/responsive-tablet.png",
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "state": "success",
+      "ownerText": "Alex",
+      "statusText": "done",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "hasAlertRole": true,
+      "hasHorizontalOverflow": false,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "success": 0,
+        "max": 0
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S003/responsive-desktop.png",
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
