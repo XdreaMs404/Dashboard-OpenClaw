@@ -1,0 +1,101 @@
+{
+  "storyId": "S009",
+  "runAt": "2026-02-21T17:05:55.646Z",
+  "statesSeen": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_PHASE_DEPENDENCY_INPUT",
+      "reason": "owner est requis pour construire la matrice de dépendances.",
+      "owner": "—",
+      "blockingDependencies": [],
+      "correctiveActions": []
+    },
+    {
+      "scenario": "transition-blocked",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "TRANSITION_NOT_ALLOWED",
+      "reason": "Transition bloquée pour owner=alex.pm: Transition non autorisée H04 -> H06.",
+      "owner": "alex.pm",
+      "blockingDependencies": [
+        "TRANSITION:TRANSITION_NOT_ALLOWED"
+      ],
+      "correctiveActions": [
+        "ALIGN_PHASE_SEQUENCE"
+      ]
+    },
+    {
+      "scenario": "prerequisites-incomplete",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
+      "reason": "Prérequis bloquants pour owner=alex.pm: Prérequis requis incomplets: PR-002, PR-003.",
+      "owner": "alex.pm",
+      "blockingDependencies": [
+        "PREREQUISITES:PHASE_PREREQUISITES_INCOMPLETE"
+      ],
+      "correctiveActions": [
+        "COMPLETE_PREREQUISITES"
+      ]
+    },
+    {
+      "scenario": "override-required",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "OVERRIDE_REQUEST_MISSING",
+      "reason": "Override requis pour owner=ops.lead: overrideRequest est requis pour un blocage de transition éligible à override.",
+      "owner": "ops.lead",
+      "blockingDependencies": [
+        "TRANSITION:PHASE_NOTIFICATION_MISSING",
+        "OVERRIDE:OVERRIDE_REQUEST_MISSING"
+      ],
+      "correctiveActions": [
+        "REQUEST_OVERRIDE_APPROVAL",
+        "PUBLISH_PHASE_NOTIFICATION"
+      ]
+    },
+    {
+      "scenario": "override-applied",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "reason": "Matrice de dépendances prête pour owner=ops.lead: aucun blocage actif.",
+      "owner": "ops.lead",
+      "blockingDependencies": [],
+      "correctiveActions": []
+    },
+    {
+      "scenario": "stale",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "DEPENDENCY_STATE_STALE",
+      "reason": "Matrice de dépendances stale pour owner=ops.lead: snapshotAgeMs=6500 > maxRefreshIntervalMs=5000.",
+      "owner": "ops.lead",
+      "blockingDependencies": [
+        "FRESHNESS:DEPENDENCY_STATE_STALE"
+      ],
+      "correctiveActions": [
+        "REFRESH_DEPENDENCY_MATRIX"
+      ]
+    },
+    {
+      "scenario": "nominal",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "reason": "Matrice de dépendances prête pour owner=ops.lead: aucun blocage actif.",
+      "owner": "ops.lead",
+      "blockingDependencies": [],
+      "correctiveActions": []
+    }
+  ],
+  "pass": true
+}

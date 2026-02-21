@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/phase-dependency-matrix.spec.js:545:1 › phase dependency matrix demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  2 [chromium] › tests/e2e/phase-dependency-matrix.spec.js:437:1 › phase dependency matrix demo covers empty/loading/error/success with explicit reason, owner, blockers and corrective actions (3.6s)
+
+  2 passed (4.9s)

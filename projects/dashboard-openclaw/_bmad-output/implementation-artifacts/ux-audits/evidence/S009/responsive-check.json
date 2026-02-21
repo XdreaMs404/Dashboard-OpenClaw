@@ -1,0 +1,124 @@
+{
+  "storyId": "S009",
+  "runAt": "2026-02-21T17:05:57.282Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S009/responsive-mobile.png",
+      "state": "error",
+      "reasonCode": "OVERRIDE_REQUEST_MISSING",
+      "reason": "Override requis pour owner=ops.lead: overrideRequest est requis pour un blocage de transition éligible à override.",
+      "owner": "ops.lead",
+      "blockingDependencies": [
+        "TRANSITION:PHASE_NOTIFICATION_MISSING",
+        "OVERRIDE:OVERRIDE_REQUEST_MISSING"
+      ],
+      "correctiveActions": [
+        "REQUEST_OVERRIDE_APPROVAL",
+        "PUBLISH_PHASE_NOTIFICATION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "owner": 0,
+        "blocking": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S009/responsive-tablet.png",
+      "state": "error",
+      "reasonCode": "OVERRIDE_REQUEST_MISSING",
+      "reason": "Override requis pour owner=ops.lead: overrideRequest est requis pour un blocage de transition éligible à override.",
+      "owner": "ops.lead",
+      "blockingDependencies": [
+        "TRANSITION:PHASE_NOTIFICATION_MISSING",
+        "OVERRIDE:OVERRIDE_REQUEST_MISSING"
+      ],
+      "correctiveActions": [
+        "REQUEST_OVERRIDE_APPROVAL",
+        "PUBLISH_PHASE_NOTIFICATION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "owner": 0,
+        "blocking": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S009/responsive-desktop.png",
+      "state": "error",
+      "reasonCode": "OVERRIDE_REQUEST_MISSING",
+      "reason": "Override requis pour owner=ops.lead: overrideRequest est requis pour un blocage de transition éligible à override.",
+      "owner": "ops.lead",
+      "blockingDependencies": [
+        "TRANSITION:PHASE_NOTIFICATION_MISSING",
+        "OVERRIDE:OVERRIDE_REQUEST_MISSING"
+      ],
+      "correctiveActions": [
+        "REQUEST_OVERRIDE_APPROVAL",
+        "PUBLISH_PHASE_NOTIFICATION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "owner": 0,
+        "blocking": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
