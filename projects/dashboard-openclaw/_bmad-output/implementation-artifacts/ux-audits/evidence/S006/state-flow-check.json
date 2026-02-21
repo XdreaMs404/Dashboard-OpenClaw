@@ -1,0 +1,41 @@
+{
+  "storyId": "S006",
+  "runAt": "2026-02-21T13:56:10.659Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-payload",
+      "finalState": "error",
+      "reasonCode": "INVALID_TRANSITION_HISTORY",
+      "reason": "history doit être un tableau pour enregistrer une transition.",
+      "historyRows": [
+        "—"
+      ]
+    },
+    {
+      "scenario": "blocked-guard",
+      "finalState": "error",
+      "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
+      "reason": "Prérequis requis incomplets: PR-005.",
+      "historyRows": [
+        "H04 -> H05 | PHASE_PREREQUISITES_INCOMPLETE | 2026-02-21T13:49:00.000Z"
+      ]
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "reasonCode": "OK",
+      "reason": "Transition historisée avec succès.",
+      "historyRows": [
+        "H03 -> H04 | OK | 2026-02-21T13:50:00.000Z",
+        "H02 -> H03 | OK | 2026-02-21T12:00:00.000Z"
+      ]
+    }
+  ],
+  "pass": true
+}

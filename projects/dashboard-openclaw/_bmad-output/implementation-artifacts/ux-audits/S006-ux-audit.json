@@ -1,0 +1,46 @@
+{
+  "storyId": "S006",
+  "epicId": "E01",
+  "verdict": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 92,
+    "D2": 94,
+    "D3": 93,
+    "D4": 94,
+    "D5": 91,
+    "D6": 90,
+    "designExcellence": 93
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/playwright-s006.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/playwright-e2e-suite.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/vitest-s006.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-mobile.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-tablet.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-desktop.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-audit.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/ux-gate.log"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX strict S006 validé: états empty/loading/error/success couverts avec reasonCode/reason lisibles, historique rendu clairement (from->to, verdict, timestamp) et propagation explicite des blocages guard. Contrôles WCAG ciblés conformes sur le démonstrateur (role=status aria-live=polite, role=alert, panneau succès aria-live+aria-atomic, focus restitué au bouton), hiérarchie H1/H2 cohérente, contrastes AA et aucune régression responsive (overflow horizontal max=0 sur mobile/tablette/desktop).",
+  "updatedAt": "2026-02-21T13:57:22Z"
+}

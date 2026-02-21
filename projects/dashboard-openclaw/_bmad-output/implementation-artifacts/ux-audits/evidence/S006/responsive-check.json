@@ -1,0 +1,109 @@
+{
+  "storyId": "S006",
+  "runAt": "2026-02-21T13:57:17.152Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Transition historisée avec succès.",
+      "scenarioValue": "success",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "error": 0,
+        "history": 0,
+        "success": 0,
+        "max": 0
+      },
+      "contrast": {
+        "bodyText": 21,
+        "heading": 21,
+        "successPanel": 20.07
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Transition historisée avec succès.",
+      "scenarioValue": "success",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "error": 0,
+        "history": 0,
+        "success": 0,
+        "max": 0
+      },
+      "contrast": {
+        "bodyText": 21,
+        "heading": 21,
+        "successPanel": 20.07
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Transition historisée avec succès.",
+      "scenarioValue": "success",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "error": 0,
+        "history": 0,
+        "success": 0,
+        "max": 0
+      },
+      "contrast": {
+        "bodyText": 21,
+        "heading": 21,
+        "successPanel": 20.07
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
