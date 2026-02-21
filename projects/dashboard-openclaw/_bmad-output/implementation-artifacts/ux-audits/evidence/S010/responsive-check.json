@@ -1,0 +1,124 @@
+{
+  "storyId": "S010",
+  "runAt": "2026-02-21T18:17:17.035Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S010/responsive-mobile.png",
+      "state": "error",
+      "reasonCode": "REPEATED_BLOCKING_ANOMALY",
+      "reason": "Récurrence de blocages détectée pour owner=ops.lead: historyBlockedCount=3, lookbackEntries=5, escalationThreshold=3.",
+      "owner": "ops.lead",
+      "anomalies": [
+        "REPEATED_BLOCKING_ANOMALY"
+      ],
+      "correctiveActions": [
+        "ESCALATE_TO_PM"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "alert": 0,
+        "severity": 0,
+        "owner": 0,
+        "anomalies": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S010/responsive-tablet.png",
+      "state": "error",
+      "reasonCode": "REPEATED_BLOCKING_ANOMALY",
+      "reason": "Récurrence de blocages détectée pour owner=ops.lead: historyBlockedCount=3, lookbackEntries=5, escalationThreshold=3.",
+      "owner": "ops.lead",
+      "anomalies": [
+        "REPEATED_BLOCKING_ANOMALY"
+      ],
+      "correctiveActions": [
+        "ESCALATE_TO_PM"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "alert": 0,
+        "severity": 0,
+        "owner": 0,
+        "anomalies": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S010/responsive-desktop.png",
+      "state": "error",
+      "reasonCode": "REPEATED_BLOCKING_ANOMALY",
+      "reason": "Récurrence de blocages détectée pour owner=ops.lead: historyBlockedCount=3, lookbackEntries=5, escalationThreshold=3.",
+      "owner": "ops.lead",
+      "anomalies": [
+        "REPEATED_BLOCKING_ANOMALY"
+      ],
+      "correctiveActions": [
+        "ESCALATE_TO_PM"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "alert": 0,
+        "severity": 0,
+        "owner": 0,
+        "anomalies": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

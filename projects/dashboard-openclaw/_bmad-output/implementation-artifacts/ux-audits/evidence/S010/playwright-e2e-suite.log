@@ -1,0 +1,24 @@
+
+Running 19 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/normalize-user-name.spec.js:92:1 › normalize user name flow covers empty/loading/error/success states (1.3s)
+  ✓   3 [chromium] › tests/e2e/phase-dependency-matrix.spec.js:545:1 › phase dependency matrix demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓   2 [chromium] › tests/e2e/phase-dependency-matrix.spec.js:437:1 › phase dependency matrix demo covers empty/loading/error/success with explicit reason, owner, blockers and corrective actions (3.7s)
+  ✓   4 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:272:1 › phase guards demo covers empty/loading/error/success with explicit reason, plan and failure diagnostics (1.7s)
+  ✓   5 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:335:1 › phase guards demo keeps rendered content without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓   6 [chromium] › tests/e2e/phase-prerequisites-validator.spec.js:237:1 › phase prerequisites demo covers empty/loading/error/success with explicit blocking reason and missing list (2.0s)
+  ✓   7 [chromium] › tests/e2e/phase-prerequisites-validator.spec.js:299:1 › phase prerequisites demo keeps success rendering without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓   9 [chromium] › tests/e2e/phase-progression-alert.spec.js:503:1 › phase progression alert demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓   8 [chromium] › tests/e2e/phase-progression-alert.spec.js:386:1 › phase progression alert demo covers empty/loading/error/success and explicit alert context (3.5s)
+  ✓  10 [chromium] › tests/e2e/phase-sla-alert.spec.js:274:1 › phase SLA alert demo covers empty/loading/error/success with reason, severity and correctiveActions (2.0s)
+  ✓  11 [chromium] › tests/e2e/phase-sla-alert.spec.js:345:1 › phase SLA alert demo remains readable without horizontal overflow on mobile/tablet/desktop (1.6s)
+  ✓  12 [chromium] › tests/e2e/phase-state-projection.spec.js:224:1 › phase state projection demo covers empty/loading/error/success with required phase fields (1.6s)
+  ✓  13 [chromium] › tests/e2e/phase-state-projection.spec.js:285:1 › phase state projection success payload stays without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  14 [chromium] › tests/e2e/phase-transition-history.spec.js:249:1 › transition history demo covers empty/loading/error/success with reason and history rows (1.6s)
+  ✓  15 [chromium] › tests/e2e/phase-transition-history.spec.js:304:1 › transition history demo stays readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  16 [chromium] › tests/e2e/phase-transition-override.spec.js:278:1 › phase transition override demo covers empty/loading/error/success with reason and override states (2.5s)
+  ✓  17 [chromium] › tests/e2e/phase-transition-override.spec.js:364:1 › phase transition override demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  19 [chromium] › tests/e2e/smoke.spec.js:3:1 › basic app smoke on data URL (191ms)
+  ✓  18 [chromium] › tests/e2e/phase-transition-validator.spec.js:129:1 › phase transition demo covers empty/loading/error/success and shows blocking reason (1.5s)
+
+  19 passed (19.8s)

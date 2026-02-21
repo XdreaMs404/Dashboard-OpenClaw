@@ -1,0 +1,139 @@
+{
+  "storyId": "S010",
+  "runAt": "2026-02-21T18:17:16.080Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_PHASE_PROGRESSION_INPUT",
+      "expectedReasonCode": "INVALID_PHASE_PROGRESSION_INPUT",
+      "reason": "dependencyMatrix ou dependencyMatrixInput est requis.",
+      "owner": "—",
+      "alertActive": "false",
+      "severity": "info",
+      "anomalies": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "dependency-blocked",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "TRANSITION_NOT_ALLOWED",
+      "expectedReasonCode": "TRANSITION_NOT_ALLOWED",
+      "reason": "Transition bloquée pour owner=alex.pm: Transition non autorisée H09 -> H11.",
+      "owner": "alex.pm",
+      "alertActive": "true",
+      "severity": "warning",
+      "anomalies": [
+        "—"
+      ],
+      "correctiveActions": [
+        "ALIGN_PHASE_SEQUENCE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sequence-gap",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "PHASE_SEQUENCE_GAP_DETECTED",
+      "expectedReasonCode": "PHASE_SEQUENCE_GAP_DETECTED",
+      "reason": "Saut de séquence canonique détecté: fromPhase=H09, toPhase=H11, indexDiff=2.",
+      "owner": "ops.lead",
+      "alertActive": "true",
+      "severity": "warning",
+      "anomalies": [
+        "PHASE_SEQUENCE_GAP_DETECTED"
+      ],
+      "correctiveActions": [
+        "REVIEW_PHASE_SEQUENCE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sequence-regression",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "PHASE_SEQUENCE_REGRESSION_DETECTED",
+      "expectedReasonCode": "PHASE_SEQUENCE_REGRESSION_DETECTED",
+      "reason": "Régression canonique détectée: fromPhase=H10, toPhase=H09, indexDiff=-1.",
+      "owner": "ops.lead",
+      "alertActive": "true",
+      "severity": "warning",
+      "anomalies": [
+        "PHASE_SEQUENCE_REGRESSION_DETECTED"
+      ],
+      "correctiveActions": [
+        "ROLLBACK_TO_CANONICAL_PHASE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "repeated-blocking",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "REPEATED_BLOCKING_ANOMALY",
+      "expectedReasonCode": "REPEATED_BLOCKING_ANOMALY",
+      "reason": "Récurrence de blocages détectée pour owner=ops.lead: historyBlockedCount=3, lookbackEntries=5, escalationThreshold=3.",
+      "owner": "ops.lead",
+      "alertActive": "true",
+      "severity": "critical",
+      "anomalies": [
+        "REPEATED_BLOCKING_ANOMALY"
+      ],
+      "correctiveActions": [
+        "ESCALATE_TO_PM"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "stale",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "DEPENDENCY_STATE_STALE",
+      "expectedReasonCode": "DEPENDENCY_STATE_STALE",
+      "reason": "Matrice de dépendances stale pour owner=ops.lead: snapshotAgeMs=6800 > maxRefreshIntervalMs=5000.",
+      "owner": "ops.lead",
+      "alertActive": "true",
+      "severity": "warning",
+      "anomalies": [
+        "DEPENDENCY_STATE_STALE"
+      ],
+      "correctiveActions": [
+        "REFRESH_DEPENDENCY_MATRIX"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "nominal",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Progression canonique valide pour owner=ops.lead: aucune anomalie détectée.",
+      "owner": "ops.lead",
+      "alertActive": "false",
+      "severity": "info",
+      "anomalies": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

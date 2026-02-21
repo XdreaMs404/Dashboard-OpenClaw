@@ -3,6 +3,7 @@ import { validatePhasePrerequisites } from './phase-prerequisites-validator.js';
 import { orchestratePhaseGuards } from './phase-guards-orchestrator.js';
 import { buildPhaseStateProjection } from './phase-state-projection.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
+import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
 import { evaluatePhaseSlaAlert } from './phase-sla-alert.js';
 import { evaluatePhaseTransitionOverride } from './phase-transition-override.js';
@@ -13,6 +14,7 @@ export {
   buildPhaseDependencyMatrix,
   buildPhaseStateProjection,
   clamp,
+  evaluatePhaseProgressionAlert,
   evaluatePhaseSlaAlert,
   evaluatePhaseTransitionOverride,
   normalizeEmail,
