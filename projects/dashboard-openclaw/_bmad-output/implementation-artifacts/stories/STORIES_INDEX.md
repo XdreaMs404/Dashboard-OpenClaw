@@ -9,7 +9,7 @@
 | S005 | E01 | Story 5 | DONE |
 | S006 | E01 | Story 6 | DONE |
 | S007 | E01 | Story 7 | DONE |
-| S008 | E01 | Story 8 | TODO |
+| S008 | E01 | Story 8 | DONE |
 | S009 | E01 | Story 9 | TODO |
 | S010 | E01 | Story 10 | TODO |
 | S011 | E02 | Story 11 | TODO |

@@ -4,6 +4,7 @@ import { orchestratePhaseGuards } from './phase-guards-orchestrator.js';
 import { buildPhaseStateProjection } from './phase-state-projection.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
 import { evaluatePhaseSlaAlert } from './phase-sla-alert.js';
+import { evaluatePhaseTransitionOverride } from './phase-transition-override.js';
 import { BMAD_PHASE_ORDER, validatePhaseTransition } from './phase-transition-validator.js';
 
 export {
@@ -11,6 +12,7 @@ export {
   buildPhaseStateProjection,
   clamp,
   evaluatePhaseSlaAlert,
+  evaluatePhaseTransitionOverride,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
