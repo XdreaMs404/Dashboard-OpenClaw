@@ -1,0 +1,104 @@
+{
+  "storyId": "S012",
+  "runAt": "2026-02-21T23:22:17.362Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_METADATA_VALIDATION_INPUT",
+      "expectedReasonCode": "INVALID_METADATA_VALIDATION_INPUT",
+      "reason": "artifactDocuments ou artifactPaths est requis pour la validation metadata (source exploitable absente).",
+      "counts": "requested=0 | compliant=0 | nonCompliant=0",
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "path-not-allowed",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_PATH_NOT_ALLOWED",
+      "expectedReasonCode": "ARTIFACT_PATH_NOT_ALLOWED",
+      "reason": "Validation metadata bloquée (ARTIFACT_PATH_NOT_ALLOWED): Chemin hors allowlist: /tmp/forbidden/prd.md.",
+      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "correctiveActions": [
+        "RESTRICT_TO_ALLOWED_ROOTS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "unsupported-type",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "UNSUPPORTED_ARTIFACT_TYPE",
+      "expectedReasonCode": "UNSUPPORTED_ARTIFACT_TYPE",
+      "reason": "Validation metadata bloquée (UNSUPPORTED_ARTIFACT_TYPE): Extension non supportée: .json pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/payload.json. Extensions autorisées: .md, .markdown, .yaml, .yml.",
+      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "correctiveActions": [
+        "REMOVE_UNSUPPORTED_ARTIFACTS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "metadata-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_MISSING",
+      "expectedReasonCode": "ARTIFACT_METADATA_MISSING",
+      "reason": "Validation metadata bloquée (ARTIFACT_METADATA_MISSING): Metadata obligatoire manquante pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md: stepsCompleted, inputDocuments.",
+      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "correctiveActions": [
+        "ADD_REQUIRED_METADATA"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "metadata-invalid",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "expectedReasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Validation metadata bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
+      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "parse-failed",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_PARSE_FAILED",
+      "expectedReasonCode": "ARTIFACT_PARSE_FAILED",
+      "reason": "Validation metadata bloquée (ARTIFACT_PARSE_FAILED): YAML invalide ligne 1: tableau inline non fermé. (/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/bad.yaml).",
+      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "correctiveActions": [
+        "FIX_ARTIFACT_SYNTAX"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Validation metadata réussie: 2/2 artefacts conformes.",
+      "counts": "requested=2 | compliant=2 | nonCompliant=0",
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
