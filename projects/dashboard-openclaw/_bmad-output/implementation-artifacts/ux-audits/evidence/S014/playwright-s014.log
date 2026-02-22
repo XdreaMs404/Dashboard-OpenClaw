@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/artifact-table-indexer.spec.js:475:1 › artifact table indexer demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  2 [chromium] › tests/e2e/artifact-table-indexer.spec.js:360:1 › artifact table indexer demo covers empty/loading/error/success with explicit reason, counters and correctiveActions (4.3s)
+
+  2 passed (5.6s)

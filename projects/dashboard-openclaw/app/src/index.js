@@ -5,6 +5,7 @@ import { buildPhaseStateProjection } from './phase-state-projection.js';
 import { ingestBmadArtifacts } from './artifact-ingestion-pipeline.js';
 import { validateArtifactMetadataCompliance } from './artifact-metadata-validator.js';
 import { extractArtifactSectionsForNavigation } from './artifact-section-extractor.js';
+import { indexArtifactMarkdownTables } from './artifact-table-indexer.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
 import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
@@ -21,6 +22,7 @@ export {
   evaluatePhaseSlaAlert,
   evaluatePhaseTransitionOverride,
   extractArtifactSectionsForNavigation,
+  indexArtifactMarkdownTables,
   ingestBmadArtifacts,
   normalizeEmail,
   normalizeUserName,

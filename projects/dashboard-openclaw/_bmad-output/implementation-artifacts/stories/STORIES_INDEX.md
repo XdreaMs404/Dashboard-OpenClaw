@@ -15,7 +15,7 @@
 | S011 | E02 | Story 11 | DONE |
 | S012 | E02 | Story 12 | DONE |
 | S013 | E02 | Story 13 | DONE |
-| S014 | E02 | Story 14 | TODO |
+| S014 | E02 | Story 14 | DONE |
 | S015 | E02 | Story 15 | TODO |
 | S016 | E02 | Story 16 | TODO |
 | S017 | E02 | Story 17 | TODO |
