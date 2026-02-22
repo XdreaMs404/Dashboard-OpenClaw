@@ -337,6 +337,41 @@ describe('phase-dependency-matrix unit', () => {
     });
   });
 
+  it('blocks non-canonical transition order from transitionInput and recommends ALIGN_PHASE_SEQUENCE', () => {
+    const result = buildPhaseDependencyMatrix({
+      owner: 'dev.owner',
+      transitionInput: {
+        fromPhase: 'H05',
+        toPhase: 'H04',
+        transitionRequestedAt: '2026-02-21T15:30:00.000Z',
+        notificationPublishedAt: '2026-02-21T15:26:00.000Z',
+        notificationSlaMinutes: 10
+      },
+      prerequisitesInput: {
+        prerequisites: [{ id: 'PR-001', required: true, status: 'done' }]
+      },
+      snapshotAgeMs: 120
+    });
+
+    expect(result).toMatchObject({
+      allowed: false,
+      reasonCode: 'TRANSITION_NOT_ALLOWED',
+      diagnostics: {
+        fromPhase: 'H05',
+        toPhase: 'H04',
+        owner: 'dev.owner',
+        sourceReasonCode: 'TRANSITION_NOT_ALLOWED'
+      }
+    });
+
+    expect(result.dependencies.find((dependency) => dependency.id === 'TRANSITION')).toMatchObject({
+      status: 'blocked',
+      blocking: true,
+      reasonCode: 'TRANSITION_NOT_ALLOWED'
+    });
+    expect(result.correctiveActions).toContain('ALIGN_PHASE_SEQUENCE');
+  });
+
   it('uses owner from phaseStateInput (S003) when owner is not provided directly', () => {
     const result = buildFromIndex({
       transitionValidation: makeTransitionOk(),

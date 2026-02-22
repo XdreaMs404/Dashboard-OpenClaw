@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-22T15:24:11Z"
+updated_at_utc: "2026-02-22T17:54:49Z"
 
 development_status:
   epic-1: in-progress
@@ -15,7 +15,7 @@ development_status:
   1-07-orchestration-ultra-quality-check-depuis-le-cockpit: done
   1-08-historique-consultable-des-transitions: done
   1-09-workflow-override-exceptionnel-avec-approbateur: done
-  1-10-carte-dependances-inter-phases-en-temps-reel: backlog
+  1-10-carte-dependances-inter-phases-en-temps-reel: done
   1-11-detection-anomalies-de-progression-et-alertes: done
   1-12-journal-decisionnel-de-gouvernance-phase-gate: backlog
   epic-1-retrospective: optional

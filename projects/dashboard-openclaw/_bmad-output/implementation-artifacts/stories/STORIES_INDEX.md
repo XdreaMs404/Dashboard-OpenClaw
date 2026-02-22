@@ -11,7 +11,7 @@
 | S007 | E01 | Orchestration ultra-quality-check depuis le cockpit | DONE |
 | S008 | E01 | Historique consultable des transitions | DONE |
 | S009 | E01 | Workflow override exceptionnel avec approbateur | DONE |
-| S010 | E01 | Carte dépendances inter-phases en temps réel | TODO |
+| S010 | E01 | Carte dépendances inter-phases en temps réel | DONE |
 | S011 | E01 | Détection anomalies de progression et alertes | DONE |
 | S012 | E01 | Journal décisionnel de gouvernance phase/gate | TODO |
 | S013 | E02 | Pipeline ingestion markdown/yaml sous allowlist | DONE |
