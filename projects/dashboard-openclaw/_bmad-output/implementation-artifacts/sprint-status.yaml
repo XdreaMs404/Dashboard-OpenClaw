@@ -2,22 +2,22 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-22T10:13:22Z"
+updated_at_utc: "2026-02-22T12:00:12Z"
 
 development_status:
-  epic-1: done
+  epic-1: in-progress
   1-01-machine-d-etat-canonique-h01-h23: done
   1-02-validateur-de-transitions-autorisees: done
-  1-03-sla-de-notification-de-phase-et-blocage: done
-  1-04-capture-owner-horodatage-statut-de-phase: done
-  1-05-checklist-prerequis-avant-activation-de-phase: done
-  1-06-orchestration-sequence-guard-depuis-le-cockpit: done
-  1-07-orchestration-ultra-quality-check-depuis-le-cockpit: done
-  1-08-historique-consultable-des-transitions: done
-  1-09-workflow-override-exceptionnel-avec-approbateur: done
-  1-10-carte-dependances-inter-phases-en-temps-reel: done
+  1-03-sla-de-notification-de-phase-et-blocage: backlog
+  1-04-capture-owner-horodatage-statut-de-phase: backlog
+  1-05-checklist-prerequis-avant-activation-de-phase: backlog
+  1-06-orchestration-sequence-guard-depuis-le-cockpit: backlog
+  1-07-orchestration-ultra-quality-check-depuis-le-cockpit: backlog
+  1-08-historique-consultable-des-transitions: backlog
+  1-09-workflow-override-exceptionnel-avec-approbateur: backlog
+  1-10-carte-dependances-inter-phases-en-temps-reel: backlog
   1-11-detection-anomalies-de-progression-et-alertes: done
-  1-12-journal-decisionnel-de-gouvernance-phase-gate: done
+  1-12-journal-decisionnel-de-gouvernance-phase-gate: backlog
   epic-1-retrospective: optional
 
   epic-2: in-progress

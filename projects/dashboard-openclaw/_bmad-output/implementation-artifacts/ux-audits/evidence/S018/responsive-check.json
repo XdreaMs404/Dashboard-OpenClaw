@@ -1,0 +1,136 @@
+{
+  "storyId": "S018",
+  "runAt": "2026-02-22T11:10:40.503Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S018/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Filtrage contextuel exécuté: 2 résultat(s) retenu(s) sur 3 résultat(s) source.",
+      "counts": "filtered=2 | filteredOut=1 | diffGroups=1",
+      "appliedFilters": [
+        "phase=implementation",
+        "gate=g4-t",
+        "owner=team-a"
+      ],
+      "diffCandidates": [
+        "prd:rollout => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md,/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.md"
+      ],
+      "correctiveActions": [
+        "RUN_ARTIFACT_DIFF"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "filters": 0,
+        "diff": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S018/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Filtrage contextuel exécuté: 2 résultat(s) retenu(s) sur 3 résultat(s) source.",
+      "counts": "filtered=2 | filteredOut=1 | diffGroups=1",
+      "appliedFilters": [
+        "phase=implementation",
+        "gate=g4-t",
+        "owner=team-a"
+      ],
+      "diffCandidates": [
+        "prd:rollout => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md,/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.md"
+      ],
+      "correctiveActions": [
+        "RUN_ARTIFACT_DIFF"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "filters": 0,
+        "diff": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S018/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Filtrage contextuel exécuté: 2 résultat(s) retenu(s) sur 3 résultat(s) source.",
+      "counts": "filtered=2 | filteredOut=1 | diffGroups=1",
+      "appliedFilters": [
+        "phase=implementation",
+        "gate=g4-t",
+        "owner=team-a"
+      ],
+      "diffCandidates": [
+        "prd:rollout => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md,/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.md"
+      ],
+      "correctiveActions": [
+        "RUN_ARTIFACT_DIFF"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "filters": 0,
+        "diff": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

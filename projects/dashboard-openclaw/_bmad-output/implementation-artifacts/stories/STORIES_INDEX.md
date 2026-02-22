@@ -4,16 +4,16 @@
 |---|---|---|---|
 | S001 | E01 | Machine d’état canonique H01→H23 | DONE |
 | S002 | E01 | Validateur de transitions autorisées | DONE |
-| S003 | E01 | SLA de notification de phase et blocage | DONE |
-| S004 | E01 | Capture owner/horodatage/statut de phase | DONE |
-| S005 | E01 | Checklist prérequis avant activation de phase | DONE |
-| S006 | E01 | Orchestration sequence-guard depuis le cockpit | DONE |
-| S007 | E01 | Orchestration ultra-quality-check depuis le cockpit | DONE |
-| S008 | E01 | Historique consultable des transitions | DONE |
-| S009 | E01 | Workflow override exceptionnel avec approbateur | DONE |
-| S010 | E01 | Carte dépendances inter-phases en temps réel | DONE |
+| S003 | E01 | SLA de notification de phase et blocage | TODO |
+| S004 | E01 | Capture owner/horodatage/statut de phase | TODO |
+| S005 | E01 | Checklist prérequis avant activation de phase | TODO |
+| S006 | E01 | Orchestration sequence-guard depuis le cockpit | TODO |
+| S007 | E01 | Orchestration ultra-quality-check depuis le cockpit | TODO |
+| S008 | E01 | Historique consultable des transitions | TODO |
+| S009 | E01 | Workflow override exceptionnel avec approbateur | TODO |
+| S010 | E01 | Carte dépendances inter-phases en temps réel | TODO |
 | S011 | E01 | Détection anomalies de progression et alertes | DONE |
-| S012 | E01 | Journal décisionnel de gouvernance phase/gate | DONE |
+| S012 | E01 | Journal décisionnel de gouvernance phase/gate | TODO |
 | S013 | E02 | Pipeline ingestion markdown/yaml sous allowlist | DONE |
 | S014 | E02 | Validator metadata stepsCompleted + inputDocuments | DONE |
 | S015 | E02 | Extracteur sections H2/H3 pour navigation | DONE |

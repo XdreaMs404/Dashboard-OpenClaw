@@ -7,6 +7,7 @@ import { validateArtifactMetadataCompliance } from './artifact-metadata-validato
 import { extractArtifactSectionsForNavigation } from './artifact-section-extractor.js';
 import { indexArtifactMarkdownTables } from './artifact-table-indexer.js';
 import { searchArtifactsFullText } from './artifact-fulltext-search.js';
+import { applyArtifactContextFilters } from './artifact-context-filter.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
 import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
@@ -16,6 +17,7 @@ import { BMAD_PHASE_ORDER, validatePhaseTransition } from './phase-transition-va
 
 export {
   BMAD_PHASE_ORDER,
+  applyArtifactContextFilters,
   buildPhaseDependencyMatrix,
   buildPhaseStateProjection,
   clamp,
@@ -26,12 +28,12 @@ export {
   indexArtifactMarkdownTables,
   ingestBmadArtifacts,
   normalizeEmail,
-  searchArtifactsFullText,
   normalizeUserName,
-  validateArtifactMetadataCompliance,
   orchestratePhaseGuards,
   recordPhaseTransitionHistory,
   safeDivide,
+  searchArtifactsFullText,
+  validateArtifactMetadataCompliance,
   validatePhasePrerequisites,
   validatePhaseTransition
 };

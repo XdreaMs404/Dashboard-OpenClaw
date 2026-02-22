@@ -1,0 +1,95 @@
+{
+  "storyId": "S018",
+  "runAt": "2026-02-22T11:10:40.503Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_ARTIFACT_CONTEXT_FILTER_INPUT",
+      "expectedReasonCode": "INVALID_ARTIFACT_CONTEXT_FILTER_INPUT",
+      "reason": "Aucune source exploitable: fournir searchResult ou searchInput.",
+      "counts": "filtered=0 | filteredOut=0 | diffGroups=0",
+      "appliedFilters": [
+        "phase=implementation"
+      ],
+      "diffCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "focusReturnedToAction": true,
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "expectedReasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Metadata invalide pour la recherche.",
+      "counts": "filtered=0 | filteredOut=0 | diffGroups=0",
+      "appliedFilters": [
+        "—"
+      ],
+      "diffCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "focusReturnedToAction": true,
+      "pass": true
+    },
+    {
+      "scenario": "filtered-empty",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Filtrage contextuel exécuté: aucun résultat sur 1 résultat(s) source.",
+      "counts": "filtered=0 | filteredOut=1 | diffGroups=0",
+      "appliedFilters": [
+        "phase=analysis"
+      ],
+      "diffCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "focusReturnedToAction": true,
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Filtrage contextuel exécuté: 2 résultat(s) retenu(s) sur 3 résultat(s) source.",
+      "counts": "filtered=2 | filteredOut=1 | diffGroups=1",
+      "appliedFilters": [
+        "phase=implementation",
+        "gate=g4-t",
+        "owner=team-a"
+      ],
+      "diffCandidates": [
+        "prd:rollout => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md,/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.md"
+      ],
+      "correctiveActions": [
+        "RUN_ARTIFACT_DIFF"
+      ],
+      "focusReturnedToAction": true,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

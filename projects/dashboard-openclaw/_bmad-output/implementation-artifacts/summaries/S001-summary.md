@@ -1,45 +1,46 @@
-# S001 — Résumé (Tech Writer)
+# S001 — Résumé final (Tech Writer)
 
-## Ce qui a été livré
-- `normalizeUserName(input)` est implémentée dans `app/src/core.js` et exportée via `app/src/index.js`.
-- Le comportement demandé est couvert: trim début/fin, réduction des séparateurs internes (`espace/tab/newline`) à un espace, conservation accents/casse.
-- Les deux erreurs contractuelles sont implémentées avec les messages attendus:
-  - `Le nom utilisateur doit être une chaîne de caractères`
-  - `Le nom utilisateur est vide après normalisation`
-- La couverture de tests existe sur les niveaux demandés:
-  - unit: `app/tests/unit/core.test.js`
-  - edge: `app/tests/edge/core.edge.test.js`
-  - e2e UI: `app/tests/e2e/normalize-user-name.spec.js` (+ `smoke.spec.js`)
-- Audit UX: **PASS** (`_bmad-output/implementation-artifacts/ux-audits/S001-ux-audit.json`) avec états `loading/empty/error/success` validés.
-- En revue, les gates ont été exécutés avec succès:
-  - `bash scripts/run-quality-gates.sh` ✅
-  - `bash scripts/run-ux-gates.sh S001` ✅
+## Livré (scope strict S001)
+- Implémentation de la validation des transitions de phase canoniques BMAD H01→H23 dans `app/src/phase-transition-validator.js`.
+- Blocage explicite des transitions non autorisées avec `reasonCode` stable et message opérable.
+- Contrat de sortie stable de validation de transition confirmé côté tests et e2e.
+- Export public S001 maintenu via `app/src/index.js`.
 
-## Ce qui reste à surveiller
-- Les tests d’erreur vérifient encore le message de façon partiellement permissive (`toThrow(string)`), à durcir en égalité stricte.
-- Ajouter un test dédié sur l’API publique (`import` depuis `src/index.js`) pour fermer la traçabilité AC.
-- Réduire le risque de flakiness E2E sur l’état transitoire `loading` (timing court), idéalement en séparant error/success en 2 scénarios.
-- Compléter la non-régression sur `clamp` (branche non couverte signalée en coverage).
+## Preuves & gates
+- Revue finale H18: `_bmad-output/implementation-artifacts/reviews/S001-review.md` → **APPROVED**.
+- Handoff TEA→Reviewer: `_bmad-output/implementation-artifacts/handoffs/S001-tea-to-reviewer.md` → **PASS (GO_REVIEWER)**.
+- Trace technique complète: `_bmad-output/implementation-artifacts/handoffs/S001-tech-gates.log` (`✅ S001_TECH_GATES_OK`).
+
+### G4-T (technique) — PASS
+- lint ✅
+- typecheck ✅
+- tests ciblés S001 (unit+edge) ✅ (**2 fichiers / 16 tests passés**)
+- tests e2e ciblés S001 ✅ (**1/1 passé**)
+- coverage globale ✅ (**32 fichiers / 407 tests passés**)
+- couverture globale ✅ (**99.35% lines / 97.90% branches / 100% functions / 99.37% statements**)
+- couverture module S001 `phase-transition-validator.js` ✅ (**97.36% lines / 95.34% branches / 100% functions / 97.36% statements**)
+- build ✅
+- security deps (`npm audit --audit-level=high`) ✅ (**0 vulnérabilité**)
+
+### G4-UX — PASS
+- SoT: `_bmad-output/implementation-artifacts/ux-audits/S001-ux-audit.json`
+- Verdict: **PASS**
+- Scores: D1=88, D2=90, D3=89, D4=91, D5=87, D6=86, Design Excellence=89
+- États UI requis couverts: `loading`, `empty`, `error`, `success`
+- Gate UX: `✅ UX_GATES_OK (S001) design=89 D2=90`
+- Issues / required fixes: `[]`
 
 ## Comment tester
-Depuis la racine du repo:
+Depuis la racine projet:
+- `bash /root/.openclaw/workspace/projects/dashboard-openclaw/scripts/run-story-gates.sh S001`
+- `bash /root/.openclaw/workspace/projects/dashboard-openclaw/scripts/run-ux-gates.sh S001`
 
-1. Lancer tous les gates techniques:
-   - `bash scripts/run-quality-gates.sh`
-2. Lancer les gates UX de la story:
-   - `bash scripts/run-ux-gates.sh S001`
-3. Validation story done (inclut vérifications + MAJ statut):
-   - `bash scripts/story-done-guard.sh S001`
+Depuis `app/` (rejeu technique strict S001):
+1. `cd /root/.openclaw/workspace/projects/dashboard-openclaw/app`
+2. `npm run lint && npm run typecheck`
+3. `npx vitest run tests/unit/phase-transition-validator.test.js tests/edge/phase-transition-validator.edge.test.js`
+4. `npx playwright test tests/e2e/phase-transition-validator.spec.js`
+5. `npm run test:coverage && npm run build && npm run security:deps`
 
-Option rapide (dans `app/`) pour rejouer uniquement les tests principaux:
-- `npm test`
-- `npm run test:edge`
-- `npm run test:e2e`
-
-## Résultat global (GO/NO-GO)
-**GO** (avec réserves non bloquantes listées ci-dessus).
-
-Base de décision:
-- UX audit = PASS
-- gates techniques = OK
-- review = CONCERNS, mais recommandation explicite Story-Done Guard: **GO**
+## Verdict
+**GO** — S001 validée en scope strict avec **G4-T + G4-UX PASS**.
