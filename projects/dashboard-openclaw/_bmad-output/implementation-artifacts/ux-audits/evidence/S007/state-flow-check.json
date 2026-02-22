@@ -1,6 +1,6 @@
 {
-  "storyId": "S005",
-  "runAt": "2026-02-21T13:14:46.422Z",
+  "storyId": "S007",
+  "runAt": "2026-02-22T13:59:47.693Z",
   "statesSeen": {
     "empty": true,
     "loading": true,
@@ -9,48 +9,51 @@
   },
   "traces": [
     {
-      "scenario": "blocked-prerequisites",
+      "scenario": "invalid-input",
       "finalState": "error",
-      "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
-      "reason": "Prérequis requis incomplets: PR-002.",
-      "failedCommand": "—",
-      "commands": [
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 3",
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 3"
-      ],
-      "failedResult": [
+      "reasonCode": "INVALID_SLA_ALERT_INPUT",
+      "reason": "history doit être un tableau pour évaluer la récurrence SLA.",
+      "severity": "none",
+      "correctiveActions": [
         "—"
-      ]
-    },
-    {
-      "scenario": "execution-failed",
-      "finalState": "error",
-      "reasonCode": "GUARD_EXECUTION_FAILED",
-      "reason": "Échec exécution guard: command=bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1, exitCode=17.",
-      "failedCommand": "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1",
-      "commands": [
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 1",
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1"
       ],
-      "failedResult": [
-        "command=bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1",
-        "exitCode=17",
-        "stderr=ultra quality guard failed"
-      ]
+      "pass": true
     },
     {
-      "scenario": "success-simulation",
+      "scenario": "sla-warning",
+      "finalState": "error",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification hors SLA: elapsedMs=610000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+      "severity": "warning",
+      "correctiveActions": [
+        "PUBLISH_PHASE_NOTIFY",
+        "REVALIDATE_TRANSITION"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sla-critical",
+      "finalState": "error",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+      "severity": "critical",
+      "correctiveActions": [
+        "PUBLISH_PHASE_NOTIFY",
+        "REVALIDATE_TRANSITION",
+        "ESCALATE_TO_PM"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
       "finalState": "success",
       "reasonCode": "OK",
-      "reason": "Simulation guards prête pour la phase 2.",
-      "failedCommand": "—",
-      "commands": [
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 2",
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 2"
-      ],
-      "failedResult": [
+      "reason": "Transition autorisée H04 -> H05.",
+      "severity": "none",
+      "correctiveActions": [
         "—"
-      ]
+      ],
+      "pass": true
     }
   ],
   "pass": true

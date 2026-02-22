@@ -8,7 +8,7 @@
 | S004 | E01 | Capture owner/horodatage/statut de phase | DONE |
 | S005 | E01 | Checklist prérequis avant activation de phase | DONE |
 | S006 | E01 | Orchestration sequence-guard depuis le cockpit | DONE |
-| S007 | E01 | Orchestration ultra-quality-check depuis le cockpit | TODO |
+| S007 | E01 | Orchestration ultra-quality-check depuis le cockpit | DONE |
 | S008 | E01 | Historique consultable des transitions | TODO |
 | S009 | E01 | Workflow override exceptionnel avec approbateur | TODO |
 | S010 | E01 | Carte dépendances inter-phases en temps réel | TODO |

@@ -1,0 +1,11 @@
+
+Running 6 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:272:1 › phase guards demo covers empty/loading/error/success with explicit reason, plan and failure diagnostics (1.8s)
+  ✓  1 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:335:1 › phase guards demo keeps rendered content without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  4 [chromium] › tests/e2e/phase-sla-alert.spec.js:345:1 › phase SLA alert demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  3 [chromium] › tests/e2e/phase-sla-alert.spec.js:274:1 › phase SLA alert demo covers empty/loading/error/success with reason, severity and correctiveActions (2.1s)
+  ✓  5 [chromium] › tests/e2e/phase-transition-history.spec.js:249:1 › transition history demo covers empty/loading/error/success with reason and history rows (1.6s)
+  ✓  6 [chromium] › tests/e2e/phase-transition-history.spec.js:304:1 › transition history demo stays readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+
+  6 passed (7.1s)

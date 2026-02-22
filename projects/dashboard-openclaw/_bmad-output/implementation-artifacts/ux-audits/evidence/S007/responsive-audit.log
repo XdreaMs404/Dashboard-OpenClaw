@@ -1,2 +1,5 @@
-responsive-all-pass=true
-state-flow-pass=true
+[S007] Responsive UX audit 2026-02-22T13:59:48.733Z
+- mobile: pass=true overflow.max=0 state=error reasonCode=PHASE_NOTIFICATION_SLA_EXCEEDED
+- tablet: pass=true overflow.max=0 state=error reasonCode=PHASE_NOTIFICATION_SLA_EXCEEDED
+- desktop: pass=true overflow.max=0 state=error reasonCode=PHASE_NOTIFICATION_SLA_EXCEEDED
+allPass=true
