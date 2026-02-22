@@ -1,115 +1,17 @@
 {
-  "storyId": "S008",
-  "runAt": "2026-02-21T15:20:05.983Z",
-  "checks": [
-    {
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-mobile.png",
-      "state": "success",
-      "reasonCode": "OK",
-      "reason": "Override exceptionnel approuvé pour le blocage PHASE_NOTIFICATION_MISSING.",
-      "overrideRequired": "true",
-      "overrideApplied": "true",
-      "requiredActions": [
-        "REVALIDATE_TRANSITION",
-        "RECORD_OVERRIDE_AUDIT"
-      ],
-      "ariaLiveStatus": "polite",
-      "ariaLiveSuccess": "polite",
-      "ariaAtomicSuccess": "true",
-      "hasAlertRole": true,
-      "focusReturnedToAction": true,
-      "scenarioHasLabel": true,
-      "headingOrderOk": true,
-      "overflow": {
-        "document": 0,
-        "body": 0,
-        "reason": 0,
-        "required": 0,
-        "applied": 0,
-        "actions": 0,
-        "error": 0,
-        "success": 0,
-        "max": 0
-      },
-      "pass": true
-    },
-    {
-      "viewport": {
-        "name": "tablet",
-        "width": 820,
-        "height": 1180
-      },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-tablet.png",
-      "state": "success",
-      "reasonCode": "OK",
-      "reason": "Override exceptionnel approuvé pour le blocage PHASE_NOTIFICATION_MISSING.",
-      "overrideRequired": "true",
-      "overrideApplied": "true",
-      "requiredActions": [
-        "REVALIDATE_TRANSITION",
-        "RECORD_OVERRIDE_AUDIT"
-      ],
-      "ariaLiveStatus": "polite",
-      "ariaLiveSuccess": "polite",
-      "ariaAtomicSuccess": "true",
-      "hasAlertRole": true,
-      "focusReturnedToAction": true,
-      "scenarioHasLabel": true,
-      "headingOrderOk": true,
-      "overflow": {
-        "document": 0,
-        "body": 0,
-        "reason": 0,
-        "required": 0,
-        "applied": 0,
-        "actions": 0,
-        "error": 0,
-        "success": 0,
-        "max": 0
-      },
-      "pass": true
-    },
-    {
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 768
-      },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-desktop.png",
-      "state": "success",
-      "reasonCode": "OK",
-      "reason": "Override exceptionnel approuvé pour le blocage PHASE_NOTIFICATION_MISSING.",
-      "overrideRequired": "true",
-      "overrideApplied": "true",
-      "requiredActions": [
-        "REVALIDATE_TRANSITION",
-        "RECORD_OVERRIDE_AUDIT"
-      ],
-      "ariaLiveStatus": "polite",
-      "ariaLiveSuccess": "polite",
-      "ariaAtomicSuccess": "true",
-      "hasAlertRole": true,
-      "focusReturnedToAction": true,
-      "scenarioHasLabel": true,
-      "headingOrderOk": true,
-      "overflow": {
-        "document": 0,
-        "body": 0,
-        "reason": 0,
-        "required": 0,
-        "applied": 0,
-        "actions": 0,
-        "error": 0,
-        "success": 0,
-        "max": 0
-      },
-      "pass": true
-    }
+  "storyId": "S009",
+  "runAt": "2026-02-22T15:14:21Z",
+  "source": "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/playwright-s009.log",
+  "viewports": [
+    "mobile",
+    "tablet",
+    "desktop"
   ],
-  "allPass": true
+  "flows": [
+    "phase-transition-override",
+    "phase-dependency-matrix"
+  ],
+  "allPass": true,
+  "maxHorizontalOverflowPx": 1,
+  "result": "PASS"
 }

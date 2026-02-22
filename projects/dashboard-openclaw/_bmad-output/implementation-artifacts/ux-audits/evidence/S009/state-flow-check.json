@@ -1,70 +1,16 @@
 {
-  "storyId": "S008",
-  "runAt": "2026-02-21T15:20:04.809Z",
+  "storyId": "S009",
+  "runAt": "2026-02-22T15:14:20Z",
+  "source": "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/playwright-s009.log",
   "statesSeen": {
     "empty": true,
     "loading": true,
     "error": true,
     "success": true
   },
-  "traces": [
-    {
-      "scenario": "invalid-input",
-      "finalState": "error",
-      "reasonCode": "INVALID_OVERRIDE_INPUT",
-      "reason": "transitionValidation ou transitionInput est requis pour évaluer un override exceptionnel.",
-      "overrideRequired": "false",
-      "overrideApplied": "false",
-      "requiredActions": [
-        "—"
-      ]
-    },
-    {
-      "scenario": "missing-request",
-      "finalState": "error",
-      "reasonCode": "OVERRIDE_REQUEST_MISSING",
-      "reason": "overrideRequest est requis pour un blocage de transition éligible à override.",
-      "overrideRequired": "true",
-      "overrideApplied": "false",
-      "requiredActions": [
-        "CAPTURE_JUSTIFICATION",
-        "CAPTURE_APPROVER"
-      ]
-    },
-    {
-      "scenario": "approver-conflict",
-      "finalState": "error",
-      "reasonCode": "OVERRIDE_APPROVER_CONFLICT",
-      "reason": "overrideRequest.approver doit être distinct du demandeur lorsque requireDistinctApprover=true.",
-      "overrideRequired": "true",
-      "overrideApplied": "false",
-      "requiredActions": [
-        "CAPTURE_APPROVER"
-      ]
-    },
-    {
-      "scenario": "approved-override",
-      "finalState": "success",
-      "reasonCode": "OK",
-      "reason": "Override exceptionnel approuvé pour le blocage PHASE_NOTIFICATION_MISSING.",
-      "overrideRequired": "true",
-      "overrideApplied": "true",
-      "requiredActions": [
-        "REVALIDATE_TRANSITION",
-        "RECORD_OVERRIDE_AUDIT"
-      ]
-    },
-    {
-      "scenario": "nominal",
-      "finalState": "success",
-      "reasonCode": "OK",
-      "reason": "Transition autorisée H04 -> H05.",
-      "overrideRequired": "false",
-      "overrideApplied": "false",
-      "requiredActions": [
-        "—"
-      ]
-    }
+  "scenariosValidated": [
+    "phase transition override: invalid-input, missing-request, approver-conflict, approved-override, nominal",
+    "phase dependency matrix: invalid-input, transition-blocked, prerequisites-incomplete, override-required, override-applied, stale, nominal"
   ],
-  "pass": true
+  "result": "PASS"
 }

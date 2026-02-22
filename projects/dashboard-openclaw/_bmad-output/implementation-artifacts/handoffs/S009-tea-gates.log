@@ -1,0 +1,175 @@
+[S009] TEA technical gates replay
+START_UTC=2026-02-22T15:16:10Z
+WORKDIR=/root/.openclaw/workspace/projects/dashboard-openclaw/app
+
+▶ lint
+
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
+
+✅ Lint OK
+
+▶ typecheck
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
+✅ Typecheck (syntax) OK
+
+▶ tests:s009-focused (unit+edge)
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/edge/phase-transition-override.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-dependency-matrix.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-dependency-matrix.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-override.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m52 passed[39m[22m[90m (52)[39m
+[2m   Start at [22m 15:16:12
+[2m   Duration [22m 427ms[2m (transform 338ms, setup 0ms, import 491ms, tests 62ms, environment 1ms)[22m
+
+
+▶ tests:s009-focused (e2e)
+
+Running 4 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/phase-dependency-matrix.spec.js:545:1 › phase dependency matrix demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  1 [chromium] › tests/e2e/phase-dependency-matrix.spec.js:437:1 › phase dependency matrix demo covers empty/loading/error/success with explicit reason, owner, blockers and corrective actions (3.6s)
+  ✓  3 [chromium] › tests/e2e/phase-transition-override.spec.js:278:1 › phase transition override demo covers empty/loading/error/success with reason and override states (2.5s)
+  ✓  4 [chromium] › tests/e2e/phase-transition-override.spec.js:364:1 › phase transition override demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+
+  4 passed (6.8s)
+
+▶ tests:non-regression (unit+edge all)
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/unit/artifact-fulltext-search.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-section-extractor.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 75[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-table-indexer.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 109[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-fulltext-search.edge.test.js [2m([22m[2m25 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-table-indexer.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-context-filter.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-metadata-validator.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m21 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-section-extractor.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-context-filter.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-dependency-matrix.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-ingestion-pipeline.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-ingestion-pipeline.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-state-projection.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-history.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-progression-alert.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-guards-orchestrator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-progression-alert.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-metadata-validator.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-override.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m22 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-dependency-matrix.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-override.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-sla-alert.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-prerequisites-validator.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-validator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/core.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m32 passed[39m[22m[90m (32)[39m
+[2m      Tests [22m [1m[32m425 passed[39m[22m[90m (425)[39m
+[2m   Start at [22m 15:16:22
+[2m   Duration [22m 2.36s[2m (transform 577ms, setup 0ms, import 1.89s, tests 785ms, environment 5ms)[22m
+
+
+▶ coverage
+
+> bmad-total-app@0.1.0 test:coverage
+> vitest run --coverage
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/unit/artifact-section-extractor.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 74[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-fulltext-search.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 92[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-table-indexer.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 107[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-fulltext-search.edge.test.js [2m([22m[2m25 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-metadata-validator.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-context-filter.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m21 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-section-extractor.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-table-indexer.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-metadata-validator.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-context-filter.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-state-projection.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-dependency-matrix.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-ingestion-pipeline.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-guards-orchestrator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-progression-alert.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-override.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-override.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-ingestion-pipeline.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-dependency-matrix.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-history.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m22 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-sla-alert.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-progression-alert.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-validator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-prerequisites-validator.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/core.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m32 passed[39m[22m[90m (32)[39m
+[2m      Tests [22m [1m[32m425 passed[39m[22m[90m (425)[39m
+[2m   Start at [22m 15:16:24
+[2m   Duration [22m 3.08s[2m (transform 716ms, setup 0ms, import 2.05s, tests 845ms, environment 5ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.36 |    97.85 |     100 |   99.34 |                   
+ ...text-filter.js |   99.63 |    98.29 |     100 |   99.62 | 471               
+ ...text-search.js |   98.97 |    98.57 |     100 |   98.92 | 363,369,375,381   
+ ...on-pipeline.js |     100 |      100 |     100 |     100 |                   
+ ...a-validator.js |   98.51 |    95.21 |     100 |   98.45 | ...,706,1000,1004 
+ ...n-extractor.js |    99.3 |    97.92 |     100 |   99.26 | 95,602            
+ ...ble-indexer.js |   99.13 |    96.99 |     100 |   99.09 | 632,647-648       
+ core.js           |     100 |      100 |     100 |     100 |                   
+ index.js          |       0 |        0 |       0 |       0 |                   
+ ...ency-matrix.js |   99.64 |    99.23 |     100 |   99.63 | 106               
+ ...rchestrator.js |     100 |      100 |     100 |     100 |                   
+ ...s-validator.js |    98.8 |    97.59 |     100 |   98.79 | 48                
+ ...ssion-alert.js |    99.6 |    95.96 |     100 |    99.6 | 98                
+ ...e-sla-alert.js |     100 |    97.05 |     100 |     100 | 57,63,106,366     
+ ...-projection.js |   99.32 |    97.91 |     100 |   99.32 | 245               
+ ...ion-history.js |     100 |    97.53 |     100 |     100 | 81,166,330,359    
+ ...on-override.js |   99.25 |    98.57 |     100 |   99.24 | 96                
+ ...n-validator.js |   97.36 |    95.34 |     100 |   97.36 | 16                
+-------------------|---------|----------|---------|---------|-------------------
+
+▶ build
+
+> bmad-total-app@0.1.0 build
+> node ./scripts/build.mjs
+
+✅ Build OK
+
+▶ security
+
+> bmad-total-app@0.1.0 security:deps
+> npm audit --audit-level=high
+
+found 0 vulnerabilities
+
+END_UTC=2026-02-22T15:16:28Z
+STATUS=PASS
+ALL_STEPS_OK
