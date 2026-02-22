@@ -5,7 +5,7 @@
 | S001 | E01 | Machine d’état canonique H01→H23 | DONE |
 | S002 | E01 | Validateur de transitions autorisées | DONE |
 | S003 | E01 | SLA de notification de phase et blocage | DONE |
-| S004 | E01 | Capture owner/horodatage/statut de phase | TODO |
+| S004 | E01 | Capture owner/horodatage/statut de phase | DONE |
 | S005 | E01 | Checklist prérequis avant activation de phase | TODO |
 | S006 | E01 | Orchestration sequence-guard depuis le cockpit | TODO |
 | S007 | E01 | Orchestration ultra-quality-check depuis le cockpit | TODO |

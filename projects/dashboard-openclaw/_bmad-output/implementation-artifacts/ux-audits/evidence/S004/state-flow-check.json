@@ -1,0 +1,55 @@
+{
+  "storyId": "S004",
+  "runAt": "2026-02-22T12:44:28.991Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "missing-notification",
+      "finalState": "error",
+      "expectedState": "error",
+      "owner": "Mina",
+      "status": "blocked",
+      "duration": "null",
+      "activationAllowed": "false",
+      "requiredCount": "2",
+      "satisfiedCount": "2",
+      "missingPrerequisiteIds": "[]",
+      "reason": "PHASE_NOTIFICATION_MISSING — Notification de phase manquante ou invalide: notificationPublishedAt requis pour fromPhase=H02, toPhase=H03.",
+      "pass": true
+    },
+    {
+      "scenario": "incomplete-prerequisites",
+      "finalState": "error",
+      "expectedState": "error",
+      "owner": "Mina",
+      "status": "blocked",
+      "duration": "null",
+      "activationAllowed": "false",
+      "requiredCount": "2",
+      "satisfiedCount": "1",
+      "missingPrerequisiteIds": "PR-002",
+      "reason": "PHASE_PREREQUISITES_INCOMPLETE — Prérequis requis incomplets: PR-002.",
+      "pass": true
+    },
+    {
+      "scenario": "done-ready",
+      "finalState": "success",
+      "expectedState": "success",
+      "owner": "Alex",
+      "status": "done",
+      "duration": "600000",
+      "activationAllowed": "true",
+      "requiredCount": "2",
+      "satisfiedCount": "2",
+      "missingPrerequisiteIds": "[]",
+      "reason": "—",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

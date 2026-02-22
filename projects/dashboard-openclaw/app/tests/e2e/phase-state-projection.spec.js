@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { validatePhasePrerequisites } from '../../src/phase-prerequisites-validator.js';
 import { buildPhaseStateProjection } from '../../src/phase-state-projection.js';
 import { validatePhaseTransition } from '../../src/phase-transition-validator.js';
 
@@ -24,7 +25,7 @@ const demoPageHtml = `
       }
 
       main {
-        width: min(100%, 48rem);
+        width: min(100%, 52rem);
       }
 
       section,
@@ -32,6 +33,23 @@ const demoPageHtml = `
       #error-message {
         width: 100%;
         max-width: 100%;
+      }
+
+      dl {
+        margin: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.5rem;
+      }
+
+      dt {
+        font-weight: 600;
+      }
+
+      dd {
+        margin: 0;
+        overflow-wrap: anywhere;
+        word-break: break-word;
       }
 
       #success-json {
@@ -53,8 +71,8 @@ const demoPageHtml = `
       <label for="scenario">Scénario</label>
       <select id="scenario" name="scenario">
         <option value="missing-notification">Blocage notification manquante</option>
-        <option value="invalid-timestamps">Blocage horodatages invalides</option>
-        <option value="done">Phase terminée</option>
+        <option value="incomplete-prerequisites">Blocage prérequis incomplets</option>
+        <option value="done-ready">Phase terminée + activation autorisée</option>
       </select>
 
       <button id="project-action" type="button">Projeter état</button>
@@ -73,6 +91,10 @@ const demoPageHtml = `
           <div><dt>finished_at</dt><dd id="finished-value">—</dd></div>
           <div><dt>status</dt><dd id="status-value">—</dd></div>
           <div><dt>duration_ms</dt><dd id="duration-value">—</dd></div>
+          <div><dt>activationAllowed</dt><dd id="activation-value">—</dd></div>
+          <div><dt>requiredCount</dt><dd id="required-value">—</dd></div>
+          <div><dt>satisfiedCount</dt><dd id="satisfied-value">—</dd></div>
+          <div><dt>missingPrerequisiteIds</dt><dd id="missing-value">—</dd></div>
           <div><dt>blocking_reason</dt><dd id="reason-value">—</dd></div>
         </dl>
       </section>
@@ -92,6 +114,10 @@ const demoPageHtml = `
       const finishedValue = document.getElementById('finished-value');
       const statusValue = document.getElementById('status-value');
       const durationValue = document.getElementById('duration-value');
+      const activationValue = document.getElementById('activation-value');
+      const requiredValue = document.getElementById('required-value');
+      const satisfiedValue = document.getElementById('satisfied-value');
+      const missingValue = document.getElementById('missing-value');
       const reasonValue = document.getElementById('reason-value');
 
       const setState = (state) => {
@@ -105,6 +131,18 @@ const demoPageHtml = `
         finishedValue.textContent = projection.finished_at || 'null';
         statusValue.textContent = projection.status;
         durationValue.textContent = projection.duration_ms === null ? 'null' : String(projection.duration_ms);
+        activationValue.textContent = String(projection.activationAllowed);
+
+        const requiredCount = projection.prerequisites?.requiredCount;
+        const satisfiedCount = projection.prerequisites?.satisfiedCount;
+        const missingIds = Array.isArray(projection.prerequisites?.missingPrerequisiteIds)
+          ? projection.prerequisites.missingPrerequisiteIds
+          : [];
+
+        requiredValue.textContent = String(requiredCount ?? 0);
+        satisfiedValue.textContent = String(satisfiedCount ?? 0);
+        missingValue.textContent = missingIds.length > 0 ? missingIds.join(', ') : '[]';
+
         reasonValue.textContent = projection.blockingReasonCode
           ? projection.blockingReasonCode + ' — ' + projection.blockingReason
           : '—';
@@ -112,31 +150,60 @@ const demoPageHtml = `
 
       const buildPayload = async (scenario) => {
         const now = Date.now();
+        const nowIso = new Date(now).toISOString();
 
-        if (scenario === 'done') {
+        if (scenario === 'done-ready') {
           return {
             phaseId: 'H02',
             owner: 'Alex',
             startedAt: new Date(now - 10 * 60 * 1000).toISOString(),
-            finishedAt: new Date(now).toISOString(),
-            nowAt: new Date(now).toISOString()
+            finishedAt: nowIso,
+            nowAt: nowIso,
+            prerequisitesInput: {
+              fromPhase: 'H02',
+              toPhase: 'H03',
+              transitionValidation: {
+                allowed: true,
+                reasonCode: 'OK',
+                reason: 'Transition autorisée.'
+              },
+              prerequisites: [
+                { id: 'PR-001', required: true, status: 'done' },
+                { id: 'PR-002', required: true, status: 'done' }
+              ]
+            }
           };
         }
 
-        if (scenario === 'invalid-timestamps') {
+        if (scenario === 'incomplete-prerequisites') {
+          const prerequisiteValidation = await window.validatePhasePrerequisitesRuntime({
+            fromPhase: 'H02',
+            toPhase: 'H03',
+            transitionValidation: {
+              allowed: true,
+              reasonCode: 'OK',
+              reason: 'Transition autorisée.'
+            },
+            prerequisites: [
+              { id: 'PR-001', required: true, status: 'done' },
+              { id: 'PR-002', required: true, status: 'pending' }
+            ]
+          });
+
           return {
-            phaseId: 'H03',
-            owner: 'Iris',
-            startedAt: new Date(now).toISOString(),
-            finishedAt: new Date(now - 1_000).toISOString(),
-            nowAt: new Date(now).toISOString()
+            phaseId: 'H02',
+            owner: 'Mina',
+            startedAt: null,
+            finishedAt: null,
+            nowAt: nowIso,
+            prerequisiteValidation
           };
         }
 
         const transitionValidation = await window.validatePhaseTransitionRuntime({
           fromPhase: 'H02',
           toPhase: 'H03',
-          transitionRequestedAt: new Date(now).toISOString(),
+          transitionRequestedAt: nowIso,
           notificationPublishedAt: null,
           notificationSlaMinutes: 10
         });
@@ -146,8 +213,18 @@ const demoPageHtml = `
           owner: 'Mina',
           startedAt: null,
           finishedAt: null,
-          nowAt: new Date(now).toISOString(),
-          transitionValidation
+          nowAt: nowIso,
+          transitionValidation,
+          prerequisiteValidation: {
+            allowed: true,
+            reasonCode: 'OK',
+            reason: 'Prérequis validés.',
+            diagnostics: {
+              requiredCount: 2,
+              satisfiedCount: 2,
+              missingPrerequisiteIds: []
+            }
+          }
         };
       };
 
@@ -205,6 +282,7 @@ const responsiveViewports = [
 async function bootstrapDemoPage(page) {
   await page.exposeFunction('buildPhaseStateProjectionRuntime', buildPhaseStateProjection);
   await page.exposeFunction('validatePhaseTransitionRuntime', validatePhaseTransition);
+  await page.exposeFunction('validatePhasePrerequisitesRuntime', validatePhasePrerequisites);
   await page.goto(`data:text/html,${encodeURIComponent(demoPageHtml)}`);
 }
 
@@ -213,7 +291,7 @@ async function projectDoneState(page) {
   const action = page.getByRole('button', { name: 'Projeter état' });
   const stateIndicator = page.getByRole('status', { name: 'État projection phase' });
 
-  await scenario.selectOption('done');
+  await scenario.selectOption('done-ready');
   await action.click();
 
   await expect(stateIndicator).toHaveAttribute('data-state', 'loading');
@@ -221,7 +299,7 @@ async function projectDoneState(page) {
   await expect(page.locator('#success-json')).toBeVisible();
 }
 
-test('phase state projection demo covers empty/loading/error/success with required phase fields', async ({
+test('phase state projection demo covers empty/loading/error/success with FR-004/FR-005 fields', async ({
   page
 }) => {
   await bootstrapDemoPage(page);
@@ -237,6 +315,10 @@ test('phase state projection demo covers empty/loading/error/success with requir
   const finishedValue = page.locator('#finished-value');
   const statusValue = page.locator('#status-value');
   const durationValue = page.locator('#duration-value');
+  const activationValue = page.locator('#activation-value');
+  const requiredValue = page.locator('#required-value');
+  const satisfiedValue = page.locator('#satisfied-value');
+  const missingValue = page.locator('#missing-value');
   const reasonValue = page.locator('#reason-value');
 
   await expect(stateIndicator).toHaveAttribute('data-state', 'empty');
@@ -253,18 +335,24 @@ test('phase state projection demo covers empty/loading/error/success with requir
   await expect(startedValue).toHaveText('null');
   await expect(finishedValue).toHaveText('null');
   await expect(durationValue).toHaveText('null');
+  await expect(activationValue).toHaveText('false');
   await expect(reasonValue).toContainText('PHASE_NOTIFICATION_MISSING');
+  await expect(reasonValue).toContainText('notificationPublishedAt');
 
-  await scenario.selectOption('invalid-timestamps');
+  await scenario.selectOption('incomplete-prerequisites');
   await action.click();
 
   await expect(stateIndicator).toHaveAttribute('data-state', 'loading');
   await expect(errorMessage).toBeVisible();
   await expect(stateIndicator).toHaveAttribute('data-state', 'error');
   await expect(statusValue).toHaveText('blocked');
-  await expect(reasonValue).toContainText('INVALID_PHASE_TIMESTAMPS');
+  await expect(activationValue).toHaveText('false');
+  await expect(reasonValue).toContainText('PHASE_PREREQUISITES_INCOMPLETE');
+  await expect(requiredValue).toHaveText('2');
+  await expect(satisfiedValue).toHaveText('1');
+  await expect(missingValue).toContainText('PR-002');
 
-  await scenario.selectOption('done');
+  await scenario.selectOption('done-ready');
   await action.click();
 
   await expect(stateIndicator).toHaveAttribute('data-state', 'loading');
@@ -275,9 +363,13 @@ test('phase state projection demo covers empty/loading/error/success with requir
   await expect(startedValue).not.toHaveText('null');
   await expect(finishedValue).not.toHaveText('null');
   await expect(durationValue).toHaveText('600000');
+  await expect(activationValue).toHaveText('true');
+  await expect(requiredValue).toHaveText('2');
+  await expect(satisfiedValue).toHaveText('2');
+  await expect(missingValue).toHaveText('[]');
   await expect(reasonValue).toHaveText('—');
   await expect(successJson).toContainText('"status":"done"');
-  await expect(successJson).toContainText('"owner":"Alex"');
+  await expect(successJson).toContainText('"activationAllowed":true');
   await expect(errorMessage).toBeHidden();
   await expect(action).toBeEnabled();
 });
