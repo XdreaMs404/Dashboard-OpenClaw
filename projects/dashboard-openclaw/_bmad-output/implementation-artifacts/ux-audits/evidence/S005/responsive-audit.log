@@ -1,2 +1,5 @@
-responsive-all-pass=true
-state-flow-pass=true
+[S005] Responsive UX audit 2026-02-22T13:07:56.374Z
+- mobile: pass=true overflow.max=0 state=success reasonCode=OK
+- tablet: pass=true overflow.max=0 state=success reasonCode=OK
+- desktop: pass=true overflow.max=0 state=success reasonCode=OK
+allPass=true

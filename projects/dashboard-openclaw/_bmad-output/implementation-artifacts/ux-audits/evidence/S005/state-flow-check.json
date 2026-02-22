@@ -1,6 +1,6 @@
 {
-  "storyId": "S004",
-  "runAt": "2026-02-21T11:47:06.800Z",
+  "storyId": "S005",
+  "runAt": "2026-02-22T13:07:55.346Z",
   "statesSeen": {
     "empty": true,
     "loading": true,
@@ -11,38 +11,50 @@
     {
       "scenario": "transition-blocked",
       "finalState": "error",
+      "expectedState": "error",
       "reasonCode": "TRANSITION_NOT_ALLOWED",
+      "expectedReasonCode": "TRANSITION_NOT_ALLOWED",
       "reason": "Transition non autorisée: fromPhase=H03, toPhase=H05, expectedToPhase=H04.",
-      "missingList": [
+      "missingPrerequisiteIds": [
         "—"
-      ]
+      ],
+      "pass": true
     },
     {
       "scenario": "missing-prerequisites",
       "finalState": "error",
+      "expectedState": "error",
       "reasonCode": "PHASE_PREREQUISITES_MISSING",
+      "expectedReasonCode": "PHASE_PREREQUISITES_MISSING",
       "reason": "Checklist de prérequis absente, vide ou invalide (tableau requis).",
-      "missingList": [
+      "missingPrerequisiteIds": [
         "—"
-      ]
+      ],
+      "pass": true
     },
     {
       "scenario": "incomplete-prerequisites",
       "finalState": "error",
+      "expectedState": "error",
       "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
+      "expectedReasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
       "reason": "Prérequis requis incomplets: PR-002.",
-      "missingList": [
+      "missingPrerequisiteIds": [
         "PR-002"
-      ]
+      ],
+      "pass": true
     },
     {
       "scenario": "success",
       "finalState": "success",
+      "expectedState": "success",
       "reasonCode": "OK",
+      "expectedReasonCode": "OK",
       "reason": "Prérequis validés pour transition H03 -> H04.",
-      "missingList": [
+      "missingPrerequisiteIds": [
         "—"
-      ]
+      ],
+      "pass": true
     }
   ],
   "pass": true
