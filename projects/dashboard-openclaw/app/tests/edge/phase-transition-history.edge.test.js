@@ -492,6 +492,88 @@ describe('phase-transition-history edge cases', () => {
     });
   });
 
+  it('fails closed and records blocked trace when overrideAttempt payload is non-object', () => {
+    const result = recordPhaseTransitionHistory(
+      {
+        fromPhase: 'H03',
+        toPhase: 'H04',
+        guardResult: guardOk('OK', 'override invalid shape'),
+        overrideAttempt: 'invalid-shape',
+        history: []
+      },
+      {
+        nowProvider: () => '2026-02-21T23:30:00.000Z'
+      }
+    );
+
+    expect(result).toMatchObject({
+      allowed: false,
+      reasonCode: 'TRANSITION_NOT_ALLOWED',
+      diagnostics: {
+        blockedByGuard: true,
+        totalCount: 1,
+        returnedCount: 1
+      }
+    });
+
+    expect(result.entry).toMatchObject({
+      guardDiagnostics: {
+        overrideAttempt: {
+          requested: true,
+          justification: null,
+          approver: null,
+          missingFields: ['justification', 'approver']
+        }
+      }
+    });
+  });
+
+  it('reuses guard diagnostics overrideAttempt when payload overrideAttempt is absent', () => {
+    const result = recordPhaseTransitionHistory(
+      {
+        fromPhase: 'H03',
+        toPhase: 'H04',
+        guardResult: {
+          allowed: true,
+          reasonCode: 'OK',
+          reason: 'guard ok',
+          diagnostics: {
+            overrideAttempt: {
+              requested: true,
+              justification: '   ',
+              approver: ''
+            }
+          }
+        },
+        history: []
+      },
+      {
+        nowProvider: () => '2026-02-21T23:31:00.000Z'
+      }
+    );
+
+    expect(result).toMatchObject({
+      allowed: false,
+      reasonCode: 'TRANSITION_NOT_ALLOWED',
+      diagnostics: {
+        blockedByGuard: true,
+        totalCount: 1,
+        returnedCount: 1
+      }
+    });
+
+    expect(result.entry).toMatchObject({
+      guardDiagnostics: {
+        overrideAttempt: {
+          requested: true,
+          justification: null,
+          approver: null,
+          missingFields: ['justification', 'approver']
+        }
+      }
+    });
+  });
+
   it('covers Date/number/blank timestamps, tie-break ordering and fallback normalized entry fields', () => {
     const sameMs = Date.parse('2026-02-21T23:00:00.000Z');
 

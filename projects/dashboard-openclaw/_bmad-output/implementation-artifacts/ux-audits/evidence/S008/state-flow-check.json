@@ -1,41 +1,124 @@
 {
-  "storyId": "S006",
-  "runAt": "2026-02-21T13:56:10.659Z",
+  "storyId": "S008",
+  "runAt": "2026-02-22T14:50:26.342Z",
   "statesSeen": {
     "empty": true,
     "loading": true,
     "error": true,
     "success": true
   },
-  "traces": [
-    {
-      "scenario": "invalid-payload",
-      "finalState": "error",
-      "reasonCode": "INVALID_TRANSITION_HISTORY",
-      "reason": "history doit être un tableau pour enregistrer une transition.",
-      "historyRows": [
-        "—"
-      ]
+  "modules": {
+    "transitionHistory": {
+      "statesSeen": {
+        "empty": true,
+        "loading": true,
+        "error": true,
+        "success": true
+      },
+      "traces": [
+        {
+          "scenario": "invalid-payload",
+          "finalState": "error",
+          "reasonCode": "INVALID_TRANSITION_HISTORY",
+          "reason": "history doit être un tableau pour enregistrer une transition.",
+          "historyRows": [
+            "—"
+          ],
+          "pass": true
+        },
+        {
+          "scenario": "blocked-guard",
+          "finalState": "error",
+          "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
+          "reason": "Prérequis requis incomplets: PR-005.",
+          "historyRows": [
+            "H04 -> H05 | PHASE_PREREQUISITES_INCOMPLETE | 2026-02-21T13:49:00.000Z"
+          ],
+          "pass": true
+        },
+        {
+          "scenario": "override-abuse",
+          "finalState": "error",
+          "reasonCode": "TRANSITION_NOT_ALLOWED",
+          "reason": "Override exceptionnel refusé: justification, approver requis pour traçabilité (justification + approbateur).",
+          "historyRows": [
+            "H05 -> H06 | TRANSITION_NOT_ALLOWED | 2026-02-21T13:49:30.000Z",
+            "H04 -> H05 | OK | 2026-02-21T13:45:00.000Z"
+          ],
+          "pass": true
+        },
+        {
+          "scenario": "success",
+          "finalState": "success",
+          "reasonCode": "OK",
+          "reason": "Transition historisée avec succès.",
+          "historyRows": [
+            "H03 -> H04 | OK | 2026-02-21T13:50:00.000Z",
+            "H02 -> H03 | OK | 2026-02-21T12:00:00.000Z"
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
     },
-    {
-      "scenario": "blocked-guard",
-      "finalState": "error",
-      "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
-      "reason": "Prérequis requis incomplets: PR-005.",
-      "historyRows": [
-        "H04 -> H05 | PHASE_PREREQUISITES_INCOMPLETE | 2026-02-21T13:49:00.000Z"
-      ]
-    },
-    {
-      "scenario": "success",
-      "finalState": "success",
-      "reasonCode": "OK",
-      "reason": "Transition historisée avec succès.",
-      "historyRows": [
-        "H03 -> H04 | OK | 2026-02-21T13:50:00.000Z",
-        "H02 -> H03 | OK | 2026-02-21T12:00:00.000Z"
-      ]
+    "slaAlert": {
+      "statesSeen": {
+        "empty": true,
+        "loading": true,
+        "error": true,
+        "success": true
+      },
+      "traces": [
+        {
+          "scenario": "invalid-input",
+          "finalState": "error",
+          "reasonCode": "INVALID_SLA_ALERT_INPUT",
+          "reason": "history doit être un tableau pour évaluer la récurrence SLA.",
+          "severity": "none",
+          "correctiveActions": [
+            "—"
+          ],
+          "pass": true
+        },
+        {
+          "scenario": "sla-warning",
+          "finalState": "error",
+          "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+          "reason": "Notification hors SLA: elapsedMs=610000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+          "severity": "warning",
+          "correctiveActions": [
+            "PUBLISH_PHASE_NOTIFY",
+            "REVALIDATE_TRANSITION"
+          ],
+          "pass": true
+        },
+        {
+          "scenario": "sla-critical",
+          "finalState": "error",
+          "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+          "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+          "severity": "critical",
+          "correctiveActions": [
+            "PUBLISH_PHASE_NOTIFY",
+            "REVALIDATE_TRANSITION",
+            "ESCALATE_TO_PM"
+          ],
+          "pass": true
+        },
+        {
+          "scenario": "success",
+          "finalState": "success",
+          "reasonCode": "OK",
+          "reason": "Transition autorisée H04 -> H05.",
+          "severity": "none",
+          "correctiveActions": [
+            "—"
+          ],
+          "pass": true
+        }
+      ],
+      "pass": true
     }
-  ],
+  },
   "pass": true
 }

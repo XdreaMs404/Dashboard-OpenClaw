@@ -1,0 +1,47 @@
+{
+  "storyId": "S008",
+  "epicId": "E01",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 94,
+    "D2": 95,
+    "D3": 94,
+    "D4": 95,
+    "D5": 93,
+    "D6": 92,
+    "designExcellence": 94
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/playwright-s008.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/playwright-e2e-suite.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/vitest-s008.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-mobile.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-tablet.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-desktop.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-audit.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/ux-gate.log"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX strict S008 validé: conformité design-system/a11y/responsive confirmée sur les deux flux S008 (historique de transition + alerte SLA). Couverture explicite des états empty/loading/error/success; microcopy opérateur claire et actionnable avec reasonCode/reason/history horodaté pour le scénario override-abuse (TRANSITION_NOT_ALLOWED) et severity/correctiveActions pour SLA warning/critical. Accessibilité ciblée conforme (label explicite, role=status aria-live=polite, role=alert, panneau succès aria-live+aria-atomic, focus restitué au bouton). Responsive mobile/tablette/desktop validé sans overflow horizontal (max=0).",
+  "updatedAt": "2026-02-22T14:50:37Z"
+}

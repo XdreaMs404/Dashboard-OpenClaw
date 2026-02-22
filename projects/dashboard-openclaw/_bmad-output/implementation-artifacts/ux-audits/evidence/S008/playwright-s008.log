@@ -1,0 +1,9 @@
+
+Running 4 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/phase-sla-alert.spec.js:345:1 › phase SLA alert demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  1 [chromium] › tests/e2e/phase-sla-alert.spec.js:274:1 › phase SLA alert demo covers empty/loading/error/success with reason, severity and correctiveActions (2.4s)
+  ✓  3 [chromium] › tests/e2e/phase-transition-history.spec.js:279:1 › transition history demo covers empty/loading/error/success with reason and history rows (2.1s)
+  ✓  4 [chromium] › tests/e2e/phase-transition-history.spec.js:346:1 › transition history demo stays readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+
+  4 passed (5.7s)

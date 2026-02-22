@@ -1,1 +1,5 @@
-responsive-all-pass=true
+[S008] Responsive UX audit 2026-02-22T14:50:28.160Z
+- mobile: pass=true transition.max=0 sla.max=0
+- tablet: pass=true transition.max=0 sla.max=0
+- desktop: pass=true transition.max=0 sla.max=0
+allPass=true

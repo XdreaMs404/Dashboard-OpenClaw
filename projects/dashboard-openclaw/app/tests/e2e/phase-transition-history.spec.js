@@ -58,6 +58,7 @@ const demoPageHtml = `
       <select id="scenario" name="scenario">
         <option value="invalid-payload">Payload invalide</option>
         <option value="blocked-guard">Blocage guards</option>
+        <option value="override-abuse">Tentative override sans traçabilité</option>
         <option value="success">Nominal success</option>
       </select>
 
@@ -229,6 +230,35 @@ async function runScenario(scenario) {
     });
   }
 
+  if (scenario === 'override-abuse') {
+    return recordPhaseTransitionHistory({
+      fromPhase: 'H05',
+      toPhase: 'H06',
+      guardResult: {
+        allowed: true,
+        reasonCode: 'OK',
+        reason: 'Tentative override exceptionnel.'
+      },
+      overrideAttempt: {
+        requested: true,
+        justification: '',
+        approver: null,
+        ticketId: 'OVR-008'
+      },
+      history: [
+        {
+          fromPhase: 'H04',
+          toPhase: 'H05',
+          allowed: true,
+          reasonCode: 'OK',
+          reason: 'Historique antérieur.',
+          timestamp: '2026-02-21T13:45:00.000Z'
+        }
+      ],
+      recordedAt: '2026-02-21T13:49:30.000Z'
+    });
+  }
+
   return recordPhaseTransitionHistory({
     fromPhase: 'H03',
     toPhase: 'H04',
@@ -284,6 +314,18 @@ test('transition history demo covers empty/loading/error/success with reason and
   await expect(reasonValue).toContainText('PR-005');
   await expect(historyValue).toContainText('H04 -> H05 | PHASE_PREREQUISITES_INCOMPLETE');
   await expect(historyValue).toContainText('2026-02-21T13:49:00.000Z');
+
+  await scenario.selectOption('override-abuse');
+  await action.click();
+
+  await expect(stateIndicator).toHaveAttribute('data-state', 'loading');
+  await expect(errorMessage).toBeVisible();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('TRANSITION_NOT_ALLOWED');
+  await expect(reasonValue).toContainText('Override exceptionnel refusé');
+  await expect(reasonValue).toContainText('justification, approver');
+  await expect(historyValue).toContainText('H05 -> H06 | TRANSITION_NOT_ALLOWED');
+  await expect(historyValue).toContainText('2026-02-21T13:49:30.000Z');
 
   await scenario.selectOption('success');
   await action.click();

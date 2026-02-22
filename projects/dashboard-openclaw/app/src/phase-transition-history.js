@@ -66,6 +66,15 @@ function hasReasonText(value) {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+function normalizeOptionalText(value) {
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
 function parseTimestampMs(value) {
   if (value instanceof Date) {
     const ms = value.getTime();
@@ -279,6 +288,95 @@ function normalizeGuardResult(guardResult) {
   };
 }
 
+function resolveOverrideAttempt(payload, guardDiagnostics) {
+  const source =
+    payload.overrideAttempt !== undefined
+      ? payload.overrideAttempt
+      : isObject(guardDiagnostics)
+        ? guardDiagnostics.overrideAttempt
+        : undefined;
+
+  if (source === undefined) {
+    return {
+      provided: false,
+      requested: false,
+      valid: true,
+      trace: null
+    };
+  }
+
+  if (!isObject(source)) {
+    return {
+      provided: true,
+      requested: true,
+      valid: false,
+      trace: {
+        requested: true,
+        justification: null,
+        approver: null,
+        ticketId: null,
+        missingFields: ['justification', 'approver']
+      }
+    };
+  }
+
+  const requested = source.requested !== false;
+  const justification = normalizeOptionalText(source.justification);
+  const approver = normalizeOptionalText(source.approver);
+  const ticketId = normalizeOptionalText(source.ticketId);
+
+  const missingFields = [];
+
+  if (requested) {
+    if (justification === null) {
+      missingFields.push('justification');
+    }
+
+    if (approver === null) {
+      missingFields.push('approver');
+    }
+  }
+
+  return {
+    provided: true,
+    requested,
+    valid: missingFields.length === 0,
+    trace: {
+      requested,
+      justification,
+      approver,
+      ticketId,
+      missingFields
+    }
+  };
+}
+
+function applyOverrideAttemptPolicy(guardResult, overrideAttemptResolution) {
+  if (!overrideAttemptResolution.provided) {
+    return guardResult;
+  }
+
+  const diagnostics = isObject(guardResult.diagnostics) ? cloneValue(guardResult.diagnostics) : {};
+
+  diagnostics.overrideAttempt = cloneValue(overrideAttemptResolution.trace);
+
+  if (!overrideAttemptResolution.requested || overrideAttemptResolution.valid) {
+    return {
+      ...guardResult,
+      diagnostics
+    };
+  }
+
+  const missing = overrideAttemptResolution.trace.missingFields.join(', ');
+
+  return {
+    allowed: false,
+    reasonCode: 'TRANSITION_NOT_ALLOWED',
+    reason: `Override exceptionnel refusé: ${missing} requis pour traçabilité (justification + approbateur).`,
+    diagnostics
+  };
+}
+
 function createResult({ allowed, reasonCode, reason, diagnostics, entry, history }) {
   return {
     allowed,
@@ -359,6 +457,11 @@ export function recordPhaseTransitionHistory(input, options = {}) {
     });
   }
 
+  const effectiveGuardResult = applyOverrideAttemptPolicy(
+    guardValidation.guardResult,
+    resolveOverrideAttempt(payload, guardValidation.guardResult.diagnostics)
+  );
+
   if (!isValidPhase(fromPhase) || !isValidPhase(toPhase)) {
     const normalizedExisting = payload.history
       .map((entry, index) => normalizeHistoryEntry(entry, index))
@@ -387,11 +490,11 @@ export function recordPhaseTransitionHistory(input, options = {}) {
   const entry = {
     fromPhase,
     toPhase,
-    allowed: guardValidation.guardResult.allowed,
-    reasonCode: guardValidation.guardResult.reasonCode,
-    reason: guardValidation.guardResult.reason,
+    allowed: effectiveGuardResult.allowed,
+    reasonCode: effectiveGuardResult.reasonCode,
+    reason: effectiveGuardResult.reason,
     timestamp: toIso(entryTimestampMs),
-    guardDiagnostics: guardValidation.guardResult.diagnostics
+    guardDiagnostics: effectiveGuardResult.diagnostics
   };
 
   const withNewEntry = [
@@ -413,12 +516,12 @@ export function recordPhaseTransitionHistory(input, options = {}) {
   diagnostics.totalCount = retention.retained.length;
   diagnostics.returnedCount = consultedEntries.length;
   diagnostics.droppedCount = retention.droppedCount;
-  diagnostics.blockedByGuard = guardValidation.guardResult.allowed === false;
+  diagnostics.blockedByGuard = effectiveGuardResult.allowed === false;
 
   return createResult({
-    allowed: guardValidation.guardResult.allowed,
-    reasonCode: guardValidation.guardResult.reasonCode,
-    reason: guardValidation.guardResult.reason,
+    allowed: effectiveGuardResult.allowed,
+    reasonCode: effectiveGuardResult.reasonCode,
+    reason: effectiveGuardResult.reason,
     diagnostics,
     entry,
     history: consultedEntries

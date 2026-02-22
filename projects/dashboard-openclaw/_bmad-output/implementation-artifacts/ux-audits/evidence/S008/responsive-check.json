@@ -1,6 +1,6 @@
 {
-  "storyId": "S006",
-  "runAt": "2026-02-21T13:57:17.152Z",
+  "storyId": "S008",
+  "runAt": "2026-02-22T14:50:28.160Z",
   "checks": [
     {
       "viewport": {
@@ -8,31 +8,43 @@
         "width": 390,
         "height": 844
       },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-mobile.png",
-      "state": "success",
-      "reasonCode": "OK",
-      "reason": "Transition historisée avec succès.",
-      "scenarioValue": "success",
-      "ariaLiveStatus": "polite",
-      "ariaLiveSuccess": "polite",
-      "ariaAtomicSuccess": "true",
-      "hasAlertRole": true,
-      "focusReturnedToAction": true,
-      "scenarioHasLabel": true,
-      "headingOrderOk": true,
-      "overflow": {
-        "document": 0,
-        "body": 0,
-        "reason": 0,
-        "error": 0,
-        "history": 0,
-        "success": 0,
-        "max": 0
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-mobile.png",
+      "transition": {
+        "state": "error",
+        "reasonCode": "TRANSITION_NOT_ALLOWED",
+        "reason": "Override exceptionnel refusé: justification, approver requis pour traçabilité (justification + approbateur).",
+        "overflow": {
+          "document": 0,
+          "body": 0,
+          "reason": 0,
+          "error": 0,
+          "history": 0,
+          "success": 0,
+          "max": 0
+        },
+        "pass": true
       },
-      "contrast": {
-        "bodyText": 21,
-        "heading": 21,
-        "successPanel": 20.07
+      "sla": {
+        "state": "error",
+        "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+        "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+        "severity": "critical",
+        "correctiveActions": [
+          "PUBLISH_PHASE_NOTIFY",
+          "REVALIDATE_TRANSITION",
+          "ESCALATE_TO_PM"
+        ],
+        "overflow": {
+          "document": 0,
+          "body": 0,
+          "reason": 0,
+          "severity": 0,
+          "actions": 0,
+          "error": 0,
+          "success": 0,
+          "max": 0
+        },
+        "pass": true
       },
       "pass": true
     },
@@ -42,31 +54,43 @@
         "width": 820,
         "height": 1180
       },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-tablet.png",
-      "state": "success",
-      "reasonCode": "OK",
-      "reason": "Transition historisée avec succès.",
-      "scenarioValue": "success",
-      "ariaLiveStatus": "polite",
-      "ariaLiveSuccess": "polite",
-      "ariaAtomicSuccess": "true",
-      "hasAlertRole": true,
-      "focusReturnedToAction": true,
-      "scenarioHasLabel": true,
-      "headingOrderOk": true,
-      "overflow": {
-        "document": 0,
-        "body": 0,
-        "reason": 0,
-        "error": 0,
-        "history": 0,
-        "success": 0,
-        "max": 0
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-tablet.png",
+      "transition": {
+        "state": "error",
+        "reasonCode": "TRANSITION_NOT_ALLOWED",
+        "reason": "Override exceptionnel refusé: justification, approver requis pour traçabilité (justification + approbateur).",
+        "overflow": {
+          "document": 0,
+          "body": 0,
+          "reason": 0,
+          "error": 0,
+          "history": 0,
+          "success": 0,
+          "max": 0
+        },
+        "pass": true
       },
-      "contrast": {
-        "bodyText": 21,
-        "heading": 21,
-        "successPanel": 20.07
+      "sla": {
+        "state": "error",
+        "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+        "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+        "severity": "critical",
+        "correctiveActions": [
+          "PUBLISH_PHASE_NOTIFY",
+          "REVALIDATE_TRANSITION",
+          "ESCALATE_TO_PM"
+        ],
+        "overflow": {
+          "document": 0,
+          "body": 0,
+          "reason": 0,
+          "severity": 0,
+          "actions": 0,
+          "error": 0,
+          "success": 0,
+          "max": 0
+        },
+        "pass": true
       },
       "pass": true
     },
@@ -76,31 +100,43 @@
         "width": 1366,
         "height": 768
       },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-desktop.png",
-      "state": "success",
-      "reasonCode": "OK",
-      "reason": "Transition historisée avec succès.",
-      "scenarioValue": "success",
-      "ariaLiveStatus": "polite",
-      "ariaLiveSuccess": "polite",
-      "ariaAtomicSuccess": "true",
-      "hasAlertRole": true,
-      "focusReturnedToAction": true,
-      "scenarioHasLabel": true,
-      "headingOrderOk": true,
-      "overflow": {
-        "document": 0,
-        "body": 0,
-        "reason": 0,
-        "error": 0,
-        "history": 0,
-        "success": 0,
-        "max": 0
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-desktop.png",
+      "transition": {
+        "state": "error",
+        "reasonCode": "TRANSITION_NOT_ALLOWED",
+        "reason": "Override exceptionnel refusé: justification, approver requis pour traçabilité (justification + approbateur).",
+        "overflow": {
+          "document": 0,
+          "body": 0,
+          "reason": 0,
+          "error": 0,
+          "history": 0,
+          "success": 0,
+          "max": 0
+        },
+        "pass": true
       },
-      "contrast": {
-        "bodyText": 21,
-        "heading": 21,
-        "successPanel": 20.07
+      "sla": {
+        "state": "error",
+        "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+        "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
+        "severity": "critical",
+        "correctiveActions": [
+          "PUBLISH_PHASE_NOTIFY",
+          "REVALIDATE_TRANSITION",
+          "ESCALATE_TO_PM"
+        ],
+        "overflow": {
+          "document": 0,
+          "body": 0,
+          "reason": 0,
+          "severity": 0,
+          "actions": 0,
+          "error": 0,
+          "success": 0,
+          "max": 0
+        },
+        "pass": true
       },
       "pass": true
     }

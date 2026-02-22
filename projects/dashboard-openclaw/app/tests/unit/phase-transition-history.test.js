@@ -405,6 +405,101 @@ describe('phase-transition-history unit', () => {
     expect(withDefaultLimit.history).toHaveLength(1);
   });
 
+  it('blocks override abuse without justification/approver and keeps trace in history', () => {
+    const result = recordPhaseTransitionHistory(
+      {
+        fromPhase: 'H05',
+        toPhase: 'H06',
+        guardResult: makeGuardOk('Override demandé'),
+        overrideAttempt: {
+          requested: true,
+          justification: '   ',
+          approver: null,
+          ticketId: 'OVR-001'
+        },
+        history: []
+      },
+      {
+        nowProvider: () => '2026-02-21T13:55:00.000Z'
+      }
+    );
+
+    expect(result).toMatchObject({
+      allowed: false,
+      reasonCode: 'TRANSITION_NOT_ALLOWED',
+      diagnostics: {
+        blockedByGuard: true,
+        totalCount: 1,
+        returnedCount: 1
+      }
+    });
+
+    expect(result.reason).toContain('Override exceptionnel refusé');
+    expect(result.reason).toContain('justification, approver');
+
+    expect(result.entry).toMatchObject({
+      reasonCode: 'TRANSITION_NOT_ALLOWED',
+      guardDiagnostics: {
+        overrideAttempt: {
+          requested: true,
+          justification: null,
+          approver: null,
+          ticketId: 'OVR-001',
+          missingFields: ['justification', 'approver']
+        }
+      }
+    });
+
+    expect(result.history[0]).toMatchObject({
+      fromPhase: 'H05',
+      toPhase: 'H06',
+      reasonCode: 'TRANSITION_NOT_ALLOWED'
+    });
+  });
+
+  it('allows traceable override attempt when justification and approver are provided', () => {
+    const result = recordPhaseTransitionHistory(
+      {
+        fromPhase: 'H05',
+        toPhase: 'H06',
+        guardResult: makeGuardOk('Override exceptionnel approuvé.'),
+        overrideAttempt: {
+          requested: true,
+          justification: 'Incident prod critique',
+          approver: 'pm.owner',
+          ticketId: 'OVR-002'
+        },
+        history: []
+      },
+      {
+        nowProvider: () => '2026-02-21T13:56:00.000Z'
+      }
+    );
+
+    expect(result).toMatchObject({
+      allowed: true,
+      reasonCode: 'OK',
+      diagnostics: {
+        blockedByGuard: false,
+        totalCount: 1,
+        returnedCount: 1
+      }
+    });
+
+    expect(result.entry).toMatchObject({
+      reasonCode: 'OK',
+      guardDiagnostics: {
+        overrideAttempt: {
+          requested: true,
+          justification: 'Incident prod critique',
+          approver: 'pm.owner',
+          ticketId: 'OVR-002',
+          missingFields: []
+        }
+      }
+    });
+  });
+
   it('keeps stable output contract and index export', () => {
     const result = recordFromIndex({
       fromPhase: 'H03',
