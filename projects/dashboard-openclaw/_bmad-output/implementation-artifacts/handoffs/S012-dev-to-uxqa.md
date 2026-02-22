@@ -4,7 +4,7 @@
 - ID: S012
 - Epic: E02
 - Phase cible: H14 (UX QA Audit)
-- Date (UTC): 2026-02-21T23:12:40Z
+- Date (UTC): 2026-02-22T09:38:19Z
 - Statut DEV: READY_FOR_UX_AUDIT
 
 ## Scope implémenté (strict S012)
@@ -22,7 +22,7 @@
 - Affichage explicite de:
   - `reasonCode`
   - `reason`
-  - compteurs `requested/compliant/nonCompliant`
+  - compteurs de conformité (`requestedCount`, `compliantCount`, `nonCompliantCount`)
   - `correctiveActions`
 - Cas UI couverts:
   - source absente (`INVALID_METADATA_VALIDATION_INPUT`),
@@ -35,24 +35,24 @@
 - Vérification responsive e2e: absence d’overflow horizontal mobile/tablette/desktop.
 
 ## Gates DEV exécutés (preuves)
-Commande complète exécutée depuis `app/`:
+Commande complète exécutée depuis `app/` (UTC 2026-02-22T09:37Z):
 - `npm run lint && npm run typecheck && npx vitest run tests/unit tests/edge && npx playwright test tests/e2e && npm run test:coverage && npm run build && npm run security:deps` ✅
 
 Résultats observés:
 - `lint` ✅
 - `typecheck` ✅
-- `tests unit+edge` ✅ (**24 fichiers / 283 tests passés**)
-- `tests e2e` ✅ (**23/23 tests passés**)
+- `tests unit+edge` ✅ (**30 fichiers / 382 tests passés**)
+- `tests e2e` ✅ (**29/29 tests passés**)
 - `coverage` ✅
-  - global: **99.46% statements / 97.82% branches / 100% functions / 99.45% lines**
+  - global: **99.34% statements / 97.86% branches / 100% functions / 99.32% lines**
   - module S012 `artifact-metadata-validator.js`: **98.51% statements / 95.21% branches / 100% functions / 98.45% lines**
 - `build` ✅
 - `security` (`npm audit --audit-level=high`) ✅ (**0 vulnérabilité**)
 
 ## Points de focus demandés à UXQA
 1. Validation G4-UX complète du démonstrateur S012 (design-system, accessibilité, responsive, lisibilité).
-2. Vérifier la lisibilité des compteurs de conformité et la clarté des reason codes/actions.
-3. Vérifier la compréhension des états `empty/loading/error/success` sur workflow de validation metadata.
+2. Vérifier la clarté des diagnostics (`reasonCode`, `reason`, `correctiveActions`) sur parcours d’échec.
+3. Vérifier la compréhension des compteurs de conformité en état success.
 4. Publier verdict dans `_bmad-output/implementation-artifacts/ux-audits/S012-ux-audit.json`.
 
 ## Next handoff

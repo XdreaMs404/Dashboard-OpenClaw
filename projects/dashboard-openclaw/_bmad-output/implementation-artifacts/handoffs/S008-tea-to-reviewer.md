@@ -2,7 +2,7 @@
 
 - SID: S008
 - Epic: E01
-- Date (UTC): 2026-02-21T15:21:49Z
+- Date (UTC): 2026-02-21T13:59:21Z
 - Scope: STRICT (S008 uniquement)
 - Verdict H17: **PASS (GO_REVIEWER)**
 
@@ -21,15 +21,15 @@
 - Technique (G4-T):
   - `lint` ✅
   - `typecheck` ✅
-  - `test` (unit/intégration): **16 fichiers / 170 tests passés** ✅
-  - `test:e2e`: **15/15 tests passés** ✅
-  - `test:edge`: **8 fichiers / 106 tests passés** ✅
-  - `test:coverage`: **99.56% lines / 98.09% branches / 100% functions / 99.56% statements** ✅
+  - `test` (unit/intégration): **12 fichiers / 122 tests passés** ✅
+  - `test:e2e`: **11/11 tests passés** ✅
+  - `test:edge`: **6 fichiers / 74 tests passés** ✅
+  - `test:coverage`: **99.51% lines / 98.25% branches / 100% functions / 99.52% statements** ✅
   - `security` (`npm audit --audit-level=high`): **0 vulnérabilité** ✅
   - `build` ✅
-- Focus module S008 (`app/src/phase-transition-override.js`): **99.24% lines / 98.57% branches**.
+- Focus module S008 (`app/src/phase-transition-history.js`): **100% lines / 98.52% branches**.
 - UX (G4-UX):
-  - Story gate: `✅ UX_GATES_OK (S008) design=94 D2=95`
+  - Story gate: `✅ UX_GATES_OK (S008) design=93 D2=94`
   - Audit source: `S008-ux-audit.json` = `PASS`, WCAG 2.2 AA conforme, issues `[]`.
 
 ## Risques / écarts

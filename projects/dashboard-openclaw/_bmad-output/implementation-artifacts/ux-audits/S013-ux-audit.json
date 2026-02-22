@@ -29,9 +29,9 @@
     "success": true
   },
   "evidence": [
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S013/playwright-s013.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S013/playwright-s011.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S013/playwright-e2e-suite.log",
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S013/vitest-s013.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S013/vitest-s011.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S013/state-flow-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S013/responsive-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S013/responsive-mobile.png",
@@ -42,6 +42,6 @@
   ],
   "issues": [],
   "requiredFixes": [],
-  "notes": "Audit UX S013 validé: démonstrateur couvre explicitement empty/loading/error/success sur les scénarios critiques d’extraction H2/H3 (input absent, hors allowlist, type non supporté, metadata manquante/invalide, parse invalide, sections manquantes, nominal). Lisibilité opérateur conforme avec affichage reasonCode/reason/compteurs h2-h3-sections/correctiveActions. Accessibilité ciblée conforme (label associé au select, role=status aria-live=polite, role=alert, panneau succès aria-live+aria-atomic, focus restitué au bouton). Responsive validé mobile/tablette/desktop sans overflow horizontal (max=0) et hiérarchie H1/H2 cohérente.",
-  "updatedAt": "2026-02-22T07:43:14Z"
+  "notes": "Audit UX S013 validé: démonstrateur couvre explicitement empty/loading/error/success sur tous les reason codes critiques FR-021/FR-022, affichage opérateur lisible (reasonCode, reason, compteurs, correctiveActions) et transitions d’état robustes. Accessibilité ciblée conforme (label associé au select, role=status aria-live=polite, role=alert pour erreurs, panneau succès aria-live+aria-atomic, focus restitué au bouton après action). Responsive validé mobile/tablette/desktop avec overflow horizontal max=0 sur les zones critiques et hiérarchie visuelle H1/H2 cohérente.",
+  "updatedAt": "2026-02-21T21:13:20Z"
 }

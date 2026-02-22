@@ -18,21 +18,18 @@
 - Détails confirmés:
   - lint ✅
   - typecheck ✅
-  - tests unit/intégration ✅ (28 fichiers / 346 tests)
-  - tests e2e ✅ (27/27)
-  - tests edge ✅ (14 fichiers / 216 tests)
-  - coverage globale ✅ (statements 99.40%, branches 97.74%, functions 100%, lines 99.38%)
-  - coverage module S014 ✅ (`artifact-table-indexer.js`: statements 99.13%, branches 96.99%, functions 100%, lines 99.09%)
-  - security deps ✅ (0 vulnérabilité high+)
+  - tests unit/intégration ✅ (24 fichiers / 283 tests)
+  - tests e2e ✅ (23/23)
+  - tests edge ✅ (12 fichiers / 178 tests)
+  - coverage globale ✅ (lines 99.45%, branches 97.82%, functions 100%, statements 99.46%)
+  - coverage module S014 ✅ (`artifact-metadata-validator.js`: lines 98.45%, branches 95.21%, functions 100%, statements 98.51%)
+  - security deps ✅ (0 vulnérabilité)
   - build ✅
-- Vérifications TEA corroborées via `_bmad-output/implementation-artifacts/handoffs/S014-tech-gates.log`:
-  - marqueur `✅ S014_TECH_GATES_OK`
-  - export public S014: `typeof=function`, `referentialEqual=true`
-  - benchmark 500 docs: `requested=500`, `indexed=500`, `nonIndexed=0`, `tableCount=500`, `p95IndexMs=0`, `durationMs=47`, `conservation=true`
+- Non-régression confirmée sur le socle S001→S011.
 
 ## Validation G4-UX
 - Audit UX S014: `verdict: PASS`.
-- Scores: D1=95, D2=97, D3=95, D4=96, D5=94, D6=95, Design Excellence=95.
+- Scores: D1=95, D2=97, D3=95, D4=95, D5=94, D6=94, Design Excellence=95.
 - Checks obligatoires: design system, accessibilité AA, responsive, états d’interface, hiérarchie visuelle, performance perçue = ✅.
 - Couverture des états UI requis: `loading`, `empty`, `error`, `success` = ✅.
 - Issues / required fixes: `[]` (aucune).

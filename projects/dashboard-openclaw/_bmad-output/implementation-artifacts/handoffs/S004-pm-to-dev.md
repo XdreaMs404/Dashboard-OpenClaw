@@ -1,48 +1,58 @@
-# H13 — Handoff PM → DEV — S004 (scope strict)
+# Handoff PM → DEV — S004 (H13)
 
 ## Contexte
 - **SID**: S004
 - **Epic**: E01
 - **Story source**: `_bmad-output/implementation-artifacts/stories/S004.md`
-- **Index source**: `_bmad-output/implementation-artifacts/stories/STORIES_INDEX.md`
-- **Objectif story**: valider les prérequis obligatoires avant activation de phase (FR-005), sans contourner S002.
+- **Objectif produit**: fournir une projection d’état de phase exploitable UI avec `owner`, `started_at`, `finished_at`, `status`, `duration_ms` et motif de blocage SLA visible.
 
-## Vérification PM (entrées)
-1. `S004.md` confirme les AC S004 (AC-01 à AC-09), les tests requis (unit/edge/e2e), la couverture module >=95% (98.8% lines / 97.59% branches) et des gates techniques PASS.
-2. `STORIES_INDEX.md` liste S004 en **TODO** (à maintenir par le flux de statut global), sans impact sur le périmètre fonctionnel de ce handoff H13.
-
-## Décision PM
-Story **GO_DEV** en **scope strict S004 uniquement**.
-
-## Scope DEV autorisé (S004 uniquement)
-1. Maintenir/compléter `validatePhasePrerequisites(input)`.
-2. Propager strictement les blocages S002 (mêmes `reasonCode`/`reason` quand `allowed=false`).
-3. Garantir le contrat stable de sortie:
-   `{ allowed, reasonCode, reason, diagnostics }`.
-4. Conserver diagnostics minimum:
-   `fromPhase`, `toPhase`, `requiredCount`, `satisfiedCount`, `missingPrerequisiteIds`, `blockedByTransition`.
-5. Maintenir les tests S004 (unit + edge + e2e) et la couverture module >=95% lignes+branches.
-6. Maintenir la preuve UI des états `empty`, `loading`, `error`, `success` avec affichage explicite des motifs de blocage.
-
-## Scope interdit (hors-scope)
-- Toute évolution produit hors S004/FR-005.
-- Toute modification de logique métier S001/S002/S003 non strictement nécessaire à l’intégration S004.
-- Refactors transverses non exigés par les AC S004.
-
-## Reason codes autorisés (strict)
-`OK | INVALID_PHASE | TRANSITION_NOT_ALLOWED | PHASE_NOTIFICATION_MISSING | PHASE_NOTIFICATION_SLA_EXCEEDED | PHASE_PREREQUISITES_MISSING | PHASE_PREREQUISITES_INCOMPLETE | INVALID_PHASE_PREREQUISITES`
-
-## Fichiers cibles autorisés (S004)
-- `app/src/phase-prerequisites-validator.js`
-- `app/src/index.js` (export S004 uniquement)
-- `app/tests/unit/phase-prerequisites-validator.test.js`
-- `app/tests/edge/phase-prerequisites-validator.edge.test.js`
-- `app/tests/e2e/phase-prerequisites-validator.spec.js`
+## Entrées analysées (artefacts S004)
 - `_bmad-output/implementation-artifacts/stories/S004.md`
 - `_bmad-output/implementation-artifacts/handoffs/S004-dev-to-uxqa.md`
+- `_bmad-output/implementation-artifacts/handoffs/S004-uxqa-to-dev-tea.md`
 - `_bmad-output/implementation-artifacts/handoffs/S004-dev-to-tea.md`
+- `_bmad-output/implementation-artifacts/handoffs/S004-tea-to-reviewer.md`
+- `_bmad-output/implementation-artifacts/ux-audits/S004-ux-audit.json`
 
-## Gates à conserver verts avant sortie DEV
+## Décision PM
+Story **prête DEV** en **scope strict S004** avec priorité sur la fermeture du blocage UX (responsive overflow) tout en conservant les AC fonctionnels et la non-régression technique validée.
+
+## Scope DEV (strict S004)
+1. Maintenir/compléter `buildPhaseStateProjection(input)` et son contrat stable.
+2. Réutiliser S002 (`validatePhaseTransition`) comme source de vérité des blocages transition (pas de duplication contradictoire).
+3. Conserver les statuts autorisés `pending | running | done | blocked` + calcul `duration_ms`.
+4. Corriger le blocant UX S004: overflow horizontal sur rendu succès (démonstrateur e2e), sans dérive hors S004.
+5. Ajouter/maintenir la non-régression e2e responsive prouvant l’absence d’overflow mobile/tablette/desktop.
+
+## Contrat de sortie attendu (AC)
+- **AC-01**: phase terminée valide → `status=done`, durée exacte.
+- **AC-02**: phase en cours (`finishedAt=null`) → `status=running`, durée basée sur `nowAt` injectable.
+- **AC-03**: phase non démarrée sans blocage → `status=pending`, `duration_ms=null`.
+- **AC-04**: si S002 retourne `allowed=false` + reason code de transition/SLA → `status=blocked` + motif ré-exposé.
+- **AC-05**: timestamps invalides (`finishedAt < startedAt` ou date invalide) → `status=blocked`, `INVALID_PHASE_TIMESTAMPS`, sans crash.
+- **AC-06**: entrées invalides (`phaseId` hors H01..H23, owner vide/blanc) → `status=blocked`, `INVALID_PHASE_STATE`, sans crash.
+- **AC-07**: contrat stable toujours retourné:
+  `{ phaseId, owner, started_at, finished_at, status, duration_ms, blockingReasonCode, blockingReason, diagnostics }`.
+- **AC-08**: couverture module projection **>=95% lignes + branches**.
+
+## Contraintes non négociables
+- Scope **S004 uniquement** (aucune modification d’une autre story).
+- SLA notification par défaut conservé à **10 min** via S002.
+- Aucune mutation observable des objets d’entrée.
+- Aucune régression sur contrats S001/S002 et fonctions existantes.
+- Story non-DONE tant que **G4-T** et **G4-UX** ne sont pas tous deux PASS.
+
+## Risques & mitigations (S004)
+1. **Risque fonctionnel**: divergence avec S002 sur reason codes.
+   - **Mitigation**: déléguer à `validatePhaseTransition` / `transitionValidation` et rejouer tests edge.
+2. **Risque robustesse**: erreurs de dates/ordre temporel provoquant statuts incohérents.
+   - **Mitigation**: validation stricte dates + tests AC-05/AC-06 + diagnostics systématiques.
+3. **Risque UX bloquant (actuel)**: overflow horizontal du rendu succès (`#success-json`) sur mobile/tablette/desktop.
+   - **Mitigation**: wrapping robuste (`pre-wrap` + `overflow-wrap:anywhere` + `word-break`) ou rendu structuré des champs + assertion e2e responsive explicite.
+4. **Risque qualité**: gates techniques verts mais G4-UX échoue.
+   - **Mitigation**: fournir evidence UX mise à jour et viser verdict UX audit `PASS` avant handoff final.
+
+## Gates obligatoires avant DEV → TEA
 ```bash
 cd /root/.openclaw/workspace/projects/dashboard-openclaw/app
 npm run lint && npm run typecheck
@@ -52,6 +62,8 @@ npm run test:coverage
 npm run build && npm run security:deps
 ```
 
-## Handoff attendu après DEV
-- DEV → UXQA (H14)
-- DEV → TEA (H16)
+## Sortie attendue DEV
+- Handoffs mis à jour:
+  - `_bmad-output/implementation-artifacts/handoffs/S004-dev-to-uxqa.md`
+  - `_bmad-output/implementation-artifacts/handoffs/S004-dev-to-tea.md`
+- Evidence UX/tech S004 à jour prouvant fermeture du blocage responsive.

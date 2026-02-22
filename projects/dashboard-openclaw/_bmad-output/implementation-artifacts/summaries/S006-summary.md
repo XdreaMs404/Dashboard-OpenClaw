@@ -1,57 +1,53 @@
 # S006 — Résumé final (Tech Writer)
 
 ## Ce qui a été livré
-- Implémentation du module d’historique des transitions: `app/src/phase-transition-history.js` avec API publique `recordPhaseTransitionHistory(input, options?)`, exportée via `app/src/index.js`.
-- Enregistrement d’une entrée d’historique à chaque tentative valide de transition, y compris en cas de blocage guard, avec propagation stricte de `reasonCode`/`reason`.
-- Validation stricte des entrées (`fromPhase`, `toPhase`, `history`, `guardResult`, `query`) et rejet robuste des payloads invalides via `INVALID_TRANSITION_HISTORY`.
-- Gestion canonique des phases `H01..H23` avec refus des phases invalides via `INVALID_PHASE` (sans mutation de l’historique d’entrée).
-- Consultation filtrée implémentée (`query.fromPhase`, `query.toPhase`, `query.reasonCode`, `query.allowed`, `query.limit`) triée du plus récent au plus ancien.
-- Politique de rétention livrée: `maxEntries` défaut 200 (max 1000), suppression des entrées les plus anciennes en dépassement, `diagnostics.droppedCount` exact.
-- Contrat stable respecté:
-  `{ allowed, reasonCode, reason, diagnostics, entry, history }`.
-- Démonstrateur e2e S006 conforme (`empty`, `loading`, `error`, `success`) avec affichage explicite `reasonCode`, `reason`, et historique (transition + verdict + timestamp).
-- Couverture module S006 (`phase-transition-history.js`): **100% lignes**, **98.52% branches** (>= 95%).
+- Implémentation de l’orchestrateur des guards de phase: `app/src/phase-guards-orchestrator.js` avec API publique `orchestratePhaseGuards(input, options?)`, exportée via `app/src/index.js`.
+- Réutilisation explicite de S004 comme garde d’entrée (validation des prérequis obligatoire, sans contournement).
+- Planification stricte et ordonnée des commandes autorisées:
+  1. `bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh <phaseNumber>`
+  2. `bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh <phaseNumber>`
+- Contrôle d’exécution conforme:
+  - `simulate=true` par défaut (pas d’exécution réelle),
+  - exécution séquentielle quand `simulate=false`,
+  - arrêt immédiat au premier échec avec `reasonCode=GUARD_EXECUTION_FAILED` et `diagnostics.failedCommand`.
+- Contrat de sortie stable livré:
+  `{ allowed, reasonCode, reason, diagnostics, commands, results }`.
+- Gestion des reason codes attendus (dont `INVALID_GUARD_PHASE`, propagation stricte des blocages S004, `GUARD_EXECUTION_FAILED`).
+- Couverture tests S006 livrée:
+  - `app/tests/unit/phase-guards-orchestrator.test.js`
+  - `app/tests/edge/phase-guards-orchestrator.edge.test.js`
+  - `app/tests/e2e/phase-guards-orchestrator.spec.js`
+- Démonstrateur e2e validé sur les états `empty`, `loading`, `error`, `success`, avec affichage explicite de `reasonCode`, `reason`, `commands`, `failedCommand`, `failedResult`.
+- Couverture module S006 (`phase-guards-orchestrator.js`): **100% lignes**, **100% branches**.
 
 ## Preuves de validation
 - Revue finale H18: `_bmad-output/implementation-artifacts/reviews/S006-review.md` → **APPROVED**.
-- Rejeu reviewer confirmé:
-  - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S006`
-  - Résultat: `✅ STORY_GATES_OK (S006)`.
-- Validation G4-T confirmée:
-  - lint ✅
-  - typecheck ✅
-  - tests unit/intégration ✅ (12 fichiers / 122 tests)
-  - tests edge ✅ (6 fichiers / 74 tests)
-  - tests e2e ✅ (11/11)
-  - coverage globale ✅ (99.51% lines / 98.25% branches / 100% functions / 99.52% statements)
-  - security ✅ (0 vulnérabilité)
-  - build ✅
-- Validation G4-UX confirmée:
-  - Audit UX S006: **PASS**
-  - UX gate: `✅ UX_GATES_OK (S006) design=93 D2=94`
-  - États UI requis couverts: `loading`, `empty`, `error`, `success`.
+- Handoff TEA: `_bmad-output/implementation-artifacts/handoffs/S006-tea-to-reviewer.md` → **PASS (GO_REVIEWER)**.
+- Log story gates: `_bmad-output/implementation-artifacts/handoffs/S006-story-gates.log` → `✅ STORY_GATES_OK (S006)`.
+- Gates techniques confirmés (lint, typecheck, unit/intégration, edge, e2e, coverage, security, build) ✅.
+- Gate UX confirmé: `✅ UX_GATES_OK (S006)` avec audit UX **PASS**.
 
 ## Comment tester
-Depuis la racine projet (`/root/.openclaw/workspace/projects/dashboard-openclaw`):
+Depuis la racine du projet (`/root/.openclaw/workspace/projects/dashboard-openclaw`):
 
-1. Rejouer les gates complets de la story S006:
+1. Rejouer les gates complets story (tech + UX):
    - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S006`
 
-2. Vérifier spécifiquement le gate UX S006:
+2. Vérifier le gate UX S006:
    - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-ux-gates.sh S006`
 
 3. Vérifier le bundle technique détaillé (depuis `app/`):
    - `cd /root/.openclaw/workspace/projects/dashboard-openclaw/app`
    - `npm run lint && npm run typecheck`
-   - `npx vitest run tests/unit/phase-transition-history.test.js tests/edge/phase-transition-history.edge.test.js`
-   - `npx playwright test tests/e2e/phase-transition-history.spec.js`
+   - `npx vitest run tests/unit tests/edge`
+   - `npx playwright test tests/e2e`
    - `npm run test:coverage`
    - `npm run build && npm run security:deps`
 
 Résultats attendus:
 - `✅ STORY_GATES_OK (S006)`
 - `✅ UX_GATES_OK (S006)`
-- Couverture module S006 >= 95% lignes/branches.
+- Couverture module S006 >= 95% lignes/branches (observé: 100%/100%).
 
 ## Résultat global (GO/NO-GO)
 **GO** — S006 est validée en scope strict avec G4-T + G4-UX PASS.

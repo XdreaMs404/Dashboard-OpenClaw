@@ -3,22 +3,22 @@
 ## Story
 - ID: S009
 - Epic: E01
-- Date (UTC): 2026-02-21T15:57:37Z
+- Date (UTC): 2026-02-21T15:17:23Z
 - Statut DEV: READY_FOR_TEA
 
 ## Vérification scope strict S009
-- Implémentation limitée à FR-010 (matrice dépendances bloquantes temps réel).
-- Réutilisation S002/S003/S004/S008 respectée (injection ou délégation modules).
+- Implémentation limitée à FR-009 (override exceptionnel avec justification + approbateur nominatif).
+- Réutilisation S002 respectée (`transitionValidation` injecté ou délégation `transitionInput`).
 - Contrat stable livré:
-  `{ allowed, reasonCode, reason, diagnostics, dependencies, blockingDependencies, correctiveActions }`.
-- Aucun changement métier hors S009 sur S001..S008 (hors export S009 dans `index.js`).
+  `{ allowed, reasonCode, reason, diagnostics, override, requiredActions }`.
+- Aucun changement métier hors S009 sur S001..S007 (hors intégration export S009 dans `index.js`).
 
 ## Fichiers touchés (S009)
-- `app/src/phase-dependency-matrix.js`
+- `app/src/phase-transition-override.js`
 - `app/src/index.js` (export S009)
-- `app/tests/unit/phase-dependency-matrix.test.js`
-- `app/tests/edge/phase-dependency-matrix.edge.test.js`
-- `app/tests/e2e/phase-dependency-matrix.spec.js`
+- `app/tests/unit/phase-transition-override.test.js`
+- `app/tests/edge/phase-transition-override.edge.test.js`
+- `app/tests/e2e/phase-transition-override.spec.js`
 - `_bmad-output/implementation-artifacts/stories/S009.md`
 - `_bmad-output/implementation-artifacts/handoffs/S009-dev-to-uxqa.md`
 - `_bmad-output/implementation-artifacts/handoffs/S009-dev-to-tea.md`
@@ -31,20 +31,20 @@ Détail des résultats:
 1. `npm run lint` ✅
 2. `npm run typecheck` ✅
 3. `npx vitest run tests/unit tests/edge` ✅
-   - **18 fichiers / 198 tests passés**
+   - **16 fichiers / 170 tests passés**
 4. `npx playwright test tests/e2e` ✅
-   - **17/17 tests passés**
+   - **15/15 tests passés**
 5. `npm run test:coverage` ✅
-   - global: **99.58% statements / 98.39% branches / 100% functions / 99.58% lines**
-   - module S009 `app/src/phase-dependency-matrix.js`: **99.64% statements / 99.23% branches / 100% functions / 99.63% lines**
+   - global: **99.56% statements / 98.09% branches / 100% functions / 99.56% lines**
+   - module S009 `app/src/phase-transition-override.js`: **99.25% statements / 98.57% branches / 100% functions / 99.24% lines**
 6. `npm run build` ✅
 7. `npm run security:deps` ✅
    - `npm audit --audit-level=high`: **0 vulnérabilité**
 
 ## Traçabilité AC/tests S009
-- AC-01/02/03/04/05/06/07/08/10: `tests/unit/phase-dependency-matrix.test.js`, `tests/edge/phase-dependency-matrix.edge.test.js`
-- AC-09 (UI e2e): `tests/e2e/phase-dependency-matrix.spec.js`
-- AC-10 (coverage >=95% lignes+branches): PASS (**99.63% lines / 99.23% branches** sur S009)
+- AC-01/02/03/04/05/06/07/09: `tests/unit/phase-transition-override.test.js`, `tests/edge/phase-transition-override.edge.test.js`
+- AC-08 (UI e2e): `tests/e2e/phase-transition-override.spec.js`
+- AC-09 (coverage >=95% lignes+branches): PASS (**99.24% lines / 98.57% branches** sur S009)
 
 ## Statut qualité DEV
 - G4-T: **PASS** côté DEV.

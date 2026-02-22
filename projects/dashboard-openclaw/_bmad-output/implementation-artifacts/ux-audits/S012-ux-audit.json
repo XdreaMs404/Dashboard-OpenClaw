@@ -42,6 +42,6 @@
   ],
   "issues": [],
   "requiredFixes": [],
-  "notes": "Audit UX S012 validé: démonstrateur couvre explicitement empty/loading/error/success sur tous les reason codes critiques de validation metadata (input absent, hors allowlist, extension non supportée, metadata manquante/invalide, parse invalide, nominal). Lisibilité opérateur conforme avec affichage reasonCode/reason/compteurs requested-compliant-nonCompliant/correctiveActions. Accessibilité ciblée conforme (label associé au select, role=status aria-live=polite, role=alert pour erreurs, panneau succès aria-live+aria-atomic, focus restitué au bouton après action). Responsive validé mobile/tablette/desktop sans overflow horizontal (max=0) et hiérarchie visuelle H1/H2 cohérente.",
-  "updatedAt": "2026-02-21T23:22:37Z"
+  "notes": "Audit UX S012 PASS: conformité design-system, accessibilité WCAG 2.2 AA, responsive mobile/tablette/desktop, états empty/loading/error/success et lisibilité opérateur validés. Les reasonCode/reason/compteurs requested-compliant-nonCompliant/correctiveActions sont explicites et stables. Aucun correctif UX bloquant restant.",
+  "updatedAt": "2026-02-22T09:39:37Z"
 }

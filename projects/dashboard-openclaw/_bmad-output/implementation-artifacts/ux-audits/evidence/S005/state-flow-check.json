@@ -1,6 +1,6 @@
 {
-  "storyId": "S005",
-  "runAt": "2026-02-21T13:14:46.422Z",
+  "storyId": "S004",
+  "runAt": "2026-02-21T11:47:06.800Z",
   "statesSeen": {
     "empty": true,
     "loading": true,
@@ -9,46 +9,38 @@
   },
   "traces": [
     {
-      "scenario": "blocked-prerequisites",
+      "scenario": "transition-blocked",
       "finalState": "error",
-      "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
-      "reason": "Prérequis requis incomplets: PR-002.",
-      "failedCommand": "—",
-      "commands": [
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 3",
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 3"
-      ],
-      "failedResult": [
+      "reasonCode": "TRANSITION_NOT_ALLOWED",
+      "reason": "Transition non autorisée: fromPhase=H03, toPhase=H05, expectedToPhase=H04.",
+      "missingList": [
         "—"
       ]
     },
     {
-      "scenario": "execution-failed",
+      "scenario": "missing-prerequisites",
       "finalState": "error",
-      "reasonCode": "GUARD_EXECUTION_FAILED",
-      "reason": "Échec exécution guard: command=bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1, exitCode=17.",
-      "failedCommand": "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1",
-      "commands": [
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 1",
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1"
-      ],
-      "failedResult": [
-        "command=bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 1",
-        "exitCode=17",
-        "stderr=ultra quality guard failed"
+      "reasonCode": "PHASE_PREREQUISITES_MISSING",
+      "reason": "Checklist de prérequis absente, vide ou invalide (tableau requis).",
+      "missingList": [
+        "—"
       ]
     },
     {
-      "scenario": "success-simulation",
+      "scenario": "incomplete-prerequisites",
+      "finalState": "error",
+      "reasonCode": "PHASE_PREREQUISITES_INCOMPLETE",
+      "reason": "Prérequis requis incomplets: PR-002.",
+      "missingList": [
+        "PR-002"
+      ]
+    },
+    {
+      "scenario": "success",
       "finalState": "success",
       "reasonCode": "OK",
-      "reason": "Simulation guards prête pour la phase 2.",
-      "failedCommand": "—",
-      "commands": [
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh 2",
-        "bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh 2"
-      ],
-      "failedResult": [
+      "reason": "Prérequis validés pour transition H03 -> H04.",
+      "missingList": [
         "—"
       ]
     }

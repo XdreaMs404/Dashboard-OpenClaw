@@ -1,8 +1,8 @@
 # S011 — Handoff TEA → REVIEWER
 
 - SID: S011
-- Epic: E02
-- Date (UTC): 2026-02-21T21:45:23Z
+- Epic: E01
+- Date (UTC): 2026-02-21T18:20:30Z
 - Scope: STRICT (S011 uniquement)
 - Verdict H17: **PASS (GO_REVIEWER)**
 
@@ -12,26 +12,26 @@
 - `_bmad-output/implementation-artifacts/ux-audits/S011-ux-audit.json` (`verdict: PASS`)
 
 ## Action obligatoire exécutée (rejeu gates techniques S011)
-- Commande:
-  `npm run lint && npm run typecheck && npx vitest run tests/unit/artifact-ingestion-pipeline.test.js tests/edge/artifact-ingestion-pipeline.edge.test.js && npx playwright test tests/e2e/artifact-ingestion-pipeline.spec.js && npm run test:coverage && npm run build && npm run security:deps`
+- Commande: `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-quality-gates.sh`
 - Exit code: `0`
 - Trace complète: `_bmad-output/implementation-artifacts/handoffs/S011-tech-gates.log`
-- Sortie finale observée: `✅ S011_TECH_GATES_OK`
+- Sortie finale observée: `✅ QUALITY_GATES_OK`
 
 ## Preuves qualité TEA (G4-T)
 - `lint` ✅
 - `typecheck` ✅
-- tests ciblés S011 (unit+edge): **2 fichiers / 31 tests passés** ✅
-- tests e2e ciblés S011: **2/2 tests passés** ✅
-- `test:coverage` (global): **22 fichiers / 257 tests passés** ✅
-- couverture globale: **99.67% lines / 98.24% branches / 100% functions / 99.67% statements** ✅
-- focus module S011 (`app/src/artifact-ingestion-pipeline.js`): **100% lines / 100% branches / 100% functions / 100% statements** ✅
-- `build` ✅
+- `test` (unit/intégration): **20 fichiers / 226 tests passés** ✅
+- `test:e2e`: **19/19 tests passés** ✅
+- `test:edge`: **10 fichiers / 143 tests passés** ✅
+- `test:coverage`: **99.58% lines / 97.94% branches / 100% functions / 99.59% statements** ✅
+- Focus module S011 (`app/src/phase-progression-alert.js`): **99.60% lines / 95.96% branches / 100% functions / 99.60% statements** ✅
 - `security` (`npm audit --audit-level=high`): **0 vulnérabilité** ✅
+- `build` ✅
 
 ## Vérification non-régression (scope S001→S011)
-- La suite `test:coverage` globale est intégralement verte (22 fichiers / 257 tests), ce qui confirme la non-régression unit/edge sur le socle existant.
-- Aucun écart bloquant ni régression technique détecté.
+- Les suites globales unit/intégration, edge et e2e restent intégralement vertes après rejeu TEA.
+- Les métriques clés observées sont stables vs handoff DEV S011 (mêmes volumes de tests passés et mêmes ordres de grandeur de couverture).
+- Aucun écart bloquant ni régression fonctionnelle détecté sur les stories antérieures.
 
 ## Statut UX (référence H15)
 - Audit UX disponible: `_bmad-output/implementation-artifacts/ux-audits/S011-ux-audit.json`
@@ -40,5 +40,5 @@
 ## Risques / écarts
 - Aucun écart bloquant détecté dans le scope strict S011.
 
-## Verdict technique explicite (H17)
-- **PASS** — validations techniques applicables à S011 conformes; handoff Reviewer (H18) recommandé.
+## Décision TEA
+- **PASS** → handoff Reviewer (H18) recommandé.

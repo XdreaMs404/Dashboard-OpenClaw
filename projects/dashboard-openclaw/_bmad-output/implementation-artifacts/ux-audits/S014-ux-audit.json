@@ -9,9 +9,9 @@
     "D1": 95,
     "D2": 97,
     "D3": 95,
-    "D4": 96,
+    "D4": 95,
     "D5": 94,
-    "D6": 95,
+    "D6": 94,
     "designExcellence": 95
   },
   "checks": {
@@ -29,18 +29,19 @@
     "success": true
   },
   "evidence": [
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/playwright-s014.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/playwright-s012.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/playwright-e2e-suite.log",
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/vitest-s014.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/vitest-s012.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/state-flow-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/responsive-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/responsive-mobile.png",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/responsive-tablet.png",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/responsive-desktop.png",
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/responsive-audit.log"
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/responsive-audit.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S014/ux-gate.log"
   ],
   "issues": [],
   "requiredFixes": [],
-  "notes": "Audit UX S014 validé: démonstrateur couvre explicitement les états empty/loading/error/success sur l’ensemble des scénarios demandés (input absent, hors allowlist, type non supporté, metadata manquante/invalide, sections manquantes, tableaux manquants, parse invalide, nominal). Lisibilité opérateur conforme avec affichage explicite reasonCode/reason/compteurs indexedCount-nonIndexedCount-tableCount/correctiveActions. Accessibilité conforme cible WCAG 2.2 AA (label scénario, status aria-live=polite, alert role, success aria-live+aria-atomic, focus restitué au bouton). Responsive validé mobile/tablette/desktop sans overflow horizontal (max=0) et hiérarchie visuelle H1/H2 cohérente.",
-  "updatedAt": "2026-02-22T08:24:20Z"
+  "notes": "Audit UX S014 validé: démonstrateur couvre explicitement empty/loading/error/success sur tous les reason codes critiques de validation metadata (input absent, hors allowlist, extension non supportée, metadata manquante/invalide, parse invalide, nominal). Lisibilité opérateur conforme avec affichage reasonCode/reason/compteurs requested-compliant-nonCompliant/correctiveActions. Accessibilité ciblée conforme (label associé au select, role=status aria-live=polite, role=alert pour erreurs, panneau succès aria-live+aria-atomic, focus restitué au bouton après action). Responsive validé mobile/tablette/desktop sans overflow horizontal (max=0) et hiérarchie visuelle H1/H2 cohérente.",
+  "updatedAt": "2026-02-21T23:22:37Z"
 }

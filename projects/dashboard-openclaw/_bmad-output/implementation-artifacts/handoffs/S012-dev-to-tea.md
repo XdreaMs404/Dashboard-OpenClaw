@@ -4,11 +4,11 @@
 - ID: S012
 - Epic: E02
 - Phase cible: H16 (Technical Evidence Audit)
-- Date (UTC): 2026-02-21T23:12:40Z
+- Date (UTC): 2026-02-22T09:38:19Z
 - Statut DEV: READY_FOR_TEA
 
 ## Scope implémenté (strict S012)
-- Nouveau module: `app/src/artifact-metadata-validator.js`
+- Module: `app/src/artifact-metadata-validator.js`
 - Export public: `app/src/index.js`
 - Tests S012:
   - `app/tests/unit/artifact-metadata-validator.test.js`
@@ -27,15 +27,15 @@ Sortie stable:
 {
   "allowed": true,
   "reasonCode": "OK",
-  "reason": "Validation metadata réussie.",
+  "reason": "Validation metadata réussie: 1/1 artefacts conformes.",
   "diagnostics": {
-    "requestedCount": 0,
-    "validatedCount": 0,
-    "compliantCount": 0,
+    "requestedCount": 1,
+    "validatedCount": 1,
+    "compliantCount": 1,
     "nonCompliantCount": 0,
     "missingMetadataCount": 0,
     "invalidMetadataCount": 0,
-    "allowlistRoots": [],
+    "allowlistRoots": ["/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts"],
     "durationMs": 0,
     "p95ValidationMs": 0
   },
@@ -56,28 +56,28 @@ Reason codes stables:
 - `INVALID_METADATA_VALIDATION_INPUT`
 
 ## Replays techniques exécutés
-Commande complète (depuis `app/`):
+Commande complète (depuis `app/`, UTC 2026-02-22T09:37Z):
 - `npm run lint && npm run typecheck && npx vitest run tests/unit tests/edge && npx playwright test tests/e2e && npm run test:coverage && npm run build && npm run security:deps`
 
 Résultats:
 - Lint ✅
 - Typecheck ✅
-- Unit + Edge ✅ (**24 fichiers / 283 tests passés**)
-- E2E ✅ (**23/23 tests passés**)
+- Unit + Edge ✅ (**30 fichiers / 382 tests passés**)
+- E2E ✅ (**29/29 tests passés**)
 - Coverage ✅
-  - Global: **99.46% statements / 97.82% branches / 100% functions / 99.45% lines**
+  - Global: **99.34% statements / 97.86% branches / 100% functions / 99.32% lines**
   - S012 module `artifact-metadata-validator.js`: **98.51% statements / 95.21% branches / 100% functions / 98.45% lines**
 - Build ✅
 - Security deps ✅ (**0 vulnérabilité high+**)
 
 ## AC coverage (résumé)
-- AC-01..AC-08 + AC-10: unit/edge (validation nominale, missing/invalid metadata, allowlist/type/parse/input/read failures, contrat stable, perf).
+- AC-01..AC-08 + AC-10: unit/edge (nominal, metadata missing/invalid, allowlist/type/parse/read/input failures, contrat stable, perf 500 docs).
 - AC-09: e2e démonstrateur (états UI + reason/counters/correctiveActions + responsive overflow checks).
 
 ## Demandes TEA
 1. Rejouer les commandes de gate ci-dessus pour confirmation indépendante.
-2. Vérifier non-régression S011 (ingestion pipeline) et export public index.
-3. Valider seuil S012 coverage module (>=95% lignes/branches) et perf 500 docs.
+2. Vérifier non-régression S011 et stabilité reason codes publiques S012.
+3. Vérifier seuil S012 coverage module (>=95% lignes/branches) et perf 500 docs (`p95ValidationMs <= 2000`, lot `< 60000 ms`).
 4. Publier verdict TEA (PASS/CONCERNS/FAIL) avec gaps éventuels.
 
 ## Next handoff

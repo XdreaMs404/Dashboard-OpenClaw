@@ -5,13 +5,13 @@
   "reviewer": "ux-qa-auditor",
   "wcagTarget": "2.2-AA",
   "scores": {
-    "D1": 95,
-    "D2": 96,
-    "D3": 95,
+    "D1": 94,
+    "D2": 95,
+    "D3": 94,
     "D4": 95,
-    "D5": 94,
-    "D6": 93,
-    "designExcellence": 95
+    "D5": 93,
+    "D6": 92,
+    "designExcellence": 94
   },
   "checks": {
     "designSystemCompliance": true,
@@ -28,9 +28,9 @@
     "success": true
   },
   "evidence": [
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/playwright-s009.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/playwright-s008.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/playwright-e2e-suite.log",
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/vitest-s009.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/vitest-s008.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/state-flow-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/responsive-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S009/responsive-mobile.png",
@@ -41,6 +41,6 @@
   ],
   "issues": [],
   "requiredFixes": [],
-  "notes": "Audit UX strict S009 validé: états empty/loading/error/success couverts avec affichage explicite reasonCode/reason/owner/blockingDependencies/correctiveActions, clarté opérationnelle confirmée sur les scénarios critiques (transition bloquée, prérequis incomplets, override requis, stale), accessibilité ciblée conforme (label explicite, role=status aria-live=polite, role=alert, panneau succès aria-live + aria-atomic, focus restitué au bouton), hiérarchie H1/H2 cohérente, et aucune régression responsive (overflow horizontal max=0 sur mobile/tablette/desktop).",
-  "updatedAt": "2026-02-21T17:06:14Z"
+  "notes": "Audit UX strict S009 validé: états empty/loading/error/success couverts avec affichage explicite reasonCode/reason/override.required/override.applied/requiredActions, clarté opérationnelle des scénarios d’override confirmée (demande absente, conflit approbateur, override approuvé, nominal), ordre des actions conforme (capture puis audit/revalidation), accessibilité ciblée conforme (label explicite, role=status aria-live=polite, role=alert, panneau succès aria-live + aria-atomic, focus restitué au bouton), hiérarchie H1/H2 cohérente, et aucune régression responsive (overflow horizontal max=0 sur mobile/tablette/desktop).",
+  "updatedAt": "2026-02-21T15:20:16Z"
 }

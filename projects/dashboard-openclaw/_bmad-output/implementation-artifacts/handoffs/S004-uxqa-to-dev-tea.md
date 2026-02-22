@@ -2,13 +2,13 @@
 
 - SID: S004
 - Epic: E01
-- Date (UTC): 2026-02-21T11:47:33Z
+- Date (UTC): 2026-02-21T10:46:56Z
 - Phase: H15
 - Verdict UX Gate (G4-UX): **PASS**
 
 ## Scope audité (strict S004)
-- `app/src/phase-prerequisites-validator.js`
-- `app/tests/e2e/phase-prerequisites-validator.spec.js`
+- `app/src/phase-state-projection.js`
+- `app/tests/e2e/phase-state-projection.spec.js`
 - `_bmad-output/implementation-artifacts/stories/S004.md`
 - `_bmad-output/implementation-artifacts/handoffs/S004-dev-to-uxqa.md`
 
@@ -21,14 +21,12 @@
 - performance perçue: ✅
 
 ## Evidence (S004)
-- `_bmad-output/implementation-artifacts/ux-audits/evidence/S004/playwright-s004.log`
+- `_bmad-output/implementation-artifacts/ux-audits/evidence/S004/playwright-s003.log`
   - 2 tests S004 passés (flux d’états + non-régression responsive overflow).
 - `_bmad-output/implementation-artifacts/ux-audits/evidence/S004/playwright-e2e-suite.log`
-  - 7/7 e2e passés (non-régression globale S001→S004).
-- `_bmad-output/implementation-artifacts/ux-audits/evidence/S004/state-flow-check.json`
-  - Couverture explicite `empty/loading/error/success` + `reasonCode/reason/missingPrerequisiteIds` conformes.
+  - 5/5 e2e passés (non-régression globale).
 - `_bmad-output/implementation-artifacts/ux-audits/evidence/S004/responsive-check.json`
-  - `allPass=true`, overflow horizontal nul (`max=0`) sur mobile/tablette/desktop.
+  - `allPass=true`, overflow horizontal = 0 sur mobile/tablette/desktop.
 - Captures UI:
   - `_bmad-output/implementation-artifacts/ux-audits/evidence/S004/responsive-mobile.png`
   - `_bmad-output/implementation-artifacts/ux-audits/evidence/S004/responsive-tablet.png`
@@ -37,9 +35,9 @@
   - `_bmad-output/implementation-artifacts/ux-audits/evidence/S004/ux-gate.log` (`UX_GATES_OK`)
 
 ## Conclusion UXQA
-- Aucun écart UX bloquant détecté dans le scope strict S004.
-- Le fichier `_bmad-output/implementation-artifacts/ux-audits/S004-ux-audit.json` est publié avec `verdict: PASS`.
-- G4-UX validé pour S004.
+- Le blocant précédent (overflow horizontal en état `success`) est levé.
+- Aucun correctif supplémentaire requis dans le scope S004.
+- Le fichier `_bmad-output/implementation-artifacts/ux-audits/S004-ux-audit.json` est mis à jour avec `verdict: PASS`.
 
 ## Next handoff
 - TEA peut poursuivre H16/H17 avec G4-UX validé pour S004.

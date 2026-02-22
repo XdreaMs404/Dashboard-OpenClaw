@@ -2,7 +2,7 @@
 
 - SID: S013
 - Epic: E02
-- Date (UTC): 2026-02-22T07:45:53Z
+- Date (UTC): 2026-02-21T21:45:23Z
 - Scope: STRICT (S013 uniquement)
 - Verdict H17: **PASS (GO_REVIEWER)**
 
@@ -12,32 +12,33 @@
 - `_bmad-output/implementation-artifacts/ux-audits/S013-ux-audit.json` (`verdict: PASS`)
 
 ## Action obligatoire exécutée (rejeu gates techniques S013)
-- Commande: `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-quality-gates.sh`
+- Commande:
+  `npm run lint && npm run typecheck && npx vitest run tests/unit/artifact-ingestion-pipeline.test.js tests/edge/artifact-ingestion-pipeline.edge.test.js && npx playwright test tests/e2e/artifact-ingestion-pipeline.spec.js && npm run test:coverage && npm run build && npm run security:deps`
 - Exit code: `0`
 - Trace complète: `_bmad-output/implementation-artifacts/handoffs/S013-tech-gates.log`
-- Sortie finale observée: `✅ QUALITY_GATES_OK`
+- Sortie finale observée: `✅ S013_TECH_GATES_OK`
 
 ## Preuves qualité TEA (G4-T)
 - `lint` ✅
 - `typecheck` ✅
-- `test` (unit/intégration): **26 fichiers / 314 tests passés** ✅
-- `test:e2e`: **25/25 tests passés** ✅
-- `test:edge`: **13 fichiers / 197 tests passés** ✅
-- `test:coverage`: **99.43% lines / 97.83% branches / 100% functions / 99.44% statements** ✅
-- Focus module S013 (`app/src/artifact-section-extractor.js`): **99.26% lines / 97.92% branches / 100% functions / 99.30% statements** ✅
-- `security` (`npm audit --audit-level=high`): **0 vulnérabilité** ✅
+- tests ciblés S013 (unit+edge): **2 fichiers / 31 tests passés** ✅
+- tests e2e ciblés S013: **2/2 tests passés** ✅
+- `test:coverage` (global): **22 fichiers / 257 tests passés** ✅
+- couverture globale: **99.67% lines / 98.24% branches / 100% functions / 99.67% statements** ✅
+- focus module S013 (`app/src/artifact-ingestion-pipeline.js`): **100% lines / 100% branches / 100% functions / 100% statements** ✅
 - `build` ✅
+- `security` (`npm audit --audit-level=high`): **0 vulnérabilité** ✅
 
 ## Vérification non-régression (scope S001→S013)
-- Les suites globales unit/intégration, edge, e2e et coverage sont intégralement vertes après rejeu TEA.
-- Aucun écart bloquant ni régression technique détecté sur les stories antérieures (S001..S012).
+- La suite `test:coverage` globale est intégralement verte (22 fichiers / 257 tests), ce qui confirme la non-régression unit/edge sur le socle existant.
+- Aucun écart bloquant ni régression technique détecté.
 
 ## Statut UX (référence H15)
 - Audit UX disponible: `_bmad-output/implementation-artifacts/ux-audits/S013-ux-audit.json`
 - Verdict UX: **PASS** (designExcellence=95, D2=97, issues=[])
 
 ## Risques / écarts
-- Aucun gap bloquant détecté dans le scope strict S013.
+- Aucun écart bloquant détecté dans le scope strict S013.
 
 ## Verdict technique explicite (H17)
-- **PASS** — toutes les validations techniques applicables à S013 sont conformes; handoff Reviewer (H18) recommandé.
+- **PASS** — validations techniques applicables à S013 conformes; handoff Reviewer (H18) recommandé.

@@ -5,67 +5,64 @@
 - **Epic**: E02
 - **Projet**: `/root/.openclaw/workspace/projects/dashboard-openclaw`
 - **Story source (SoT)**: `_bmad-output/implementation-artifacts/stories/S014.md`
-- **Références planning**:
-  - `_bmad-output/planning-artifacts/prd.md` (FR-024, FR-025, AC-024A/B, AC-025A/B, NFR-012, NFR-016)
-  - `_bmad-output/planning-artifacts/architecture.md` (endpoint `GET /api/v1/artifacts/{artifactId}/tables`, projection `projection.artifact.tables`, event `artifact.table.indexed`)
-  - `_bmad-output/planning-artifacts/epics.md` (E02-S04)
-- **Runtime tick**: 2026-02-22 07:58 UTC
+- **Runtime tick**: 2026-02-21 23:18:00 UTC
 
-## Vérification PM (entrées obligatoires)
-1. Story S014 cadrée, testable et traçable (FR/NFR/risques/AC/cas de test/contraintes).
-2. Alignement confirmé avec E02-S04 : indexation tableaux markdown + schéma stable + préparation S015.
-3. Dépendances verrouillées : S011 (ingestion), S012 (metadata), S013 (sections H2/H3).
-4. Périmètre DEV verrouillé en **scope strict S014 uniquement**.
+## Entrées PM validées
+- `_bmad-output/implementation-artifacts/stories/S014.md`
+- `_bmad-output/planning-artifacts/prd.md` (FR-022, FR-023, AC-022A/B, AC-023A/B, NFR-004, NFR-006)
+- `_bmad-output/planning-artifacts/architecture.md` (endpoint `/api/v1/artifacts/validate-metadata`, projection `artifact.metadata-compliance`)
+- `_bmad-output/planning-artifacts/epics.md` (E02-S02)
+- Dépendance technique S011 (`ingestBmadArtifacts`) confirmée comme socle existant
+
+## Vérification PM du cadrage S014
+1. Story S014 complète et actionnable: objectif, dépendances, traçabilité FR/NFR/risques, AC mesurables, cas de test obligatoires, contraintes explicites.
+2. Alignement confirmé avec E02-S02: validation metadata explicite (`stepsCompleted`, `inputDocuments`) + préparation extraction structurée FR-023.
+3. Périmètre DEV verrouillé: **scope strict S014 uniquement**, sans dérive vers autres stories.
+4. Conditions de DONE rappelées: G4-T **et** G4-UX requis.
 
 ## Décision PM
 **GO_DEV explicite — S014 uniquement.**
 
-## Scope DEV autorisé (strict S014)
-1. Implémenter `indexArtifactMarkdownTables(input, options?)` dans `app/src/artifact-table-indexer.js`.
-2. Indexer les tableaux markdown d’artefacts conformes (`.md|.markdown`) avec schéma déterministe (`tableId`, rattachement section, `headers`, `rows`, `rowCount`, `columnCount`, `schemaVersion`, `extractedAt`).
-3. Propager explicitement les garde-fous S012/S013 (`ARTIFACT_METADATA_*`, `ARTIFACT_SECTIONS_MISSING`) sans contournement silencieux.
-4. Exposer la préparation S015 via `searchIndexEligible=true`, sans implémenter la recherche full-text dans S014.
-5. Maintenir le contrat de sortie stable:
-   `{ allowed, reasonCode, reason, diagnostics, indexedArtifacts, nonIndexedArtifacts, correctiveActions }`.
-6. Ajouter/maintenir les tests S014 unit + edge + e2e, avec couverture >=95% lignes/branches et benchmark 500 docs conforme.
-7. Exporter S014 dans `app/src/index.js` (export S014 uniquement).
+## Objectifs DEV (H13)
+1. Implémenter `validateArtifactMetadataCompliance(input, options?)` dans `app/src/artifact-metadata-validator.js`.
+2. Garantir validation stricte de `stepsCompleted` et `inputDocuments` (présence + format: tableaux non vides de chaînes non vides).
+3. Conserver les garde-fous: allowlist stricte, extensions autorisées, parse robuste, erreurs localisées.
+4. Produire un contrat de sortie stable:
+   `{ allowed, reasonCode, reason, diagnostics, compliantArtifacts, nonCompliantArtifacts, correctiveActions }`.
+5. Préparer FR-023 avec `compliantArtifacts[*].sectionExtractionEligible === true`.
 
-## Acceptance Criteria (AC) à satisfaire
-- **AC-01** Indexation nominale: lot markdown conforme -> `allowed=true`, `reasonCode=OK`, `indexedCount=requestedCount`.
-- **AC-02** Schéma stable: `tableId`, rattachement section, `headers/rows/rowCount/columnCount`, `schemaVersion` déterministes.
-- **AC-03** Absence de tableaux: `ARTIFACT_TABLES_MISSING` + `tableErrors` + `ADD_MARKDOWN_TABLES`.
-- **AC-04** Garde-fous S012/S013: propagation explicite `ARTIFACT_METADATA_*` / `ARTIFACT_SECTIONS_MISSING`.
-- **AC-05** Hors allowlist: `ARTIFACT_PATH_NOT_ALLOWED`.
-- **AC-06** Type non supporté (`.md|.markdown` uniquement): `UNSUPPORTED_ARTIFACT_TYPE`.
-- **AC-07** Parse invalide: `ARTIFACT_PARSE_FAILED` sans crash lot.
-- **AC-08** Contrat de sortie stable + `searchIndexEligible=true` (préparation S015).
-- **AC-09** E2E UI: états `empty/loading/success/error` + reason/counters/actions.
-- **AC-10** Qualité/perf: couverture module >=95% lignes/branches; benchmark 500 docs (`p95<=2000ms`, lot `<60000ms`).
+## Acceptance Criteria à satisfaire (résumé exécutable)
+- **AC-01** Nominal metadata valide -> `allowed:true`, `reasonCode:OK`, compteurs cohérents.
+- **AC-02** Metadata manquante -> `ARTIFACT_METADATA_MISSING` + `missingFields` + `ADD_REQUIRED_METADATA`.
+- **AC-03** Metadata invalide -> `ARTIFACT_METADATA_INVALID` + `metadataErrors` + `FIX_INVALID_METADATA`.
+- **AC-04** Hors allowlist -> `ARTIFACT_PATH_NOT_ALLOWED`.
+- **AC-05** Type non supporté -> `UNSUPPORTED_ARTIFACT_TYPE`.
+- **AC-06** Parse invalide markdown/yaml -> `ARTIFACT_PARSE_FAILED` sans crash lot.
+- **AC-07** Résolution des sources: `artifactDocuments` prioritaire, sinon `artifactPaths + options.documentReader`, sinon `INVALID_METADATA_VALIDATION_INPUT`.
+- **AC-08** Contrat de sortie déterministe + diagnostics complets + `sectionExtractionEligible`.
+- **AC-09** E2E UI: états `empty/loading/success/error` + reasonCode/reason/compteurs/actions.
+- **AC-10** Couverture module >=95% lignes+branches; perf 500 docs: `p95 <= 2000ms`, lot `< 60000ms`.
 
-## Contrat de sortie attendu (stable)
-`{ allowed, reasonCode, reason, diagnostics, indexedArtifacts, nonIndexedArtifacts, correctiveActions }`
-
-Reason codes autorisés uniquement:
-`OK | ARTIFACT_PATH_NOT_ALLOWED | UNSUPPORTED_ARTIFACT_TYPE | ARTIFACT_READ_FAILED | ARTIFACT_PARSE_FAILED | ARTIFACT_METADATA_MISSING | ARTIFACT_METADATA_INVALID | ARTIFACT_SECTIONS_MISSING | ARTIFACT_TABLES_MISSING | INVALID_TABLE_INDEX_INPUT`
+## Contraintes non négociables
+- Scope strict **S014** (aucune évolution fonctionnelle hors FR-022/FR-023).
+- Aucune régression S001..S011.
+- Aucune exécution shell dans les modules S014.
+- Reason codes autorisés uniquement:
+  `OK | ARTIFACT_PATH_NOT_ALLOWED | UNSUPPORTED_ARTIFACT_TYPE | ARTIFACT_READ_FAILED | ARTIFACT_PARSE_FAILED | ARTIFACT_METADATA_MISSING | ARTIFACT_METADATA_INVALID | INVALID_METADATA_VALIDATION_INPUT`.
+- Story non-DONE tant que G4-T et G4-UX ne sont pas tous deux PASS.
 
 ## Fichiers cibles autorisés (strict S014)
-- `app/src/artifact-table-indexer.js`
+- `app/src/artifact-metadata-validator.js`
 - `app/src/index.js` (export S014 uniquement)
-- `app/tests/unit/artifact-table-indexer.test.js`
-- `app/tests/edge/artifact-table-indexer.edge.test.js`
-- `app/tests/e2e/artifact-table-indexer.spec.js`
-- `app/src/artifact-section-extractor.js` *(ajustement minimal uniquement si partage utilitaire sans changement comportement S013)*
+- `app/tests/unit/artifact-metadata-validator.test.js`
+- `app/tests/edge/artifact-metadata-validator.edge.test.js`
+- `app/tests/e2e/artifact-metadata-validator.spec.js`
+- `app/src/artifact-ingestion-pipeline.js` *(ajustement minimal uniquement si nécessaire au partage utilitaire sans changement comportement S011)*
 - `_bmad-output/implementation-artifacts/stories/S014.md`
 - `_bmad-output/implementation-artifacts/handoffs/S014-dev-to-uxqa.md`
 - `_bmad-output/implementation-artifacts/handoffs/S014-dev-to-tea.md`
 
-## Scope interdit (hors-scope)
-- Toute implémentation complète de recherche full-text (scope S015).
-- Toute évolution hors FR-024/FR-025 / S014.
-- Toute modification fonctionnelle S001..S013 non strictement nécessaire à l’intégration S014.
-- Tout refactor transverse non requis par les AC S014.
-
-## Gates à exécuter avant sortie DEV
+## Gates techniques à exécuter avant sortie DEV
 ```bash
 cd /root/.openclaw/workspace/projects/dashboard-openclaw/app
 npm run lint && npm run typecheck
@@ -75,18 +72,18 @@ npm run test:coverage
 npm run build && npm run security:deps
 ```
 
-## Critère de succès H13
-- AC-01..AC-10 couverts et vérifiables.
-- Non-régression S001..S013 prouvée (tests verts).
-- Evidence gates techniques + UX fournie dans les handoffs DEV.
-
 ## Preuves attendues (obligatoires)
-1. Logs complets gates: lint/typecheck/unit/edge/e2e/coverage/build/security.
-2. Mapping AC → tests explicite dans story/handoffs DEV.
-3. Couverture S014 (`artifact-table-indexer.js`) >=95% lignes + branches.
-4. Preuve performance 500 docs (`p95IndexMs`, durée totale).
-5. Preuve de non-régression S001..S013.
-6. Liste des fichiers modifiés strictement limitée au scope autorisé S014.
+1. Logs complets des gates (lint/typecheck/unit/edge/e2e/coverage/build/security).
+2. Mapping explicite AC -> tests dans la story/handoff DEV.
+3. Preuve coverage S014 (`artifact-metadata-validator.js`) >=95% lignes + branches.
+4. Preuve performance 500 docs (`p95ValidationMs`, durée totale).
+5. Liste des fichiers modifiés limitée au scope S014.
+6. Handoffs DEV -> UXQA et DEV -> TEA publiés avec statut prêt.
+
+## Critères de succès H13
+- Cadrage S014 complet, non ambigu, exécutable.
+- GO_DEV explicite avec périmètre verrouillé.
+- Critères de validation et preuves de sortie DEV clairement définis.
 
 ## Handoff suivant attendu
 - DEV → UXQA (H14)

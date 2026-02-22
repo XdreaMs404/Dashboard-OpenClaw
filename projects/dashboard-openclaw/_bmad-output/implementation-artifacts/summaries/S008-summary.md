@@ -1,48 +1,34 @@
 # S008 — Résumé final (Tech Writer)
 
 ## Ce qui a été livré
-- Implémentation de `evaluatePhaseTransitionOverride(input, options?)` dans `app/src/phase-transition-override.js`, avec contrat de sortie stable:
-  `{ allowed, reasonCode, reason, diagnostics, override, requiredActions }`.
-- Résolution de la source de validation conforme au scope:
-  - priorité à `transitionValidation` si fourni,
-  - sinon délégation à `validatePhaseTransition` (S002) via `transitionInput`.
-- Politique d’override exceptionnel livrée avec gouvernance stricte:
-  - motifs éligibles uniquement: `TRANSITION_NOT_ALLOWED`, `PHASE_NOTIFICATION_MISSING`, `PHASE_NOTIFICATION_SLA_EXCEEDED`,
-  - justification obligatoire (défaut `minJustificationLength=20`),
-  - approbateur nominatif obligatoire,
-  - approbateur distinct du demandeur par défaut (`requireDistinctApprover=true`).
-- Gestion explicite des blocages d’override:
-  - `OVERRIDE_REQUEST_MISSING`,
-  - `OVERRIDE_JUSTIFICATION_REQUIRED`,
-  - `OVERRIDE_APPROVER_REQUIRED`,
-  - `OVERRIDE_APPROVER_CONFLICT`,
-  - `OVERRIDE_NOT_ELIGIBLE`,
-  - `INVALID_OVERRIDE_INPUT`.
-- Actions requises ordonnées selon le cas:
-  - demande incomplète: `CAPTURE_JUSTIFICATION`, `CAPTURE_APPROVER`,
-  - override approuvé: `REVALIDATE_TRANSITION`, `RECORD_OVERRIDE_AUDIT`.
-- Export public S008 confirmé dans `app/src/index.js` (`evaluatePhaseTransitionOverride`).
-- Démonstrateur e2e S008 validé pour `empty`, `loading`, `error`, `success` avec rendu explicite de `reasonCode`, `reason`, `override.required`, `override.applied`, `requiredActions`.
-- Couverture module S008 (`phase-transition-override.js`) au-dessus du seuil requis: **99.24% lignes**, **98.57% branches**.
+- Implémentation du module d’historique des transitions: `app/src/phase-transition-history.js` avec API publique `recordPhaseTransitionHistory(input, options?)`, exportée via `app/src/index.js`.
+- Enregistrement d’une entrée d’historique à chaque tentative valide de transition, y compris en cas de blocage guard, avec propagation stricte de `reasonCode`/`reason`.
+- Validation stricte des entrées (`fromPhase`, `toPhase`, `history`, `guardResult`, `query`) et rejet robuste des payloads invalides via `INVALID_TRANSITION_HISTORY`.
+- Gestion canonique des phases `H01..H23` avec refus des phases invalides via `INVALID_PHASE` (sans mutation de l’historique d’entrée).
+- Consultation filtrée implémentée (`query.fromPhase`, `query.toPhase`, `query.reasonCode`, `query.allowed`, `query.limit`) triée du plus récent au plus ancien.
+- Politique de rétention livrée: `maxEntries` défaut 200 (max 1000), suppression des entrées les plus anciennes en dépassement, `diagnostics.droppedCount` exact.
+- Contrat stable respecté:
+  `{ allowed, reasonCode, reason, diagnostics, entry, history }`.
+- Démonstrateur e2e S008 conforme (`empty`, `loading`, `error`, `success`) avec affichage explicite `reasonCode`, `reason`, et historique (transition + verdict + timestamp).
+- Couverture module S008 (`phase-transition-history.js`): **100% lignes**, **98.52% branches** (>= 95%).
 
 ## Preuves de validation
-- Revue finale H18: `_bmad-output/implementation-artifacts/reviews/S008-review.md` → verdict **APPROVED**.
+- Revue finale H18: `_bmad-output/implementation-artifacts/reviews/S008-review.md` → **APPROVED**.
 - Rejeu reviewer confirmé:
   - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S008`
   - Résultat: `✅ STORY_GATES_OK (S008)`.
 - Validation G4-T confirmée:
   - lint ✅
   - typecheck ✅
-  - tests unit/intégration ✅ (16 fichiers / 170 tests)
-  - tests edge ✅ (8 fichiers / 106 tests)
-  - tests e2e ✅ (15/15)
-  - coverage globale ✅ (99.56% lines / 98.09% branches / 100% functions / 99.56% statements)
-  - coverage module S008 ✅ (99.24% lines / 98.57% branches)
-  - security deps ✅ (0 vulnérabilité)
+  - tests unit/intégration ✅ (12 fichiers / 122 tests)
+  - tests edge ✅ (6 fichiers / 74 tests)
+  - tests e2e ✅ (11/11)
+  - coverage globale ✅ (99.51% lines / 98.25% branches / 100% functions / 99.52% statements)
+  - security ✅ (0 vulnérabilité)
   - build ✅
 - Validation G4-UX confirmée:
   - Audit UX S008: **PASS**
-  - UX gate: `✅ UX_GATES_OK (S008) design=94 D2=95`
+  - UX gate: `✅ UX_GATES_OK (S008) design=93 D2=94`
   - États UI requis couverts: `loading`, `empty`, `error`, `success`.
 
 ## Comment tester
@@ -57,8 +43,8 @@ Depuis la racine projet (`/root/.openclaw/workspace/projects/dashboard-openclaw`
 3. Vérifier le bundle technique détaillé (depuis `app/`):
    - `cd /root/.openclaw/workspace/projects/dashboard-openclaw/app`
    - `npm run lint && npm run typecheck`
-   - `npx vitest run tests/unit/phase-transition-override.test.js tests/edge/phase-transition-override.edge.test.js`
-   - `npx playwright test tests/e2e/phase-transition-override.spec.js`
+   - `npx vitest run tests/unit/phase-transition-history.test.js tests/edge/phase-transition-history.edge.test.js`
+   - `npx playwright test tests/e2e/phase-transition-history.spec.js`
    - `npm run test:coverage`
    - `npm run build && npm run security:deps`
 

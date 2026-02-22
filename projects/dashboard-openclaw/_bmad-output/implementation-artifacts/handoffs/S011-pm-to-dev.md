@@ -2,74 +2,72 @@
 
 ## Contexte
 - **SID**: S011
-- **Epic**: E02
+- **Epic**: E01
 - **Projet**: `/root/.openclaw/workspace/projects/dashboard-openclaw`
-- **Story source (SoT)**: `_bmad-output/implementation-artifacts/stories/S011.md`
-- **Références planning**: `prd.md` (FR-021/FR-022), `architecture.md`, `epics.md` (E02-S01)
-- **Runtime tick**: 2026-02-21 21:42 UTC
+- **Story source**: `_bmad-output/implementation-artifacts/stories/S011.md`
+- **Index source**: `_bmad-output/implementation-artifacts/stories/STORIES_INDEX.md`
+- **Objectif story**: détecter les anomalies de progression de phase et produire des alertes actionnables pour sécuriser la continuité canonique H01→H23 (FR-001/FR-002), en réutilisant la matrice dépendances S009.
 
-## Vérification PM du cadrage S011
-1. Story S011 bien cadrée: objectif, dépendances, traçabilité FR/NFR/risques, AC mesurables, tests obligatoires, scope autorisé/interdit.
-2. Alignement confirmé avec E02-S01 (`FR-021`, `FR-022`, `NFR-003`, `NFR-004`, risques `T01`, `T02`, `P02`).
-3. Contrat technique explicite: pipeline d’ingestion allowlist + validation metadata minimale + reason codes stables.
-4. Handoff DEV requis en **scope strict S011 uniquement**.
+## Vérification PM (entrées obligatoires)
+1. `S011.md` est complète et actionnable: user story, dépendances S002/S006/S009, traçabilité FR/NFR/AC, AC mesurables, cas de test, contraintes, quality/UX gates.
+2. `S011.md` est en statut **READY_FOR_DEV**.
+3. `STORIES_INDEX.md` maintient `S011` en `TODO` (story planifiée, prête pour prise en charge DEV en H13).
+4. Continuité vérifiée sur le code existant `app/src` + tests S001..S009:
+   - S002: `BMAD_PHASE_ORDER`, `validatePhaseTransition` (ordre canonique + transitions)
+   - S006: `recordPhaseTransitionHistory` (format historique transitions/verdicts)
+   - S009: `buildPhaseDependencyMatrix` (blocages dépendances + staleness)
 
 ## Décision PM
 **GO_DEV explicite — S011 uniquement.**
 
-## Objectifs DEV (H13)
-1. Implémenter `ingestBmadArtifacts(input, options?)` dans `app/src/artifact-ingestion-pipeline.js`.
-2. Garantir ingestion sous allowlist stricte (`allowlistRoots`) et extensions autorisées (`.md`, `.markdown`, `.yaml`, `.yml`).
-3. Valider metadata obligatoire (`stepsCompleted`, `inputDocuments`) pour artefacts majeurs.
-4. Produire un résultat déterministe et stable:
-   `{ allowed, reasonCode, reason, diagnostics, ingestedArtifacts, rejectedArtifacts, correctiveActions }`.
-5. Livrer tests unit/edge/e2e + couverture/perf conformes aux seuils S011.
+## Scope DEV autorisé (strict S011)
+1. Implémenter `evaluatePhaseProgressionAlert(input, options?)` dans `app/src/phase-progression-alert.js`.
+2. Résoudre les sources de données selon priorité contractuelle:
+   - `dependencyMatrix` injecté sinon délégation à S009 via `dependencyMatrixInput`
+   - `historyEntries` optionnel (format S006), défaut `[]`
+3. Implémenter la détection d’anomalies de progression:
+   - saut de séquence canonique (`PHASE_SEQUENCE_GAP_DETECTED`)
+   - régression de séquence (`PHASE_SEQUENCE_REGRESSION_DETECTED`)
+   - récurrence de blocages (`REPEATED_BLOCKING_ANOMALY`) selon `lookbackEntries`/`escalationThreshold`
+4. Propager strictement les blocages S009 (dont `DEPENDENCY_STATE_STALE`) avec owner et actions correctives explicites.
+5. Produire le contrat de sortie stable:
+   `{ allowed, reasonCode, reason, diagnostics, alert, anomalies, correctiveActions }`.
+6. Ajouter/maintenir les tests S011 unit + edge + e2e avec coverage module >=95% lignes+branches.
+7. Exporter S011 dans `app/src/index.js` (export S011 uniquement).
 
-## Acceptance Criteria (AC) à satisfaire
-- **AC-01** Nominal allowlist: lot valide → `allowed:true`, `reasonCode:OK`, compteurs cohérents.
-- **AC-02** Hors allowlist: blocage `ARTIFACT_PATH_NOT_ALLOWED` + action corrective.
-- **AC-03** Extension non supportée: `UNSUPPORTED_ARTIFACT_TYPE`.
-- **AC-04** Metadata manquante: `ARTIFACT_METADATA_MISSING` + compteur metadata.
-- **AC-05** Metadata invalide: `ARTIFACT_METADATA_INVALID` + erreurs de champs explicites.
-- **AC-06** Parse invalide markdown/yaml: `ARTIFACT_PARSE_FAILED` sans crash global.
-- **AC-07** Résolution des sources conforme (`artifactDocuments` prioritaire, sinon `artifactPaths` + reader, sinon erreur d’entrée).
-- **AC-08** Contrat de sortie stable + reason codes autorisés uniquement.
-- **AC-09** E2E UI: états `empty/loading/success/error` avec reason + compteurs + actions correctives.
-- **AC-10** Qualité/performance: couverture module ≥95% lignes/branches, benchmark 500 docs (`p95 <= 2000ms`, lot `<5000ms`).
+## Scope interdit (hors-scope)
+- Toute évolution hors FR-001/FR-002 / S011.
+- Toute modification métier S001..S009 non strictement nécessaire à l’intégration S011.
+- Toute exécution shell depuis S011.
+- Refactors transverses non requis par les AC S011.
 
-## Contraintes (non négociables)
-- Scope strict **S011** (aucune évolution fonctionnelle hors FR-021/FR-022).
-- Aucune régression S001..S010.
-- Aucune exécution shell depuis le module S011.
-- Sortie déterministe, reason codes stables:
-  `OK | ARTIFACT_PATH_NOT_ALLOWED | UNSUPPORTED_ARTIFACT_TYPE | ARTIFACT_READ_FAILED | ARTIFACT_PARSE_FAILED | ARTIFACT_METADATA_MISSING | ARTIFACT_METADATA_INVALID | INVALID_ARTIFACT_INGESTION_INPUT`.
-- Story **non DONE** tant que G4-T et G4-UX ne sont pas tous deux PASS.
+## Reason codes autorisés (strict)
+`OK | INVALID_PHASE | TRANSITION_NOT_ALLOWED | PHASE_NOTIFICATION_MISSING | PHASE_NOTIFICATION_SLA_EXCEEDED | PHASE_PREREQUISITES_MISSING | PHASE_PREREQUISITES_INCOMPLETE | INVALID_PHASE_PREREQUISITES | OVERRIDE_NOT_ELIGIBLE | OVERRIDE_REQUEST_MISSING | OVERRIDE_JUSTIFICATION_REQUIRED | OVERRIDE_APPROVER_REQUIRED | OVERRIDE_APPROVER_CONFLICT | DEPENDENCY_STATE_STALE | INVALID_PHASE_DEPENDENCY_INPUT | PHASE_SEQUENCE_GAP_DETECTED | PHASE_SEQUENCE_REGRESSION_DETECTED | REPEATED_BLOCKING_ANOMALY | INVALID_PHASE_PROGRESSION_INPUT`
 
 ## Fichiers cibles autorisés (strict S011)
-- `app/src/artifact-ingestion-pipeline.js`
+- `app/src/phase-progression-alert.js`
 - `app/src/index.js` (export S011 uniquement)
-- `app/tests/unit/artifact-ingestion-pipeline.test.js`
-- `app/tests/edge/artifact-ingestion-pipeline.edge.test.js`
-- `app/tests/e2e/artifact-ingestion-pipeline.spec.js`
+- `app/tests/unit/phase-progression-alert.test.js`
+- `app/tests/edge/phase-progression-alert.edge.test.js`
+- `app/tests/e2e/phase-progression-alert.spec.js`
 - `_bmad-output/implementation-artifacts/stories/S011.md`
 - `_bmad-output/implementation-artifacts/handoffs/S011-dev-to-uxqa.md`
 - `_bmad-output/implementation-artifacts/handoffs/S011-dev-to-tea.md`
 
-## Critères de succès H13
-- Tous les AC S011 sont couverts par des tests vérifiables.
-- Lint, typecheck, tests unit/edge/e2e, coverage, build, security: **PASS**.
-- Seuils de perf S011 respectés sur corpus 500 docs.
-- Non-régression prouvée sur l’existant.
-- Handoffs DEV→UXQA et DEV→TEA fournis avec preuves complètes.
+## Gates à exécuter avant sortie DEV
+```bash
+cd /root/.openclaw/workspace/projects/dashboard-openclaw/app
+npm run lint && npm run typecheck
+npx vitest run tests/unit tests/edge
+npx playwright test tests/e2e
+npm run test:coverage
+npm run build && npm run security:deps
+```
 
-## Preuves attendues (obligatoires)
-1. **Logs d’exécution gates** (commandes + sorties): lint, typecheck, vitest (unit/edge), playwright e2e, coverage, build, security.
-2. **Mapping AC → tests** explicite dans la story/handoff DEV.
-3. **Preuve coverage S011**: pour `artifact-ingestion-pipeline.js`, lignes/branches ≥95% (valeurs exactes reportées).
-4. **Preuve performance**: mesure benchmark 500 docs avec `p95IngestMs` et durée totale.
-5. **Preuves UX (si UI touchée)**: états `empty/loading/error/success`, lisibilité reason code/compteurs/actions correctives.
-6. **Preuve robustesse**: cas négatifs (hors allowlist, extension invalide, metadata manquante/invalide, parse failure, source absente).
-7. **Liste des fichiers modifiés** limitée au périmètre autorisé S011.
+## Critère de succès H13
+- AC-01..AC-10 couverts et vérifiables.
+- Non-régression S001..S009 prouvée (tests verts).
+- Evidence gates techniques + UX fournie dans les handoffs DEV.
 
 ## Handoff suivant attendu
 - DEV → UXQA (H14)

@@ -3,39 +3,35 @@
 ## Verdict
 **APPROVED**
 
-## Périmètre revu (STRICT S004)
+## Périmètre revu
 - Story: `_bmad-output/implementation-artifacts/stories/S004.md`
-- Handoff TEA: `_bmad-output/implementation-artifacts/handoffs/S004-tea-to-reviewer.md`
-- Audit UX SoT: `_bmad-output/implementation-artifacts/ux-audits/S004-ux-audit.json`
-- Implémentation ciblée: `app/src/phase-prerequisites-validator.js`, `app/src/index.js`
-- Tests ciblés S004:
-  - `app/tests/unit/phase-prerequisites-validator.test.js`
-  - `app/tests/edge/phase-prerequisites-validator.edge.test.js`
-  - `app/tests/e2e/phase-prerequisites-validator.spec.js`
+- Implémentation: `app/src/phase-state-projection.js`, `app/src/index.js`
+- Tests story:
+  - `app/tests/unit/phase-state-projection.test.js`
+  - `app/tests/edge/phase-state-projection.edge.test.js`
+  - `app/tests/e2e/phase-state-projection.spec.js`
+- Handoffs:
+  - `S004-pm-to-dev.md`
+  - `S004-dev-to-uxqa.md`
+  - `S004-uxqa-to-dev-tea.md`
+  - `S004-dev-to-tea.md`
+  - `S004-tea-to-reviewer.md`
+- Audit UX: `_bmad-output/implementation-artifacts/ux-audits/S004-ux-audit.json` (+ evidence associée)
 
-## Validation G4-T (technique)
-- Vérification des AC S004 couverte par les suites unit/edge/e2e ciblées.
-- Rejeu reviewer des gates story:
-  - Commande: `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S004`
-  - Résultat: `✅ STORY_GATES_OK (S004)` (exit code 0)
-- Détails confirmés pendant le rejeu:
-  - lint ✅
-  - typecheck ✅
-  - tests unit+intégration ✅ (70/70)
-  - tests edge ✅ (38/38)
-  - tests e2e ✅ (7/7)
-  - coverage global ✅ (lines 99.03%, branches 97.45%)
-  - coverage module S004 ✅ (`phase-prerequisites-validator.js`: lines 98.8%, branches 97.59%)
-  - security deps ✅ (0 vulnérabilité)
-  - build ✅
-
-## Validation G4-UX
-- Audit UX S004: `verdict: PASS`.
-- Checks obligatoires: design system, accessibilité AA, responsive, états d’interface, hiérarchie visuelle, performance perçue = ✅.
-- Couverture des états UI requis: `loading`, `empty`, `error`, `success` = ✅.
-- Evidence UX référencée dans l’audit (logs + captures responsive) présente.
-- Gate UX story confirmé: `✅ UX_GATES_OK (S004) design=90 D2=92`.
+## Vérifications clés
+1. **Contrat fonctionnel S004**: conforme (`owner`, `started_at`, `finished_at`, `status`, `duration_ms`, motifs de blocage, diagnostics).
+2. **Réutilisation S002**: conforme (délégation via `transitionValidation`/`transitionInput` + `validatePhaseTransition` comme source de vérité).
+3. **Blocages SLA/transition**: conforme (codes `TRANSITION_NOT_ALLOWED`, `PHASE_NOTIFICATION_MISSING`, `PHASE_NOTIFICATION_SLA_EXCEEDED` gérés en `blocked`).
+4. **Robustesse dates/entrées invalides**: conforme (`INVALID_PHASE_STATE`, `INVALID_PHASE_TIMESTAMPS`, sans crash).
+5. **Qualité technique (rejeu reviewer)**:
+   - Commande: `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S004`
+   - Résultat: **STORY_GATES_OK** (lint/typecheck/tests unit+edge+e2e/coverage/security/build).
+   - Couverture module S004: **100% lines**, **97.59% branches** (>= 95%).
+6. **Qualité UX (G4-UX)**: conforme
+   - `S004-ux-audit.json`: `verdict=PASS`
+   - Evidence responsive: `responsive-check.json` (`allPass=true`, overflow horizontal nul mobile/tablette/desktop)
+   - UX gate: `UX_GATES_OK (S004)`.
 
 ## Décision H18
-- **APPROVED** — cohérence G4-T + G4-UX validée, aucun blocage restant dans le scope strict S004.
-- Handoff suivant: **GO_TECH_WRITER**.
+- **APPROVED** — aucun gap bloquant restant sur S004 (technique + UX).
+- Handoff recommandé: **GO_TECHWRITER**.

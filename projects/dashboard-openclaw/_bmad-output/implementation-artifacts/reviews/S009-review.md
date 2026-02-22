@@ -14,21 +14,21 @@
 - Détails confirmés:
   - lint ✅
   - typecheck ✅
-  - tests unit/intégration ✅ (18 fichiers / 198 tests)
-  - tests e2e ✅ (17/17)
-  - tests edge ✅ (9 fichiers / 124 tests)
-  - coverage globale ✅ (lines 99.58%, branches 98.39%, functions 100%, statements 99.58%)
-  - coverage module S009 ✅ (`phase-dependency-matrix.js`: lines 99.63%, branches 99.23%)
+  - tests unit/intégration ✅ (16 fichiers / 170 tests)
+  - tests e2e ✅ (15/15)
+  - tests edge ✅ (8 fichiers / 106 tests)
+  - coverage globale ✅ (lines 99.56%, branches 98.09%, functions 100%, statements 99.56%)
+  - coverage module S009 ✅ (`phase-transition-override.js`: lines 99.24%, branches 98.57%)
   - security deps ✅ (0 vulnérabilité)
   - build ✅
 
 ## Validation G4-UX
 - Audit UX S009: `verdict: PASS`.
-- Scores: D1=95, D2=96, D3=95, D4=95, D5=94, D6=93, Design Excellence=95.
+- Scores: D1=94, D2=95, D3=94, D4=95, D5=93, D6=92, Design Excellence=94.
 - Checks obligatoires: design system, accessibilité AA, responsive, états d’interface, hiérarchie visuelle, performance perçue = ✅.
 - Couverture des états UI requis: `loading`, `empty`, `error`, `success` = ✅.
 - Issues / required fixes: `[]` (aucune).
-- Gate UX story confirmé: `✅ UX_GATES_OK (S009) design=95 D2=96`.
+- Gate UX story confirmé: `✅ UX_GATES_OK (S009) design=94 D2=95`.
 
 ## Décision H18
 - **APPROVED** — G4-T et G4-UX validés, aucun écart bloquant dans le scope strict S009.

@@ -4,51 +4,48 @@
 - ID: S004
 - Epic: E01
 - Phase cible: H14 (UX QA Audit)
-- Date (UTC): 2026-02-21T11:42:57Z
-- Statut DEV: READY_FOR_UX_AUDIT
+- Date (UTC): 2026-02-21T10:42:17Z
+- Statut DEV: READY_FOR_UX_REAUDIT
 
 ## Scope implémenté (strict S004)
-- `app/src/phase-prerequisites-validator.js` (nouveau module S004)
-- `app/src/index.js` (export public `validatePhasePrerequisites`)
-- `app/tests/unit/phase-prerequisites-validator.test.js` (nouveau)
-- `app/tests/edge/phase-prerequisites-validator.edge.test.js` (nouveau)
-- `app/tests/e2e/phase-prerequisites-validator.spec.js` (nouveau)
-- `_bmad-output/implementation-artifacts/stories/S004.md` (sections Implémentation/Review/Status mises à jour)
+- `app/src/phase-state-projection.js` (contrat et logique S004 conservés)
+- `app/tests/e2e/phase-state-projection.spec.js` (**correction UX bloquante responsive + non-régression**)
 - `_bmad-output/implementation-artifacts/handoffs/S004-dev-to-uxqa.md`
 - `_bmad-output/implementation-artifacts/handoffs/S004-dev-to-tea.md`
 
-## Evidence UX/UI disponible
-- Démonstrateur e2e S004 couvrant explicitement les états `empty`, `loading`, `error`, `success`.
-- Affichage UI explicite de:
-  - `reasonCode`
-  - `reason`
-  - `missingPrerequisiteIds` (liste détaillée en blocage)
-- Cas de blocage visibles côté UI:
-  - `TRANSITION_NOT_ALLOWED` (propagation S002)
-  - `PHASE_PREREQUISITES_MISSING`
-  - `PHASE_PREREQUISITES_INCOMPLETE`
-- Cas nominal visible côté UI: `allowed=true`, `reasonCode=OK`.
-- Non-régression responsive ajoutée: absence d’overflow horizontal sur mobile/tablette/desktop.
+## Correction UX appliquée (blocant H15)
+1. Rendu succès renforcé pour éviter l’overflow horizontal de `#success-json`:
+   - `white-space: pre-wrap`
+   - `overflow-wrap: anywhere`
+   - `word-break: break-word`
+   - `max-width: 100%` + `box-sizing: border-box`
+2. Ajout d’un test e2e de non-régression responsive explicite:
+   - **`phase state projection success payload stays without horizontal overflow on mobile/tablet/desktop`**
+   - validation sur viewports mobile/tablette/desktop.
 
-## Commandes exécutées (preuves)
+## Preuves UX/UI (commandes exécutées)
 Depuis `app/`:
-1. `npx playwright test tests/e2e/phase-prerequisites-validator.spec.js` ✅
+
+1. `npx playwright test tests/e2e/phase-state-projection.spec.js` ✅
    - 2 tests passés:
-     - `phase prerequisites demo covers empty/loading/error/success with explicit blocking reason and missing list`
-     - `phase prerequisites demo keeps success rendering without horizontal overflow on mobile/tablet/desktop`
+     - `phase state projection demo covers empty/loading/error/success with required phase fields`
+     - `phase state projection success payload stays without horizontal overflow on mobile/tablet/desktop`
+
 2. `npx playwright test tests/e2e` ✅
-   - 7/7 tests e2e passés (S001→S004 non-régression incluse).
-3. `npm run lint && npm run typecheck` ✅
-4. `npx vitest run tests/unit tests/edge` ✅ (70 tests)
-5. `npm run test:coverage` ✅
-   - `phase-prerequisites-validator.js`: **98.8% lines**, **97.59% branches**
-6. `npm run build && npm run security:deps` ✅ (0 vulnérabilité)
+   - 5/5 e2e passés (incluant le test responsive S004).
+
+## Preuves techniques de stabilité (pré-audit UX)
+Depuis `app/`:
+- `npm run lint && npm run typecheck` ✅
+- `npx vitest run tests/unit tests/edge` ✅ (49 tests)
+- `npm run test:coverage` ✅
+  - `app/src/phase-state-projection.js`: **100% lines**, **97.59% branches**
+- `npm run build && npm run security:deps` ✅ (0 vulnérabilité)
 
 ## Points de focus demandés à UXQA
-1. Validation G4-UX complète du démonstrateur S004 (design-system, accessibilité, responsive, lisibilité).
-2. Vérifier la clarté opérateur des motifs de blocage (reason codes + raisons + checklist manquante).
-3. Confirmer la robustesse responsive sur mobile/tablette/desktop (absence d’overflow horizontal).
-4. Publier verdict dans `_bmad-output/implementation-artifacts/ux-audits/S004-ux-audit.json`.
+1. Confirmer la disparition de l’overflow horizontal sur mobile/tablette/desktop en état `success`.
+2. Revalider G4-UX complet (design-system, accessibilité, responsive, états UI, lisibilité).
+3. Mettre à jour `_bmad-output/implementation-artifacts/ux-audits/S004-ux-audit.json` avec verdict attendu `PASS` si conforme.
 
 ## Next handoff
 UXQA → DEV/TEA (H15)

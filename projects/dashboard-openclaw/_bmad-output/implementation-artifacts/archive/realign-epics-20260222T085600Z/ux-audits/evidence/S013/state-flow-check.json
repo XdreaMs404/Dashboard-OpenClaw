@@ -1,0 +1,117 @@
+{
+  "storyId": "S013",
+  "runAt": "2026-02-22T07:43:06.225Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_SECTION_EXTRACTION_INPUT",
+      "expectedReasonCode": "INVALID_SECTION_EXTRACTION_INPUT",
+      "reason": "artifactDocuments ou artifactPaths est requis pour l’extraction de sections (source exploitable absente).",
+      "counts": "h2=0 | h3=0 | sections=0",
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "path-not-allowed",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_PATH_NOT_ALLOWED",
+      "expectedReasonCode": "ARTIFACT_PATH_NOT_ALLOWED",
+      "reason": "Extraction sections bloquée (ARTIFACT_PATH_NOT_ALLOWED): Chemin hors allowlist: /tmp/forbidden/prd.md.",
+      "counts": "h2=0 | h3=0 | sections=0",
+      "correctiveActions": [
+        "RESTRICT_TO_ALLOWED_ROOTS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "unsupported-type",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "UNSUPPORTED_ARTIFACT_TYPE",
+      "expectedReasonCode": "UNSUPPORTED_ARTIFACT_TYPE",
+      "reason": "Extraction sections bloquée (UNSUPPORTED_ARTIFACT_TYPE): Extension non supportée: .yaml pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/payload.yaml. Extensions autorisées: .md, .markdown.",
+      "counts": "h2=0 | h3=0 | sections=0",
+      "correctiveActions": [
+        "REMOVE_UNSUPPORTED_ARTIFACTS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "metadata-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_MISSING",
+      "expectedReasonCode": "ARTIFACT_METADATA_MISSING",
+      "reason": "Extraction sections bloquée (ARTIFACT_METADATA_MISSING): Metadata obligatoire manquante pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md: stepsCompleted, inputDocuments.",
+      "counts": "h2=0 | h3=0 | sections=0",
+      "correctiveActions": [
+        "ADD_REQUIRED_METADATA"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "metadata-invalid",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "expectedReasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Extraction sections bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
+      "counts": "h2=0 | h3=0 | sections=0",
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "parse-failed",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_PARSE_FAILED",
+      "expectedReasonCode": "ARTIFACT_PARSE_FAILED",
+      "reason": "Extraction sections bloquée (ARTIFACT_PARSE_FAILED): Frontmatter markdown invalide: séparateur de fermeture --- manquant. (/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md).",
+      "counts": "h2=0 | h3=0 | sections=0",
+      "correctiveActions": [
+        "FIX_ARTIFACT_SYNTAX"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sections-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_SECTIONS_MISSING",
+      "expectedReasonCode": "ARTIFACT_SECTIONS_MISSING",
+      "reason": "Extraction sections bloquée (ARTIFACT_SECTIONS_MISSING): Aucune section H2/H3 exploitable trouvée pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md.",
+      "counts": "h2=0 | h3=0 | sections=0",
+      "correctiveActions": [
+        "ADD_STRUCTURED_HEADINGS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Extraction sections réussie: 2/2 artefacts extraits.",
+      "counts": "h2=2 | h3=2 | sections=4",
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

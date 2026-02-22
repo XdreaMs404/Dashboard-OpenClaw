@@ -2,46 +2,43 @@
 
 - SID: S014
 - Epic: E02
-- Date (UTC): 2026-02-22T08:32:42Z
+- Date (UTC): 2026-02-21T23:47:13Z
 - Scope: STRICT (S014 uniquement)
 - Verdict H17: **PASS (GO_REVIEWER)**
 
 ## Entrées validées
 - `_bmad-output/implementation-artifacts/stories/S014.md`
 - `_bmad-output/implementation-artifacts/handoffs/S014-dev-to-tea.md`
-- `_bmad-output/implementation-artifacts/handoffs/S014-uxqa-to-dev-tea.md` (`G4-UX: PASS`)
 - `_bmad-output/implementation-artifacts/ux-audits/S014-ux-audit.json` (`verdict: PASS`)
 
-## Rejeu gates techniques (S014 strict)
-- Commande exécutée (depuis `app/`):
-  `npm run lint && npm run typecheck && npx vitest run tests/unit tests/edge && npx playwright test tests/e2e && npm run test:coverage && npm run build && npm run security:deps`
+## Action obligatoire exécutée (rejeu gates techniques S014)
+- Commande:
+  `npm run lint && npm run typecheck && npx vitest run tests/unit/artifact-metadata-validator.test.js tests/edge/artifact-metadata-validator.edge.test.js && npx playwright test tests/e2e/artifact-metadata-validator.spec.js && npm run test:coverage && npm run build && npm run security:deps`
 - Exit code: `0`
 - Trace complète: `_bmad-output/implementation-artifacts/handoffs/S014-tech-gates.log`
-- Marqueur final: `✅ S014_TECH_GATES_OK`
+- Sortie finale observée: `✅ S014_TECH_GATES_OK`
 
-## Résultats G4-T
+## Preuves qualité TEA (G4-T)
 - `lint` ✅
 - `typecheck` ✅
-- `vitest` unit+edge: **28 fichiers / 346 tests passés** ✅
-- `playwright` e2e: **27/27 tests passés** ✅
-- `test:coverage` global: **99.40% statements / 97.74% branches / 100% functions / 99.38% lines** ✅
-- Focus module S014 `app/src/artifact-table-indexer.js`: **99.13% statements / 96.99% branches / 100% functions / 99.09% lines** ✅
+- tests ciblés S014 (unit+edge): **2 fichiers / 26 tests passés** ✅
+- tests e2e ciblés S014: **2/2 tests passés** ✅
+- `test:coverage` (global): **24 fichiers / 283 tests passés** ✅
+- couverture globale: **99.45% lines / 97.82% branches / 100% functions / 99.46% statements** ✅
+- focus module S014 (`app/src/artifact-metadata-validator.js`): **98.45% lines / 95.21% branches / 100% functions / 98.51% statements** ✅
 - `build` ✅
-- `security:deps` (`npm audit --audit-level=high`): **0 vulnérabilité high+** ✅
+- `security` (`npm audit --audit-level=high`): **0 vulnérabilité** ✅
 
-## Vérifications TEA complémentaires
-1. Non-régression S011/S012/S013 ✅ (suites globales vertes S001→S014)
-2. Export public S014 (`app/src/index.js`) ✅ (`typeof=function`, `referentialEqual=true`)
-3. Benchmark 500 docs S014 ✅
-   - `requested=500`, `indexed=500`, `nonIndexed=0`, `tableCount=500`
-   - `p95IndexMs=0`, `durationMs=47`, `wallClockMs=52`
-   - conservation des comptes: `true`
+## Vérification non-régression (scope S001→S014)
+- La suite `test:coverage` globale est intégralement verte (24 fichiers / 283 tests), confirmant la non-régression technique sur le socle existant.
+- Aucun écart bloquant ni régression détectée.
 
-## Statut UX
-- G4-UX: **PASS** confirmé par UXQA (`S014-uxqa-to-dev-tea.md`, `S014-ux-audit.json`).
+## Statut UX (référence H15)
+- Audit UX disponible: `_bmad-output/implementation-artifacts/ux-audits/S014-ux-audit.json`
+- Verdict UX: **PASS** (designExcellence=95, D2=97, issues=[])
 
 ## Risques / écarts
-- Aucun gap bloquant détecté.
+- Aucun gap bloquant détecté dans le scope strict S014.
 
-## Verdict
-- **PASS** — G4-T validé pour S014. Handoff Reviewer (H18) recommandé (**GO_REVIEWER**).
+## Verdict technique explicite (H17)
+- **PASS** — validations techniques applicables à S014 conformes; handoff Reviewer (H18) recommandé.

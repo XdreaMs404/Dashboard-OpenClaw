@@ -5,82 +5,72 @@
 - **Epic**: E02
 - **Projet**: `/root/.openclaw/workspace/projects/dashboard-openclaw`
 - **Story source (SoT)**: `_bmad-output/implementation-artifacts/stories/S013.md`
-- **Runtime tick**: 2026-02-22 07:39 UTC
-
-## Entrées PM validées
-- `_bmad-output/implementation-artifacts/stories/S013.md`
-- `_bmad-output/planning-artifacts/prd.md` (FR-023, FR-024, AC-023A/B, AC-024A/B, NFR-006, NFR-012)
-- `_bmad-output/planning-artifacts/architecture.md`
-  - endpoint cible `GET /api/v1/artifacts/{artifactId}/sections`
-  - projection cible `projection.artifact.sections`
-  - événement cible `artifact.section.indexed`
-- `_bmad-output/planning-artifacts/epics.md` (E02-S03)
-- Dépendances validées: S011 (`ingestBmadArtifacts`) + S012 (`validateArtifactMetadataCompliance`)
+- **Références planning**: `prd.md` (FR-021/FR-022), `architecture.md`, `epics.md` (E02-S01)
+- **Runtime tick**: 2026-02-21 21:42 UTC
 
 ## Vérification PM du cadrage S013
-1. Story S013 complète, actionnable et traçable (FR/NFR/risques/AC/tests).
-2. Alignement confirmé avec E02-S03: extraction H2/H3 + préparation indexation story suivante.
-3. Périmètre DEV verrouillé en **scope strict S013 uniquement**.
-4. Conditions de DONE rappelées: G4-T **et** G4-UX requis.
+1. Story S013 bien cadrée: objectif, dépendances, traçabilité FR/NFR/risques, AC mesurables, tests obligatoires, scope autorisé/interdit.
+2. Alignement confirmé avec E02-S01 (`FR-021`, `FR-022`, `NFR-003`, `NFR-004`, risques `T01`, `T02`, `P02`).
+3. Contrat technique explicite: pipeline d’ingestion allowlist + validation metadata minimale + reason codes stables.
+4. Handoff DEV requis en **scope strict S013 uniquement**.
 
 ## Décision PM
 **GO_DEV explicite — S013 uniquement.**
 
-## Objectif strict S013
-Implémenter l’extracteur de sections H2/H3 pour navigation structurée sur artefacts markdown conformes, avec contrat de sortie stable, diagnostics exploitables et préparation explicite de S014.
+## Objectifs DEV (H13)
+1. Implémenter `ingestBmadArtifacts(input, options?)` dans `app/src/artifact-ingestion-pipeline.js`.
+2. Garantir ingestion sous allowlist stricte (`allowlistRoots`) et extensions autorisées (`.md`, `.markdown`, `.yaml`, `.yml`).
+3. Valider metadata obligatoire (`stepsCompleted`, `inputDocuments`) pour artefacts majeurs.
+4. Produire un résultat déterministe et stable:
+   `{ allowed, reasonCode, reason, diagnostics, ingestedArtifacts, rejectedArtifacts, correctiveActions }`.
+5. Livrer tests unit/edge/e2e + couverture/perf conformes aux seuils S013.
 
-## Périmètre fichiers autorisés (strict S013)
-- `app/src/artifact-section-extractor.js`
+## Acceptance Criteria (AC) à satisfaire
+- **AC-01** Nominal allowlist: lot valide → `allowed:true`, `reasonCode:OK`, compteurs cohérents.
+- **AC-02** Hors allowlist: blocage `ARTIFACT_PATH_NOT_ALLOWED` + action corrective.
+- **AC-03** Extension non supportée: `UNSUPPORTED_ARTIFACT_TYPE`.
+- **AC-04** Metadata manquante: `ARTIFACT_METADATA_MISSING` + compteur metadata.
+- **AC-05** Metadata invalide: `ARTIFACT_METADATA_INVALID` + erreurs de champs explicites.
+- **AC-06** Parse invalide markdown/yaml: `ARTIFACT_PARSE_FAILED` sans crash global.
+- **AC-07** Résolution des sources conforme (`artifactDocuments` prioritaire, sinon `artifactPaths` + reader, sinon erreur d’entrée).
+- **AC-08** Contrat de sortie stable + reason codes autorisés uniquement.
+- **AC-09** E2E UI: états `empty/loading/success/error` avec reason + compteurs + actions correctives.
+- **AC-10** Qualité/performance: couverture module ≥95% lignes/branches, benchmark 500 docs (`p95 <= 2000ms`, lot `<5000ms`).
+
+## Contraintes (non négociables)
+- Scope strict **S013** (aucune évolution fonctionnelle hors FR-021/FR-022).
+- Aucune régression S001..S010.
+- Aucune exécution shell depuis le module S013.
+- Sortie déterministe, reason codes stables:
+  `OK | ARTIFACT_PATH_NOT_ALLOWED | UNSUPPORTED_ARTIFACT_TYPE | ARTIFACT_READ_FAILED | ARTIFACT_PARSE_FAILED | ARTIFACT_METADATA_MISSING | ARTIFACT_METADATA_INVALID | INVALID_ARTIFACT_INGESTION_INPUT`.
+- Story **non DONE** tant que G4-T et G4-UX ne sont pas tous deux PASS.
+
+## Fichiers cibles autorisés (strict S013)
+- `app/src/artifact-ingestion-pipeline.js`
 - `app/src/index.js` (export S013 uniquement)
-- `app/tests/unit/artifact-section-extractor.test.js`
-- `app/tests/edge/artifact-section-extractor.edge.test.js`
-- `app/tests/e2e/artifact-section-extractor.spec.js`
-- `app/src/artifact-metadata-validator.js` *(ajustement minimal uniquement si partage utilitaire sans changement comportement S012)*
+- `app/tests/unit/artifact-ingestion-pipeline.test.js`
+- `app/tests/edge/artifact-ingestion-pipeline.edge.test.js`
+- `app/tests/e2e/artifact-ingestion-pipeline.spec.js`
 - `_bmad-output/implementation-artifacts/stories/S013.md`
 - `_bmad-output/implementation-artifacts/handoffs/S013-dev-to-uxqa.md`
 - `_bmad-output/implementation-artifacts/handoffs/S013-dev-to-tea.md`
 
-## AC exécutables à satisfaire
-- **AC-01** Extraction nominale H2/H3 -> `allowed:true`, `reasonCode:OK`.
-- **AC-02** Ordonnancement/hiérarchie stable -> ancres déterministes + parentage H3.
-- **AC-03** Sections manquantes -> `ARTIFACT_SECTIONS_MISSING` + action corrective.
-- **AC-04** Garde-fou metadata S012 respecté -> blocage explicite si metadata invalide/manquante.
-- **AC-05** Hors allowlist -> `ARTIFACT_PATH_NOT_ALLOWED`.
-- **AC-06** Type non supporté -> `UNSUPPORTED_ARTIFACT_TYPE`.
-- **AC-07** Parse invalide -> `ARTIFACT_PARSE_FAILED` sans crash lot.
-- **AC-08** Contrat stable + `tableIndexEligible=true` pour préparation S014.
-- **AC-09** E2E UI -> états `empty/loading/success/error` + reason/counters/actions.
-- **AC-10** Qualité/perf -> couverture module >=95% lignes+branches; 500 docs (`p95<=2000ms`, lot `<60000ms`).
-
-## Contrat de sortie attendu (stable)
-`{ allowed, reasonCode, reason, diagnostics, extractedArtifacts, nonExtractedArtifacts, correctiveActions }`
-
-Reason codes autorisés uniquement:
-`OK | ARTIFACT_PATH_NOT_ALLOWED | UNSUPPORTED_ARTIFACT_TYPE | ARTIFACT_READ_FAILED | ARTIFACT_PARSE_FAILED | ARTIFACT_METADATA_MISSING | ARTIFACT_METADATA_INVALID | ARTIFACT_SECTIONS_MISSING | INVALID_SECTION_EXTRACTION_INPUT`
-
-## Gates à lancer avant sortie DEV
-```bash
-cd /root/.openclaw/workspace/projects/dashboard-openclaw/app
-npm run lint && npm run typecheck
-npx vitest run tests/unit tests/edge
-npx playwright test tests/e2e
-npm run test:coverage
-npm run build && npm run security:deps
-```
+## Critères de succès H13
+- Tous les AC S013 sont couverts par des tests vérifiables.
+- Lint, typecheck, tests unit/edge/e2e, coverage, build, security: **PASS**.
+- Seuils de perf S013 respectés sur corpus 500 docs.
+- Non-régression prouvée sur l’existant.
+- Handoffs DEV→UXQA et DEV→TEA fournis avec preuves complètes.
 
 ## Preuves attendues (obligatoires)
-1. Logs complets des gates (lint/typecheck/unit/edge/e2e/coverage/build/security).
-2. Mapping AC -> tests explicite dans la story/handoff DEV.
-3. Preuve coverage S013 (`artifact-section-extractor.js`) >=95% lignes + branches.
-4. Preuve performance 500 docs (`p95ExtractionMs`, durée totale).
-5. Preuve de non-régression S001..S012.
-6. Liste des fichiers modifiés limitée au scope autorisé S013.
+1. **Logs d’exécution gates** (commandes + sorties): lint, typecheck, vitest (unit/edge), playwright e2e, coverage, build, security.
+2. **Mapping AC → tests** explicite dans la story/handoff DEV.
+3. **Preuve coverage S013**: pour `artifact-ingestion-pipeline.js`, lignes/branches ≥95% (valeurs exactes reportées).
+4. **Preuve performance**: mesure benchmark 500 docs avec `p95IngestMs` et durée totale.
+5. **Preuves UX (si UI touchée)**: états `empty/loading/error/success`, lisibilité reason code/compteurs/actions correctives.
+6. **Preuve robustesse**: cas négatifs (hors allowlist, extension invalide, metadata manquante/invalide, parse failure, source absente).
+7. **Liste des fichiers modifiés** limitée au périmètre autorisé S013.
 
-## Critère de succès H13
-- Cadrage S013 non ambigu, exécutable immédiatement par DEV.
-- Objectif FR-023/FR-024 borné, sans dérive hors scope.
-- Handoff DEV prêt avec contraintes, AC, preuves et gates explicités.
-
-## Handoff suivant attendu (DEV)
+## Handoff suivant attendu
 - DEV → UXQA (H14)
 - DEV → TEA (H16)

@@ -1,31 +1,36 @@
 # S005 — Résumé final (Tech Writer)
 
 ## Ce qui a été livré
-- Implémentation de l’orchestrateur des guards de phase: `app/src/phase-guards-orchestrator.js` avec API publique `orchestratePhaseGuards(input, options?)`, exportée via `app/src/index.js`.
-- Réutilisation explicite de S004 comme garde d’entrée (validation des prérequis obligatoire, sans contournement).
-- Planification stricte et ordonnée des commandes autorisées:
-  1. `bash /root/.openclaw/workspace/bmad-total/scripts/phase13-sequence-guard.sh <phaseNumber>`
-  2. `bash /root/.openclaw/workspace/bmad-total/scripts/phase13-ultra-quality-check.sh <phaseNumber>`
-- Contrôle d’exécution conforme:
-  - `simulate=true` par défaut (pas d’exécution réelle),
-  - exécution séquentielle quand `simulate=false`,
-  - arrêt immédiat au premier échec avec `reasonCode=GUARD_EXECUTION_FAILED` et `diagnostics.failedCommand`.
-- Contrat de sortie stable livré:
-  `{ allowed, reasonCode, reason, diagnostics, commands, results }`.
-- Gestion des reason codes attendus (dont `INVALID_GUARD_PHASE`, propagation stricte des blocages S004, `GUARD_EXECUTION_FAILED`).
+- Implémentation du validateur des prérequis de phase: `app/src/phase-prerequisites-validator.js` avec API publique `validatePhasePrerequisites(input)` exportée via `app/src/index.js`.
+- Validation stricte des prérequis requis (`required=true`) avant activation de phase, sans contournement de S002.
+- Propagation stricte des blocages de transition issus de S002 (même `reasonCode` + `reason`):
+  - `INVALID_PHASE`
+  - `TRANSITION_NOT_ALLOWED`
+  - `PHASE_NOTIFICATION_MISSING`
+  - `PHASE_NOTIFICATION_SLA_EXCEEDED`
+- Gestion robuste des cas S005:
+  - `PHASE_PREREQUISITES_MISSING`
+  - `PHASE_PREREQUISITES_INCOMPLETE`
+  - `INVALID_PHASE_PREREQUISITES`
+- Contrat de sortie stable respecté:
+  `{ allowed, reasonCode, reason, diagnostics }`.
+- Diagnostics minimaux garantis:
+  `fromPhase`, `toPhase`, `requiredCount`, `satisfiedCount`, `missingPrerequisiteIds`, `blockedByTransition`.
 - Couverture tests S005 livrée:
-  - `app/tests/unit/phase-guards-orchestrator.test.js`
-  - `app/tests/edge/phase-guards-orchestrator.edge.test.js`
-  - `app/tests/e2e/phase-guards-orchestrator.spec.js`
-- Démonstrateur e2e validé sur les états `empty`, `loading`, `error`, `success`, avec affichage explicite de `reasonCode`, `reason`, `commands`, `failedCommand`, `failedResult`.
-- Couverture module S005 (`phase-guards-orchestrator.js`): **100% lignes**, **100% branches**.
+  - `app/tests/unit/phase-prerequisites-validator.test.js`
+  - `app/tests/edge/phase-prerequisites-validator.edge.test.js`
+  - `app/tests/e2e/phase-prerequisites-validator.spec.js`
+- Démonstrateur e2e validé avec états UI `empty`, `loading`, `error`, `success`, affichage explicite de `reasonCode`, `reason`, `missingPrerequisiteIds`, et absence d’overflow horizontal mobile/tablette/desktop.
 
 ## Preuves de validation
 - Revue finale H18: `_bmad-output/implementation-artifacts/reviews/S005-review.md` → **APPROVED**.
+- Audit UX: `_bmad-output/implementation-artifacts/ux-audits/S005-ux-audit.json` → **PASS**.
 - Handoff TEA: `_bmad-output/implementation-artifacts/handoffs/S005-tea-to-reviewer.md` → **PASS (GO_REVIEWER)**.
-- Log story gates: `_bmad-output/implementation-artifacts/handoffs/S005-story-gates.log` → `✅ STORY_GATES_OK (S005)`.
-- Gates techniques confirmés (lint, typecheck, unit/intégration, edge, e2e, coverage, security, build) ✅.
-- Gate UX confirmé: `✅ UX_GATES_OK (S005)` avec audit UX **PASS**.
+- Rejeu gate story confirmé:
+  - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S005`
+  - Résultat attendu/confirmé: `✅ STORY_GATES_OK (S005)`.
+- Couverture module S005 (`phase-prerequisites-validator.js`): **98.8% lignes**, **97.59% branches** (seuil >= 95% atteint).
+- Gates UX confirmés: `✅ UX_GATES_OK (S005)` avec score design excellence **90** (D2=92).
 
 ## Comment tester
 Depuis la racine du projet (`/root/.openclaw/workspace/projects/dashboard-openclaw`):
@@ -47,7 +52,7 @@ Depuis la racine du projet (`/root/.openclaw/workspace/projects/dashboard-opencl
 Résultats attendus:
 - `✅ STORY_GATES_OK (S005)`
 - `✅ UX_GATES_OK (S005)`
-- Couverture module S005 >= 95% lignes/branches (observé: 100%/100%).
+- Couverture module S005 >= 95% lignes/branches.
 
 ## Résultat global (GO/NO-GO)
-**GO** — S005 est validée en scope strict avec G4-T + G4-UX PASS.
+**GO** — S005 est validée en scope strict (G4-T + G4-UX) et exploitable pour la clôture story.

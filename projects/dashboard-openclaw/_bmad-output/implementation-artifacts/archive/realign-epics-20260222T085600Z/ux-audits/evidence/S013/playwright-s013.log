@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/artifact-section-extractor.spec.js:409:1 › artifact section extractor demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  2 [chromium] › tests/e2e/artifact-section-extractor.spec.js:304:1 › artifact section extractor demo covers empty/loading/error/success with explicit reason, section counters and correctiveActions (3.9s)
+
+  2 passed (5.3s)

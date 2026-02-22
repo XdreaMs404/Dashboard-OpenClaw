@@ -6,6 +6,7 @@ import { ingestBmadArtifacts } from './artifact-ingestion-pipeline.js';
 import { validateArtifactMetadataCompliance } from './artifact-metadata-validator.js';
 import { extractArtifactSectionsForNavigation } from './artifact-section-extractor.js';
 import { indexArtifactMarkdownTables } from './artifact-table-indexer.js';
+import { searchArtifactsFullText } from './artifact-fulltext-search.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
 import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
@@ -25,6 +26,7 @@ export {
   indexArtifactMarkdownTables,
   ingestBmadArtifacts,
   normalizeEmail,
+  searchArtifactsFullText,
   normalizeUserName,
   validateArtifactMetadataCompliance,
   orchestratePhaseGuards,

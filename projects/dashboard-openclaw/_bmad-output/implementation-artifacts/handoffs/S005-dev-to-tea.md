@@ -3,57 +3,55 @@
 ## Story
 - ID: S005
 - Epic: E01
-- Date (UTC): 2026-02-21T13:04:48Z
+- Date (UTC): 2026-02-21T11:42:57Z
 - Statut DEV: READY_FOR_TEA
 
 ## Vérification scope strict S005
-- Implémentation limitée à S005: orchestrateur guards + export index + tests unit/edge/e2e + artefacts S005.
-- Réutilisation S004 confirmée (`prerequisitesValidation` + délégation `prerequisitesInput` vers `validatePhasePrerequisites`).
+- Implémentation limitée au périmètre S005 (module prérequis + export + tests S005 + artefacts story/handoffs S005).
+- Réutilisation S002 confirmée (délégation `transitionInput` ou consommation `transitionValidation`).
 - Contrat de sortie stable livré:
-  `{ allowed, reasonCode, reason, diagnostics, commands, results }`.
+  `{ allowed, reasonCode, reason, diagnostics }`.
 
 ## Fichiers touchés (S005)
-- `app/src/phase-guards-orchestrator.js`
+- `app/src/phase-prerequisites-validator.js`
 - `app/src/index.js`
-- `app/tests/unit/phase-guards-orchestrator.test.js`
-- `app/tests/edge/phase-guards-orchestrator.edge.test.js`
-- `app/tests/e2e/phase-guards-orchestrator.spec.js`
+- `app/tests/unit/phase-prerequisites-validator.test.js`
+- `app/tests/edge/phase-prerequisites-validator.edge.test.js`
+- `app/tests/e2e/phase-prerequisites-validator.spec.js`
 - `_bmad-output/implementation-artifacts/stories/S005.md`
 - `_bmad-output/implementation-artifacts/handoffs/S005-dev-to-uxqa.md`
 - `_bmad-output/implementation-artifacts/handoffs/S005-dev-to-tea.md`
 
-## Gates DEV exécutés + résultats (preuves)
-Commande exécutée:
-- `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash scripts/run-quality-gates.sh` ✅
+## Commandes exécutées + résultats
+Depuis `app/`:
 
-Détail des résultats:
-1. `npm run lint` ✅
-2. `npm run typecheck` ✅
-3. `npm test` (vitest run) ✅
-   - **10 fichiers / 95 tests passés**
-4. `npm run test:e2e` (playwright) ✅
-   - **9/9 tests passés**
-5. `npm run test:edge` ✅
-   - **5 fichiers / 55 tests passés**
-6. `npm run test:coverage` ✅
-   - couverture globale: **99.28% lines / 98.13% branches / 100% functions / 99.29% statements**
-   - module S005 `app/src/phase-guards-orchestrator.js`: **100% lines / 100% branches**
-7. security scan (`npm audit --audit-level=high`) ✅
-   - **0 vulnérabilité**
-8. `npm run build` ✅
-9. verdict script: `✅ QUALITY_GATES_OK`
+1. `npm run lint && npm run typecheck` ✅
+2. `npx vitest run tests/unit tests/edge` ✅
+   - 8 fichiers de tests
+   - 70/70 tests passés
+3. `npx playwright test tests/e2e` ✅
+   - 7/7 tests e2e passés
+   - inclut S005 UI states + non-régression responsive
+4. `npm run test:coverage` ✅
+   - Seuil global: PASS
+   - `app/src/phase-prerequisites-validator.js`:
+     - **Lines: 98.8%**
+     - **Branches: 97.59%**
+5. `npm run build && npm run security:deps` ✅
+   - Build OK
+   - Audit dépendances: 0 vulnérabilité
 
 ## Traçabilité AC/tests S005
-- AC-01/03/04/05: `tests/unit/phase-guards-orchestrator.test.js`, `tests/edge/phase-guards-orchestrator.edge.test.js`
-- AC-02 (propagation stricte S004): `tests/unit/phase-guards-orchestrator.test.js`, `tests/edge/phase-guards-orchestrator.edge.test.js`
-- AC-06 (UI e2e): `tests/e2e/phase-guards-orchestrator.spec.js`
-- AC-07 (coverage module >=95% lignes+branches): `test:coverage` PASS (**100/100** sur S005)
+- AC-01/03/04/05/06/07: `tests/unit/phase-prerequisites-validator.test.js`, `tests/edge/phase-prerequisites-validator.edge.test.js`
+- AC-02 (propagation stricte reason codes S002): `tests/unit/phase-prerequisites-validator.test.js`, `tests/edge/phase-prerequisites-validator.edge.test.js`
+- AC-08 (UI e2e): `tests/e2e/phase-prerequisites-validator.spec.js`
+- AC-09 (coverage module >=95% lignes+branches): `npm run test:coverage` PASS
 
 ## Statut qualité DEV
-- G4-T: **PASS** côté DEV.
-- G4-UX: en attente verdict UXQA (H14/H15), story non-DONE tant que UX non validé.
+- G4-T (technique): prêt (PASS).
+- G4-UX: en attente verdict UXQA (H14/H15), non marqué DONE côté DEV.
 
 ## Demande TEA
-1. Rejouer les gates techniques en environnement TEA.
-2. Vérifier la non-régression inter-story (S001→S005).
-3. Publier verdict QA global (PASS/CONCERNS/FAIL) avec écarts actionnables si nécessaires.
+1. Rejouer gates techniques en environnement TEA.
+2. Valider non-régression inter-story (S001/S002/S003/S005).
+3. Émettre verdict QA global (PASS/CONCERNS/FAIL) avec écarts actionnables si présents.

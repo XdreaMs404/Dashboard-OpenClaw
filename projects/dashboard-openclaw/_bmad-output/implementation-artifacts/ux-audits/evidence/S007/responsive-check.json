@@ -1,6 +1,6 @@
 {
-  "storyId": "S007",
-  "runAt": "2026-02-21T14:49:07.386Z",
+  "storyId": "S005",
+  "runAt": "2026-02-21T13:14:47.435Z",
   "checks": [
     {
       "viewport": {
@@ -8,16 +8,10 @@
         "width": 390,
         "height": 844
       },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S007/responsive-mobile.png",
-      "state": "error",
-      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
-      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
-      "severity": "critical",
-      "correctiveActions": [
-        "PUBLISH_PHASE_NOTIFY",
-        "REVALIDATE_TRANSITION",
-        "ESCALATE_TO_PM"
-      ],
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S005/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Simulation guards prête pour la phase 2.",
       "ariaLiveStatus": "polite",
       "ariaLiveSuccess": "polite",
       "ariaAtomicSuccess": "true",
@@ -28,12 +22,16 @@
       "overflow": {
         "document": 0,
         "body": 0,
-        "reason": 0,
-        "severity": 0,
-        "actions": 0,
-        "error": 0,
         "success": 0,
+        "error": 0,
+        "commands": 0,
+        "failureDetails": 0,
         "max": 0
+      },
+      "contrast": {
+        "bodyText": 21,
+        "successPanel": 20.07,
+        "heading": 21
       },
       "pass": true
     },
@@ -43,16 +41,10 @@
         "width": 820,
         "height": 1180
       },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S007/responsive-tablet.png",
-      "state": "error",
-      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
-      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
-      "severity": "critical",
-      "correctiveActions": [
-        "PUBLISH_PHASE_NOTIFY",
-        "REVALIDATE_TRANSITION",
-        "ESCALATE_TO_PM"
-      ],
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S005/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Simulation guards prête pour la phase 2.",
       "ariaLiveStatus": "polite",
       "ariaLiveSuccess": "polite",
       "ariaAtomicSuccess": "true",
@@ -63,12 +55,16 @@
       "overflow": {
         "document": 0,
         "body": 0,
-        "reason": 0,
-        "severity": 0,
-        "actions": 0,
-        "error": 0,
         "success": 0,
+        "error": 0,
+        "commands": 0,
+        "failureDetails": 0,
         "max": 0
+      },
+      "contrast": {
+        "bodyText": 21,
+        "successPanel": 20.07,
+        "heading": 21
       },
       "pass": true
     },
@@ -78,16 +74,10 @@
         "width": 1366,
         "height": 768
       },
-      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S007/responsive-desktop.png",
-      "state": "error",
-      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
-      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
-      "severity": "critical",
-      "correctiveActions": [
-        "PUBLISH_PHASE_NOTIFY",
-        "REVALIDATE_TRANSITION",
-        "ESCALATE_TO_PM"
-      ],
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S005/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Simulation guards prête pour la phase 2.",
       "ariaLiveStatus": "polite",
       "ariaLiveSuccess": "polite",
       "ariaAtomicSuccess": "true",
@@ -98,12 +88,16 @@
       "overflow": {
         "document": 0,
         "body": 0,
-        "reason": 0,
-        "severity": 0,
-        "actions": 0,
-        "error": 0,
         "success": 0,
+        "error": 0,
+        "commands": 0,
+        "failureDetails": 0,
         "max": 0
+      },
+      "contrast": {
+        "bodyText": 21,
+        "successPanel": 20.07,
+        "heading": 21
       },
       "pass": true
     }

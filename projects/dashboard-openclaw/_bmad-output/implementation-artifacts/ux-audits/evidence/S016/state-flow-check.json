@@ -1,0 +1,130 @@
+{
+  "storyId": "S014",
+  "runAt": "2026-02-22T08:23:20.237Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_TABLE_INDEX_INPUT",
+      "expectedReasonCode": "INVALID_TABLE_INDEX_INPUT",
+      "reason": "artifactDocuments ou artifactPaths est requis pour l’indexation de tableaux (source exploitable absente).",
+      "counts": "indexed=0 | nonIndexed=0 | tableCount=0",
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "path-not-allowed",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_PATH_NOT_ALLOWED",
+      "expectedReasonCode": "ARTIFACT_PATH_NOT_ALLOWED",
+      "reason": "Indexation tables bloquée (ARTIFACT_PATH_NOT_ALLOWED): Chemin hors allowlist: /tmp/forbidden/prd.md.",
+      "counts": "indexed=0 | nonIndexed=1 | tableCount=0",
+      "correctiveActions": [
+        "RESTRICT_TO_ALLOWED_ROOTS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "unsupported-type",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "UNSUPPORTED_ARTIFACT_TYPE",
+      "expectedReasonCode": "UNSUPPORTED_ARTIFACT_TYPE",
+      "reason": "Indexation tables bloquée (UNSUPPORTED_ARTIFACT_TYPE): Extension non supportée: .yaml pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/payload.yaml. Extensions autorisées: .md, .markdown.",
+      "counts": "indexed=0 | nonIndexed=1 | tableCount=0",
+      "correctiveActions": [
+        "REMOVE_UNSUPPORTED_ARTIFACTS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "metadata-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_MISSING",
+      "expectedReasonCode": "ARTIFACT_METADATA_MISSING",
+      "reason": "Indexation tables bloquée (ARTIFACT_METADATA_MISSING): Metadata obligatoire manquante pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md: stepsCompleted, inputDocuments.",
+      "counts": "indexed=0 | nonIndexed=1 | tableCount=0",
+      "correctiveActions": [
+        "ADD_REQUIRED_METADATA"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "metadata-invalid",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "expectedReasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Indexation tables bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
+      "counts": "indexed=0 | nonIndexed=1 | tableCount=0",
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "sections-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_SECTIONS_MISSING",
+      "expectedReasonCode": "ARTIFACT_SECTIONS_MISSING",
+      "reason": "Indexation tables bloquée (ARTIFACT_SECTIONS_MISSING): Aucune section H2/H3 exploitable trouvée pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md.",
+      "counts": "indexed=0 | nonIndexed=1 | tableCount=0",
+      "correctiveActions": [
+        "ADD_STRUCTURED_HEADINGS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "tables-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_TABLES_MISSING",
+      "expectedReasonCode": "ARTIFACT_TABLES_MISSING",
+      "reason": "Indexation tables bloquée (ARTIFACT_TABLES_MISSING): Aucun tableau markdown exploitable trouvé pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md.",
+      "counts": "indexed=0 | nonIndexed=1 | tableCount=0",
+      "correctiveActions": [
+        "ADD_MARKDOWN_TABLES"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "parse-failed",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_PARSE_FAILED",
+      "expectedReasonCode": "ARTIFACT_PARSE_FAILED",
+      "reason": "Indexation tables bloquée (ARTIFACT_PARSE_FAILED): Frontmatter markdown invalide: séparateur de fermeture --- manquant. (/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md).",
+      "counts": "indexed=0 | nonIndexed=1 | tableCount=0",
+      "correctiveActions": [
+        "FIX_ARTIFACT_SYNTAX"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Indexation tables réussie: 2/2 artefacts indexés.",
+      "counts": "indexed=2 | nonIndexed=0 | tableCount=2",
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

@@ -1,5 +1,1 @@
-[S009] Responsive UX audit 2026-02-21T17:05:58.264Z
-- mobile: pass=true overflow.max=0 state=error reasonCode=OVERRIDE_REQUEST_MISSING
-- tablet: pass=true overflow.max=0 state=error reasonCode=OVERRIDE_REQUEST_MISSING
-- desktop: pass=true overflow.max=0 state=error reasonCode=OVERRIDE_REQUEST_MISSING
-allPass=true
+responsive-all-pass=true

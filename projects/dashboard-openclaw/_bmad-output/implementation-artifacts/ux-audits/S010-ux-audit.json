@@ -2,12 +2,11 @@
   "storyId": "S010",
   "epicId": "E01",
   "verdict": "PASS",
-  "g4Ux": "PASS",
   "reviewer": "ux-qa-auditor",
   "wcagTarget": "2.2-AA",
   "scores": {
     "D1": 95,
-    "D2": 97,
+    "D2": 96,
     "D3": 95,
     "D4": 95,
     "D5": 94,
@@ -29,9 +28,9 @@
     "success": true
   },
   "evidence": [
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S010/playwright-s010.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S010/playwright-s009.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S010/playwright-e2e-suite.log",
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S010/vitest-s010.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S010/vitest-s009.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S010/state-flow-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S010/responsive-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S010/responsive-mobile.png",
@@ -42,6 +41,6 @@
   ],
   "issues": [],
   "requiredFixes": [],
-  "notes": "G4-UX PASS explicite sur S010: checks design/accessibilité/responsive/états validés. Le démonstrateur couvre empty/loading/error/success avec rendu explicite reasonCode/reason/alert.active/alert.severity/owner/anomalies/correctiveActions. Accessibilité ciblée conforme (label lié au select, role=status aria-live=polite, role=alert, panneau succès aria-live+aria-atomic, focus restitué au bouton après action). Responsive validé mobile/tablette/desktop avec overflow horizontal max=0 et hiérarchie H1/H2 cohérente.",
-  "updatedAt": "2026-02-21T18:17:30Z"
+  "notes": "Audit UX strict S010 validé: états empty/loading/error/success couverts avec affichage explicite reasonCode/reason/owner/blockingDependencies/correctiveActions, clarté opérationnelle confirmée sur les scénarios critiques (transition bloquée, prérequis incomplets, override requis, stale), accessibilité ciblée conforme (label explicite, role=status aria-live=polite, role=alert, panneau succès aria-live + aria-atomic, focus restitué au bouton), hiérarchie H1/H2 cohérente, et aucune régression responsive (overflow horizontal max=0 sur mobile/tablette/desktop).",
+  "updatedAt": "2026-02-21T17:06:14Z"
 }

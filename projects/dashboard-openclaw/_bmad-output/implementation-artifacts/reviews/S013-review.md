@@ -12,20 +12,18 @@
 - Story SoT: `_bmad-output/implementation-artifacts/stories/S013.md`
 
 ## Validation G4-T (technique)
-- Rejeu reviewer exécuté:
-  - Commande: `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S013`
-  - Résultat: `✅ STORY_GATES_OK (S013)` (exit code 0)
-- Détails confirmés:
+- Handoff TEA S013 confirme un rejeu technique scope strict S013 avec exit code 0 (`S013-tech-gates.log`, sortie `✅ S013_TECH_GATES_OK`).
+- Résultats confirmés:
   - lint ✅
   - typecheck ✅
-  - tests unit/intégration ✅ (26 fichiers / 314 tests)
-  - tests e2e ✅ (25/25)
-  - tests edge ✅ (13 fichiers / 197 tests)
-  - coverage globale ✅ (lines 99.43%, branches 97.83%, functions 100%, statements 99.44%)
-  - coverage module S013 ✅ (`artifact-section-extractor.js`: lines 99.26%, branches 97.92%, functions 100%, statements 99.30%)
+  - tests ciblés S013 unit+edge ✅ (2 fichiers / 31 tests)
+  - tests e2e ciblés S013 ✅ (2/2)
+  - test:coverage global ✅ (22 fichiers / 257 tests)
+  - couverture globale ✅ (99.67% lines / 98.24% branches / 100% functions / 99.67% statements)
+  - couverture module S013 ✅ (`artifact-ingestion-pipeline.js`: 100% lines/branches/functions/statements)
   - security deps ✅ (0 vulnérabilité)
   - build ✅
-- Non-régression confirmée sur le socle S001→S012.
+- Non-régression: aucune régression détectée sur le socle S001→S010.
 
 ## Validation G4-UX
 - Audit UX S013: `verdict: PASS`.
@@ -33,7 +31,6 @@
 - Checks obligatoires: design system, accessibilité AA, responsive, états d’interface, hiérarchie visuelle, performance perçue = ✅.
 - Couverture des états UI requis: `loading`, `empty`, `error`, `success` = ✅.
 - Issues / required fixes: `[]` (aucune).
-- Gate UX story confirmé: `✅ UX_GATES_OK (S013) design=95 D2=97`.
 
 ## Décision H18
 - **APPROVED** — G4-T et G4-UX validés, aucun écart bloquant dans le scope strict S013.

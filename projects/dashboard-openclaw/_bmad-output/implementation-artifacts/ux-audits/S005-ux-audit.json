@@ -5,13 +5,13 @@
   "reviewer": "ux-qa-auditor",
   "wcagTarget": "2.2-AA",
   "scores": {
-    "D1": 91,
-    "D2": 93,
-    "D3": 92,
-    "D4": 94,
-    "D5": 90,
-    "D6": 89,
-    "designExcellence": 92
+    "D1": 90,
+    "D2": 92,
+    "D3": 91,
+    "D4": 93,
+    "D5": 89,
+    "D6": 88,
+    "designExcellence": 90
   },
   "checks": {
     "designSystemCompliance": true,
@@ -28,9 +28,9 @@
     "success": true
   },
   "evidence": [
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S005/playwright-s005.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S005/playwright-s004.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S005/playwright-e2e-suite.log",
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S005/vitest-s005.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S005/vitest-s004.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S005/state-flow-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S005/responsive-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S005/responsive-mobile.png",
@@ -40,6 +40,6 @@
   ],
   "issues": [],
   "requiredFixes": [],
-  "notes": "Audit UX strict S005: flux UI empty/loading/error/success validé, reasonCode/reason/failedCommand/failedResult lisibles et actionnables, plan de commandes ordonné (CMD-008 puis CMD-009) explicite, rôles/labels/aria-live conformes, focus restitué au bouton après action, et aucune régression responsive (overflow horizontal max=0 sur mobile/tablette/desktop).",
-  "updatedAt": "2026-02-21T13:16:30Z"
+  "notes": "Audit UX scope strict S005: états empty/loading/error/success validés, reasonCode/reason/missingPrerequisiteIds lisibles et explicites, labels/roles/aria-live conformes WCAG AA ciblé, focus restitué au bouton après action, et absence d’overflow horizontal mobile/tablette/desktop (max=0).",
+  "updatedAt": "2026-02-21T11:47:17Z"
 }

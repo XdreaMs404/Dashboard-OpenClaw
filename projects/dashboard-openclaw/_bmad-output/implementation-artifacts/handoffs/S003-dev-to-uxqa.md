@@ -4,48 +4,53 @@
 - ID: S003
 - Epic: E01
 - Phase cible: H14 (UX QA Audit)
-- Date (UTC): 2026-02-21T10:42:17Z
-- Statut DEV: READY_FOR_UX_REAUDIT
+- Date (UTC): 2026-02-21T14:39:42Z
+- Statut DEV: READY_FOR_UX_AUDIT
 
 ## Scope implémenté (strict S003)
-- `app/src/phase-state-projection.js` (contrat et logique S003 conservés)
-- `app/tests/e2e/phase-state-projection.spec.js` (**correction UX bloquante responsive + non-régression**)
+- `app/src/phase-sla-alert.js` (module S003, API `evaluatePhaseSlaAlert`)
+- `app/src/index.js` (export public S003)
+- `app/tests/unit/phase-sla-alert.test.js`
+- `app/tests/edge/phase-sla-alert.edge.test.js`
+- `app/tests/e2e/phase-sla-alert.spec.js`
+- `_bmad-output/implementation-artifacts/stories/S003.md`
 - `_bmad-output/implementation-artifacts/handoffs/S003-dev-to-uxqa.md`
 - `_bmad-output/implementation-artifacts/handoffs/S003-dev-to-tea.md`
 
-## Correction UX appliquée (blocant H15)
-1. Rendu succès renforcé pour éviter l’overflow horizontal de `#success-json`:
-   - `white-space: pre-wrap`
-   - `overflow-wrap: anywhere`
-   - `word-break: break-word`
-   - `max-width: 100%` + `box-sizing: border-box`
-2. Ajout d’un test e2e de non-régression responsive explicite:
-   - **`phase state projection success payload stays without horizontal overflow on mobile/tablet/desktop`**
-   - validation sur viewports mobile/tablette/desktop.
+## Evidence UX/UI disponible
+- Démonstrateur e2e S003 avec états explicites: `empty`, `loading`, `error`, `success`.
+- Affichage explicite de:
+  - `reasonCode`
+  - `reason`
+  - `severity`
+  - `correctiveActions` ordonnées
+- Cas UI couverts:
+  - payload invalide (`INVALID_SLA_ALERT_INPUT`),
+  - incident SLA warning (actions 1-2),
+  - incident SLA critical (action `ESCALATE_TO_PM` en 3e position),
+  - nominal success (`OK`).
+- Vérification responsive e2e: absence d’overflow horizontal mobile/tablette/desktop.
 
-## Preuves UX/UI (commandes exécutées)
-Depuis `app/`:
+## Gates DEV exécutés (preuves)
+Commande complète exécutée depuis `app/`:
+- `npm run lint && npm run typecheck && npx vitest run tests/unit tests/edge && npx playwright test tests/e2e && npm run test:coverage && npm run build && npm run security:deps` ✅
 
-1. `npx playwright test tests/e2e/phase-state-projection.spec.js` ✅
-   - 2 tests passés:
-     - `phase state projection demo covers empty/loading/error/success with required phase fields`
-     - `phase state projection success payload stays without horizontal overflow on mobile/tablet/desktop`
-
-2. `npx playwright test tests/e2e` ✅
-   - 5/5 e2e passés (incluant le test responsive S003).
-
-## Preuves techniques de stabilité (pré-audit UX)
-Depuis `app/`:
-- `npm run lint && npm run typecheck` ✅
-- `npx vitest run tests/unit tests/edge` ✅ (49 tests)
-- `npm run test:coverage` ✅
-  - `app/src/phase-state-projection.js`: **100% lines**, **97.59% branches**
-- `npm run build && npm run security:deps` ✅ (0 vulnérabilité)
+Résultats observés:
+- `lint` ✅
+- `typecheck` ✅
+- `tests unit+edge` ✅ (**14 fichiers / 146 tests passés**)
+- `tests e2e` ✅ (**13 tests passés**)
+- `coverage` ✅
+  - global: **99.64% statements / 97.97% branches / 100% functions / 99.63% lines**
+  - module S003 `phase-sla-alert.js`: **100% lines / 97.05% branches**
+- `build` ✅
+- `security` (`npm audit --audit-level=high`) ✅ (**0 vulnérabilité**)
 
 ## Points de focus demandés à UXQA
-1. Confirmer la disparition de l’overflow horizontal sur mobile/tablette/desktop en état `success`.
-2. Revalider G4-UX complet (design-system, accessibilité, responsive, états UI, lisibilité).
-3. Mettre à jour `_bmad-output/implementation-artifacts/ux-audits/S003-ux-audit.json` avec verdict attendu `PASS` si conforme.
+1. Validation G4-UX complète du démonstrateur S003 (design-system, accessibilité, responsive, lisibilité).
+2. Vérifier la clarté opérateur de la sévérité (`none|warning|critical`) et de l’ordre des actions correctives.
+3. Vérifier la compréhension des états UI `empty/loading/error/success`.
+4. Publier verdict dans `_bmad-output/implementation-artifacts/ux-audits/S003-ux-audit.json`.
 
 ## Next handoff
 UXQA → DEV/TEA (H15)

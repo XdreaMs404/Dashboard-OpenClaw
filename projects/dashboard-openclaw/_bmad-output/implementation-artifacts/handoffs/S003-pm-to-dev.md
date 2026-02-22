@@ -1,58 +1,63 @@
-# Handoff PM → DEV — S003 (H13)
+# H13 — PM → DEV — S003 (scope strict)
 
 ## Contexte
 - **SID**: S003
 - **Epic**: E01
+- **Projet**: `/root/.openclaw/workspace/projects/dashboard-openclaw`
 - **Story source**: `_bmad-output/implementation-artifacts/stories/S003.md`
-- **Objectif produit**: fournir une projection d’état de phase exploitable UI avec `owner`, `started_at`, `finished_at`, `status`, `duration_ms` et motif de blocage SLA visible.
+- **Index source**: `_bmad-output/implementation-artifacts/stories/STORIES_INDEX.md`
+- **Objectif story**: détecter les dépassements SLA de transition et produire un plan d’action corrective déterministe (FR-008), en continuité stricte avec S002 et S006.
 
-## Entrées analysées (artefacts S003)
-- `_bmad-output/implementation-artifacts/stories/S003.md`
-- `_bmad-output/implementation-artifacts/handoffs/S003-dev-to-uxqa.md`
-- `_bmad-output/implementation-artifacts/handoffs/S003-uxqa-to-dev-tea.md`
-- `_bmad-output/implementation-artifacts/handoffs/S003-dev-to-tea.md`
-- `_bmad-output/implementation-artifacts/handoffs/S003-tea-to-reviewer.md`
-- `_bmad-output/implementation-artifacts/ux-audits/S003-ux-audit.json`
+## Vérification PM (entrées obligatoires)
+1. `S003.md` est complète et actionnable: user story, dépendances, traçabilité FR/NFR, AC mesurables, cas de test, contraintes, quality/UX gates.
+2. `S003.md` est en statut **READY_FOR_DEV**.
+3. `STORIES_INDEX.md` maintient `S003` en `TODO` (story planifiée, prête pour prise en charge DEV en H13).
+4. Continuité vérifiée sur le code existant `app/src` + tests S001..S006:
+   - S002: `validatePhaseTransition` (reason codes SLA)
+   - S006: `recordPhaseTransitionHistory` (historique read-only)
+   - S001..S005: non-régression exigée.
 
 ## Décision PM
-Story **prête DEV** en **scope strict S003** avec priorité sur la fermeture du blocage UX (responsive overflow) tout en conservant les AC fonctionnels et la non-régression technique validée.
+**GO_DEV explicite — S003 uniquement.**
 
-## Scope DEV (strict S003)
-1. Maintenir/compléter `buildPhaseStateProjection(input)` et son contrat stable.
-2. Réutiliser S002 (`validatePhaseTransition`) comme source de vérité des blocages transition (pas de duplication contradictoire).
-3. Conserver les statuts autorisés `pending | running | done | blocked` + calcul `duration_ms`.
-4. Corriger le blocant UX S003: overflow horizontal sur rendu succès (démonstrateur e2e), sans dérive hors S003.
-5. Ajouter/maintenir la non-régression e2e responsive prouvant l’absence d’overflow mobile/tablette/desktop.
+## Scope DEV autorisé (strict S003)
+1. Implémenter/ajuster `evaluatePhaseSlaAlert(input, options?)` dans `app/src/phase-sla-alert.js`.
+2. Utiliser S002 comme source de vérité de validation transition:
+   - priorité à `transitionValidation` injecté,
+   - sinon délégation à `validatePhaseTransition` via `transitionInput`.
+3. Consommer `history` (format S006) en lecture seule pour calcul de récurrence.
+4. Produire un plan d’actions déterministe et ordonné:
+   - `PUBLISH_PHASE_NOTIFY`
+   - `REVALIDATE_TRANSITION`
+   - `ESCALATE_TO_PM` (conditionnel, en 3e position)
+5. Respecter les paramètres:
+   - `lookbackMinutes` défaut 60
+   - `escalationThreshold` défaut 2
+6. Garantir le contrat de sortie stable:
+   `{ allowed, reasonCode, reason, diagnostics, alert, correctiveActions }`.
+7. Ajouter/maintenir les tests S003 unit + edge + e2e avec coverage module >=95% lignes+branches.
+8. Exporter S003 dans `app/src/index.js` (export S003 uniquement).
 
-## Contrat de sortie attendu (AC)
-- **AC-01**: phase terminée valide → `status=done`, durée exacte.
-- **AC-02**: phase en cours (`finishedAt=null`) → `status=running`, durée basée sur `nowAt` injectable.
-- **AC-03**: phase non démarrée sans blocage → `status=pending`, `duration_ms=null`.
-- **AC-04**: si S002 retourne `allowed=false` + reason code de transition/SLA → `status=blocked` + motif ré-exposé.
-- **AC-05**: timestamps invalides (`finishedAt < startedAt` ou date invalide) → `status=blocked`, `INVALID_PHASE_TIMESTAMPS`, sans crash.
-- **AC-06**: entrées invalides (`phaseId` hors H01..H23, owner vide/blanc) → `status=blocked`, `INVALID_PHASE_STATE`, sans crash.
-- **AC-07**: contrat stable toujours retourné:
-  `{ phaseId, owner, started_at, finished_at, status, duration_ms, blockingReasonCode, blockingReason, diagnostics }`.
-- **AC-08**: couverture module projection **>=95% lignes + branches**.
+## Scope interdit (hors-scope)
+- Toute évolution hors FR-008 / S003.
+- Toute modification métier S001..S006 non strictement nécessaire à l’intégration S003.
+- Toute exécution shell depuis S003.
+- Refactors transverses non requis par les AC S003.
 
-## Contraintes non négociables
-- Scope **S003 uniquement** (aucune modification d’une autre story).
-- SLA notification par défaut conservé à **10 min** via S002.
-- Aucune mutation observable des objets d’entrée.
-- Aucune régression sur contrats S001/S002 et fonctions existantes.
-- Story non-DONE tant que **G4-T** et **G4-UX** ne sont pas tous deux PASS.
+## Reason codes autorisés (strict)
+`OK | INVALID_PHASE | TRANSITION_NOT_ALLOWED | PHASE_NOTIFICATION_MISSING | PHASE_NOTIFICATION_SLA_EXCEEDED | INVALID_SLA_ALERT_INPUT`
 
-## Risques & mitigations (S003)
-1. **Risque fonctionnel**: divergence avec S002 sur reason codes.
-   - **Mitigation**: déléguer à `validatePhaseTransition` / `transitionValidation` et rejouer tests edge.
-2. **Risque robustesse**: erreurs de dates/ordre temporel provoquant statuts incohérents.
-   - **Mitigation**: validation stricte dates + tests AC-05/AC-06 + diagnostics systématiques.
-3. **Risque UX bloquant (actuel)**: overflow horizontal du rendu succès (`#success-json`) sur mobile/tablette/desktop.
-   - **Mitigation**: wrapping robuste (`pre-wrap` + `overflow-wrap:anywhere` + `word-break`) ou rendu structuré des champs + assertion e2e responsive explicite.
-4. **Risque qualité**: gates techniques verts mais G4-UX échoue.
-   - **Mitigation**: fournir evidence UX mise à jour et viser verdict UX audit `PASS` avant handoff final.
+## Fichiers cibles autorisés (strict S003)
+- `app/src/phase-sla-alert.js`
+- `app/src/index.js` (export S003 uniquement)
+- `app/tests/unit/phase-sla-alert.test.js`
+- `app/tests/edge/phase-sla-alert.edge.test.js`
+- `app/tests/e2e/phase-sla-alert.spec.js`
+- `_bmad-output/implementation-artifacts/stories/S003.md`
+- `_bmad-output/implementation-artifacts/handoffs/S003-dev-to-uxqa.md`
+- `_bmad-output/implementation-artifacts/handoffs/S003-dev-to-tea.md`
 
-## Gates obligatoires avant DEV → TEA
+## Gates à exécuter avant sortie DEV
 ```bash
 cd /root/.openclaw/workspace/projects/dashboard-openclaw/app
 npm run lint && npm run typecheck
@@ -62,8 +67,11 @@ npm run test:coverage
 npm run build && npm run security:deps
 ```
 
-## Sortie attendue DEV
-- Handoffs mis à jour:
-  - `_bmad-output/implementation-artifacts/handoffs/S003-dev-to-uxqa.md`
-  - `_bmad-output/implementation-artifacts/handoffs/S003-dev-to-tea.md`
-- Evidence UX/tech S003 à jour prouvant fermeture du blocage responsive.
+## Critère de succès H13
+- AC-01..AC-08 couverts et vérifiables.
+- Non-régression S001..S006 prouvée (tests verts).
+- Evidence gates techniques + UX fournie dans les handoffs DEV.
+
+## Handoff suivant attendu
+- DEV → UXQA (H14)
+- DEV → TEA (H16)

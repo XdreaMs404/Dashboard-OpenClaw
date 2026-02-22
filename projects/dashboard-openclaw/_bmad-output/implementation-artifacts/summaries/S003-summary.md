@@ -1,51 +1,63 @@
 # S003 — Résumé final (Tech Writer)
 
 ## Ce qui a été livré
-- Module de projection d’état implémenté: `app/src/phase-state-projection.js` avec API publique `buildPhaseStateProjection(input)` exportée via `app/src/index.js`.
-- Contrat de sortie stable respecté:
-  `{ phaseId, owner, started_at, finished_at, status, duration_ms, blockingReasonCode, blockingReason, diagnostics }`.
-- Statuts métier couverts: `pending | running | done | blocked`.
-- Calcul de durée conforme:
-  - `done`: `finishedAt - startedAt`
-  - `running`: `nowAt - startedAt` (injectable pour tests déterministes)
-  - `pending/blocked`: `duration_ms = null`.
-- Blocages de transition/SLA réutilisent S002 comme source de vérité (`validatePhaseTransition`), avec ré-exposition des motifs:
-  - `TRANSITION_NOT_ALLOWED`
-  - `PHASE_NOTIFICATION_MISSING`
-  - `PHASE_NOTIFICATION_SLA_EXCEEDED`.
-- Robustesse ajoutée côté projection:
-  - `INVALID_PHASE_STATE` (phase/owner invalides)
-  - `INVALID_PHASE_TIMESTAMPS` (dates invalides ou ordre temporel incohérent).
-- Démo e2e UI conforme (états `empty/loading/error/success`) avec affichage `owner`, timestamps, `status`, `duration_ms`, raison de blocage.
-- Correctif responsive S003 validé: absence d’overflow horizontal en état `success` sur mobile/tablette/desktop.
+- Implémentation de `evaluatePhaseSlaAlert(input, options?)` dans `app/src/phase-sla-alert.js`, avec contrat de sortie stable:
+  `{ allowed, reasonCode, reason, diagnostics, alert, correctiveActions }`.
+- Résolution de la source de validation conforme au scope:
+  - priorité à `transitionValidation` si fourni,
+  - sinon délégation à `validatePhaseTransition` (S002) via `transitionInput`.
+- Détection explicite des incidents SLA de transition avec propagation stricte des reason codes S002, notamment `PHASE_NOTIFICATION_SLA_EXCEEDED`.
+- Génération d’un plan d’action corrective ordonné:
+  1. `PUBLISH_PHASE_NOTIFY`
+  2. `REVALIDATE_TRANSITION`
+  3. `ESCALATE_TO_PM` (ajout conditionnel en cas de récurrence).
+- Escalade critique implémentée selon fenêtre glissante (`lookbackMinutes`, défaut 60) et seuil (`escalationThreshold`, défaut 2) à partir de l’historique S006 en lecture seule.
+- Validation stricte des entrées invalides (`history`, `lookbackMinutes`, `escalationThreshold`, payload incomplet) avec blocage explicite `INVALID_SLA_ALERT_INPUT`, sans exception non contrôlée.
+- Export public S003 confirmé dans `app/src/index.js`.
+- Couverture des états UI démonstrateur e2e: `empty`, `loading`, `error`, `success`, avec rendu explicite de `reasonCode`, `reason`, `severity`, `correctiveActions`.
+- Couverture module S003 (`phase-sla-alert.js`) validée au-dessus du seuil requis: **100% lignes**, **97.05% branches**.
 
 ## Preuves de validation
-- Revue finale H18: `_bmad-output/implementation-artifacts/reviews/S003-review.md` → **APPROVED**.
-- Audit UX: `_bmad-output/implementation-artifacts/ux-audits/S003-ux-audit.json` → **PASS**.
-- Handoff TEA: `_bmad-output/implementation-artifacts/handoffs/S003-tea-to-reviewer.md` → **PASS (GO_REVIEWER)**.
-- Couverture module S003 (`phase-state-projection.js`): **100% lignes**, **97.59% branches** (seuil >= 95% atteint).
+- Revue finale H18: `_bmad-output/implementation-artifacts/reviews/S003-review.md` → verdict **APPROVED**.
+- Rejeu reviewer confirmé:
+  - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S003`
+  - Résultat: `✅ STORY_GATES_OK (S003)`.
+- Validation G4-T confirmée:
+  - lint ✅
+  - typecheck ✅
+  - tests unit/intégration ✅ (14 fichiers / 146 tests)
+  - tests edge ✅ (7 fichiers / 91 tests)
+  - tests e2e ✅ (13/13)
+  - coverage globale ✅ (99.63% lines / 97.97% branches / 100% functions / 99.64% statements)
+  - coverage module S003 ✅ (100% lines / 97.05% branches)
+  - security deps ✅ (0 vulnérabilité)
+  - build ✅
+- Validation G4-UX confirmée:
+  - Audit UX S003: **PASS**
+  - UX gate: `✅ UX_GATES_OK (S003) design=94 D2=95`
+  - États UI requis couverts: `loading`, `empty`, `error`, `success`.
 
 ## Comment tester
-Depuis la racine du projet (`/root/.openclaw/workspace/projects/dashboard-openclaw`):
+Depuis la racine projet (`/root/.openclaw/workspace/projects/dashboard-openclaw`):
 
-1. Rejouer les gates complets story (tech + UX) en une commande:
+1. Rejouer les gates complets de la story S003:
    - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-story-gates.sh S003`
 
-2. Vérifier uniquement les gates UX S003:
+2. Vérifier spécifiquement le gate UX S003:
    - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-ux-gates.sh S003`
 
-3. Vérifier le bundle technique en détail (depuis `app/`):
+3. Vérifier le bundle technique détaillé (depuis `app/`):
    - `cd /root/.openclaw/workspace/projects/dashboard-openclaw/app`
    - `npm run lint && npm run typecheck`
-   - `npx vitest run tests/unit/phase-state-projection.test.js tests/edge/phase-state-projection.edge.test.js`
-   - `npx playwright test tests/e2e/phase-state-projection.spec.js`
+   - `npx vitest run tests/unit/phase-sla-alert.test.js tests/edge/phase-sla-alert.edge.test.js`
+   - `npx playwright test tests/e2e/phase-sla-alert.spec.js`
    - `npm run test:coverage`
    - `npm run build && npm run security:deps`
 
 Résultats attendus:
-- `✅ STORY_GATES_OK (S003)` pour le gate complet.
-- `✅ UX_GATES_OK (S003)` pour le gate UX.
+- `✅ STORY_GATES_OK (S003)`
+- `✅ UX_GATES_OK (S003)`
 - Couverture module S003 >= 95% lignes/branches.
 
 ## Résultat global (GO/NO-GO)
-**GO** — S003 est documentée et prête pour exécution des gates de clôture story.
+**GO** — S003 est validée en scope strict avec G4-T + G4-UX PASS.

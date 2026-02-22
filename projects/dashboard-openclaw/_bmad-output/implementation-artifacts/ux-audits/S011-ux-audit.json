@@ -1,6 +1,6 @@
 {
   "storyId": "S011",
-  "epicId": "E02",
+  "epicId": "E01",
   "verdict": "PASS",
   "g4Ux": "PASS",
   "reviewer": "ux-qa-auditor",
@@ -11,7 +11,7 @@
     "D3": 95,
     "D4": 95,
     "D5": 94,
-    "D6": 94,
+    "D6": 93,
     "designExcellence": 95
   },
   "checks": {
@@ -29,9 +29,9 @@
     "success": true
   },
   "evidence": [
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S011/playwright-s011.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S011/playwright-s010.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S011/playwright-e2e-suite.log",
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S011/vitest-s011.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S011/vitest-s010.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S011/state-flow-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S011/responsive-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S011/responsive-mobile.png",
@@ -42,6 +42,6 @@
   ],
   "issues": [],
   "requiredFixes": [],
-  "notes": "Audit UX S011 validé: démonstrateur couvre explicitement empty/loading/error/success sur tous les reason codes critiques FR-021/FR-022, affichage opérateur lisible (reasonCode, reason, compteurs, correctiveActions) et transitions d’état robustes. Accessibilité ciblée conforme (label associé au select, role=status aria-live=polite, role=alert pour erreurs, panneau succès aria-live+aria-atomic, focus restitué au bouton après action). Responsive validé mobile/tablette/desktop avec overflow horizontal max=0 sur les zones critiques et hiérarchie visuelle H1/H2 cohérente.",
-  "updatedAt": "2026-02-21T21:13:20Z"
+  "notes": "G4-UX PASS explicite sur S011: checks design/accessibilité/responsive/états validés. Le démonstrateur couvre empty/loading/error/success avec rendu explicite reasonCode/reason/alert.active/alert.severity/owner/anomalies/correctiveActions. Accessibilité ciblée conforme (label lié au select, role=status aria-live=polite, role=alert, panneau succès aria-live+aria-atomic, focus restitué au bouton après action). Responsive validé mobile/tablette/desktop avec overflow horizontal max=0 et hiérarchie H1/H2 cohérente.",
+  "updatedAt": "2026-02-21T18:17:30Z"
 }

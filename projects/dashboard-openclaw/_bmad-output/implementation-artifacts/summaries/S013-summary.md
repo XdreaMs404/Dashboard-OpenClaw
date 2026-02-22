@@ -1,36 +1,28 @@
 # S013 — Résumé final (Tech Writer)
 
 ## Livré (scope strict S013)
-- Implémentation de `extractArtifactSectionsForNavigation(input, options?)` dans `app/src/artifact-section-extractor.js`.
-- Extraction fiable des sections **H2/H3** pour navigation structurée avec:
-  - `headingId` et `anchor` déterministes,
-  - `startLine` / `endLine` cohérents,
-  - hiérarchie H3 via `parentHeadingId`.
-- Intégration du garde-fou S012 (`validateArtifactMetadataCompliance`) avant extraction.
-- Gestion explicite des erreurs de lot:
-  - `ARTIFACT_SECTIONS_MISSING`
-  - `ARTIFACT_PATH_NOT_ALLOWED`
-  - `UNSUPPORTED_ARTIFACT_TYPE`
-  - `ARTIFACT_PARSE_FAILED`
+- Implémentation de `ingestBmadArtifacts(input, options?)` dans `app/src/artifact-ingestion-pipeline.js`.
+- Ingestion strictement limitée aux types `.md|.markdown|.yaml|.yml` sous `allowlistRoots`.
+- Rejet déterministe des chemins hors allowlist (`ARTIFACT_PATH_NOT_ALLOWED`).
+- Validation metadata des artefacts majeurs (`stepsCompleted`, `inputDocuments`) avec reason codes dédiés:
   - `ARTIFACT_METADATA_MISSING`
   - `ARTIFACT_METADATA_INVALID`
-  - `INVALID_SECTION_EXTRACTION_INPUT`
+- Parse markdown/yaml robuste avec erreurs localisées (`ARTIFACT_PARSE_FAILED`) sans crash lot global.
 - Contrat de sortie stable livré:
-  `{ allowed, reasonCode, reason, diagnostics, extractedArtifacts, nonExtractedArtifacts, correctiveActions }`.
-- Préparation FR-024 livrée: `extractedArtifacts[*].tableIndexEligible = true`.
-- Export public S013 confirmé dans `app/src/index.js` (`extractArtifactSectionsForNavigation`).
+  `{ allowed, reasonCode, reason, diagnostics, ingestedArtifacts, rejectedArtifacts, correctiveActions }`.
+- Export public S013 confirmé dans `app/src/index.js` (`ingestBmadArtifacts`).
 
-## Preuves & gates
-- Revue H18: `_bmad-output/implementation-artifacts/reviews/S013-review.md` → **APPROVED**.
-- Story gates reviewer: `✅ STORY_GATES_OK (S013)`.
+## Preuves & verdict gates
+- Revue finale H18: `_bmad-output/implementation-artifacts/reviews/S013-review.md` → **APPROVED**.
+- Story gate: `✅ STORY_GATES_OK (S013)`.
 - G4-T validé:
   - lint ✅
   - typecheck ✅
-  - tests unit/intégration ✅ (**26 fichiers / 314 tests**)
-  - tests edge ✅ (**13 fichiers / 197 tests**)
-  - tests e2e ✅ (**25/25**)
-  - coverage globale ✅ (**99.43% lines / 97.83% branches / 100% functions / 99.44% statements**)
-  - coverage module S013 ✅ (`artifact-section-extractor.js`: **99.26% lines / 97.92% branches / 100% functions / 99.30% statements**)
+  - tests unit/intégration ✅ (**22 fichiers / 257 tests**)
+  - tests edge ✅ (**11 fichiers / 163 tests**)
+  - tests e2e ✅ (**21/21**)
+  - coverage globale ✅ (**99.67% lines / 98.24% branches / 100% functions / 99.67% statements**)
+  - coverage module S013 ✅ (**100% lines / 100% branches / 100% functions / 100% statements**)
   - security deps ✅ (**0 vulnérabilité**)
   - build ✅
 - G4-UX validé (SoT: `_bmad-output/implementation-artifacts/ux-audits/S013-ux-audit.json`):
@@ -46,9 +38,15 @@ Depuis la racine projet:
 
 Depuis `app/`:
 - `npm run lint && npm run typecheck`
-- `npx vitest run tests/unit/artifact-section-extractor.test.js tests/edge/artifact-section-extractor.edge.test.js`
-- `npx playwright test tests/e2e/artifact-section-extractor.spec.js`
+- `npx vitest run tests/unit/artifact-ingestion-pipeline.test.js tests/edge/artifact-ingestion-pipeline.edge.test.js`
+- `npx playwright test tests/e2e/artifact-ingestion-pipeline.spec.js`
 - `npm run test:coverage && npm run build && npm run security:deps`
+
+## Impacts
+- **Fiabilité**: socle d’ingestion déterministe et auditable pour E02, sans dépendre de chemins non autorisés.
+- **Conformité FR-021/FR-022**: contrôle strict allowlist + metadata minimale systématique sur artefacts majeurs.
+- **Qualité opérationnelle**: diagnostics exploitables (`requested/ingested/rejected`, metadata, durée, p95) pour pilotage gate.
+- **Risque réduit**: baisse du risque d’ingestion de données non fiables/hors périmètre et meilleure traçabilité des corrections.
 
 ## Verdict
 **GO** — S013 validée en scope strict avec G4-T + G4-UX PASS.

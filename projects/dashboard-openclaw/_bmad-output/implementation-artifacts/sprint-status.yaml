@@ -2,135 +2,185 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-22T08:37:07Z"
+updated_at_utc: "2026-02-22T09:46:12Z"
 
 development_status:
   epic-1: done
-  1-01-normalisation-de-nom-utilisateur: done
-  1-02-validateur-de-transitions-autorisees-blocage-sans-notification-de-phase: done
-  1-03-story-3: done
-  1-04-story-4: done
-  1-05-story-5: done
-  1-06-story-6: done
-  1-07-story-7: done
-  1-08-story-8: done
-  1-09-story-9: done
-  1-10-story-10: done
+  1-01-machine-d-etat-canonique-h01-h23: done
+  1-02-validateur-de-transitions-autorisees: done
+  1-03-sla-de-notification-de-phase-et-blocage: done
+  1-04-capture-owner-horodatage-statut-de-phase: done
+  1-05-checklist-prerequis-avant-activation-de-phase: done
+  1-06-orchestration-sequence-guard-depuis-le-cockpit: done
+  1-07-orchestration-ultra-quality-check-depuis-le-cockpit: done
+  1-08-historique-consultable-des-transitions: done
+  1-09-workflow-override-exceptionnel-avec-approbateur: done
+  1-10-carte-dependances-inter-phases-en-temps-reel: done
+  1-11-detection-anomalies-de-progression-et-alertes: done
+  1-12-journal-decisionnel-de-gouvernance-phase-gate: done
   epic-1-retrospective: optional
 
   epic-2: in-progress
-  2-11-story-11: done
-  2-12-story-12: done
-  2-13-story-13: done
-  2-14-story-14: done
-  2-15-story-15: backlog
-  2-16-story-16: backlog
-  2-17-story-17: backlog
-  2-18-story-18: backlog
-  2-19-story-19: backlog
-  2-20-story-20: backlog
+  2-13-pipeline-ingestion-markdown-yaml-sous-allowlist: done
+  2-14-validator-metadata-stepscompleted-inputdocuments: done
+  2-15-extracteur-sections-h2-h3-pour-navigation: done
+  2-16-indexeur-tableaux-markdown-et-schema: done
+  2-17-recherche-full-text-avec-filtres-dynamiques: backlog
+  2-18-filtrage-contextuel-phase-agent-date-gate: backlog
+  2-19-moteur-diff-version-vers-version-d-artefacts: backlog
+  2-20-evidence-graph-decision-preuve-gate-commande: backlog
+  2-21-indicateur-de-fraicheur-staleness-des-vues: backlog
+  2-22-diagnostic-parse-errors-et-recommandations: backlog
+  2-23-tags-risques-et-annotations-contextuelles: backlog
+  2-24-backfill-historique-migration-corpus-existant: backlog
   epic-2-retrospective: optional
 
   epic-3: backlog
-  3-21-story-21: backlog
-  3-22-story-22: backlog
-  3-23-story-23: backlog
-  3-24-story-24: backlog
-  3-25-story-25: backlog
-  3-26-story-26: backlog
-  3-27-story-27: backlog
-  3-28-story-28: backlog
-  3-29-story-29: backlog
-  3-30-story-30: backlog
+  3-25-gate-center-unifie-avec-statut-et-owner: backlog
+  3-26-evaluation-duale-g4-t-g4-ux-correlee: backlog
+  3-27-calculateur-verdict-pass-concerns-fail: backlog
+  3-28-blocage-done-si-sous-gate-non-pass: backlog
+  3-29-validation-preuve-primaire-obligatoire: backlog
+  3-30-creation-automatique-actions-concerns: backlog
+  3-31-versioning-des-policies-de-gate: backlog
+  3-32-simulation-de-verdict-pre-soumission: backlog
+  3-33-tableau-tendances-des-verdicts: backlog
+  3-34-export-rapport-gate-verdict-preuves-actions: backlog
+  3-35-pont-d-ingestion-des-preuves-ux-vers-g4-ux: backlog
+  3-36-gouvernance-des-exceptions-de-gate: backlog
   epic-3-retrospective: optional
 
   epic-4: backlog
-  4-31-story-31: backlog
-  4-32-story-32: backlog
-  4-33-story-33: backlog
-  4-34-story-34: backlog
-  4-35-story-35: backlog
-  4-36-story-36: backlog
-  4-37-story-37: backlog
-  4-38-story-38: backlog
-  4-39-story-39: backlog
-  4-40-story-40: backlog
+  4-37-catalogue-commandes-allowlist-versionne: backlog
+  4-38-dry-run-by-default-pour-toute-commande-write: backlog
+  4-39-preview-d-impact-fichiers-avant-apply: backlog
+  4-40-double-confirmation-pour-actions-destructives: backlog
+  4-41-controle-rbac-avant-execution: backlog
+  4-42-contexte-actif-signe-active-project-root: backlog
+  4-43-journal-append-only-des-commandes: backlog
+  4-44-timeout-retry-idempotency-key-pilotes: backlog
+  4-45-ordonnancement-concurrent-et-backpressure: backlog
+  4-46-kill-switch-operationnel-immediat: backlog
+  4-47-override-policy-avec-approbation-nominative: backlog
+  4-48-bibliotheque-templates-de-commandes-validees: backlog
   epic-4-retrospective: optional
 
   epic-5: backlog
-  5-41-story-41: backlog
-  5-42-story-42: backlog
-  5-43-story-43: backlog
-  5-44-story-44: backlog
-  5-45-story-45: backlog
-  5-46-story-46: backlog
-  5-47-story-47: backlog
-  5-48-story-48: backlog
-  5-49-story-49: backlog
-  5-50-story-50: backlog
+  5-49-tableau-aqcd-explicable-formule-source: backlog
+  5-50-snapshots-aqcd-periodiques-et-comparatifs: backlog
+  5-51-readiness-score-rule-based-v1: backlog
+  5-52-top-3-actions-prioritaires-par-gate: backlog
+  5-53-registre-risques-vivant-owner-echeance-statut: backlog
+  5-54-lien-mitigation-task-preuve-de-fermeture: backlog
+  5-55-heatmap-risques-probabilite-impact: backlog
+  5-56-cout-moyen-par-decision-validee: backlog
+  5-57-waste-ratio-par-phase-alertes-derive: backlog
+  5-58-suivi-actions-h21-h22-h23-jusqu-a-cloture: backlog
+  5-59-vue-executive-sponsor-simplifiee: backlog
+  5-60-instrumentation-baseline-tcd-et-roi: backlog
   epic-5-retrospective: optional
 
   epic-6: backlog
-  6-51-story-51: backlog
-  6-52-story-52: backlog
-  6-53-story-53: backlog
-  6-54-story-54: backlog
-  6-55-story-55: backlog
-  6-56-story-56: backlog
-  6-57-story-57: backlog
-  6-58-story-58: backlog
-  6-59-story-59: backlog
-  6-60-story-60: backlog
+  6-61-contrat-4-etats-pour-widgets-critiques: backlog
+  6-62-navigation-clavier-complete-focus-visible: backlog
+  6-63-conformite-contraste-wcag-2-2-aa: backlog
+  6-64-responsive-360-768-1366-1920-sans-perte-decisionnelle: backlog
+  6-65-liaison-captures-ux-et-verdicts-g4-ux: backlog
+  6-66-ux-debt-lane-et-plan-de-reduction: backlog
+  6-67-glossaire-bmad-contextuel-integre: backlog
+  6-68-lint-design-tokens-anti-style-rogue: backlog
+  6-69-catalogue-microcopie-pass-concerns-fail: backlog
+  6-70-preferences-motion-prefers-reduced-motion: backlog
+  6-71-harnais-de-tests-usability-rapides: backlog
+  6-72-tableau-de-bord-regressions-ux: backlog
   epic-6-retrospective: optional
 
   epic-7: backlog
-  7-61-story-61: backlog
-  7-62-story-62: backlog
-  7-63-story-63: backlog
-  7-64-story-64: backlog
-  7-65-story-65: backlog
-  7-66-story-66: backlog
-  7-67-story-67: backlog
-  7-68-story-68: backlog
-  7-69-story-69: backlog
-  7-70-story-70: backlog
+  7-73-dashboards-personnalises-par-role: backlog
+  7-74-file-d-actions-priorisees-contextualisees: backlog
+  7-75-notification-center-multiseverite: backlog
+  7-76-throttling-dedup-anti-fatigue: backlog
+  7-77-mesure-sla-phase-complete-notify: backlog
+  7-78-threads-commentaires-lies-aux-decisions: backlog
+  7-79-mentions-directes-escalade-severite: backlog
+  7-80-timeline-inter-roles-des-evenements-cles: backlog
+  7-81-indice-de-fatigue-notifications: backlog
+  7-82-reporting-ack-critique-10-min: backlog
+  7-83-permissions-collaboration-orientees-role: backlog
+  7-84-playbooks-communication-de-crise: backlog
   epic-7-retrospective: optional
 
   epic-8: backlog
-  8-71-story-71: backlog
-  8-72-story-72: backlog
-  8-73-story-73: backlog
-  8-74-story-74: backlog
-  8-75-story-75: backlog
-  8-76-story-76: backlog
-  8-77-story-77: backlog
-  8-78-story-78: backlog
-  8-79-story-79: backlog
-  8-80-story-80: backlog
+  8-85-switcher-projet-avec-confirmation-contextuelle: backlog
+  8-86-blocage-ecriture-cross-project: backlog
+  8-87-service-de-contexte-signe: backlog
+  8-88-connecteur-jira-read-only: backlog
+  8-89-connecteur-linear-read-only: backlog
+  8-90-gestion-secrets-connecteurs-en-vault: backlog
+  8-91-rbac-scoping-par-projet-actif: backlog
+  8-92-segmentation-vues-multi-projets: backlog
+  8-93-gestion-incidents-mismatch-de-contexte: backlog
+  8-94-monitoring-sante-connecteurs: backlog
+  8-95-scheduler-synchronisation-read-first: backlog
+  8-96-assistant-onboarding-nouveau-projet: backlog
   epic-8-retrospective: optional
 
   epic-9: backlog
-  9-81-story-81: backlog
-  9-82-story-82: backlog
-  9-83-story-83: backlog
-  9-84-story-84: backlog
-  9-85-story-85: backlog
-  9-86-story-86: backlog
-  9-87-story-87: backlog
-  9-88-story-88: backlog
-  9-89-story-89: backlog
-  9-90-story-90: backlog
+  9-97-connecteur-notion-pour-preuves-referencees: backlog
+  9-98-ingestion-rapports-tests-ci-unit-int-e2e-coverage: backlog
+  9-99-ingestion-rapports-vulnerabilites: backlog
+  9-100-export-bundles-md-pdf-json: backlog
+  9-101-api-reporting-externe-controlee: backlog
+  9-102-backup-restauration-configurations-critiques: backlog
+  9-103-profil-deploiement-self-host-securise: backlog
+  9-104-politique-retention-purge-par-type-de-donnee: backlog
+  9-105-controle-export-par-role-et-policy: backlog
+  9-106-classification-et-tagging-des-donnees: backlog
+  9-107-pack-preuves-conformite-automatise: backlog
+  9-108-checklist-hardening-enterprise-pilote: backlog
   epic-9-retrospective: optional
 
   epic-10: backlog
-  10-91-story-91: backlog
-  10-92-story-92: backlog
-  10-93-story-93: backlog
-  10-94-story-94: backlog
-  10-95-story-95: backlog
-  10-96-story-96: backlog
-  10-97-story-97: backlog
-  10-98-story-98: backlog
-  10-99-story-99: backlog
-  10-100-story-100: backlog
+  10-109-registre-versionne-des-contrats-api-events: backlog
+  10-110-contract-tests-obligatoires-gate-command-data: backlog
+  10-111-sli-latence-read-models-critiques: backlog
+  10-112-optimisation-recherche-artefacts-p95: backlog
+  10-113-rebuild-projections-bulk-60s: backlog
+  10-114-indexation-delta-cache-intelligent: backlog
+  10-115-controles-qualite-donnees-projection: backlog
+  10-116-backpressure-queue-ingestion-workers: backlog
+  10-117-dashboard-capacity-planning: backlog
+  10-118-alertes-finops-budgets-et-derives: backlog
+  10-119-automatisation-slo-error-budget: backlog
+  10-120-suite-benchmarks-performance-continue: backlog
   epic-10-retrospective: optional
+
+  epic-11: backlog
+  11-121-mode-stale-but-available-pilote: backlog
+  11-122-runbooks-dr-backup-restore-testes: backlog
+  11-123-redaction-automatique-des-secrets-logs: backlog
+  11-124-workflow-revocation-acces-24h: backlog
+  11-125-verification-integrite-audit-logs-quotidienne: backlog
+  11-126-routage-alertes-incidents-critiques: backlog
+  11-127-chaos-tests-retries-dlq-ingestion: backlog
+  11-128-bibliotheque-runbooks-game-days: backlog
+  11-129-audit-conformite-retention-export: backlog
+  11-130-tracker-sla-remediation-vulnerabilites: backlog
+  11-131-hardening-self-host-security-baseline: backlog
+  11-132-comite-gouvernance-overrides-securite: backlog
+  epic-11-retrospective: optional
+
+  epic-12: backlog
+  12-133-generateur-checklist-readiness-h10: backlog
+  12-134-compilateur-packs-preuves-pass-concerns-fail: backlog
+  12-135-board-scope-freeze-must-should-could: backlog
+  12-136-matrice-sign-off-nominative-inter-roles: backlog
+  12-137-publication-baseline-tcd-aqcd-sprint-1: backlog
+  12-138-plan-rollout-pilote-30-60-90-jours: backlog
+  12-139-kit-conduite-du-changement-par-role: backlog
+  12-140-parcours-onboarding-accelere-14-jours: backlog
+  12-141-tracker-concerns-act-01-act-08: backlog
+  12-142-atelier-simulation-go-no-go-h10: backlog
+  12-143-boucle-feedback-post-go-live: backlog
+  12-144-contrat-de-handoff-final-vers-h10: backlog
+  epic-12-retrospective: optional

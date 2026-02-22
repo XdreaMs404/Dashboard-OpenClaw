@@ -5,13 +5,13 @@
   "reviewer": "ux-qa-auditor",
   "wcagTarget": "2.2-AA",
   "scores": {
-    "D1": 94,
-    "D2": 95,
-    "D3": 94,
-    "D4": 95,
-    "D5": 93,
-    "D6": 92,
-    "designExcellence": 94
+    "D1": 92,
+    "D2": 94,
+    "D3": 93,
+    "D4": 94,
+    "D5": 91,
+    "D6": 90,
+    "designExcellence": 93
   },
   "checks": {
     "designSystemCompliance": true,
@@ -28,9 +28,9 @@
     "success": true
   },
   "evidence": [
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/playwright-s008.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/playwright-s006.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/playwright-e2e-suite.log",
-    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/vitest-s008.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/vitest-s006.log",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/state-flow-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-check.json",
     "_bmad-output/implementation-artifacts/ux-audits/evidence/S008/responsive-mobile.png",
@@ -41,6 +41,6 @@
   ],
   "issues": [],
   "requiredFixes": [],
-  "notes": "Audit UX strict S008 validé: états empty/loading/error/success couverts avec affichage explicite reasonCode/reason/override.required/override.applied/requiredActions, clarté opérationnelle des scénarios d’override confirmée (demande absente, conflit approbateur, override approuvé, nominal), ordre des actions conforme (capture puis audit/revalidation), accessibilité ciblée conforme (label explicite, role=status aria-live=polite, role=alert, panneau succès aria-live + aria-atomic, focus restitué au bouton), hiérarchie H1/H2 cohérente, et aucune régression responsive (overflow horizontal max=0 sur mobile/tablette/desktop).",
-  "updatedAt": "2026-02-21T15:20:16Z"
+  "notes": "Audit UX strict S008 validé: états empty/loading/error/success couverts avec reasonCode/reason lisibles, historique rendu clairement (from->to, verdict, timestamp) et propagation explicite des blocages guard. Contrôles WCAG ciblés conformes sur le démonstrateur (role=status aria-live=polite, role=alert, panneau succès aria-live+aria-atomic, focus restitué au bouton), hiérarchie H1/H2 cohérente, contrastes AA et aucune régression responsive (overflow horizontal max=0 sur mobile/tablette/desktop).",
+  "updatedAt": "2026-02-21T13:57:22Z"
 }
