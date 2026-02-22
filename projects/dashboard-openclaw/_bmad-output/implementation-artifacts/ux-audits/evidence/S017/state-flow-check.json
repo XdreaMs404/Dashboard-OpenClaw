@@ -1,0 +1,77 @@
+{
+  "storyId": "S017",
+  "runAt": "2026-02-22T09:57:25.839Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_ARTIFACT_SEARCH_INPUT",
+      "expectedReasonCode": "INVALID_ARTIFACT_SEARCH_INPUT",
+      "reason": "query invalide: chaîne non vide requise.",
+      "counts": "matched=0 | filteredOut=0",
+      "appliedFilters": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_TABLES_MISSING",
+      "expectedReasonCode": "ARTIFACT_TABLES_MISSING",
+      "reason": "Recherche full-text bloquée (ARTIFACT_TABLES_MISSING): Aucun tableau markdown exploitable.",
+      "counts": "matched=0 | filteredOut=0",
+      "appliedFilters": [
+        "—"
+      ],
+      "correctiveActions": [
+        "ADD_MARKDOWN_TABLES"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "filtered-empty",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Recherche full-text exécutée: aucun résultat sur 1 artefacts indexés.",
+      "counts": "matched=0 | filteredOut=1",
+      "appliedFilters": [
+        "artifactTypes=ux"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Recherche full-text exécutée: 1 résultat(s) sur 2 artefacts indexés.",
+      "counts": "matched=1 | filteredOut=1",
+      "appliedFilters": [
+        "artifactTypes=architecture"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

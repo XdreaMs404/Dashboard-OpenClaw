@@ -1,0 +1,47 @@
+{
+  "storyId": "S017",
+  "epicId": "E02",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 95,
+    "D2": 97,
+    "D3": 95,
+    "D4": 95,
+    "D5": 94,
+    "D6": 94,
+    "designExcellence": 95
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/playwright-s017.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/playwright-e2e-suite.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/vitest-s017.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/responsive-mobile.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/responsive-tablet.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/responsive-desktop.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/responsive-audit.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S017/ux-gate.log"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX S017 validé: démonstrateur couvre empty/loading/error/success sur les scénarios clés (input invalide, blocage amont S014, filtre sans résultat, nominal). Lisibilité opérateur conforme (reasonCode, reason, matchedCount, filteredOutCount, appliedFilters, correctiveActions). Accessibilité ciblée conforme (label select, role=status aria-live, role=alert, panneau succès aria-live+aria-atomic, focus restitué au bouton). Responsive validé mobile/tablette/desktop sans overflow horizontal (max=0) avec hiérarchie H1/H2 cohérente.",
+  "updatedAt": "2026-02-22T09:57:38Z"
+}

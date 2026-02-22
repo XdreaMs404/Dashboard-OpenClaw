@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/artifact-fulltext-search.spec.js:354:1 › artifact fulltext search demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  1 [chromium] › tests/e2e/artifact-fulltext-search.spec.js:286:1 › artifact fulltext search demo covers empty/loading/error/success with reason, counters, filters and correctiveActions (2.1s)
+
+  2 passed (3.5s)
