@@ -1,6 +1,6 @@
 {
   "storyId": "S012",
-  "runAt": "2026-02-21T23:22:18.379Z",
+  "runAt": "2026-02-22T23:42:42.714Z",
   "checks": [
     {
       "viewport": {
@@ -10,11 +10,16 @@
       },
       "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S012/responsive-mobile.png",
       "state": "error",
-      "reasonCode": "ARTIFACT_METADATA_INVALID",
-      "reason": "Validation metadata bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
-      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification SLA dépassée pour owner=ops.lead: elapsedMs=620000, slaMs=600000, fromPhase=H09, toPhase=H10.",
+      "owner": "ops.lead",
+      "decisionEntry": "dec-blocked-sla-1 | G2 | critical",
+      "historyRows": [
+        "dec-blocked-sla-1 | G2 | PHASE_NOTIFICATION_SLA_EXCEEDED"
+      ],
       "correctiveActions": [
-        "FIX_INVALID_METADATA"
+        "PUBLISH_PHASE_NOTIFICATION",
+        "REVALIDATE_TRANSITION"
       ],
       "ariaLiveStatus": "polite",
       "ariaLiveSuccess": "polite",
@@ -27,7 +32,9 @@
         "document": 0,
         "body": 0,
         "reason": 0,
-        "counts": 0,
+        "owner": 0,
+        "entry": 0,
+        "history": 0,
         "actions": 0,
         "error": 0,
         "success": 0,
@@ -43,11 +50,16 @@
       },
       "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S012/responsive-tablet.png",
       "state": "error",
-      "reasonCode": "ARTIFACT_METADATA_INVALID",
-      "reason": "Validation metadata bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
-      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification SLA dépassée pour owner=ops.lead: elapsedMs=620000, slaMs=600000, fromPhase=H09, toPhase=H10.",
+      "owner": "ops.lead",
+      "decisionEntry": "dec-blocked-sla-1 | G2 | critical",
+      "historyRows": [
+        "dec-blocked-sla-1 | G2 | PHASE_NOTIFICATION_SLA_EXCEEDED"
+      ],
       "correctiveActions": [
-        "FIX_INVALID_METADATA"
+        "PUBLISH_PHASE_NOTIFICATION",
+        "REVALIDATE_TRANSITION"
       ],
       "ariaLiveStatus": "polite",
       "ariaLiveSuccess": "polite",
@@ -60,7 +72,9 @@
         "document": 0,
         "body": 0,
         "reason": 0,
-        "counts": 0,
+        "owner": 0,
+        "entry": 0,
+        "history": 0,
         "actions": 0,
         "error": 0,
         "success": 0,
@@ -76,11 +90,16 @@
       },
       "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S012/responsive-desktop.png",
       "state": "error",
-      "reasonCode": "ARTIFACT_METADATA_INVALID",
-      "reason": "Validation metadata bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
-      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification SLA dépassée pour owner=ops.lead: elapsedMs=620000, slaMs=600000, fromPhase=H09, toPhase=H10.",
+      "owner": "ops.lead",
+      "decisionEntry": "dec-blocked-sla-1 | G2 | critical",
+      "historyRows": [
+        "dec-blocked-sla-1 | G2 | PHASE_NOTIFICATION_SLA_EXCEEDED"
+      ],
       "correctiveActions": [
-        "FIX_INVALID_METADATA"
+        "PUBLISH_PHASE_NOTIFICATION",
+        "REVALIDATE_TRANSITION"
       ],
       "ariaLiveStatus": "polite",
       "ariaLiveSuccess": "polite",
@@ -93,7 +112,9 @@
         "document": 0,
         "body": 0,
         "reason": 0,
-        "counts": 0,
+        "owner": 0,
+        "entry": 0,
+        "history": 0,
         "actions": 0,
         "error": 0,
         "success": 0,

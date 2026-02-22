@@ -1,6 +1,6 @@
 {
   "storyId": "S012",
-  "runAt": "2026-02-21T23:22:17.362Z",
+  "runAt": "2026-02-22T23:42:41.616Z",
   "statesSeen": {
     "empty": true,
     "loading": true,
@@ -12,77 +12,45 @@
       "scenario": "invalid-input",
       "finalState": "error",
       "expectedState": "error",
-      "reasonCode": "INVALID_METADATA_VALIDATION_INPUT",
-      "expectedReasonCode": "INVALID_METADATA_VALIDATION_INPUT",
-      "reason": "artifactDocuments ou artifactPaths est requis pour la validation metadata (source exploitable absente).",
-      "counts": "requested=0 | compliant=0 | nonCompliant=0",
+      "reasonCode": "INVALID_GOVERNANCE_DECISION_INPUT",
+      "expectedReasonCode": "INVALID_GOVERNANCE_DECISION_INPUT",
+      "reason": "decisionHistory doit être un tableau.",
+      "owner": "—",
+      "decisionEntry": "—",
+      "counts": "decisionCount=0 | returnedCount=0 | droppedCount=0",
       "correctiveActions": [
         "—"
       ],
       "pass": true
     },
     {
-      "scenario": "path-not-allowed",
+      "scenario": "blocked-transition",
       "finalState": "error",
       "expectedState": "error",
-      "reasonCode": "ARTIFACT_PATH_NOT_ALLOWED",
-      "expectedReasonCode": "ARTIFACT_PATH_NOT_ALLOWED",
-      "reason": "Validation metadata bloquée (ARTIFACT_PATH_NOT_ALLOWED): Chemin hors allowlist: /tmp/forbidden/prd.md.",
-      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "reasonCode": "TRANSITION_NOT_ALLOWED",
+      "expectedReasonCode": "TRANSITION_NOT_ALLOWED",
+      "reason": "Transition bloquée pour owner=alex.pm: Transition non autorisée H09 -> H11.",
+      "owner": "alex.pm",
+      "decisionEntry": "dec-blocked-transition-1 | G2 | warning",
+      "counts": "decisionCount=2 | returnedCount=2 | droppedCount=0",
       "correctiveActions": [
-        "RESTRICT_TO_ALLOWED_ROOTS"
+        "ALIGN_PHASE_SEQUENCE"
       ],
       "pass": true
     },
     {
-      "scenario": "unsupported-type",
+      "scenario": "blocked-notify-sla",
       "finalState": "error",
       "expectedState": "error",
-      "reasonCode": "UNSUPPORTED_ARTIFACT_TYPE",
-      "expectedReasonCode": "UNSUPPORTED_ARTIFACT_TYPE",
-      "reason": "Validation metadata bloquée (UNSUPPORTED_ARTIFACT_TYPE): Extension non supportée: .json pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/payload.json. Extensions autorisées: .md, .markdown, .yaml, .yml.",
-      "counts": "requested=1 | compliant=0 | nonCompliant=1",
+      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "expectedReasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
+      "reason": "Notification SLA dépassée pour owner=ops.lead: elapsedMs=620000, slaMs=600000, fromPhase=H09, toPhase=H10.",
+      "owner": "ops.lead",
+      "decisionEntry": "dec-blocked-sla-1 | G2 | critical",
+      "counts": "decisionCount=2 | returnedCount=1 | droppedCount=0",
       "correctiveActions": [
-        "REMOVE_UNSUPPORTED_ARTIFACTS"
-      ],
-      "pass": true
-    },
-    {
-      "scenario": "metadata-missing",
-      "finalState": "error",
-      "expectedState": "error",
-      "reasonCode": "ARTIFACT_METADATA_MISSING",
-      "expectedReasonCode": "ARTIFACT_METADATA_MISSING",
-      "reason": "Validation metadata bloquée (ARTIFACT_METADATA_MISSING): Metadata obligatoire manquante pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/prd.md: stepsCompleted, inputDocuments.",
-      "counts": "requested=1 | compliant=0 | nonCompliant=1",
-      "correctiveActions": [
-        "ADD_REQUIRED_METADATA"
-      ],
-      "pass": true
-    },
-    {
-      "scenario": "metadata-invalid",
-      "finalState": "error",
-      "expectedState": "error",
-      "reasonCode": "ARTIFACT_METADATA_INVALID",
-      "expectedReasonCode": "ARTIFACT_METADATA_INVALID",
-      "reason": "Validation metadata bloquée (ARTIFACT_METADATA_INVALID): Metadata invalide pour /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/architecture.md: stepsCompleted doit être un tableau non vide de chaînes.",
-      "counts": "requested=1 | compliant=0 | nonCompliant=1",
-      "correctiveActions": [
-        "FIX_INVALID_METADATA"
-      ],
-      "pass": true
-    },
-    {
-      "scenario": "parse-failed",
-      "finalState": "error",
-      "expectedState": "error",
-      "reasonCode": "ARTIFACT_PARSE_FAILED",
-      "expectedReasonCode": "ARTIFACT_PARSE_FAILED",
-      "reason": "Validation metadata bloquée (ARTIFACT_PARSE_FAILED): YAML invalide ligne 1: tableau inline non fermé. (/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/bad.yaml).",
-      "counts": "requested=1 | compliant=0 | nonCompliant=1",
-      "correctiveActions": [
-        "FIX_ARTIFACT_SYNTAX"
+        "PUBLISH_PHASE_NOTIFICATION",
+        "REVALIDATE_TRANSITION"
       ],
       "pass": true
     },
@@ -92,8 +60,10 @@
       "expectedState": "success",
       "reasonCode": "OK",
       "expectedReasonCode": "OK",
-      "reason": "Validation metadata réussie: 2/2 artefacts conformes.",
-      "counts": "requested=2 | compliant=2 | nonCompliant=0",
+      "reason": "Progression canonique valide pour owner=ops.lead: aucune anomalie détectée.",
+      "owner": "ops.lead",
+      "decisionEntry": "dec-success-1 | G4-T | info",
+      "counts": "decisionCount=2 | returnedCount=2 | droppedCount=0",
       "correctiveActions": [
         "—"
       ],
