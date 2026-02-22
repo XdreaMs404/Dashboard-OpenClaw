@@ -1,0 +1,47 @@
+{
+  "storyId": "S006",
+  "epicId": "E01",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 94,
+    "D2": 95,
+    "D3": 94,
+    "D4": 95,
+    "D5": 93,
+    "D6": 93,
+    "designExcellence": 94
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/playwright-s006.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/playwright-e2e-suite.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/vitest-s006.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-mobile.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-tablet.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-desktop.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/responsive-audit.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S006/ux-gate.log"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX S006 validé: la démo couvre explicitement empty/loading/error/success avec lisibilité des reasonCode/reason/failedCommand/commands/failedResult sur les cas blocage prérequis, échec d’exécution guard et succès simulation. Accessibilité ciblée conforme (label explicite, role=status aria-live=polite, role=alert, panneau succès aria-live+aria-atomic, focus restitué au bouton). Responsive validé mobile/tablette/desktop avec overflow horizontal nul (max=0) et hiérarchie H1/H2 cohérente.",
+  "updatedAt": "2026-02-22T13:33:57Z"
+}
