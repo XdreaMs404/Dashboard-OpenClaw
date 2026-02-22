@@ -14,6 +14,7 @@ import { recordPhaseTransitionHistory } from './phase-transition-history.js';
 import { evaluatePhaseSlaAlert } from './phase-sla-alert.js';
 import { evaluatePhaseTransitionOverride } from './phase-transition-override.js';
 import { BMAD_PHASE_ORDER, validatePhaseTransition } from './phase-transition-validator.js';
+import { recordPhaseGateGovernanceDecision } from './phase-gate-governance-journal.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -27,6 +28,7 @@ export {
   extractArtifactSectionsForNavigation,
   indexArtifactMarkdownTables,
   ingestBmadArtifacts,
+  recordPhaseGateGovernanceDecision,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
