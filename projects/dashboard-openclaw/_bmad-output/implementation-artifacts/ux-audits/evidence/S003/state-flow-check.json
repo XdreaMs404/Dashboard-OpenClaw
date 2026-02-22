@@ -1,56 +1,17 @@
 {
-  "storyId": "S007",
-  "runAt": "2026-02-21T14:49:06.454Z",
+  "storyId": "S003",
+  "runAt": "2026-02-22T12:09:30Z",
+  "source": "_bmad-output/implementation-artifacts/ux-audits/evidence/S003/playwright-s003.log",
   "statesSeen": {
     "empty": true,
     "loading": true,
     "error": true,
     "success": true
   },
-  "traces": [
-    {
-      "scenario": "invalid-input",
-      "finalState": "error",
-      "reasonCode": "INVALID_SLA_ALERT_INPUT",
-      "reason": "history doit être un tableau pour évaluer la récurrence SLA.",
-      "severity": "none",
-      "correctiveActions": [
-        "—"
-      ]
-    },
-    {
-      "scenario": "sla-warning",
-      "finalState": "error",
-      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
-      "reason": "Notification hors SLA: elapsedMs=610000, slaMs=600000, fromPhase=H04, toPhase=H05.",
-      "severity": "warning",
-      "correctiveActions": [
-        "PUBLISH_PHASE_NOTIFY",
-        "REVALIDATE_TRANSITION"
-      ]
-    },
-    {
-      "scenario": "sla-critical",
-      "finalState": "error",
-      "reasonCode": "PHASE_NOTIFICATION_SLA_EXCEEDED",
-      "reason": "Notification hors SLA: elapsedMs=620000, slaMs=600000, fromPhase=H04, toPhase=H05.",
-      "severity": "critical",
-      "correctiveActions": [
-        "PUBLISH_PHASE_NOTIFY",
-        "REVALIDATE_TRANSITION",
-        "ESCALATE_TO_PM"
-      ]
-    },
-    {
-      "scenario": "success",
-      "finalState": "success",
-      "reasonCode": "OK",
-      "reason": "Transition autorisée H04 -> H05.",
-      "severity": "none",
-      "correctiveActions": [
-        "—"
-      ]
-    }
+  "assertions": [
+    "phase state projection demo covers empty/loading/error/success with required phase fields",
+    "blocking reason codes PHASE_NOTIFICATION_MISSING and INVALID_PHASE_TIMESTAMPS visible",
+    "done state displays owner/started_at/finished_at/status/duration_ms"
   ],
-  "pass": true
+  "result": "PASS"
 }
