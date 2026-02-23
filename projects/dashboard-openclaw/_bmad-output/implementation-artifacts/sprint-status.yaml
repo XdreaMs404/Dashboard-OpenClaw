@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-23T19:55:50Z"
+updated_at_utc: "2026-02-23T21:50:50Z"
 
 development_status:
   epic-1: done
@@ -20,7 +20,7 @@ development_status:
   1-12-journal-decisionnel-de-gouvernance-phase-gate: done
   epic-1-retrospective: optional
 
-  epic-2: in-progress
+  epic-2: done
   2-13-pipeline-ingestion-markdown-yaml-sous-allowlist: done
   2-14-validator-metadata-stepscompleted-inputdocuments: done
   2-15-extracteur-sections-h2-h3-pour-navigation: done
@@ -32,7 +32,7 @@ development_status:
   2-21-indicateur-de-fraicheur-staleness-des-vues: done
   2-22-diagnostic-parse-errors-et-recommandations: done
   2-23-tags-risques-et-annotations-contextuelles: done
-  2-24-backfill-historique-migration-corpus-existant: backlog
+  2-24-backfill-historique-migration-corpus-existant: done
   epic-2-retrospective: optional
 
   epic-3: backlog

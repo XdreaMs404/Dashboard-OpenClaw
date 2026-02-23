@@ -25,7 +25,7 @@
 | S021 | E02 | Indicateur de fraîcheur/staleness des vues | DONE |
 | S022 | E02 | Diagnostic parse-errors et recommandations | DONE |
 | S023 | E02 | Tags risques et annotations contextuelles | DONE |
-| S024 | E02 | Backfill historique + migration corpus existant | TODO |
+| S024 | E02 | Backfill historique + migration corpus existant | DONE |
 | S025 | E03 | Gate Center unifié avec statut et owner | TODO |
 | S026 | E03 | Évaluation duale G4-T/G4-UX corrélée | TODO |
 | S027 | E03 | Calculateur verdict PASS/CONCERNS/FAIL | TODO |
