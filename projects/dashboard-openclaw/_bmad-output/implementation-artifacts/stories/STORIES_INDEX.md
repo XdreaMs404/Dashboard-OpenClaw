@@ -21,7 +21,7 @@
 | S017 | E02 | Recherche full-text avec filtres dynamiques | DONE |
 | S018 | E02 | Filtrage contextuel phase/agent/date/gate | DONE |
 | S019 | E02 | Moteur diff version-vers-version d’artefacts | DONE |
-| S020 | E02 | Evidence graph décision↔preuve↔gate↔commande | TODO |
+| S020 | E02 | Evidence graph décision↔preuve↔gate↔commande | DONE |
 | S021 | E02 | Indicateur de fraîcheur/staleness des vues | TODO |
 | S022 | E02 | Diagnostic parse-errors et recommandations | TODO |
 | S023 | E02 | Tags risques et annotations contextuelles | TODO |
