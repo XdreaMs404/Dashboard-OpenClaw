@@ -457,47 +457,52 @@ describe('artifact-parse-diagnostics unit', () => {
   });
 
   it('accepts output of buildArtifactStalenessIndicator as direct upstream source', () => {
-    const stalenessResult = buildArtifactStalenessIndicator({
-      evidenceGraphResult: {
-        allowed: true,
-        reasonCode: 'OK',
-        reason: 'graph ok',
-        diagnostics: {
-          sourceReasonCode: 'OK'
+    const stalenessResult = buildArtifactStalenessIndicator(
+      {
+        evidenceGraphResult: {
+          allowed: true,
+          reasonCode: 'OK',
+          reason: 'graph ok',
+          diagnostics: {
+            sourceReasonCode: 'OK'
+          },
+          graph: {
+            nodes: [
+              {
+                nodeId: 'artifact:doc-v1',
+                nodeType: 'artifact',
+                artifactId: 'doc-v1',
+                artifactPath: `${ALLOWLIST_ROOT}/reports/doc-v1.md`,
+                artifactType: 'doc',
+                updatedAt: '2026-02-23T15:20:00.000Z'
+              }
+            ],
+            edges: [],
+            clusters: []
+          },
+          decisionBacklinks: {
+            'DEC-DOC': [
+              {
+                artifactId: 'doc-v1',
+                artifactPath: `${ALLOWLIST_ROOT}/reports/doc-v1.md`,
+                artifactType: 'doc',
+                updatedAt: '2026-02-23T15:20:00.000Z'
+              }
+            ]
+          },
+          orphanEvidence: [],
+          correctiveActions: []
         },
-        graph: {
-          nodes: [
-            {
-              nodeId: 'artifact:doc-v1',
-              nodeType: 'artifact',
-              artifactId: 'doc-v1',
-              artifactPath: `${ALLOWLIST_ROOT}/reports/doc-v1.md`,
-              artifactType: 'doc',
-              updatedAt: '2026-02-23T15:20:00.000Z'
-            }
-          ],
-          edges: [],
-          clusters: []
+        artifactTimestamps: {
+          'doc-v1': '2026-02-23T15:20:00.000Z'
         },
-        decisionBacklinks: {
-          'DEC-DOC': [
-            {
-              artifactId: 'doc-v1',
-              artifactPath: `${ALLOWLIST_ROOT}/reports/doc-v1.md`,
-              artifactType: 'doc',
-              updatedAt: '2026-02-23T15:20:00.000Z'
-            }
-          ]
-        },
-        orphanEvidence: [],
-        correctiveActions: []
+        maxAgeSeconds: 3600,
+        eventLedger: [10, 11, 12]
       },
-      artifactTimestamps: {
-        'doc-v1': '2026-02-23T15:20:00.000Z'
-      },
-      maxAgeSeconds: 3600,
-      eventLedger: [10, 11, 12]
-    });
+      {
+        nowMs: () => Date.parse('2026-02-23T15:30:00.000Z')
+      }
+    );
 
     const result = buildArtifactParseDiagnostics({
       stalenessResult,

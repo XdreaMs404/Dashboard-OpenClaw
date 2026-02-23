@@ -1,0 +1,71 @@
+{
+  "job": "24f417fe-1996-4671-89dd-7886bba3d8f0",
+  "window_utc": "2026-02-22..2026-02-23",
+  "events_total": 321,
+  "counts": {
+    "gateway_timeout": 26,
+    "blocked": 109,
+    "job_timeout": 29,
+    "provider_limit": 13,
+    "tool_not_found_rg": 10,
+    "slo_30": 7,
+    "slo_45": 7,
+    "bootstrap_dev_impossible": 12,
+    "reviewer_loop_exceeded": 93,
+    "session_lock": 15
+  },
+  "stories_top": [
+    [
+      "S012",
+      190
+    ],
+    [
+      "S019",
+      14
+    ],
+    [
+      "S018",
+      4
+    ],
+    [
+      "S020",
+      4
+    ],
+    [
+      "S021",
+      4
+    ],
+    [
+      "S022",
+      4
+    ],
+    [
+      "S023",
+      4
+    ],
+    [
+      "S015",
+      1
+    ],
+    [
+      "S010",
+      1
+    ],
+    [
+      "S002",
+      1
+    ]
+  ],
+  "blocked_by_story": {
+    "S015": 1,
+    "S012": 94,
+    "S018": 2,
+    "S010": 1,
+    "S002": 1,
+    "S019": 6,
+    "S020": 1,
+    "S021": 1,
+    "S022": 1,
+    "S023": 1
+  }
+}

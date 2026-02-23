@@ -24,7 +24,7 @@
 | S020 | E02 | Evidence graph décision↔preuve↔gate↔commande | DONE |
 | S021 | E02 | Indicateur de fraîcheur/staleness des vues | DONE |
 | S022 | E02 | Diagnostic parse-errors et recommandations | DONE |
-| S023 | E02 | Tags risques et annotations contextuelles | TODO |
+| S023 | E02 | Tags risques et annotations contextuelles | DONE |
 | S024 | E02 | Backfill historique + migration corpus existant | TODO |
 | S025 | E03 | Gate Center unifié avec statut et owner | TODO |
 | S026 | E03 | Évaluation duale G4-T/G4-UX corrélée | TODO |
