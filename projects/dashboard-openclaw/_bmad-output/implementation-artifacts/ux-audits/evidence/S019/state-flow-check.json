@@ -1,0 +1,89 @@
+{
+  "storyId": "S019",
+  "runAt": "2026-02-23T11:16:05.317Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_ARTIFACT_DIFF_INPUT",
+      "expectedReasonCode": "INVALID_ARTIFACT_DIFF_INPUT",
+      "reason": "Aucune source exploitable: fournir contextFilterResult, contextFilterInput ou artifactPairs.",
+      "counts": "compared=0 | unresolved=0 | requested=0",
+      "diffResults": [
+        "—"
+      ],
+      "provenanceLinks": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_DIFF_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "expectedReasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Metadata invalide pour la comparaison.",
+      "counts": "compared=0 | unresolved=0 | requested=1",
+      "diffResults": [
+        "—"
+      ],
+      "provenanceLinks": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "not-eligible",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_DIFF_NOT_ELIGIBLE",
+      "expectedReasonCode": "ARTIFACT_DIFF_NOT_ELIGIBLE",
+      "reason": "Aucun candidat diff éligible: vérifier les versions et métadonnées de comparaison.",
+      "counts": "compared=0 | unresolved=1 | requested=1",
+      "diffResults": [
+        "—"
+      ],
+      "provenanceLinks": [
+        "—"
+      ],
+      "correctiveActions": [
+        "REVIEW_DIFF_CANDIDATES"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Diff version-vers-version exécuté: 1 paire(s) comparée(s), 0 candidate(s) non éligible(s).",
+      "counts": "compared=1 | unresolved=0 | requested=1",
+      "diffResults": [
+        "prd:rollout => rollout-v1 vs rollout-v2"
+      ],
+      "provenanceLinks": [
+        "prd:rollout => decisions=DEC-1,DEC-2 gates=G4-T,G4-UX commands=CMD-1,CMD-2"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

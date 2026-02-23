@@ -1,0 +1,130 @@
+{
+  "storyId": "S019",
+  "runAt": "2026-02-23T11:16:06.458Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S019/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Diff version-vers-version exécuté: 1 paire(s) comparée(s), 0 candidate(s) non éligible(s).",
+      "counts": "compared=1 | unresolved=0 | requested=1",
+      "diffResults": [
+        "prd:rollout => rollout-v1 vs rollout-v2"
+      ],
+      "provenanceLinks": [
+        "prd:rollout => decisions=DEC-1,DEC-2 gates=G4-T,G4-UX commands=CMD-1,CMD-2"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "diff": 0,
+        "provenance": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S019/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Diff version-vers-version exécuté: 1 paire(s) comparée(s), 0 candidate(s) non éligible(s).",
+      "counts": "compared=1 | unresolved=0 | requested=1",
+      "diffResults": [
+        "prd:rollout => rollout-v1 vs rollout-v2"
+      ],
+      "provenanceLinks": [
+        "prd:rollout => decisions=DEC-1,DEC-2 gates=G4-T,G4-UX commands=CMD-1,CMD-2"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "diff": 0,
+        "provenance": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S019/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Diff version-vers-version exécuté: 1 paire(s) comparée(s), 0 candidate(s) non éligible(s).",
+      "counts": "compared=1 | unresolved=0 | requested=1",
+      "diffResults": [
+        "prd:rollout => rollout-v1 vs rollout-v2"
+      ],
+      "provenanceLinks": [
+        "prd:rollout => decisions=DEC-1,DEC-2 gates=G4-T,G4-UX commands=CMD-1,CMD-2"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "diff": 0,
+        "provenance": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
