@@ -19,7 +19,7 @@
 | S015 | E02 | Extracteur sections H2/H3 pour navigation | DONE |
 | S016 | E02 | Indexeur tableaux markdown et schéma | DONE |
 | S017 | E02 | Recherche full-text avec filtres dynamiques | DONE |
-| S018 | E02 | Filtrage contextuel phase/agent/date/gate | TODO |
+| S018 | E02 | Filtrage contextuel phase/agent/date/gate | DONE |
 | S019 | E02 | Moteur diff version-vers-version d’artefacts | TODO |
 | S020 | E02 | Evidence graph décision↔preuve↔gate↔commande | TODO |
 | S021 | E02 | Indicateur de fraîcheur/staleness des vues | TODO |

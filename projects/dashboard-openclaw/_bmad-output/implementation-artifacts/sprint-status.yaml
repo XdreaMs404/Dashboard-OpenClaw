@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-23T08:28:43Z"
+updated_at_utc: "2026-02-23T09:22:16Z"
 
 development_status:
   epic-1: done
@@ -26,7 +26,7 @@ development_status:
   2-15-extracteur-sections-h2-h3-pour-navigation: done
   2-16-indexeur-tableaux-markdown-et-schema: done
   2-17-recherche-full-text-avec-filtres-dynamiques: done
-  2-18-filtrage-contextuel-phase-agent-date-gate: backlog
+  2-18-filtrage-contextuel-phase-agent-date-gate: done
   2-19-moteur-diff-version-vers-version-d-artefacts: backlog
   2-20-evidence-graph-decision-preuve-gate-commande: backlog
   2-21-indicateur-de-fraicheur-staleness-des-vues: backlog
