@@ -362,4 +362,270 @@ describe('artifact-version-diff edge cases', () => {
     expect(result.diffResults[0].changes.sections.changed).toBe(false);
     expect(result.diffResults[0].changes.tables.changed).toBe(false);
   });
+
+  it('covers pair fallback normalization branches (id/versionId/path/filePath/type/candidateGroupKey)', () => {
+    const result = diffArtifactVersions({
+      artifactPairs: [
+        {
+          candidateGroupKey: 'fallback-group',
+          left: {
+            id: 'fallback-left-v1',
+            path: `${ALLOWLIST_ROOT}/reports/fallback-left-v1.md`,
+            type: 'spec',
+            metadata: {
+              owner: 'team-a',
+              nested: {
+                branch: 'left'
+              },
+              nullable: null,
+              '  ': 'ignored-key',
+              tags: [undefined, 'alpha']
+            },
+            sections: [{ headingText: 'Heading only' }, 42, { title: 'Title only' }],
+            tables: [
+              123,
+              {
+                text: 'fallback table text'
+              },
+              {
+                headers: [undefined, 'value'],
+                rows: [['metric', undefined]]
+              }
+            ],
+            summary: 'left summary fallback',
+            decisionRefs: [undefined, 'DEC-FALLBACK-1'],
+            gateRefs: 'G2',
+            commandRefs: [undefined, 'CMD-FALLBACK-1']
+          },
+          right: {
+            versionId: 'fallback-right-v2',
+            filePath: `${ALLOWLIST_ROOT}/reports/fallback-right-v2.md`,
+            artifactType: '',
+            metadata: {
+              owner: 'team-b',
+              nested: {
+                branch: 'right',
+                extra: 'x'
+              },
+              tags: ['alpha', 'beta']
+            },
+            sections: 'non-array-sections',
+            tables: [
+              {
+                snippet: 'snippet fallback table'
+              }
+            ],
+            snippet: 'right snippet fallback',
+            decisionRefs: ['DEC-FALLBACK-2'],
+            gateRefs: ['G2', 'G4-T'],
+            commandRefs: ['CMD-FALLBACK-2']
+          }
+        }
+      ]
+    });
+
+    expect(result).toMatchObject({
+      allowed: true,
+      reasonCode: 'OK',
+      diagnostics: {
+        comparedPairsCount: 1
+      }
+    });
+    expect(result.diffResults[0].groupKey).toBe('fallback-group');
+    expect(result.diffResults[0].leftArtifactId).toBe('fallback-left-v1');
+    expect(result.diffResults[0].rightArtifactId).toBe('fallback-right-v2');
+    expect(result.provenanceLinks[0].decisionRefs).toEqual(['DEC-FALLBACK-1', 'DEC-FALLBACK-2']);
+  });
+
+  it('covers unresolved resolution branches for invalid left/right entries sourced from contextFilterResult', () => {
+    const result = diffArtifactVersions({
+      contextFilterResult: {
+        allowed: true,
+        reasonCode: 'OK',
+        filteredResults: [
+          {
+            artifactPath: `${ALLOWLIST_ROOT}/reports/no-id.md`,
+            artifactType: 'prd',
+            score: 1,
+            snippet: 'missing artifactId should be ignored'
+          },
+          {
+            artifactId: 'bad-left',
+            artifactPath: '   ',
+            artifactType: 'prd',
+            score: 10,
+            snippet: 'bad left path'
+          },
+          {
+            artifactId: 'good-left',
+            artifactPath: `${ALLOWLIST_ROOT}/reports/good-left.md`,
+            artifactType: 'prd',
+            score: 9,
+            snippet: 'good left'
+          },
+          {
+            artifactId: 'bad-right',
+            artifactPath: '   ',
+            artifactType: 'prd',
+            score: 8,
+            snippet: 'bad right path'
+          },
+          {
+            artifactId: 'good-right',
+            artifactPath: `${ALLOWLIST_ROOT}/reports/good-right.md`,
+            artifactType: 'prd',
+            score: 7,
+            snippet: 'good right'
+          }
+        ],
+        diffCandidates: [
+          {
+            artifactIds: ['bad-left', 'good-right']
+          },
+          {
+            groupKey: 'candidate-right-invalid',
+            artifactIds: ['good-left', 'bad-right']
+          },
+          {
+            groupKey: 'candidate-valid',
+            artifactIds: ['good-left', 'good-right']
+          }
+        ]
+      }
+    });
+
+    expect(result).toMatchObject({
+      allowed: true,
+      reasonCode: 'OK',
+      diagnostics: {
+        requestedCandidatesCount: 3,
+        comparedPairsCount: 1,
+        unresolvedCount: 2
+      },
+      correctiveActions: ['REVIEW_DIFF_CANDIDATES']
+    });
+
+    expect(result.unresolvedCandidates).toHaveLength(2);
+    expect(result.diffResults).toHaveLength(1);
+  });
+
+  it('covers empty artifactPairs fallback message for non eligible diff', () => {
+    const result = diffArtifactVersions({
+      artifactPairs: []
+    });
+
+    expect(result).toMatchObject({
+      allowed: false,
+      reasonCode: 'ARTIFACT_DIFF_NOT_ELIGIBLE',
+      diagnostics: {
+        requestedCandidatesCount: 0,
+        comparedPairsCount: 0,
+        unresolvedCount: 0
+      }
+    });
+    expect(result.reason).toContain('au moins une paire de versions est requise');
+  });
+
+  it('covers invalid comparable artifacts for non-object and missing path branches', () => {
+    const nonObjectLeft = diffArtifactVersions({
+      artifactPairs: [
+        {
+          left: 1,
+          right: artifact({ artifactId: 'other-v2', artifactPath: `${ALLOWLIST_ROOT}/reports/other-v2.md` })
+        }
+      ]
+    });
+
+    expect(nonObjectLeft.reasonCode).toBe('INVALID_ARTIFACT_DIFF_INPUT');
+    expect(nonObjectLeft.reason).toContain('objet attendu');
+
+    const missingPath = diffArtifactVersions({
+      artifactPairs: [
+        {
+          left: {
+            artifactId: 'missing-path-left'
+          },
+          right: artifact({ artifactId: 'other-v2', artifactPath: `${ALLOWLIST_ROOT}/reports/other-v2.md` })
+        }
+      ]
+    });
+
+    expect(missingPath.reasonCode).toBe('INVALID_ARTIFACT_DIFF_INPUT');
+    expect(missingPath.reason).toContain('artifactPath invalide');
+  });
+
+  it('covers contextFilterOptions passthrough branch with explicit options object', () => {
+    const result = diffArtifactVersions(
+      {
+        contextFilterInput: {
+          searchResult: {
+            allowed: true,
+            reasonCode: 'OK',
+            reason: 'Recherche full-text exécutée.',
+            diagnostics: {
+              requestedCount: 2,
+              indexedCount: 2,
+              matchedCount: 2,
+              filteredOutCount: 0,
+              sourceReasonCode: 'OK'
+            },
+            results: [
+              {
+                artifactId: 'ctx-v1',
+                artifactPath: `${ALLOWLIST_ROOT}/reports/ctx-v1.md`,
+                artifactType: 'prd',
+                score: 10,
+                groupKey: 'ctx:pair',
+                snippet: 'ctx v1'
+              },
+              {
+                artifactId: 'ctx-v2',
+                artifactPath: `${ALLOWLIST_ROOT}/reports/ctx-v2.md`,
+                artifactType: 'prd',
+                score: 9,
+                groupKey: 'ctx:pair',
+                snippet: 'ctx v2'
+              }
+            ]
+          }
+        }
+      },
+      {
+        contextFilterOptions: {
+          nowMs: () => Date.now()
+        }
+      }
+    );
+
+    expect(result).toMatchObject({
+      allowed: true,
+      reasonCode: 'OK',
+      diagnostics: {
+        comparedPairsCount: 1
+      }
+    });
+  });
+
+  it('covers right-side pair ordering comparator branch for stable deterministic sort', () => {
+    const result = diffArtifactVersions({
+      artifactPairs: [
+        {
+          groupKey: 'same',
+          left: artifact({ artifactId: 'same-left', artifactPath: `${ALLOWLIST_ROOT}/reports/same-left.md` }),
+          right: artifact({ artifactId: 'same-right-b', artifactPath: `${ALLOWLIST_ROOT}/reports/same-right-b.md` })
+        },
+        {
+          groupKey: 'same',
+          left: artifact({ artifactId: 'same-left', artifactPath: `${ALLOWLIST_ROOT}/reports/same-left-2.md` }),
+          right: artifact({ artifactId: 'same-right-a', artifactPath: `${ALLOWLIST_ROOT}/reports/same-right-a.md` })
+        }
+      ]
+    });
+
+    expect(result.reasonCode).toBe('OK');
+    expect(result.diffResults.map((entry) => entry.rightArtifactId)).toEqual([
+      'same-right-a',
+      'same-right-b'
+    ]);
+  });
 });

@@ -212,26 +212,20 @@ function normalizeMetadata(raw) {
 }
 
 function toDurationMs(startedAtMs, endedAtMs) {
-  const start = Number.isFinite(startedAtMs) ? startedAtMs : 0;
-  const end = Number.isFinite(endedAtMs) ? endedAtMs : start;
+  const start = Number(startedAtMs);
+  const end = Number(endedAtMs);
+  const safeStart = Number.isFinite(start) ? start : 0;
+  const duration = Number.isFinite(end) ? end - safeStart : 0;
 
-  if (end < start) {
+  if (!Number.isFinite(duration) || duration < 0) {
     return 0;
   }
 
-  return Math.max(0, Math.trunc(end - start));
+  return Math.trunc(duration);
 }
 
 function computePercentile(samples, percentile) {
-  if (!Array.isArray(samples) || samples.length === 0) {
-    return 0;
-  }
-
-  const sorted = samples
-    .map((value) => Number(value))
-    .map((value) => (Number.isFinite(value) && value >= 0 ? value : 0))
-    .sort((left, right) => left - right);
-
+  const sorted = [...samples].map((value) => Number(value)).sort((left, right) => left - right);
   const ratio = Math.min(100, Math.max(0, Number(percentile))) / 100;
   const index = Math.ceil(sorted.length * ratio) - 1;
 
@@ -263,31 +257,17 @@ function normalizeCorrectiveActions(reasonCode, correctiveActions) {
     return normalized;
   }
 
-  const fallback = DEFAULT_ACTION_BY_REASON[reasonCode];
-  return fallback ? [fallback] : [];
+  return [DEFAULT_ACTION_BY_REASON[reasonCode]].filter((value) => typeof value === 'string');
 }
 
-function createDiagnostics(overrides = {}) {
+function createDiagnostics(overrides) {
   return {
-    requestedCandidatesCount: Number.isInteger(overrides.requestedCandidatesCount)
-      ? overrides.requestedCandidatesCount
-      : DEFAULT_DIAGNOSTICS.requestedCandidatesCount,
-    comparedPairsCount: Number.isInteger(overrides.comparedPairsCount)
-      ? overrides.comparedPairsCount
-      : DEFAULT_DIAGNOSTICS.comparedPairsCount,
-    unresolvedCount: Number.isInteger(overrides.unresolvedCount)
-      ? overrides.unresolvedCount
-      : DEFAULT_DIAGNOSTICS.unresolvedCount,
-    durationMs: Number.isFinite(overrides.durationMs)
-      ? Math.max(0, Math.trunc(overrides.durationMs))
-      : DEFAULT_DIAGNOSTICS.durationMs,
-    p95DiffMs: Number.isFinite(overrides.p95DiffMs)
-      ? Math.max(0, Math.trunc(overrides.p95DiffMs))
-      : DEFAULT_DIAGNOSTICS.p95DiffMs,
-    sourceReasonCode:
-      REASON_CODE_SET.has(normalizeText(overrides.sourceReasonCode))
-        ? normalizeText(overrides.sourceReasonCode)
-        : DEFAULT_DIAGNOSTICS.sourceReasonCode
+    requestedCandidatesCount: overrides.requestedCandidatesCount,
+    comparedPairsCount: overrides.comparedPairsCount,
+    unresolvedCount: overrides.unresolvedCount,
+    durationMs: overrides.durationMs,
+    p95DiffMs: overrides.p95DiffMs,
+    sourceReasonCode: overrides.sourceReasonCode
   };
 }
 
@@ -296,42 +276,49 @@ function createResult({
   reasonCode,
   reason,
   diagnostics,
-  diffResults,
-  unresolvedCandidates,
-  provenanceLinks,
-  correctiveActions
+  diffResults = [],
+  unresolvedCandidates = [],
+  provenanceLinks = [],
+  correctiveActions = []
 }) {
   return {
     allowed,
     reasonCode,
     reason,
     diagnostics: createDiagnostics(diagnostics),
-    diffResults: (Array.isArray(diffResults) ? diffResults : []).map((entry) => cloneValue(entry)),
-    unresolvedCandidates: (Array.isArray(unresolvedCandidates) ? unresolvedCandidates : []).map((entry) =>
-      cloneValue(entry)
-    ),
-    provenanceLinks: (Array.isArray(provenanceLinks) ? provenanceLinks : []).map((entry) => cloneValue(entry)),
-    correctiveActions: [...(Array.isArray(correctiveActions) ? correctiveActions : [])]
+    diffResults: diffResults.map((entry) => cloneValue(entry)),
+    unresolvedCandidates: unresolvedCandidates.map((entry) => cloneValue(entry)),
+    provenanceLinks: provenanceLinks.map((entry) => cloneValue(entry)),
+    correctiveActions: [...correctiveActions]
   };
 }
 
 function createInvalidInputResult(reason, context = {}) {
+  const {
+    requestedCandidatesCount = 0,
+    unresolvedCount = 0,
+    durationMs = 0,
+    sourceReasonCode = 'INVALID_ARTIFACT_DIFF_INPUT',
+    unresolvedCandidates = [],
+    correctiveActions = ['FIX_DIFF_INPUT']
+  } = context;
+
   return createResult({
     allowed: false,
     reasonCode: 'INVALID_ARTIFACT_DIFF_INPUT',
     reason,
     diagnostics: {
-      requestedCandidatesCount: context.requestedCandidatesCount ?? 0,
+      requestedCandidatesCount,
       comparedPairsCount: 0,
-      unresolvedCount: context.unresolvedCount ?? 0,
-      durationMs: context.durationMs ?? 0,
+      unresolvedCount,
+      durationMs,
       p95DiffMs: 0,
-      sourceReasonCode: context.sourceReasonCode ?? 'INVALID_ARTIFACT_DIFF_INPUT'
+      sourceReasonCode
     },
     diffResults: [],
-    unresolvedCandidates: context.unresolvedCandidates ?? [],
+    unresolvedCandidates,
     provenanceLinks: [],
-    correctiveActions: context.correctiveActions ?? ['FIX_DIFF_INPUT']
+    correctiveActions
   });
 }
 
@@ -379,7 +366,7 @@ function createNotEligibleResult({
       unresolvedCount: unresolvedCandidates.length,
       durationMs,
       p95DiffMs: 0,
-      sourceReasonCode: sourceReasonCode || 'ARTIFACT_DIFF_NOT_ELIGIBLE'
+      sourceReasonCode
     },
     diffResults: [],
     unresolvedCandidates,
@@ -437,7 +424,7 @@ function normalizeComparableArtifact(rawArtifact, label) {
     artifact: {
       artifactId,
       artifactPath,
-      artifactType: artifactType || 'artifact',
+      artifactType,
       metadata: normalizeMetadata(metadataSource),
       sections: normalizeSectionArray(rawArtifact.sections),
       tables: normalizeTablesArray(rawArtifact.tables),
@@ -887,7 +874,7 @@ function buildPairDiff(pair) {
     rightArtifactId: pair.right.artifactId,
     leftArtifactPath: pair.left.artifactPath,
     rightArtifactPath: pair.right.artifactPath,
-    artifactType: pair.left.artifactType || pair.right.artifactType || 'artifact',
+    artifactType: pair.left.artifactType,
     changes: {
       metadata,
       sections,
@@ -949,7 +936,7 @@ export function diffArtifactVersions(input, options = {}) {
     ? sourceResolution.unresolvedCandidates.map((entry) => cloneValue(entry))
     : [];
 
-  const pairs = Array.isArray(sourceResolution.pairs) ? sourceResolution.pairs.map((entry) => cloneValue(entry)) : [];
+  const pairs = sourceResolution.pairs.map((entry) => cloneValue(entry));
 
   if (pairs.length === 0) {
     const reason =
@@ -993,7 +980,7 @@ export function diffArtifactVersions(input, options = {}) {
       unresolvedCount: unresolvedCandidates.length,
       durationMs: toDurationMs(startedAtMs, nowMs()),
       p95DiffMs: computePercentile(diffDurations, 95),
-      sourceReasonCode: sourceResolution.sourceReasonCode || 'OK'
+      sourceReasonCode: sourceResolution.sourceReasonCode
     },
     diffResults,
     unresolvedCandidates,

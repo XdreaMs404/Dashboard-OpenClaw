@@ -3,7 +3,7 @@
 ## Story
 - ID: S019
 - Epic: E02
-- Date (UTC): 2026-02-23T10:45:00Z
+- Date (UTC): 2026-02-23T11:51:22Z
 - Statut DEV: READY_FOR_TEA
 
 ## Vérification scope strict S019
@@ -22,12 +22,23 @@
 - `_bmad-output/implementation-artifacts/handoffs/S019-dev-to-uxqa.md`
 - `_bmad-output/implementation-artifacts/handoffs/S019-dev-to-tea.md`
 
+## Correctif TEA appliqué (RETURN_TO_STEP=tea)
+- Point TEA corrigé: couverture module S019 insuffisante sur branches.
+- Actions DEV S019 strictes:
+  - renforcement des tests edge sur branches non couvertes (`normalizeSectionArray`, `normalizeContextFilterResult`, résolution candidats invalides, fallback non-éligible),
+  - simplification de branches inatteignables sans changer le contrat S019,
+  - revalidation couverture globale et module.
+
 ## Recheck technique DEV (rapide)
 Commande exécutée:
 - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S019` ✅
 
 Preuve log:
 - `_bmad-output/implementation-artifacts/handoffs/S019-tech-gates.log`
+
+## Couverture S019 (post-correctif TEA)
+- `app/src/artifact-version-diff.js`: **99.31% lines / 96.03% branches / 100% functions / 99.35% statements** ✅
+- Seuil module TEA: >=95% lignes + >=95% branches ✅
 
 ## AC S019 couverts par tests
 - AC-01..AC-08 + AC-10: `tests/unit/artifact-version-diff.test.js`, `tests/edge/artifact-version-diff.edge.test.js`
