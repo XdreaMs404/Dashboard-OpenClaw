@@ -1,6 +1,6 @@
 {
   "storyId": "S018",
-  "runAt": "2026-02-22T11:10:40.503Z",
+  "runAt": "2026-02-23T08:44:42.464Z",
   "statesSeen": {
     "empty": true,
     "loading": true,
@@ -25,7 +25,6 @@
       "correctiveActions": [
         "—"
       ],
-      "focusReturnedToAction": true,
       "pass": true
     },
     {
@@ -45,7 +44,6 @@
       "correctiveActions": [
         "FIX_INVALID_METADATA"
       ],
-      "focusReturnedToAction": true,
       "pass": true
     },
     {
@@ -65,7 +63,6 @@
       "correctiveActions": [
         "—"
       ],
-      "focusReturnedToAction": true,
       "pass": true
     },
     {
@@ -87,7 +84,6 @@
       "correctiveActions": [
         "RUN_ARTIFACT_DIFF"
       ],
-      "focusReturnedToAction": true,
       "pass": true
     }
   ],
