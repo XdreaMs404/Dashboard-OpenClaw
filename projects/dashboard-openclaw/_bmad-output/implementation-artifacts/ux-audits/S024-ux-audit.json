@@ -1,0 +1,46 @@
+{
+  "storyId": "S024",
+  "epicId": "E02",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 95,
+    "D2": 97,
+    "D3": 95,
+    "D4": 96,
+    "D5": 95,
+    "D6": 94,
+    "designExcellence": 95
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/vitest-s024.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/playwright-s024.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/responsive-mobile.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/responsive-tablet.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/responsive-desktop.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/responsive-audit.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S024/ux-gate.log"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX S024 PASS: conformité design system, accessibilité WCAG 2.2 AA, responsive mobile/tablette/desktop et états empty/loading/error/success validés. Les scénarios INVALID_BACKFILL_INPUT, RISK_TAGS_MISSING, BACKFILL_QUEUE_SATURATED, BACKFILL_BATCH_FAILED et OK exposent des microcopies et diagnostics opérateur clairs (reasonCode/reason, compteurs migration, resumeToken, artefacts migrés/skippés/en erreur, correctiveActions). Aucun correctif UX bloquant.",
+  "updatedAt": "2026-02-23T21:13:21Z"
+}

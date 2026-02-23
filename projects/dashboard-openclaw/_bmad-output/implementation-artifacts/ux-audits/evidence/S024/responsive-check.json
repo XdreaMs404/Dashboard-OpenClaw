@@ -1,0 +1,151 @@
+{
+  "storyId": "S024",
+  "runAt": "2026-02-23T21:13:14.840Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S024/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Backfill terminé: 2/2 migré(s), 0 ignoré(s), 0 en échec.",
+      "counts": "requested=2 | migrated=2 | skipped=0 | failed=0 | batches=1 | p95=0 | source=OK",
+      "resume": "nextOffset=2 | completed=true | dedup=2",
+      "migratedArtifacts": [
+        "rollout-v1 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md::hash-rollout-v1",
+        "rollout-v2 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.yaml #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.yaml::hash-rollout-v2"
+      ],
+      "skippedArtifacts": [
+        "—"
+      ],
+      "failedArtifacts": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveJson": "polite",
+      "ariaAtomicJson": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "resume": 0,
+        "migrated": 0,
+        "skipped": 0,
+        "failed": 0,
+        "actions": 0,
+        "error": 0,
+        "json": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S024/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Backfill terminé: 2/2 migré(s), 0 ignoré(s), 0 en échec.",
+      "counts": "requested=2 | migrated=2 | skipped=0 | failed=0 | batches=1 | p95=1 | source=OK",
+      "resume": "nextOffset=2 | completed=true | dedup=2",
+      "migratedArtifacts": [
+        "rollout-v1 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md::hash-rollout-v1",
+        "rollout-v2 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.yaml #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.yaml::hash-rollout-v2"
+      ],
+      "skippedArtifacts": [
+        "—"
+      ],
+      "failedArtifacts": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveJson": "polite",
+      "ariaAtomicJson": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "resume": 0,
+        "migrated": 0,
+        "skipped": 0,
+        "failed": 0,
+        "actions": 0,
+        "error": 0,
+        "json": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S024/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Backfill terminé: 2/2 migré(s), 0 ignoré(s), 0 en échec.",
+      "counts": "requested=2 | migrated=2 | skipped=0 | failed=0 | batches=1 | p95=0 | source=OK",
+      "resume": "nextOffset=2 | completed=true | dedup=2",
+      "migratedArtifacts": [
+        "rollout-v1 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md::hash-rollout-v1",
+        "rollout-v2 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.yaml #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.yaml::hash-rollout-v2"
+      ],
+      "skippedArtifacts": [
+        "—"
+      ],
+      "failedArtifacts": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveJson": "polite",
+      "ariaAtomicJson": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "resume": 0,
+        "migrated": 0,
+        "skipped": 0,
+        "failed": 0,
+        "actions": 0,
+        "error": 0,
+        "json": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

@@ -1,0 +1,131 @@
+{
+  "storyId": "S024",
+  "runAt": "2026-02-23T21:13:13.620Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_BACKFILL_INPUT",
+      "expectedReasonCode": "INVALID_BACKFILL_INPUT",
+      "reason": "Aucune source exploitable: fournir riskAnnotationsResult, riskAnnotationsInput ou legacyArtifacts.",
+      "counts": "requested=0 | migrated=0 | skipped=0 | failed=0 | batches=0 | p95=0 | source=INVALID_BACKFILL_INPUT",
+      "resume": "nextOffset=0 | completed=— | dedup=0",
+      "migratedArtifacts": [
+        "—"
+      ],
+      "skippedArtifacts": [
+        "—"
+      ],
+      "failedArtifacts": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_BACKFILL_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "RISK_TAGS_MISSING",
+      "expectedReasonCode": "RISK_TAGS_MISSING",
+      "reason": "Tags manquants côté source S023.",
+      "counts": "requested=0 | migrated=0 | skipped=0 | failed=0 | batches=0 | p95=0 | source=RISK_TAGS_MISSING",
+      "resume": "nextOffset=0 | completed=— | dedup=0",
+      "migratedArtifacts": [
+        "—"
+      ],
+      "skippedArtifacts": [
+        "—"
+      ],
+      "failedArtifacts": [
+        "—"
+      ],
+      "correctiveActions": [
+        "ADD_RISK_TAGS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "queue-saturated",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "BACKFILL_QUEUE_SATURATED",
+      "expectedReasonCode": "BACKFILL_QUEUE_SATURATED",
+      "reason": "Queue backfill saturée: queueDepth=42 > maxQueueDepth=3.",
+      "counts": "requested=0 | migrated=0 | skipped=0 | failed=0 | batches=0 | p95=0 | source=OK",
+      "resume": "nextOffset=0 | completed=— | dedup=0",
+      "migratedArtifacts": [
+        "—"
+      ],
+      "skippedArtifacts": [
+        "—"
+      ],
+      "failedArtifacts": [
+        "—"
+      ],
+      "correctiveActions": [
+        "THROTTLE_BACKFILL_QUEUE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "batch-failure",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "BACKFILL_BATCH_FAILED",
+      "expectedReasonCode": "BACKFILL_BATCH_FAILED",
+      "reason": "Echec de migration lot 2.",
+      "counts": "requested=5 | migrated=2 | skipped=0 | failed=2 | batches=2 | p95=0 | source=OK",
+      "resume": "nextOffset=2 | completed=false | dedup=2",
+      "migratedArtifacts": [
+        "batch-0 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/batch-0.md #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/batch-0.md::batch-hash-0",
+        "batch-1 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/batch-1.md #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/batch-1.md::batch-hash-1"
+      ],
+      "skippedArtifacts": [
+        "—"
+      ],
+      "failedArtifacts": [
+        "batch-2 => BACKFILL_BATCH_FAILED (Lot 2 échoué pendant la migration.)",
+        "batch-3 => BACKFILL_BATCH_FAILED (Lot 2 échoué pendant la migration.)"
+      ],
+      "correctiveActions": [
+        "RETRY_BACKFILL_BATCH"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Backfill terminé: 2/2 migré(s), 0 ignoré(s), 0 en échec.",
+      "counts": "requested=2 | migrated=2 | skipped=0 | failed=0 | batches=1 | p95=0 | source=OK",
+      "resume": "nextOffset=2 | completed=true | dedup=2",
+      "migratedArtifacts": [
+        "rollout-v1 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v1.md::hash-rollout-v1",
+        "rollout-v2 => /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.yaml #batch=1 dedup=/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/reports/rollout-v2.yaml::hash-rollout-v2"
+      ],
+      "skippedArtifacts": [
+        "—"
+      ],
+      "failedArtifacts": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
