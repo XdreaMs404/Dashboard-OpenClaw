@@ -9,6 +9,7 @@ import { indexArtifactMarkdownTables } from './artifact-table-indexer.js';
 import { searchArtifactsFullText } from './artifact-fulltext-search.js';
 import { applyArtifactContextFilters } from './artifact-context-filter.js';
 import { diffArtifactVersions } from './artifact-version-diff.js';
+import { buildArtifactEvidenceGraph } from './artifact-evidence-graph.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
 import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
@@ -20,6 +21,7 @@ import { recordPhaseGateGovernanceDecision } from './phase-gate-governance-journ
 export {
   BMAD_PHASE_ORDER,
   applyArtifactContextFilters,
+  buildArtifactEvidenceGraph,
   diffArtifactVersions,
   buildPhaseDependencyMatrix,
   buildPhaseStateProjection,

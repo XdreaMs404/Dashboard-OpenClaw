@@ -1,0 +1,39 @@
+[S020 DEV recheck — 2026-02-23T12:52:29Z]
+
+Command:
+BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S020
+
+Result:
+▶ FAST lint
+✅ Lint OK
+▶ FAST typecheck
+✅ Typecheck (syntax) OK
+▶ FAST targeted tests from story Comment tester
+- npx vitest run tests/unit/artifact-evidence-graph.test.js tests/edge/artifact-evidence-graph.edge.test.js
+  - Test Files: 2 passed
+  - Tests: 30 passed
+- npx playwright test tests/e2e/artifact-evidence-graph.spec.js
+  - 2 passed
+✅ FAST_QUALITY_GATES_OK (S020)
+
+---
+[S020 coverage/build/security evidence]
+
+Command:
+npm run test:coverage
+
+Result (extrait module S020):
+- app/src/artifact-evidence-graph.js: 98.80% statements / 97.79% branches / 100% functions / 98.73% lines
+- Coverage gate module (>=95% lines & >=95% branches): ✅ PASS
+
+Command:
+npm run build
+Result:
+✅ Build OK
+
+Command:
+npm run security:deps
+Result:
+✅ npm audit --audit-level=high: found 0 vulnerabilities
+
+✅ S020_TECH_GATES_OK
