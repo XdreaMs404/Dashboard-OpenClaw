@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/artifact-evidence-graph.spec.js:434:1 › artifact evidence graph demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  1 [chromium] › tests/e2e/artifact-evidence-graph.spec.js:351:1 › artifact evidence graph demo covers empty/loading/error/success with reason, counters, graph, backlinks, orphan evidence and actions (2.6s)
+
+  2 passed (3.9s)

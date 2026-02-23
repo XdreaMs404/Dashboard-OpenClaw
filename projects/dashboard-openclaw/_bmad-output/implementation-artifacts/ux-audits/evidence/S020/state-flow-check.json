@@ -1,0 +1,134 @@
+{
+  "storyId": "S020",
+  "runAt": "2026-02-23T13:14:04.523Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_EVIDENCE_GRAPH_INPUT",
+      "expectedReasonCode": "INVALID_EVIDENCE_GRAPH_INPUT",
+      "reason": "Aucune source exploitable: fournir artifactDiffResult, artifactDiffInput ou graphEntries.",
+      "counts": "nodes=0 | edges=0 | decisions=0 | backlinks=0 | orphans=0",
+      "graph": [
+        "nodes=0",
+        "edges=0",
+        "clusters=0"
+      ],
+      "decisionBacklinks": [
+        "—"
+      ],
+      "orphanEvidence": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_EVIDENCE_GRAPH_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_METADATA_INVALID",
+      "expectedReasonCode": "ARTIFACT_METADATA_INVALID",
+      "reason": "Metadata invalide pour la comparaison.",
+      "counts": "nodes=0 | edges=0 | decisions=0 | backlinks=0 | orphans=0",
+      "graph": [
+        "nodes=0",
+        "edges=0",
+        "clusters=0"
+      ],
+      "decisionBacklinks": [
+        "—"
+      ],
+      "orphanEvidence": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_INVALID_METADATA"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "incomplete-links",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "EVIDENCE_LINK_INCOMPLETE",
+      "expectedReasonCode": "EVIDENCE_LINK_INCOMPLETE",
+      "reason": "Graph incomplet: 1 preuve(s) orpheline(s) détectée(s).",
+      "counts": "nodes=0 | edges=0 | decisions=0 | backlinks=0 | orphans=1",
+      "graph": [
+        "nodes=0",
+        "edges=0",
+        "clusters=0"
+      ],
+      "decisionBacklinks": [
+        "—"
+      ],
+      "orphanEvidence": [
+        "artifactDiffResult.diffResults => Aucun provenanceLink corrélé pour la paire diff."
+      ],
+      "correctiveActions": [
+        "LINK_OR_RESTORE_EVIDENCE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "decision-not-found",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "DECISION_NOT_FOUND",
+      "expectedReasonCode": "DECISION_NOT_FOUND",
+      "reason": "Aucune décision trouvée pour decisionId=DEC-404.",
+      "counts": "nodes=5 | edges=4 | decisions=1 | backlinks=2 | orphans=0",
+      "graph": [
+        "nodes=5",
+        "edges=4",
+        "clusters=1"
+      ],
+      "decisionBacklinks": [
+        "DEC-1 => rollout-v1,rollout-v2"
+      ],
+      "orphanEvidence": [
+        "—"
+      ],
+      "correctiveActions": [
+        "VERIFY_DECISION_ID"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Evidence graph construit: 8 nœud(s), 12 liaison(s), 2 décision(s).",
+      "counts": "nodes=8 | edges=12 | decisions=2 | backlinks=2 | orphans=0",
+      "graph": [
+        "nodes=8",
+        "edges=12",
+        "clusters=2"
+      ],
+      "decisionBacklinks": [
+        "DEC-1 => rollout-v1,rollout-v2",
+        "DEC-2 => rollout-v1,rollout-v2"
+      ],
+      "orphanEvidence": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

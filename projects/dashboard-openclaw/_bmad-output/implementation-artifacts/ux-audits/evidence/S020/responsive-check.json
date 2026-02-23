@@ -1,0 +1,151 @@
+{
+  "storyId": "S020",
+  "runAt": "2026-02-23T13:14:05.946Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S020/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Evidence graph construit: 8 nœud(s), 12 liaison(s), 2 décision(s).",
+      "counts": "nodes=8 | edges=12 | decisions=2 | backlinks=2 | orphans=0",
+      "graph": [
+        "nodes=8",
+        "edges=12",
+        "clusters=2"
+      ],
+      "backlinks": [
+        "DEC-1 => rollout-v1,rollout-v2",
+        "DEC-2 => rollout-v1,rollout-v2"
+      ],
+      "orphans": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "graph": 0,
+        "backlinks": 0,
+        "orphans": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S020/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Evidence graph construit: 8 nœud(s), 12 liaison(s), 2 décision(s).",
+      "counts": "nodes=8 | edges=12 | decisions=2 | backlinks=2 | orphans=0",
+      "graph": [
+        "nodes=8",
+        "edges=12",
+        "clusters=2"
+      ],
+      "backlinks": [
+        "DEC-1 => rollout-v1,rollout-v2",
+        "DEC-2 => rollout-v1,rollout-v2"
+      ],
+      "orphans": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "graph": 0,
+        "backlinks": 0,
+        "orphans": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S020/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Evidence graph construit: 8 nœud(s), 12 liaison(s), 2 décision(s).",
+      "counts": "nodes=8 | edges=12 | decisions=2 | backlinks=2 | orphans=0",
+      "graph": [
+        "nodes=8",
+        "edges=12",
+        "clusters=2"
+      ],
+      "backlinks": [
+        "DEC-1 => rollout-v1,rollout-v2",
+        "DEC-2 => rollout-v1,rollout-v2"
+      ],
+      "orphans": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "graph": 0,
+        "backlinks": 0,
+        "orphans": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
