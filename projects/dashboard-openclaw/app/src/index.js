@@ -13,6 +13,7 @@ import { buildArtifactEvidenceGraph } from './artifact-evidence-graph.js';
 import { buildArtifactStalenessIndicator } from './artifact-staleness-indicator.js';
 import { buildArtifactParseDiagnostics } from './artifact-parse-diagnostics.js';
 import { annotateArtifactRiskContext } from './artifact-risk-annotations.js';
+import { runArtifactCorpusBackfill } from './artifact-corpus-backfill.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
 import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
@@ -25,6 +26,7 @@ export {
   BMAD_PHASE_ORDER,
   applyArtifactContextFilters,
   annotateArtifactRiskContext,
+  runArtifactCorpusBackfill,
   buildArtifactEvidenceGraph,
   buildArtifactParseDiagnostics,
   buildArtifactStalenessIndicator,
