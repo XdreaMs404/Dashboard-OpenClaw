@@ -31,6 +31,11 @@
   - nominal (`OK`)
 - Vérification responsive e2e mobile/tablette/desktop: absence d’overflow horizontal.
 
+## Correctif reviewer appliqué (impact UX)
+- Le correctif H18 force un fail-closed explicite quand une parse issue amont est invalide (`artifactPath` absent/non absolu).
+- Impact UI: l’état passe explicitement en `error` (`INVALID_RISK_ANNOTATION_INPUT`) au lieu d’un faux nominal `OK`.
+- Aucun changement de structure UI; uniquement une correction de fiabilité de l’état/microcopy en scénario dégradé.
+
 ## Recheck rapide DEV (preuves)
 Commande checkpoint exécutée:
 - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S023` ✅

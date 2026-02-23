@@ -323,6 +323,38 @@ describe('artifact-risk-annotations unit', () => {
     });
   });
 
+  it('fails closed when delegated parse diagnostics returns issues without artifactPath', () => {
+    const result = annotateArtifactRiskContext({
+      parseDiagnosticsInput: {
+        stalenessResult: buildStalenessResult(),
+        parseEvents: [
+          {
+            artifactId: 'rollout-v1',
+            parseStage: 'markdown',
+            errorType: 'syntax',
+            errorMessage: 'artifactPath absent',
+            retryCount: 1
+          }
+        ]
+      }
+    });
+
+    expect(result).toMatchObject({
+      allowed: false,
+      reasonCode: 'INVALID_RISK_ANNOTATION_INPUT',
+      diagnostics: {
+        sourceReasonCode: 'OK',
+        artifactsTaggedCount: 0,
+        annotationsCount: 0
+      },
+      taggedArtifacts: [],
+      contextAnnotations: [],
+      riskTagCatalog: [],
+      correctiveActions: ['FIX_RISK_ANNOTATION_INPUT']
+    });
+    expect(result.reason).toContain('parseIssues[0].artifactPath invalide');
+  });
+
   it('propagates strict upstream blocking reason codes from S022', () => {
     const result = annotateArtifactRiskContext({
       parseDiagnosticsResult: {
@@ -517,8 +549,8 @@ describe('artifact-risk-annotations unit', () => {
     expect(result.reason).toContain('Conflit de contexte');
   });
 
-  it('covers default builder branches: skip invalid path issue, merge duplicate artifacts and severity tie-break in catalog', () => {
-    const mergedResult = annotateArtifactRiskContext({
+  it('fails closed when parseDiagnosticsResult contains issue with invalid artifactPath (reviewer regression)', () => {
+    const result = annotateArtifactRiskContext({
       parseDiagnosticsResult: buildParseDiagnosticsResult({
         parseIssues: [
           {
@@ -529,7 +561,33 @@ describe('artifact-risk-annotations unit', () => {
             errorType: 'syntax',
             retryCount: 0,
             recommendedFix: 'ignored'
-          },
+          }
+        ],
+        recommendations: [],
+        dlqCandidates: []
+      })
+    });
+
+    expect(result).toMatchObject({
+      allowed: false,
+      reasonCode: 'INVALID_RISK_ANNOTATION_INPUT',
+      diagnostics: {
+        artifactsTaggedCount: 0,
+        annotationsCount: 0,
+        sourceReasonCode: 'OK'
+      },
+      taggedArtifacts: [],
+      contextAnnotations: [],
+      riskTagCatalog: [],
+      correctiveActions: ['FIX_RISK_ANNOTATION_INPUT']
+    });
+    expect(result.reason).toContain('parseIssues[0].artifactPath invalide');
+  });
+
+  it('merges duplicate artifacts with highest severity and keeps severity tie-break ordering in catalog', () => {
+    const mergedResult = annotateArtifactRiskContext({
+      parseDiagnosticsResult: buildParseDiagnosticsResult({
+        parseIssues: [
           {
             issueId: 'dup-low',
             artifactId: 'dup-v1',

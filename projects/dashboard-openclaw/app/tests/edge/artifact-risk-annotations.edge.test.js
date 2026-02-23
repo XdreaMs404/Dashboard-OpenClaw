@@ -757,7 +757,7 @@ describe('artifact-risk-annotations edge cases', () => {
     ]);
   });
 
-  it('covers reason/source fallback, parse issue skips and conflict branch for missing artifact mapping', () => {
+  it('covers reason/source fallback, fail-closed parse issue validation and conflict branch for missing artifact mapping', () => {
     const fallbackReasonSource = annotateArtifactRiskContext({
       parseDiagnosticsResult: {
         allowed: true,
@@ -773,10 +773,20 @@ describe('artifact-risk-annotations edge cases', () => {
     expect(fallbackReasonSource.reason).toContain('Aucune parse issue');
     expect(fallbackReasonSource.diagnostics.sourceReasonCode).toBe('OK');
 
-    const skipInvalidIssues = annotateArtifactRiskContext({
+    const invalidIssueObject = annotateArtifactRiskContext({
+      parseDiagnosticsResult: validParseDiagnosticsResult({
+        parseIssues: [null],
+        recommendations: [],
+        dlqCandidates: []
+      })
+    });
+
+    expect(invalidIssueObject.reasonCode).toBe('INVALID_RISK_ANNOTATION_INPUT');
+    expect(invalidIssueObject.reason).toContain('parseIssues[0] invalide');
+
+    const invalidIssueArtifactId = annotateArtifactRiskContext({
       parseDiagnosticsResult: validParseDiagnosticsResult({
         parseIssues: [
-          null,
           {
             issueId: 'missing-id',
             artifactId: '',
@@ -784,7 +794,19 @@ describe('artifact-risk-annotations edge cases', () => {
             parseStage: 'markdown',
             errorType: 'syntax',
             retryCount: 0
-          },
+          }
+        ],
+        recommendations: [],
+        dlqCandidates: []
+      })
+    });
+
+    expect(invalidIssueArtifactId.reasonCode).toBe('INVALID_RISK_ANNOTATION_INPUT');
+    expect(invalidIssueArtifactId.reason).toContain('parseIssues[0].artifactId invalide');
+
+    const invalidIssueArtifactPath = annotateArtifactRiskContext({
+      parseDiagnosticsResult: validParseDiagnosticsResult({
+        parseIssues: [
           {
             issueId: 'bad-path',
             artifactId: 'bad-path',
@@ -799,9 +821,8 @@ describe('artifact-risk-annotations edge cases', () => {
       })
     });
 
-    expect(skipInvalidIssues.reasonCode).toBe('OK');
-    expect(skipInvalidIssues.taggedArtifacts).toEqual([]);
-    expect(skipInvalidIssues.contextAnnotations).toEqual([]);
+    expect(invalidIssueArtifactPath.reasonCode).toBe('INVALID_RISK_ANNOTATION_INPUT');
+    expect(invalidIssueArtifactPath.reason).toContain('parseIssues[0].artifactPath invalide');
 
     const missingArtifactConflict = annotateArtifactRiskContext({
       parseDiagnosticsResult: validParseDiagnosticsResult({

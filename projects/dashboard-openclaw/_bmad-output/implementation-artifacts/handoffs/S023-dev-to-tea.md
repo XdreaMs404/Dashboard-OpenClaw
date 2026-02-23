@@ -11,6 +11,15 @@
 - Contrat stable livré:
   `{ allowed, reasonCode, reason, diagnostics, taggedArtifacts, contextAnnotations, riskTagCatalog, correctiveActions }`.
 
+## Correctifs reviewer traités (retour H18)
+1. Suppression de la perte silencieuse d’issues parse sans `artifactPath`:
+   - avant: issue ignorée (`continue`) ;
+   - maintenant: fail-closed explicite `INVALID_RISK_ANNOTATION_INPUT`.
+2. Protection AC-04: impossible de retomber en `OK` nominal quand une parse issue amont invalide est fournie.
+3. Tests ajoutés/mis à jour:
+   - unit: cas délégué S022 sans `artifactPath` => `INVALID_RISK_ANNOTATION_INPUT`.
+   - edge: validation stricte `parseIssues[*]` (objet, `artifactId`, `artifactPath`) en fail-closed.
+
 ## Fichiers touchés (S023)
 - `app/src/artifact-risk-annotations.js`
 - `app/src/index.js` (export S023)
@@ -37,9 +46,9 @@ Preuve log:
 ## Couverture S023
 - `app/src/artifact-risk-annotations.js`:
   - **99.08% lines**
-  - **95.84% branches**
+  - **95.88% branches**
   - **100% functions**
-  - **99.12% statements**
+  - **99.13% statements**
 - Seuil module TEA: >=95% lignes + >=95% branches ✅
 
 ## AC S023 couverts par tests

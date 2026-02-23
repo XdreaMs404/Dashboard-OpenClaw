@@ -699,19 +699,28 @@ function buildDefaultArtifactsAndAnnotations(parseIssues, perAnnotationDurations
     const issue = parseIssues[index];
 
     if (!isObject(issue)) {
-      continue;
+      return {
+        valid: false,
+        reason: `parseIssues[${index}] invalide: objet attendu.`
+      };
     }
 
     const artifactId = normalizeText(issue.artifactId);
 
     if (artifactId.length === 0) {
-      continue;
+      return {
+        valid: false,
+        reason: `parseIssues[${index}].artifactId invalide: chaîne non vide requise.`
+      };
     }
 
     const artifactPathResolution = validateArtifactPath(issue.artifactPath);
 
     if (!artifactPathResolution.valid) {
-      continue;
+      return {
+        valid: false,
+        reason: `parseIssues[${index}].artifactPath invalide: ${artifactPathResolution.reason}.`
+      };
     }
 
     const severity = computeIssueSeverity(issue);
@@ -784,6 +793,7 @@ function buildDefaultArtifactsAndAnnotations(parseIssues, perAnnotationDurations
   annotations.sort((left, right) => compareObjectsByKeys(left, right, ['artifactId', 'annotationId']));
 
   return {
+    valid: true,
     taggedArtifacts,
     contextAnnotations: annotations
   };
@@ -991,6 +1001,13 @@ export function annotateArtifactRiskContext(input, options = {}) {
   const perAnnotationDurations = [];
 
   const defaults = buildDefaultArtifactsAndAnnotations(sourceResolution.parseIssues, perAnnotationDurations, nowMs);
+
+  if (!defaults.valid) {
+    return createInvalidInputResult(defaults.reason, {
+      durationMs: toDurationMs(startedAtMs, nowMs()),
+      sourceReasonCode: sourceResolution.sourceReasonCode
+    });
+  }
 
   const taggedArtifacts =
     injectedResolution.taggedArtifacts !== undefined
