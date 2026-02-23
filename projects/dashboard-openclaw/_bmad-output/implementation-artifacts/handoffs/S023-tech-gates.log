@@ -1,0 +1,54 @@
+▶ FAST lint
+
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
+
+✅ Lint OK
+▶ FAST typecheck
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
+✅ Typecheck (syntax) OK
+▶ FAST targeted tests from story Comment tester
+▶ npx vitest run tests/unit/artifact-risk-annotations.test.js tests/edge/artifact-risk-annotations.edge.test.js
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/edge/artifact-risk-annotations.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-risk-annotations.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 48[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
+[2m   Start at [22m 18:47:12
+[2m   Duration [22m 499ms[2m (transform 349ms, setup 0ms, import 509ms, tests 70ms, environment 0ms)[22m
+
+▶ npx playwright test tests/e2e/artifact-risk-annotations.spec.js
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/artifact-risk-annotations.spec.js:486:1 › artifact risk annotations demo remains readable without horizontal overflow on mobile/tablet/desktop (2.0s)
+  ✓  1 [chromium] › tests/e2e/artifact-risk-annotations.spec.js:403:1 › artifact risk annotations demo covers empty/loading/error/success with reason, counters, tags, annotations, catalog and actions (2.8s)
+
+  2 passed (4.2s)
+▶ npx vitest run tests/unit/artifact-risk-annotations.test.js tests/edge/artifact-risk-annotations.edge.test.js --coverage --coverage.include=src/artifact-risk-annotations.js
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/edge/artifact-risk-annotations.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-risk-annotations.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
+[2m   Start at [22m 18:47:19
+[2m   Duration [22m 571ms[2m (transform 339ms, setup 0ms, import 505ms, tests 68ms, environment 0ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.12 |    95.84 |     100 |   99.08 |                   
+ ...annotations.js |   99.12 |    95.84 |     100 |   99.08 | 186,218,253       
+-------------------|---------|----------|---------|---------|-------------------
+✅ FAST_QUALITY_GATES_OK (S023)

@@ -12,6 +12,7 @@ import { diffArtifactVersions } from './artifact-version-diff.js';
 import { buildArtifactEvidenceGraph } from './artifact-evidence-graph.js';
 import { buildArtifactStalenessIndicator } from './artifact-staleness-indicator.js';
 import { buildArtifactParseDiagnostics } from './artifact-parse-diagnostics.js';
+import { annotateArtifactRiskContext } from './artifact-risk-annotations.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
 import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
@@ -23,6 +24,7 @@ import { recordPhaseGateGovernanceDecision } from './phase-gate-governance-journ
 export {
   BMAD_PHASE_ORDER,
   applyArtifactContextFilters,
+  annotateArtifactRiskContext,
   buildArtifactEvidenceGraph,
   buildArtifactParseDiagnostics,
   buildArtifactStalenessIndicator,
