@@ -1,12 +1,12 @@
 {
   "sid": "S022",
-  "step": "final_gates",
+  "step": "pm",
   "returnToStep": "",
-  "startedAtMs": 1771859166744,
-  "lastUpdatedMs": 1771863072380,
-  "lastStepResult": "RESET_ATTEMPT:techwriter",
-  "alert30Sent": true,
-  "alert45Sent": true,
+  "startedAtMs": 1771863138723,
+  "lastUpdatedMs": 1771863138723,
+  "lastStepResult": "INIT",
+  "alert30Sent": false,
+  "alert45Sent": false,
   "attempts": {
     "pm": 0,
     "dev": 0,
