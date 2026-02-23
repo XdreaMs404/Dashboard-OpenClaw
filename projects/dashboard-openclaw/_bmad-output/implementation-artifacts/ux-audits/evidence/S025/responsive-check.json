@@ -1,0 +1,145 @@
+{
+  "storyId": "S025",
+  "runAt": "2026-02-23T22:38:22.669Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S025/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Gate Center prêt: 5 gates (G1→G2→G3→G4→G5) et 2 sous-gates G4 corrélées.",
+      "counts": "gates=5 | subGates=2 | stale=0 | p95=0 | source=OK",
+      "gateCenter": [
+        "G1 => status=PASS owner=owner-g1 updatedAt=2026-02-23T21:00:00.000Z",
+        "G2 => status=PASS owner=owner-g2 updatedAt=2026-02-23T21:00:01.000Z",
+        "G3 => status=PASS owner=owner-g3 updatedAt=2026-02-23T21:00:02.000Z",
+        "G4 => status=PASS owner=owner-g4 updatedAt=2026-02-23T21:00:03.000Z",
+        "G5 => status=PASS owner=owner-g5 updatedAt=2026-02-23T21:00:04.000Z"
+      ],
+      "subGates": [
+        "G4-T => parent=G4 status=PASS owner=owner-g4t",
+        "G4-UX => parent=G4 status=PASS owner=owner-g4ux"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "gates": 0,
+        "subgates": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S025/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Gate Center prêt: 5 gates (G1→G2→G3→G4→G5) et 2 sous-gates G4 corrélées.",
+      "counts": "gates=5 | subGates=2 | stale=0 | p95=0 | source=OK",
+      "gateCenter": [
+        "G1 => status=PASS owner=owner-g1 updatedAt=2026-02-23T21:00:00.000Z",
+        "G2 => status=PASS owner=owner-g2 updatedAt=2026-02-23T21:00:01.000Z",
+        "G3 => status=PASS owner=owner-g3 updatedAt=2026-02-23T21:00:02.000Z",
+        "G4 => status=PASS owner=owner-g4 updatedAt=2026-02-23T21:00:03.000Z",
+        "G5 => status=PASS owner=owner-g5 updatedAt=2026-02-23T21:00:04.000Z"
+      ],
+      "subGates": [
+        "G4-T => parent=G4 status=PASS owner=owner-g4t",
+        "G4-UX => parent=G4 status=PASS owner=owner-g4ux"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "gates": 0,
+        "subgates": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S025/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Gate Center prêt: 5 gates (G1→G2→G3→G4→G5) et 2 sous-gates G4 corrélées.",
+      "counts": "gates=5 | subGates=2 | stale=0 | p95=0 | source=OK",
+      "gateCenter": [
+        "G1 => status=PASS owner=owner-g1 updatedAt=2026-02-23T21:00:00.000Z",
+        "G2 => status=PASS owner=owner-g2 updatedAt=2026-02-23T21:00:01.000Z",
+        "G3 => status=PASS owner=owner-g3 updatedAt=2026-02-23T21:00:02.000Z",
+        "G4 => status=PASS owner=owner-g4 updatedAt=2026-02-23T21:00:03.000Z",
+        "G5 => status=PASS owner=owner-g5 updatedAt=2026-02-23T21:00:04.000Z"
+      ],
+      "subGates": [
+        "G4-T => parent=G4 status=PASS owner=owner-g4t",
+        "G4-UX => parent=G4 status=PASS owner=owner-g4ux"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "gates": 0,
+        "subgates": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

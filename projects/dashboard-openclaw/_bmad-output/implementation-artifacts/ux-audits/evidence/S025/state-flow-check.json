@@ -1,0 +1,125 @@
+{
+  "storyId": "S025",
+  "runAt": "2026-02-23T22:38:21.459Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_GATE_CENTER_INPUT",
+      "expectedReasonCode": "INVALID_GATE_CENTER_INPUT",
+      "reason": "Aucune source exploitable: fournir governanceDecisionResult ou governanceDecisionInput.",
+      "counts": "gates=0 | subGates=0 | stale=0 | p95=0 | source=INVALID_GATE_CENTER_INPUT",
+      "gateCenter": [
+        "—"
+      ],
+      "subGates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_GATE_CENTER_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "PHASE_NOTIFICATION_MISSING",
+      "expectedReasonCode": "PHASE_NOTIFICATION_MISSING",
+      "reason": "Notification de phase manquante.",
+      "counts": "gates=0 | subGates=0 | stale=0 | p95=0 | source=PHASE_NOTIFICATION_MISSING",
+      "gateCenter": [
+        "—"
+      ],
+      "subGates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "PUBLISH_PHASE_NOTIFICATION"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "incomplete",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "GATE_STATUS_INCOMPLETE",
+      "expectedReasonCode": "GATE_STATUS_INCOMPLETE",
+      "reason": "Gate metadata incomplète: G4.owner, G4-T.status, G4-UX.updatedAt.",
+      "counts": "gates=5 | subGates=2 | stale=6 | p95=0 | source=OK",
+      "gateCenter": [
+        "G1 => status=PASS owner=owner-g1 updatedAt=2026-02-23T21:00:00.000Z",
+        "G2 => status=PASS owner=owner-g2 updatedAt=2026-02-23T21:00:01.000Z",
+        "G3 => status=PASS owner=owner-g3 updatedAt=2026-02-23T21:00:02.000Z",
+        "G4 => status=PASS owner=null updatedAt=2026-02-23T21:00:03.000Z",
+        "G5 => status=PASS owner=owner-g5 updatedAt=2026-02-23T21:00:04.000Z"
+      ],
+      "subGates": [
+        "G4-T => parent=G4 status=null owner=owner-g4t",
+        "G4-UX => parent=G4 status=PASS owner=owner-g4ux"
+      ],
+      "correctiveActions": [
+        "BLOCK_DONE_TRANSITION",
+        "COMPLETE_GATE_STATUS_FIELDS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "mismatch",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "G4_SUBGATE_MISMATCH",
+      "expectedReasonCode": "G4_SUBGATE_MISMATCH",
+      "reason": "Incohérence G4: status=PASS alors que sous-gates imposent FAIL.",
+      "counts": "gates=5 | subGates=2 | stale=7 | p95=0 | source=OK",
+      "gateCenter": [
+        "G1 => status=PASS owner=owner-g1 updatedAt=2026-02-23T21:00:00.000Z",
+        "G2 => status=PASS owner=owner-g2 updatedAt=2026-02-23T21:00:01.000Z",
+        "G3 => status=PASS owner=owner-g3 updatedAt=2026-02-23T21:00:02.000Z",
+        "G4 => status=PASS owner=owner-g4 updatedAt=2026-02-23T21:00:03.000Z",
+        "G5 => status=PASS owner=owner-g5 updatedAt=2026-02-23T21:00:04.000Z"
+      ],
+      "subGates": [
+        "G4-T => parent=G4 status=PASS owner=owner-g4t",
+        "G4-UX => parent=G4 status=FAIL owner=owner-g4ux"
+      ],
+      "correctiveActions": [
+        "ALIGN_G4_SUBGATES",
+        "BLOCK_DONE_TRANSITION"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Gate Center prêt: 5 gates (G1→G2→G3→G4→G5) et 2 sous-gates G4 corrélées.",
+      "counts": "gates=5 | subGates=2 | stale=0 | p95=0 | source=OK",
+      "gateCenter": [
+        "G1 => status=PASS owner=owner-g1 updatedAt=2026-02-23T21:00:00.000Z",
+        "G2 => status=PASS owner=owner-g2 updatedAt=2026-02-23T21:00:01.000Z",
+        "G3 => status=PASS owner=owner-g3 updatedAt=2026-02-23T21:00:02.000Z",
+        "G4 => status=PASS owner=owner-g4 updatedAt=2026-02-23T21:00:03.000Z",
+        "G5 => status=PASS owner=owner-g5 updatedAt=2026-02-23T21:00:04.000Z"
+      ],
+      "subGates": [
+        "G4-T => parent=G4 status=PASS owner=owner-g4t",
+        "G4-UX => parent=G4 status=PASS owner=owner-g4ux"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
