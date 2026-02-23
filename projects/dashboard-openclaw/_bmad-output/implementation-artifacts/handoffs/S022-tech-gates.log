@@ -1,50 +1,123 @@
-[S022 DEV recheck — 2026-02-23T15:37:08Z]
 
-Command:
-BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S022
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
 
-Result:
-▶ FAST lint
 ✅ Lint OK
-▶ FAST typecheck
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
 ✅ Typecheck (syntax) OK
-▶ FAST targeted tests from story Comment tester
-- npx vitest run tests/unit/artifact-parse-diagnostics.test.js tests/edge/artifact-parse-diagnostics.edge.test.js
-  - Test Files: 2 passed
-  - Tests: 23 passed
-- npx playwright test tests/e2e/artifact-parse-diagnostics.spec.js
-  - 2 passed
-✅ FAST_QUALITY_GATES_OK (S022)
 
----
-[S022 coverage/build/security evidence]
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
 
-Command:
-npm run test:coverage
+ [32m✓[39m tests/edge/artifact-parse-diagnostics.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-parse-diagnostics.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 28[2mms[22m[39m
 
-Result (extrait module S022):
-- app/src/artifact-parse-diagnostics.js: 99.48% statements / 99.41% branches / 97.56% functions / 100.00% lines
-- Coverage gate module (>=95% lines & >=95% branches): ✅ PASS
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m23 passed[39m[22m[90m (23)[39m
+[2m   Start at [22m 16:02:02
+[2m   Duration [22m 495ms[2m (transform 382ms, setup 0ms, import 522ms, tests 68ms, environment 0ms)[22m
 
-Command:
-npm run build
-Result:
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/artifact-parse-diagnostics.spec.js:428:1 › artifact parse diagnostics demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  2 [chromium] › tests/e2e/artifact-parse-diagnostics.spec.js:345:1 › artifact parse diagnostics demo covers empty/loading/error/success with reason, counters, issues, recommendations, dlq and actions (2.7s)
+
+  2 passed (4.1s)
+
+> bmad-total-app@0.1.0 test:coverage
+> vitest run --coverage
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/unit/artifact-version-diff.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 103[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-section-extractor.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 112[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-table-indexer.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 149[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-fulltext-search.edge.test.js [2m([22m[2m25 tests[22m[2m)[22m[32m 73[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-fulltext-search.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 85[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-metadata-validator.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-staleness-indicator.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 42[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-evidence-graph.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 48[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-context-filter.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 49[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m21 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-parse-diagnostics.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-table-indexer.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-version-diff.edge.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-section-extractor.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-gate-governance-journal.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-staleness-indicator.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-parse-diagnostics.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-context-filter.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-evidence-graph.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-ingestion-pipeline.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-gate-governance-journal.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-dependency-matrix.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-history.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-dependency-matrix.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-metadata-validator.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-ingestion-pipeline.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m22 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-progression-alert.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-state-projection.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-override.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-progression-alert.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-guards-orchestrator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-prerequisites-validator.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-validator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-override.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-sla-alert.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/core.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m42 passed[39m[22m[90m (42)[39m
+[2m      Tests [22m [1m[32m560 passed[39m[22m[90m (560)[39m
+[2m   Start at [22m 16:02:09
+[2m   Duration [22m 4.50s[2m (transform 872ms, setup 0ms, import 3.34s, tests 1.35s, environment 6ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.39 |    97.76 |   99.86 |   99.39 |                   
+ ...text-filter.js |   99.63 |    98.29 |     100 |   99.62 | 471               
+ ...dence-graph.js |    98.8 |    97.79 |     100 |   98.73 | 486,496,504       
+ ...text-search.js |   98.97 |    98.57 |     100 |   98.92 | 363,369,375,381   
+ ...on-pipeline.js |     100 |      100 |     100 |     100 |                   
+ ...a-validator.js |   98.51 |    95.21 |     100 |   98.45 | ...,706,1000,1004 
+ ...diagnostics.js |   99.48 |    99.41 |   97.56 |     100 | 612               
+ ...n-extractor.js |    99.3 |    97.92 |     100 |   99.26 | 95,602            
+ ...s-indicator.js |   99.65 |    98.85 |     100 |   99.64 | 837               
+ ...ble-indexer.js |   99.13 |    96.99 |     100 |   99.09 | 632,647-648       
+ ...ersion-diff.js |   99.35 |    96.03 |     100 |   99.31 | 663-670           
+ core.js           |     100 |      100 |     100 |     100 |                   
+ index.js          |       0 |        0 |       0 |       0 |                   
+ ...ency-matrix.js |   99.64 |    99.23 |     100 |   99.63 | 106               
+ ...nce-journal.js |     100 |     96.3 |     100 |     100 | ...66,754,761,797 
+ ...rchestrator.js |     100 |      100 |     100 |     100 |                   
+ ...s-validator.js |    98.8 |    97.59 |     100 |   98.79 | 48                
+ ...ssion-alert.js |    99.6 |    95.96 |     100 |    99.6 | 98                
+ ...e-sla-alert.js |     100 |    97.05 |     100 |     100 | 57,63,106,366     
+ ...-projection.js |   99.32 |    97.91 |     100 |   99.32 | 245               
+ ...ion-history.js |     100 |    97.53 |     100 |     100 | 81,166,330,359    
+ ...on-override.js |   99.25 |    98.57 |     100 |   99.24 | 96                
+ ...n-validator.js |   97.36 |    95.34 |     100 |   97.36 | 16                
+-------------------|---------|----------|---------|---------|-------------------
+
+> bmad-total-app@0.1.0 build
+> node ./scripts/build.mjs
+
 ✅ Build OK
 
-Command:
-npm run security:deps
-Result:
-✅ npm audit --audit-level=high: found 0 vulnerabilities
+> bmad-total-app@0.1.0 security:deps
+> npm audit --audit-level=high
 
+found 0 vulnerabilities
 ✅ S022_TECH_GATES_OK
-
----
-[2026-02-23T15:38:17Z] FAST_RECHECK_S022
-Command:
-BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S022
-Result:
-✅ FAST_QUALITY_GATES_OK (S022)
-- lint: PASS
-- typecheck: PASS
-- targeted vitest (unit+edge S022): 23/23 PASS
-- targeted playwright e2e S022: 2/2 PASS
