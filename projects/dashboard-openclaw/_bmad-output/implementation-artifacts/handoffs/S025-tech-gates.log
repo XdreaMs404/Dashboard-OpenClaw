@@ -12,31 +12,31 @@
 [1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
 
  [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 29[2mms[22m[39m
- [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 33[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
 [2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
-[2m   Start at [22m 23:10:35
-[2m   Duration [22m 482ms[2m (transform 340ms, setup 0ms, import 478ms, tests 61ms, environment 0ms)[22m
+[2m   Start at [22m 23:41:37
+[2m   Duration [22m 504ms[2m (transform 334ms, setup 0ms, import 489ms, tests 62ms, environment 0ms)[22m
 
 
 Running 2 tests using 2 workers
 
   ✓  1 [chromium] › tests/e2e/gate-center-status.spec.js:527:1 › gate center demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
-  ✓  2 [chromium] › tests/e2e/gate-center-status.spec.js:443:1 › gate center demo covers empty/loading/error/success with counters, gates, subgates and actions (2.6s)
+  ✓  2 [chromium] › tests/e2e/gate-center-status.spec.js:443:1 › gate center demo covers empty/loading/error/success with counters, gates, subgates and actions (2.7s)
 
-  2 passed (4.0s)
+  2 passed (4.1s)
 
 [1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
       [2mCoverage enabled with [22m[33mv8[39m
 
  [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 30[2mms[22m[39m
- [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 40[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
 [2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
-[2m   Start at [22m 23:10:42
-[2m   Duration [22m 580ms[2m (transform 299ms, setup 0ms, import 439ms, tests 61ms, environment 0ms)[22m
+[2m   Start at [22m 23:41:44
+[2m   Duration [22m 648ms[2m (transform 363ms, setup 0ms, import 514ms, tests 70ms, environment 0ms)[22m
 
 [34m % [39m[2mCoverage report from [22m[33mv8[39m
 -------------------|---------|----------|---------|---------|-------------------
@@ -57,7 +57,7 @@ All files          |   96.91 |    91.09 |     100 |   96.77 |
 found 0 vulnerabilities
 ✅ S025_TECH_GATES_OK
 
-[TEA checkpoint 2026-02-23T23:11:00Z]
+[TEA checkpoint 2026-02-23T23:42:00Z]
 Coverage gate evaluation (module S025):
 - app/src/gate-center-status.js: 96.77% lines / 91.09% branches
 - Required threshold (story S025 AC-10): >=95% lines and >=95% branches
