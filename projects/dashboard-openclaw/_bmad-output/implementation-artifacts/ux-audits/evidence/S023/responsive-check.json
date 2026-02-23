@@ -1,0 +1,160 @@
+{
+  "storyId": "S023",
+  "runAt": "2026-02-23T18:54:53.971Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S023/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Annotations risque générées: 2 annotation(s) sur 2 artefact(s).",
+      "counts": "tagged=2 | annotations=2 | highRisk=1 | retryLimited=1 | dlq=1",
+      "taggedArtifacts": [
+        "rollout-v1 => severity=medium tags=T01,T02",
+        "rollout-v2 => severity=high tags=NFR016,NFR038,P02,T01,T02"
+      ],
+      "contextAnnotations": [
+        "rollout-v1 => frontmatter/frontmatter",
+        "rollout-v2 => schema/schema"
+      ],
+      "riskTagCatalog": [
+        "T01 => count=4 max=high",
+        "T02 => count=4 max=high",
+        "NFR016 => count=2 max=high",
+        "NFR038 => count=2 max=high",
+        "P02 => count=2 max=high"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "tagged": 0,
+        "annotations": 0,
+        "catalog": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S023/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Annotations risque générées: 2 annotation(s) sur 2 artefact(s).",
+      "counts": "tagged=2 | annotations=2 | highRisk=1 | retryLimited=1 | dlq=1",
+      "taggedArtifacts": [
+        "rollout-v1 => severity=medium tags=T01,T02",
+        "rollout-v2 => severity=high tags=NFR016,NFR038,P02,T01,T02"
+      ],
+      "contextAnnotations": [
+        "rollout-v1 => frontmatter/frontmatter",
+        "rollout-v2 => schema/schema"
+      ],
+      "riskTagCatalog": [
+        "T01 => count=4 max=high",
+        "T02 => count=4 max=high",
+        "NFR016 => count=2 max=high",
+        "NFR038 => count=2 max=high",
+        "P02 => count=2 max=high"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "tagged": 0,
+        "annotations": 0,
+        "catalog": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S023/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Annotations risque générées: 2 annotation(s) sur 2 artefact(s).",
+      "counts": "tagged=2 | annotations=2 | highRisk=1 | retryLimited=1 | dlq=1",
+      "taggedArtifacts": [
+        "rollout-v1 => severity=medium tags=T01,T02",
+        "rollout-v2 => severity=high tags=NFR016,NFR038,P02,T01,T02"
+      ],
+      "contextAnnotations": [
+        "rollout-v1 => frontmatter/frontmatter",
+        "rollout-v2 => schema/schema"
+      ],
+      "riskTagCatalog": [
+        "T01 => count=4 max=high",
+        "T02 => count=4 max=high",
+        "NFR016 => count=2 max=high",
+        "NFR038 => count=2 max=high",
+        "P02 => count=2 max=high"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "tagged": 0,
+        "annotations": 0,
+        "catalog": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

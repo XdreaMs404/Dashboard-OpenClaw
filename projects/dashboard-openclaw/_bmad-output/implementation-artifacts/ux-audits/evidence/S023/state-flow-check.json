@@ -1,0 +1,130 @@
+{
+  "storyId": "S023",
+  "runAt": "2026-02-23T18:54:52.675Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_RISK_ANNOTATION_INPUT",
+      "expectedReasonCode": "INVALID_RISK_ANNOTATION_INPUT",
+      "reason": "Aucune source exploitable: fournir parseDiagnosticsResult ou parseDiagnosticsInput.",
+      "counts": "tagged=0 | annotations=0 | highRisk=0 | retryLimited=0 | dlq=0",
+      "taggedArtifacts": [
+        "—"
+      ],
+      "contextAnnotations": [
+        "—"
+      ],
+      "riskTagCatalog": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_RISK_ANNOTATION_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "EVENT_LEDGER_GAP_DETECTED",
+      "expectedReasonCode": "EVENT_LEDGER_GAP_DETECTED",
+      "reason": "Gap ledger détecté.",
+      "counts": "tagged=0 | annotations=0 | highRisk=0 | retryLimited=0 | dlq=0",
+      "taggedArtifacts": [
+        "—"
+      ],
+      "contextAnnotations": [
+        "—"
+      ],
+      "riskTagCatalog": [
+        "—"
+      ],
+      "correctiveActions": [
+        "REPAIR_EVENT_LEDGER_GAP"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "missing-tags",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "RISK_TAGS_MISSING",
+      "expectedReasonCode": "RISK_TAGS_MISSING",
+      "reason": "Au moins un artefact annoté ne contient aucun riskTag.",
+      "counts": "tagged=1 | annotations=0 | highRisk=1 | retryLimited=1 | dlq=0",
+      "taggedArtifacts": [
+        "critical-v1 => severity=critical tags="
+      ],
+      "contextAnnotations": [
+        "—"
+      ],
+      "riskTagCatalog": [
+        "—"
+      ],
+      "correctiveActions": [
+        "ADD_RISK_TAGS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "conflict",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "RISK_ANNOTATION_CONFLICT",
+      "expectedReasonCode": "RISK_ANNOTATION_CONFLICT",
+      "reason": "Conflit de contexte: annotation ann-conflict porte T02 absent des tags artefact conflict-v1.",
+      "counts": "tagged=1 | annotations=1 | highRisk=1 | retryLimited=0 | dlq=0",
+      "taggedArtifacts": [
+        "conflict-v1 => severity=high tags=T01"
+      ],
+      "contextAnnotations": [
+        "conflict-v1 => markdown/syntax"
+      ],
+      "riskTagCatalog": [
+        "T01 => count=1 max=high",
+        "T02 => count=1 max=high"
+      ],
+      "correctiveActions": [
+        "RESOLVE_RISK_ANNOTATION_CONFLICT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Annotations risque générées: 2 annotation(s) sur 2 artefact(s).",
+      "counts": "tagged=2 | annotations=2 | highRisk=1 | retryLimited=1 | dlq=1",
+      "taggedArtifacts": [
+        "rollout-v1 => severity=medium tags=T01,T02",
+        "rollout-v2 => severity=high tags=NFR016,NFR038,P02,T01,T02"
+      ],
+      "contextAnnotations": [
+        "rollout-v1 => frontmatter/frontmatter",
+        "rollout-v2 => schema/schema"
+      ],
+      "riskTagCatalog": [
+        "T01 => count=4 max=high",
+        "T02 => count=4 max=high",
+        "NFR016 => count=2 max=high",
+        "NFR038 => count=2 max=high",
+        "P02 => count=2 max=high"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
