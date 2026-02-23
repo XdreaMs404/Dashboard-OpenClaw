@@ -43,5 +43,5 @@
   "issues": [],
   "requiredFixes": [],
   "notes": "Audit UX S018 PASS: états empty/loading/error/success couverts avec affichage explicite de reasonCode, reason, appliedFilters, filteredCount/filteredOutCount, diffCandidates et correctiveActions. Les scénarios bloquants et nominaux sont lisibles, l’action RUN_ARTIFACT_DIFF est présente en nominal, l’accessibilité (label, role=status/alert, aria-live, focus) est conforme et le responsive mobile/tablette/desktop est validé sans overflow horizontal.",
-  "updatedAt": "2026-02-23T08:45:10Z"
+  "updatedAt": "2026-02-23T08:54:29Z"
 }
