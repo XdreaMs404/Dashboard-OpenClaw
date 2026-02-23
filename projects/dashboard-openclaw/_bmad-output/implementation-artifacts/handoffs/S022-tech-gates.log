@@ -1,0 +1,50 @@
+[S022 DEV recheck — 2026-02-23T15:37:08Z]
+
+Command:
+BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S022
+
+Result:
+▶ FAST lint
+✅ Lint OK
+▶ FAST typecheck
+✅ Typecheck (syntax) OK
+▶ FAST targeted tests from story Comment tester
+- npx vitest run tests/unit/artifact-parse-diagnostics.test.js tests/edge/artifact-parse-diagnostics.edge.test.js
+  - Test Files: 2 passed
+  - Tests: 23 passed
+- npx playwright test tests/e2e/artifact-parse-diagnostics.spec.js
+  - 2 passed
+✅ FAST_QUALITY_GATES_OK (S022)
+
+---
+[S022 coverage/build/security evidence]
+
+Command:
+npm run test:coverage
+
+Result (extrait module S022):
+- app/src/artifact-parse-diagnostics.js: 99.48% statements / 99.41% branches / 97.56% functions / 100.00% lines
+- Coverage gate module (>=95% lines & >=95% branches): ✅ PASS
+
+Command:
+npm run build
+Result:
+✅ Build OK
+
+Command:
+npm run security:deps
+Result:
+✅ npm audit --audit-level=high: found 0 vulnerabilities
+
+✅ S022_TECH_GATES_OK
+
+---
+[2026-02-23T15:38:17Z] FAST_RECHECK_S022
+Command:
+BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S022
+Result:
+✅ FAST_QUALITY_GATES_OK (S022)
+- lint: PASS
+- typecheck: PASS
+- targeted vitest (unit+edge S022): 23/23 PASS
+- targeted playwright e2e S022: 2/2 PASS
