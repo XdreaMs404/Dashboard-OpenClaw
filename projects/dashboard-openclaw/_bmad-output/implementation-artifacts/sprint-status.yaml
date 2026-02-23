@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-23T15:02:21Z"
+updated_at_utc: "2026-02-23T16:11:36Z"
 
 development_status:
   epic-1: done
@@ -30,7 +30,7 @@ development_status:
   2-19-moteur-diff-version-vers-version-d-artefacts: done
   2-20-evidence-graph-decision-preuve-gate-commande: done
   2-21-indicateur-de-fraicheur-staleness-des-vues: done
-  2-22-diagnostic-parse-errors-et-recommandations: backlog
+  2-22-diagnostic-parse-errors-et-recommandations: done
   2-23-tags-risques-et-annotations-contextuelles: backlog
   2-24-backfill-historique-migration-corpus-existant: backlog
   epic-2-retrospective: optional

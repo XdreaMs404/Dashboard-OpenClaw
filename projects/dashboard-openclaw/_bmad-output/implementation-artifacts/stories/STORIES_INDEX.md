@@ -23,7 +23,7 @@
 | S019 | E02 | Moteur diff version-vers-version d’artefacts | DONE |
 | S020 | E02 | Evidence graph décision↔preuve↔gate↔commande | DONE |
 | S021 | E02 | Indicateur de fraîcheur/staleness des vues | DONE |
-| S022 | E02 | Diagnostic parse-errors et recommandations | TODO |
+| S022 | E02 | Diagnostic parse-errors et recommandations | DONE |
 | S023 | E02 | Tags risques et annotations contextuelles | TODO |
 | S024 | E02 | Backfill historique + migration corpus existant | TODO |
 | S025 | E03 | Gate Center unifié avec statut et owner | TODO |
