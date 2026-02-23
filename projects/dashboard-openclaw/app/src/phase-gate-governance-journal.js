@@ -7,6 +7,7 @@ const MAX_QUERY_LIMIT = 200;
 const DEFAULT_MAX_ENTRIES = 200;
 const MAX_RETENTION_ENTRIES = 1000;
 const MIN_SORT_MS = -8_640_000_000_000_000;
+const MAX_SORT_MS = 8_640_000_000_000_000;
 
 const ALLOWED_REASON_CODES = new Set([
   'OK',
@@ -100,18 +101,19 @@ function hasReasonText(value) {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+function isValidTimestampMs(ms) {
+  return Number.isFinite(ms) && ms >= MIN_SORT_MS && ms <= MAX_SORT_MS;
+}
+
 function parseTimestampMs(value) {
   if (value instanceof Date) {
     const ms = value.getTime();
-    return Number.isFinite(ms) ? ms : null;
+    return isValidTimestampMs(ms) ? Math.trunc(ms) : null;
   }
 
   if (typeof value === 'number') {
-    if (!Number.isFinite(value)) {
-      return null;
-    }
-
-    return Math.trunc(value);
+    const candidate = Math.trunc(value);
+    return isValidTimestampMs(candidate) ? candidate : null;
   }
 
   if (typeof value === 'string') {
@@ -120,7 +122,7 @@ function parseTimestampMs(value) {
     }
 
     const ms = Date.parse(value);
-    return Number.isFinite(ms) ? ms : null;
+    return isValidTimestampMs(ms) ? ms : null;
   }
 
   return null;
@@ -265,13 +267,28 @@ function resolveDecisionId(payload, runtimeOptions) {
 }
 
 function resolveDecisionTimestampMs(payload, runtimeOptions) {
-  const candidate = parseTimestampMs(payload.decidedAt ?? payload.timestamp);
+  const hasExplicitTimestamp = payload.decidedAt !== undefined || payload.timestamp !== undefined;
+  const explicitTimestamp = payload.decidedAt ?? payload.timestamp;
+  const candidate = parseTimestampMs(explicitTimestamp);
 
-  if (candidate !== null) {
-    return candidate;
+  if (hasExplicitTimestamp && candidate === null) {
+    return {
+      valid: false,
+      reason: `decidedAt/timestamp invalide: ${String(explicitTimestamp)}.`
+    };
   }
 
-  return resolveNowMs(runtimeOptions);
+  if (candidate !== null) {
+    return {
+      valid: true,
+      decidedAtMs: candidate
+    };
+  }
+
+  return {
+    valid: true,
+    decidedAtMs: resolveNowMs(runtimeOptions)
+  };
 }
 
 function resolveMaxEntries(value) {
@@ -457,7 +474,19 @@ function resolveProgressionAlert(payload, runtimeOptions) {
       ? runtimeOptions.progressionAlertEvaluator
       : evaluatePhaseProgressionAlert;
 
-  const evaluated = progressionAlertEvaluator(cloneValue(payload.progressionAlertInput));
+  let evaluated;
+
+  try {
+    evaluated = progressionAlertEvaluator(cloneValue(payload.progressionAlertInput));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+
+    return {
+      valid: false,
+      reason: `evaluatePhaseProgressionAlert a levé une exception: ${message}`
+    };
+  }
+
   const normalized = normalizeProgressionAlert(evaluated);
 
   if (!normalized.valid) {
@@ -847,8 +876,26 @@ export function recordPhaseGateGovernanceDecision(input, options = {}) {
     });
   }
 
+  const decisionTimestampResolution = resolveDecisionTimestampMs(payload, runtimeOptions);
+
+  if (!decisionTimestampResolution.valid) {
+    const retained = applyRetention(sortedExistingHistory, maxEntries);
+    const consulted = applyQuery(retained.retained, queryResolution.query).map((item) => item.entry);
+
+    return createInvalidInputResult({
+      reason: decisionTimestampResolution.reason,
+      phaseFrom: contextResolution.context.phaseFrom,
+      phaseTo: contextResolution.context.phaseTo,
+      gateId: contextResolution.context.gateId,
+      owner: contextResolution.context.owner,
+      sourceReasonCode: progressionAlert.diagnostics.sourceReasonCode,
+      decisionHistory: consulted,
+      droppedCount: retained.droppedCount
+    });
+  }
+
   const decisionType = normalizeText(payload.decisionType) || 'phase-gate';
-  const decidedAtMs = resolveDecisionTimestampMs(payload, runtimeOptions);
+  const decidedAtMs = decisionTimestampResolution.decidedAtMs;
   const decisionId = resolveDecisionId(payload, runtimeOptions);
 
   const defaultActions = resolveDefaultActions(progressionAlert.reasonCode);

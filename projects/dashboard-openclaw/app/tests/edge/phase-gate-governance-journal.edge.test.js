@@ -372,14 +372,13 @@ describe('phase-gate-governance-journal edge cases', () => {
     expect(byNumber.decisionHistory[0].decisionId).toBe('dec-number-ts');
   });
 
-  it('falls back to Date.now when nowProvider/decidedAt are invalid and idGenerator returns blank', () => {
+  it('falls back to Date.now when nowProvider is invalid and idGenerator returns blank', () => {
     const dateNowSpy = vi.spyOn(Date, 'now').mockReturnValue(Date.parse('2026-02-21T17:20:00.000Z'));
 
     try {
       const result = recordPhaseGateGovernanceDecision(
         {
           gateId: 'G2',
-          decidedAt: Number.POSITIVE_INFINITY,
           progressionAlert: progressionAlertOk(),
           decisionHistory: []
         },
@@ -395,6 +394,64 @@ describe('phase-gate-governance-journal edge cases', () => {
     } finally {
       dateNowSpy.mockRestore();
     }
+  });
+
+  it('fails closed when decidedAt/timestamp payloads are out of JS Date range', () => {
+    const outOfRange = 8_640_000_000_000_001;
+
+    const decidedAtInvalid = recordPhaseGateGovernanceDecision({
+      gateId: 'G2',
+      decidedAt: outOfRange,
+      progressionAlert: progressionAlertOk(),
+      decisionHistory: [historyEntry()]
+    });
+
+    expect(decidedAtInvalid).toMatchObject({
+      allowed: false,
+      reasonCode: 'INVALID_GOVERNANCE_DECISION_INPUT',
+      decisionEntry: null
+    });
+    expect(decidedAtInvalid.reason).toContain('decidedAt/timestamp invalide');
+
+    const timestampInvalid = recordPhaseGateGovernanceDecision({
+      gateId: 'G2',
+      timestamp: outOfRange,
+      progressionAlert: progressionAlertOk(),
+      decisionHistory: [historyEntry()]
+    });
+
+    expect(timestampInvalid).toMatchObject({
+      allowed: false,
+      reasonCode: 'INVALID_GOVERNANCE_DECISION_INPUT',
+      decisionEntry: null
+    });
+    expect(timestampInvalid.reason).toContain('decidedAt/timestamp invalide');
+  });
+
+  it('fails closed when progressionAlertEvaluator throws', () => {
+    const result = recordPhaseGateGovernanceDecision(
+      {
+        gateId: 'G2',
+        progressionAlertInput: {
+          fromPhase: 'H09',
+          toPhase: 'H10',
+          owner: 'ops.lead'
+        },
+        decisionHistory: [historyEntry()]
+      },
+      {
+        progressionAlertEvaluator: () => {
+          throw new RangeError('evaluator exploded');
+        }
+      }
+    );
+
+    expect(result).toMatchObject({
+      allowed: false,
+      reasonCode: 'INVALID_GOVERNANCE_DECISION_INPUT',
+      decisionEntry: null
+    });
+    expect(result.reason).toContain('evaluatePhaseProgressionAlert a levé une exception');
   });
 
   it('handles numeric parsing for maxEntries/query limit with invalid and decimal inputs', () => {
@@ -512,6 +569,7 @@ describe('phase-gate-governance-journal edge cases', () => {
           historyEntry({ decisionId: 'invalid-allowed', allowed: 'false' }),
           historyEntry({ decisionId: 'invalid-reasoncode', reasonCode: 'BAD_CODE' }),
           historyEntry({ decisionId: 'invalid-reason', reason: ' ' }),
+          historyEntry({ decisionId: 'invalid-timestamp', decidedAt: 8_640_000_000_000_001 }),
           historyEntry({
             decisionId: 'invalid-actions',
             correctiveActions: ['OK', 123]

@@ -3,7 +3,7 @@
 ## Story
 - ID: S012
 - Epic: E01
-- Date (UTC): 2026-02-22T23:31:00Z
+- Date (UTC): 2026-02-23T08:18:31Z
 - Statut DEV: READY_FOR_TEA
 
 ## Vérification scope strict S012
@@ -11,6 +11,14 @@
 - Réutilisation stricte S011 (`evaluatePhaseProgressionAlert`) sans réimplémentation de règles progression.
 - Contrat stable livré:
   `{ allowed, reasonCode, reason, diagnostics, decisionEntry, decisionHistory, correctiveActions }`.
+
+## Correctif reviewer AC-06 (déblocage)
+- Durcissement fail-closed sur timestamps hors plage JS Date:
+  - `decidedAt`/`timestamp` explicites hors plage => `INVALID_GOVERNANCE_DECISION_INPUT` (sans exception non contrôlée).
+  - `decisionHistory[*].decidedAt` hors plage ignoré proprement (pas de crash global).
+- Durcissement délégation S011:
+  - toute exception levée par `progressionAlertEvaluator` est capturée,
+  - conversion en résultat fail-closed `INVALID_GOVERNANCE_DECISION_INPUT` avec raison explicite.
 
 ## Fichiers touchés (S012)
 - `app/src/phase-gate-governance-journal.js`
@@ -25,6 +33,8 @@
 ## Gates DEV exécutés + résultats (preuves)
 Commande exécutée:
 - `npm run lint && npm run typecheck && npx vitest run tests/unit tests/edge && npx playwright test tests/e2e && npm run test:coverage && npm run build && npm run security:deps` ✅
+- Recheck rapide post-correctif reviewer AC-06:
+  - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S012` ✅
 - Log complet: `_bmad-output/implementation-artifacts/handoffs/S012-tech-gates.log`
 
 Détail des résultats:
