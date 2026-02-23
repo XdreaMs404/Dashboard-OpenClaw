@@ -10,6 +10,7 @@ import { searchArtifactsFullText } from './artifact-fulltext-search.js';
 import { applyArtifactContextFilters } from './artifact-context-filter.js';
 import { diffArtifactVersions } from './artifact-version-diff.js';
 import { buildArtifactEvidenceGraph } from './artifact-evidence-graph.js';
+import { buildArtifactStalenessIndicator } from './artifact-staleness-indicator.js';
 import { buildPhaseDependencyMatrix } from './phase-dependency-matrix.js';
 import { evaluatePhaseProgressionAlert } from './phase-progression-alert.js';
 import { recordPhaseTransitionHistory } from './phase-transition-history.js';
@@ -22,6 +23,7 @@ export {
   BMAD_PHASE_ORDER,
   applyArtifactContextFilters,
   buildArtifactEvidenceGraph,
+  buildArtifactStalenessIndicator,
   diffArtifactVersions,
   buildPhaseDependencyMatrix,
   buildPhaseStateProjection,
