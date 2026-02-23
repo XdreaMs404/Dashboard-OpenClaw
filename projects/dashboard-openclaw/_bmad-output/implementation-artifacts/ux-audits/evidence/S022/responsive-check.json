@@ -1,0 +1,142 @@
+{
+  "storyId": "S022",
+  "runAt": "2026-02-23T15:55:54.238Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S022/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Diagnostic parse OK: 1 artefact(s) vérifié(s), aucune parse issue.",
+      "counts": "checked=1 | errors=0 | retry=0 | dlq=0",
+      "parseIssues": [
+        "—"
+      ],
+      "recommendations": [
+        "—"
+      ],
+      "dlqCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "issues": 0,
+        "recommendations": 0,
+        "dlq": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S022/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Diagnostic parse OK: 1 artefact(s) vérifié(s), aucune parse issue.",
+      "counts": "checked=1 | errors=0 | retry=0 | dlq=0",
+      "parseIssues": [
+        "—"
+      ],
+      "recommendations": [
+        "—"
+      ],
+      "dlqCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "issues": 0,
+        "recommendations": 0,
+        "dlq": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S022/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Diagnostic parse OK: 1 artefact(s) vérifié(s), aucune parse issue.",
+      "counts": "checked=1 | errors=0 | retry=0 | dlq=0",
+      "parseIssues": [
+        "—"
+      ],
+      "recommendations": [
+        "—"
+      ],
+      "dlqCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "issues": 0,
+        "recommendations": 0,
+        "dlq": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

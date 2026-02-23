@@ -1,0 +1,47 @@
+{
+  "storyId": "S022",
+  "epicId": "E02",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 95,
+    "D2": 97,
+    "D3": 95,
+    "D4": 96,
+    "D5": 95,
+    "D6": 94,
+    "designExcellence": 95
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/vitest-s022.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/playwright-s022.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/playwright-e2e-suite.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/responsive-mobile.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/responsive-tablet.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/responsive-desktop.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/responsive-audit.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S022/ux-gate.log"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX S022 PASS: conformité design-system, accessibilité WCAG 2.2 AA, responsive mobile/tablette/desktop et états empty/loading/error/success validés. Le démonstrateur expose reasonCode, reason, compteurs (checked/errors/retry/dlq), parseIssues, recommendations, dlqCandidates et correctiveActions sur scénarios invalid-input, blocked-upstream, retry-limit, dlq-required et nominal. Aucun correctif UX bloquant restant.",
+  "updatedAt": "2026-02-23T15:58:00Z"
+}

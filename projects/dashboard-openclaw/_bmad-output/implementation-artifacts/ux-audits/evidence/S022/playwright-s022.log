@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/artifact-parse-diagnostics.spec.js:428:1 › artifact parse diagnostics demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  1 [chromium] › tests/e2e/artifact-parse-diagnostics.spec.js:345:1 › artifact parse diagnostics demo covers empty/loading/error/success with reason, counters, issues, recommendations, dlq and actions (2.7s)
+
+  2 passed (4.1s)

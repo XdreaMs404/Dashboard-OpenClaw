@@ -1,0 +1,5 @@
+[S022] Responsive UX audit 2026-02-23T15:55:54.238Z
+- mobile: pass=true overflow.max=0 state=success reasonCode=OK
+- tablet: pass=true overflow.max=0 state=success reasonCode=OK
+- desktop: pass=true overflow.max=0 state=success reasonCode=OK
+allPass=true

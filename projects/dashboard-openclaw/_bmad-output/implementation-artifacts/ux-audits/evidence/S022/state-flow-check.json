@@ -1,0 +1,123 @@
+{
+  "storyId": "S022",
+  "runAt": "2026-02-23T15:55:53.148Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_PARSE_DIAGNOSTIC_INPUT",
+      "expectedReasonCode": "INVALID_PARSE_DIAGNOSTIC_INPUT",
+      "reason": "Aucune source exploitable: fournir stalenessResult ou stalenessInput.",
+      "counts": "checked=0 | errors=0 | retry=0 | dlq=0",
+      "parseIssues": [
+        "—"
+      ],
+      "recommendations": [
+        "—"
+      ],
+      "dlqCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_PARSE_DIAGNOSTIC_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "EVENT_LEDGER_GAP_DETECTED",
+      "expectedReasonCode": "EVENT_LEDGER_GAP_DETECTED",
+      "reason": "Gap ledger détecté.",
+      "counts": "checked=0 | errors=0 | retry=0 | dlq=0",
+      "parseIssues": [
+        "—"
+      ],
+      "recommendations": [
+        "—"
+      ],
+      "dlqCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "REPAIR_EVENT_LEDGER_GAP"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "retry-limit",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "PARSE_RETRY_LIMIT_REACHED",
+      "expectedReasonCode": "PARSE_RETRY_LIMIT_REACHED",
+      "reason": "Limite de retry atteinte pour 1 artefact(s) (maxRetries=3).",
+      "counts": "checked=1 | errors=1 | retry=0 | dlq=0",
+      "parseIssues": [
+        "rollout-v1 => schema/schema retry=3"
+      ],
+      "recommendations": [
+        "rollout-v1 => SCHEDULE_PARSE_RETRY"
+      ],
+      "dlqCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "SCHEDULE_PARSE_RETRY"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "dlq-required",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "PARSE_DLQ_REQUIRED",
+      "expectedReasonCode": "PARSE_DLQ_REQUIRED",
+      "reason": "DLQ requis: 1 artefact(s) ont dépassé maxRetries=3.",
+      "counts": "checked=1 | errors=1 | retry=0 | dlq=1",
+      "parseIssues": [
+        "rollout-v1 => decode/encoding retry=4"
+      ],
+      "recommendations": [
+        "rollout-v1 => MOVE_TO_PARSE_DLQ"
+      ],
+      "dlqCandidates": [
+        "rollout-v1 => retry=4"
+      ],
+      "correctiveActions": [
+        "MOVE_TO_PARSE_DLQ"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Diagnostic parse OK: 1 artefact(s) vérifié(s), aucune parse issue.",
+      "counts": "checked=1 | errors=0 | retry=0 | dlq=0",
+      "parseIssues": [
+        "—"
+      ],
+      "recommendations": [
+        "—"
+      ],
+      "dlqCandidates": [
+        "—"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
