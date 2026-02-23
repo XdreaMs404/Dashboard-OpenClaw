@@ -1,0 +1,110 @@
+{
+  "storyId": "S021",
+  "runAt": "2026-02-23T14:30:19.422Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_STALENESS_INPUT",
+      "expectedReasonCode": "INVALID_STALENESS_INPUT",
+      "reason": "Aucune source exploitable: fournir evidenceGraphResult ou evidenceGraphInput.",
+      "counts": "artifacts=0 | stale=0 | ratio=0 | maxAge=3600",
+      "stalenessBoard": [
+        "—"
+      ],
+      "decisionFreshness": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_STALENESS_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "EVIDENCE_LINK_INCOMPLETE",
+      "expectedReasonCode": "EVIDENCE_LINK_INCOMPLETE",
+      "reason": "Graph incomplet.",
+      "counts": "artifacts=0 | stale=0 | ratio=0 | maxAge=3600",
+      "stalenessBoard": [
+        "—"
+      ],
+      "decisionFreshness": [
+        "—"
+      ],
+      "correctiveActions": [
+        "LINK_OR_RESTORE_EVIDENCE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "ledger-gap",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "EVENT_LEDGER_GAP_DETECTED",
+      "expectedReasonCode": "EVENT_LEDGER_GAP_DETECTED",
+      "reason": "Gap ledger détecté: séquence attendue=102, reçue=103 (index 2).",
+      "counts": "artifacts=0 | stale=0 | ratio=0 | maxAge=3600",
+      "stalenessBoard": [
+        "—"
+      ],
+      "decisionFreshness": [
+        "—"
+      ],
+      "correctiveActions": [
+        "REPAIR_EVENT_LEDGER_GAP"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "stale",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "ARTIFACT_STALENESS_DETECTED",
+      "expectedReasonCode": "ARTIFACT_STALENESS_DETECTED",
+      "reason": "Staleness détecté: 2/2 artefact(s) au-delà de maxAgeSeconds=600.",
+      "counts": "artifacts=2 | stale=2 | ratio=1 | maxAge=600",
+      "stalenessBoard": [
+        "rollout-v1 => stale=true age=9000 level=critical",
+        "rollout-v2 => stale=true age=1200 level=warning"
+      ],
+      "decisionFreshness": [
+        "DEC-1 => rollout-v1,rollout-v2"
+      ],
+      "correctiveActions": [
+        "REFRESH_STALE_ARTIFACTS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Staleness check OK: 2 artefact(s), staleCount=0, maxAgeSeconds=3600.",
+      "counts": "artifacts=2 | stale=0 | ratio=0 | maxAge=3600",
+      "stalenessBoard": [
+        "rollout-v1 => stale=false age=1800 level=fresh",
+        "rollout-v2 => stale=false age=1200 level=fresh"
+      ],
+      "decisionFreshness": [
+        "DEC-1 => rollout-v1,rollout-v2"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

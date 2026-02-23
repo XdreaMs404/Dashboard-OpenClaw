@@ -1,0 +1,133 @@
+{
+  "storyId": "S021",
+  "runAt": "2026-02-23T14:30:20.638Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S021/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Staleness check OK: 2 artefact(s), staleCount=0, maxAgeSeconds=3600.",
+      "counts": "artifacts=2 | stale=0 | ratio=0 | maxAge=3600",
+      "stalenessBoard": [
+        "rollout-v1 => stale=false age=1800 level=fresh",
+        "rollout-v2 => stale=false age=1200 level=fresh"
+      ],
+      "decisionFreshness": [
+        "DEC-1 => rollout-v1,rollout-v2"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "board": 0,
+        "decision": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S021/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Staleness check OK: 2 artefact(s), staleCount=0, maxAgeSeconds=3600.",
+      "counts": "artifacts=2 | stale=0 | ratio=0 | maxAge=3600",
+      "stalenessBoard": [
+        "rollout-v1 => stale=false age=1800 level=fresh",
+        "rollout-v2 => stale=false age=1200 level=fresh"
+      ],
+      "decisionFreshness": [
+        "DEC-1 => rollout-v1,rollout-v2"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "board": 0,
+        "decision": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S021/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Staleness check OK: 2 artefact(s), staleCount=0, maxAgeSeconds=3600.",
+      "counts": "artifacts=2 | stale=0 | ratio=0 | maxAge=3600",
+      "stalenessBoard": [
+        "rollout-v1 => stale=false age=1800 level=fresh",
+        "rollout-v2 => stale=false age=1200 level=fresh"
+      ],
+      "decisionFreshness": [
+        "DEC-1 => rollout-v1,rollout-v2"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "board": 0,
+        "decision": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
