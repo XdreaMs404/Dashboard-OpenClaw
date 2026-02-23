@@ -13,7 +13,7 @@
 | S009 | E01 | Workflow override exceptionnel avec approbateur | DONE |
 | S010 | E01 | Carte dépendances inter-phases en temps réel | DONE |
 | S011 | E01 | Détection anomalies de progression et alertes | DONE |
-| S012 | E01 | Journal décisionnel de gouvernance phase/gate | TODO |
+| S012 | E01 | Journal décisionnel de gouvernance phase/gate | DONE |
 | S013 | E02 | Pipeline ingestion markdown/yaml sous allowlist | DONE |
 | S014 | E02 | Validator metadata stepsCompleted + inputDocuments | DONE |
 | S015 | E02 | Extracteur sections H2/H3 pour navigation | DONE |
