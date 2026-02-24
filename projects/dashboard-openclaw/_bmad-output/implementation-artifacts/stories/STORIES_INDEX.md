@@ -30,7 +30,7 @@
 | S026 | E03 | Évaluation duale G4-T/G4-UX corrélée | DONE |
 | S027 | E03 | Calculateur verdict PASS/CONCERNS/FAIL | DONE |
 | S028 | E03 | Blocage DONE si sous-gate non PASS | DONE |
-| S029 | E03 | Validation preuve primaire obligatoire | TODO |
+| S029 | E03 | Validation preuve primaire obligatoire | DONE |
 | S030 | E03 | Création automatique actions CONCERNS | TODO |
 | S031 | E03 | Versioning des policies de gate | TODO |
 | S032 | E03 | Simulation de verdict pré-soumission | TODO |
