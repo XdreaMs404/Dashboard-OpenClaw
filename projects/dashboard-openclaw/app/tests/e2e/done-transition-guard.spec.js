@@ -1,0 +1,424 @@
+import { expect, test } from '@playwright/test';
+import { guardDoneTransition } from '../../src/done-transition-guard.js';
+
+const demoPageHtml = `
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Guard DONE transition</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 1rem;
+      }
+
+      main {
+        width: min(100%, 66rem);
+      }
+
+      #reason-value,
+      #counts-value,
+      #done-value,
+      #blockers-value,
+      #actions-value,
+      #error-message,
+      #success-json {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      #blockers-value,
+      #actions-value {
+        margin: 0;
+        padding-left: 1.25rem;
+      }
+
+      #success-json {
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        background: #f8fafc;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Blocage DONE si sous-gate non PASS</h1>
+
+      <label for="scenario">Scénario</label>
+      <select id="scenario" name="scenario">
+        <option value="invalid-input">Entrée invalide</option>
+        <option value="blocked-upstream">Blocage amont S027</option>
+        <option value="evidence-missing">Chaîne preuve incomplète</option>
+        <option value="success">Nominal</option>
+      </select>
+
+      <button id="run-action" type="button">Évaluer garde DONE</button>
+
+      <p id="state-indicator" role="status" aria-label="État garde DONE" aria-live="polite" data-state="empty">
+        État: empty
+      </p>
+
+      <p id="error-message" role="alert" hidden></p>
+
+      <section>
+        <h2>Résultat</h2>
+        <dl>
+          <div><dt>reasonCode</dt><dd id="reason-code-value">—</dd></div>
+          <div><dt>reason</dt><dd id="reason-value">—</dd></div>
+          <div><dt>compteurs</dt><dd id="counts-value">—</dd></div>
+          <div><dt>doneTransition</dt><dd id="done-value">—</dd></div>
+          <div>
+            <dt>blockingReasons</dt>
+            <dd><ul id="blockers-value"><li>—</li></ul></dd>
+          </div>
+          <div>
+            <dt>correctiveActions</dt>
+            <dd><ul id="actions-value"><li>—</li></ul></dd>
+          </div>
+        </dl>
+      </section>
+
+      <pre id="success-json" aria-live="polite" aria-atomic="true" hidden></pre>
+    </main>
+
+    <script>
+      const scenarioInput = document.getElementById('scenario');
+      const action = document.getElementById('run-action');
+      const stateIndicator = document.getElementById('state-indicator');
+      const errorMessage = document.getElementById('error-message');
+      const successJson = document.getElementById('success-json');
+      const reasonCodeValue = document.getElementById('reason-code-value');
+      const reasonValue = document.getElementById('reason-value');
+      const countsValue = document.getElementById('counts-value');
+      const doneValue = document.getElementById('done-value');
+      const blockersValue = document.getElementById('blockers-value');
+      const actionsValue = document.getElementById('actions-value');
+
+      const setState = (state) => {
+        stateIndicator.dataset.state = state;
+        stateIndicator.textContent = 'État: ' + state;
+      };
+
+      const renderList = (container, values) => {
+        container.textContent = '';
+
+        if (!Array.isArray(values) || values.length === 0) {
+          const item = document.createElement('li');
+          item.textContent = '—';
+          container.appendChild(item);
+          return;
+        }
+
+        for (const value of values) {
+          const item = document.createElement('li');
+          item.textContent = value;
+          container.appendChild(item);
+        }
+      };
+
+      const renderResult = (result) => {
+        reasonCodeValue.textContent = result.reasonCode;
+        reasonValue.textContent = result.reason;
+
+        const diagnostics = result.diagnostics ?? {};
+        countsValue.textContent =
+          'target=' + String(diagnostics.targetState ?? '—') +
+          ' | verdict=' + String(diagnostics.verdict ?? '—') +
+          ' | canMarkDone=' + String(diagnostics.canMarkDone ?? '—') +
+          ' | g4t=' + String(diagnostics.g4tStatus ?? '—') +
+          ' | g4ux=' + String(diagnostics.g4uxStatus ?? '—') +
+          ' | evidence=' + String(diagnostics.evidenceCount ?? '—') +
+          ' | p95=' + String(diagnostics.p95GuardMs ?? '—') +
+          ' | source=' + String(diagnostics.sourceReasonCode ?? '—');
+
+        const done = result.doneTransition ?? {};
+        doneValue.textContent =
+          'state=' +
+          String(done.targetState ?? '—') +
+          ' | blocked=' +
+          String(done.blocked ?? '—') +
+          ' | verdict=' +
+          String(done.verdict ?? '—') +
+          ' | g4t=' +
+          String(done.g4SubGates?.g4tStatus ?? '—') +
+          ' | g4ux=' +
+          String(done.g4SubGates?.g4uxStatus ?? '—');
+
+        renderList(blockersValue, done.blockingReasons ?? []);
+        renderList(actionsValue, result.correctiveActions);
+      };
+
+      setState('empty');
+
+      action.addEventListener('click', async () => {
+        setState('loading');
+        action.disabled = true;
+        errorMessage.hidden = true;
+        errorMessage.textContent = '';
+
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 150));
+
+          const result = await window.runDoneGuardScenarioRuntime(scenarioInput.value);
+          renderResult(result);
+
+          if (result.allowed && result.reasonCode === 'OK') {
+            setState('success');
+            successJson.hidden = false;
+            successJson.textContent = JSON.stringify(result);
+            errorMessage.hidden = true;
+            errorMessage.textContent = '';
+          } else {
+            setState('error');
+            errorMessage.hidden = false;
+            errorMessage.textContent = result.reasonCode + ' — ' + result.reason;
+            successJson.hidden = false;
+            successJson.textContent = JSON.stringify(result);
+          }
+        } catch (error) {
+          setState('error');
+          errorMessage.hidden = false;
+          errorMessage.textContent = error?.message ?? String(error);
+          successJson.hidden = true;
+          successJson.textContent = '';
+        } finally {
+          action.disabled = false;
+          action.focus();
+        }
+      });
+    </script>
+  </body>
+</html>
+`;
+
+const responsiveViewports = [
+  { name: 'mobile', width: 390, height: 844 },
+  { name: 'tablet', width: 820, height: 1180 },
+  { name: 'desktop', width: 1366, height: 768 }
+];
+
+function gateVerdictResult(overrides = {}) {
+  return {
+    allowed: true,
+    reasonCode: 'OK',
+    reason: 'Verdict gate calculé: PASS (G4-T=PASS, G4-UX=PASS).',
+    diagnostics: {
+      inputGatesCount: 5,
+      evidenceCount: 2,
+      g4tStatus: 'PASS',
+      g4uxStatus: 'PASS',
+      durationMs: 5,
+      p95VerdictMs: 1,
+      sourceReasonCode: 'OK'
+    },
+    verdict: 'PASS',
+    canMarkDone: true,
+    contributingFactors: [],
+    correctiveActions: [],
+    ...overrides
+  };
+}
+
+async function runScenario(scenario) {
+  if (scenario === 'success') {
+    return guardDoneTransition({
+      gateVerdictResult: gateVerdictResult(),
+      evidenceRefs: ['proof-1']
+    });
+  }
+
+  if (scenario === 'blocked-upstream') {
+    return guardDoneTransition({
+      gateVerdictResult: {
+        allowed: false,
+        reasonCode: 'G4_SUBGATES_UNSYNC',
+        reason: 'Sous-gates non synchronisées.',
+        diagnostics: {
+          sourceReasonCode: 'G4_SUBGATES_UNSYNC'
+        },
+        correctiveActions: ['SYNC_G4_SUBGATES']
+      }
+    });
+  }
+
+  if (scenario === 'evidence-missing') {
+    return guardDoneTransition({
+      gateVerdictResult: gateVerdictResult({
+        diagnostics: {
+          ...gateVerdictResult().diagnostics,
+          evidenceCount: 0
+        }
+      }),
+      evidenceRefs: [],
+      minEvidenceCount: 1
+    });
+  }
+
+  return guardDoneTransition({});
+}
+
+async function bootstrapDemoPage(page) {
+  await page.exposeFunction('runDoneGuardScenarioRuntime', runScenario);
+  await page.goto(`data:text/html,${encodeURIComponent(demoPageHtml)}`);
+}
+
+test('done transition guard demo covers empty/loading/error/success with reason, counters, doneTransition and actions', async ({
+  page
+}) => {
+  await bootstrapDemoPage(page);
+
+  const scenario = page.getByLabel('Scénario');
+  const action = page.getByRole('button', { name: 'Évaluer garde DONE' });
+  const stateIndicator = page.getByRole('status', { name: 'État garde DONE' });
+  const errorMessage = page.getByRole('alert');
+  const successJson = page.locator('#success-json');
+
+  const reasonCodeValue = page.locator('#reason-code-value');
+  const reasonValue = page.locator('#reason-value');
+  const countsValue = page.locator('#counts-value');
+  const doneValue = page.locator('#done-value');
+  const blockersValue = page.locator('#blockers-value');
+  const actionsValue = page.locator('#actions-value');
+
+  await expect(stateIndicator).toHaveAttribute('data-state', 'empty');
+  await expect(stateIndicator).toHaveText('État: empty');
+
+  await scenario.selectOption('invalid-input');
+  await action.click();
+
+  await expect(stateIndicator).toHaveAttribute('data-state', 'loading');
+  await expect(errorMessage).toBeVisible();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('INVALID_DONE_TRANSITION_INPUT');
+  await expect(reasonValue).toContainText('Aucune source exploitable');
+  await expect(countsValue).toContainText('target=DONE | verdict=— | canMarkDone=false | g4t=— | g4ux=— | evidence=0 | p95=0 | source=INVALID_DONE_TRANSITION_INPUT');
+
+  await scenario.selectOption('blocked-upstream');
+  await action.click();
+
+  await expect(stateIndicator).toHaveAttribute('data-state', 'loading');
+  await expect(errorMessage).toBeVisible();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('G4_SUBGATES_UNSYNC');
+  await expect(reasonValue).toContainText('Sous-gates non synchronisées');
+  await expect(actionsValue).toContainText('SYNC_G4_SUBGATES');
+
+  await scenario.selectOption('evidence-missing');
+  await action.click();
+
+  await expect(stateIndicator).toHaveAttribute('data-state', 'loading');
+  await expect(errorMessage).toBeVisible();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('EVIDENCE_CHAIN_INCOMPLETE');
+  await expect(doneValue).toContainText('blocked=true');
+  await expect(actionsValue).toContainText('LINK_PRIMARY_EVIDENCE');
+  await expect(actionsValue).toContainText('BLOCK_DONE_TRANSITION');
+
+  await scenario.selectOption('success');
+  await action.click();
+
+  await expect(stateIndicator).toHaveAttribute('data-state', 'loading');
+  await expect(successJson).toBeVisible();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'success');
+  await expect(reasonCodeValue).toHaveText('OK');
+  await expect(reasonValue).toContainText('Transition DONE autorisée');
+  await expect(countsValue).toContainText('target=DONE | verdict=PASS | canMarkDone=true | g4t=PASS | g4ux=PASS | evidence=2 | p95=');
+  await expect(doneValue).toContainText('state=DONE | blocked=false | verdict=PASS | g4t=PASS | g4ux=PASS');
+  await expect(blockersValue).toContainText('—');
+  await expect(actionsValue).toContainText('—');
+  await expect(successJson).toContainText('"allowed":true');
+  await expect(errorMessage).toBeHidden();
+  await expect(action).toBeEnabled();
+});
+
+test('done transition guard demo remains readable without horizontal overflow on mobile/tablet/desktop', async ({
+  browser
+}) => {
+  for (const viewport of responsiveViewports) {
+    await test.step(`${viewport.name} viewport`, async () => {
+      const context = await browser.newContext({
+        viewport: {
+          width: viewport.width,
+          height: viewport.height
+        }
+      });
+
+      const page = await context.newPage();
+
+      try {
+        await bootstrapDemoPage(page);
+
+        await page.getByLabel('Scénario').selectOption('success');
+        await page.getByRole('button', { name: 'Évaluer garde DONE' }).click();
+
+        await expect(page.getByRole('status', { name: 'État garde DONE' })).toHaveAttribute(
+          'data-state',
+          'success'
+        );
+
+        const overflow = await page.evaluate(() => {
+          const doc = document.documentElement;
+          const body = document.body;
+          const reason = document.getElementById('reason-value');
+          const counts = document.getElementById('counts-value');
+          const done = document.getElementById('done-value');
+          const blockers = document.getElementById('blockers-value');
+          const actions = document.getElementById('actions-value');
+          const error = document.getElementById('error-message');
+          const success = document.getElementById('success-json');
+
+          const computeOverflow = (element) => {
+            if (!element) {
+              return 0;
+            }
+
+            return element.scrollWidth - element.clientWidth;
+          };
+
+          return {
+            document: computeOverflow(doc),
+            body: computeOverflow(body),
+            reason: computeOverflow(reason),
+            counts: computeOverflow(counts),
+            done: computeOverflow(done),
+            blockers: computeOverflow(blockers),
+            actions: computeOverflow(actions),
+            error: computeOverflow(error),
+            success: computeOverflow(success)
+          };
+        });
+
+        expect(
+          Math.max(
+            overflow.document,
+            overflow.body,
+            overflow.reason,
+            overflow.counts,
+            overflow.done,
+            overflow.blockers,
+            overflow.actions,
+            overflow.error,
+            overflow.success
+          ),
+          `Overflow horizontal détecté (${viewport.name}): ${JSON.stringify(overflow)}`
+        ).toBeLessThanOrEqual(1);
+      } finally {
+        await context.close();
+      }
+    });
+  }
+});
