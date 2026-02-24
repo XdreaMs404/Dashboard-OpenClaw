@@ -1,0 +1,8 @@
+{
+  "storyId": "S038",
+  "scenario": "command-allowlist-catalog",
+  "states": ["empty", "loading", "error", "success"],
+  "validatedBy": "tests/e2e/command-allowlist-catalog.spec.js",
+  "result": "PASS",
+  "updatedAt": "2026-02-24T20:22:35Z"
+}

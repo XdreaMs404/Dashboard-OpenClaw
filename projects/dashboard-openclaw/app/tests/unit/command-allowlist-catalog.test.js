@@ -17,6 +17,7 @@ function buildCatalogInput() {
         command: 'bash scripts/update-story-status.sh',
         mode: 'WRITE',
         allowedRoles: ['DEV', 'TEA'],
+        impactFiles: ['projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S037.md'],
         parameters: [
           { name: 'sid', type: 'string', required: true, pattern: '^S[0-9]{3}$' },
           { name: 'status', type: 'string', required: true, enum: ['OPEN', 'DONE'] }
@@ -27,6 +28,7 @@ function buildCatalogInput() {
         command: 'openclaw gateway restart',
         mode: 'CRITICAL',
         allowedRoles: ['ADMIN'],
+        impactFiles: ['/root/.openclaw/workspace/bmad-total/PROJECT_STATUS.md'],
         parameters: [{ name: 'reason', type: 'string', required: true }]
       }
     ]
@@ -89,6 +91,61 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.allowed).toBe(false);
     expect(result.reasonCode).toBe('DRY_RUN_REQUIRED_FOR_WRITE');
     expect(result.correctiveActions).toContain('ENFORCE_DRY_RUN_FOR_WRITE');
+    expect(result.diagnostics.impactPreviewMissingCount).toBe(0);
+    expect(result.diagnostics.impactPreview).toMatchObject({
+      commandId: 'story.patch',
+      files: ['projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S037.md']
+    });
+  });
+
+  it('defaults write commands to dry-run when flag is omitted (AC-01/FR-034)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'story.patch',
+        role: 'DEV',
+        args: { sid: 'S037', status: 'OPEN' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+    expect(result.executionGuard).toMatchObject({
+      dryRunByDefault: true,
+      impactPreviewReadyForWrite: true
+    });
+  });
+
+  it('surfaces impact preview details before a blocked apply attempt (AC-02/FR-035)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'story.patch',
+        dryRun: false,
+        role: 'DEV',
+        impactFiles: [
+          '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S037.md'
+        ],
+        args: { sid: 'S037', status: 'DONE' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      activeProjectRoot: '/root/.openclaw/workspace/projects/dashboard-openclaw'
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('DRY_RUN_REQUIRED_FOR_WRITE');
+    expect(result.diagnostics.impactPreviewProvidedCount).toBe(1);
+    expect(result.diagnostics.impactPreview).toMatchObject({
+      commandId: 'story.patch',
+      files: [
+        '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S037.md'
+      ],
+      allInsideActiveProjectRoot: true
+    });
   });
 
   it('fails when execution command is outside allowlist (AC-04/NFR-020)', () => {

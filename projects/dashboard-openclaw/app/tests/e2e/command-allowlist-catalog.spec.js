@@ -30,6 +30,7 @@ const demoPageHtml = `
       #diag-value,
       #catalog-value,
       #guard-value,
+      #impact-preview-value,
       #error-message,
       #success-json {
         max-width: 100%;
@@ -56,6 +57,7 @@ const demoPageHtml = `
         <option value="invalid-input">Entrée invalide</option>
         <option value="outside-catalog">Commande hors catalogue</option>
         <option value="dry-run-required">Dry-run requis</option>
+        <option value="apply-impact-preview">Preview impact avant apply</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -75,6 +77,7 @@ const demoPageHtml = `
           <div><dt>diagnostics</dt><dd id="diag-value">—</dd></div>
           <div><dt>catalog</dt><dd id="catalog-value">—</dd></div>
           <div><dt>executionGuard</dt><dd id="guard-value">—</dd></div>
+          <div><dt>impactPreview</dt><dd id="impact-preview-value">—</dd></div>
         </dl>
       </section>
 
@@ -93,6 +96,7 @@ const demoPageHtml = `
       const diagValue = document.getElementById('diag-value');
       const catalogValue = document.getElementById('catalog-value');
       const guardValue = document.getElementById('guard-value');
+      const impactPreviewValue = document.getElementById('impact-preview-value');
 
       const setState = (state) => {
         stateIndicator.dataset.state = state;
@@ -109,7 +113,8 @@ const demoPageHtml = `
           ' | commands=' + String(diagnostics.commandCount ?? '—') +
           ' | executions=' + String(diagnostics.executionCount ?? '—') +
           ' | outside=' + String(diagnostics.outsideCatalogCount ?? '—') +
-          ' | dryRunViolations=' + String(diagnostics.dryRunViolations ?? '—');
+          ' | dryRunViolations=' + String(diagnostics.dryRunViolations ?? '—') +
+          ' | impactPreviewProvided=' + String(diagnostics.impactPreviewProvidedCount ?? '—');
 
         const commands = result.catalog?.commands ?? [];
         catalogValue.textContent =
@@ -120,7 +125,15 @@ const demoPageHtml = `
         guardValue.textContent =
           'allFromCatalog=' + String(guard.allFromCatalog ?? '—') +
           ' | dryRunByDefault=' + String(guard.dryRunByDefault ?? '—') +
-          ' | criticalRoleCompliant=' + String(guard.criticalRoleCompliant ?? '—');
+          ' | criticalRoleCompliant=' + String(guard.criticalRoleCompliant ?? '—') +
+          ' | activeProjectRootSafe=' + String(guard.activeProjectRootSafe ?? '—');
+
+        const impactPreview = diagnostics.impactPreview ?? {};
+        const previewFiles = Array.isArray(impactPreview.files) ? impactPreview.files.join(',') : '—';
+        impactPreviewValue.textContent =
+          'commandId=' + String(impactPreview.commandId ?? '—') +
+          ' | files=' + (previewFiles || '—') +
+          ' | inProject=' + String(impactPreview.allInsideActiveProjectRoot ?? '—');
       };
 
       setState('empty');
@@ -179,6 +192,7 @@ function buildCatalog() {
         command: 'bash scripts/update-story-status.sh',
         mode: 'WRITE',
         allowedRoles: ['DEV', 'TEA'],
+        impactFiles: ['/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S038.md'],
         parameters: [
           { name: 'sid', type: 'string', required: true, pattern: '^S[0-9]{3}$' },
           { name: 'status', type: 'string', required: true, enum: ['OPEN', 'DONE'] }
@@ -189,6 +203,7 @@ function buildCatalog() {
         command: 'openclaw gateway restart',
         mode: 'CRITICAL',
         allowedRoles: ['ADMIN'],
+        impactFiles: ['/root/.openclaw/workspace/bmad-total/PROJECT_STATUS.md'],
         parameters: [{ name: 'reason', type: 'string', required: true }]
       }
     ]
@@ -244,6 +259,28 @@ function runScenario(scenario) {
     });
   }
 
+  if (scenario === 'apply-impact-preview') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'story.patch',
+            dryRun: false,
+            role: 'DEV',
+            impactFiles: [
+              '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S038.md'
+            ],
+            args: { sid: 'S038', status: 'DONE' }
+          }
+        ]
+      },
+      {
+        activeProjectRoot: '/root/.openclaw/workspace/projects/dashboard-openclaw'
+      }
+    );
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -266,6 +303,7 @@ test('command allowlist catalog demo covers empty/loading/error/success with gua
   const diagValue = page.locator('#diag-value');
   const catalogValue = page.locator('#catalog-value');
   const guardValue = page.locator('#guard-value');
+  const impactPreviewValue = page.locator('#impact-preview-value');
 
   await expect(stateIndicator).toHaveAttribute('data-state', 'empty');
 
@@ -284,14 +322,23 @@ test('command allowlist catalog demo covers empty/loading/error/success with gua
   await expect(stateIndicator).toHaveAttribute('data-state', 'error');
   await expect(reasonCodeValue).toHaveText('DRY_RUN_REQUIRED_FOR_WRITE');
 
+  await scenario.selectOption('apply-impact-preview');
+  await action.click();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('DRY_RUN_REQUIRED_FOR_WRITE');
+  await expect(impactPreviewValue).toContainText('commandId=story.patch');
+  await expect(impactPreviewValue).toContainText('inProject=true');
+
   await scenario.selectOption('success');
   await action.click();
   await expect(stateIndicator).toHaveAttribute('data-state', 'success');
   await expect(reasonCodeValue).toHaveText('OK');
   await expect(diagValue).toContainText('commands=3');
+  await expect(diagValue).toContainText('impactPreviewProvided=1');
   await expect(catalogValue).toContainText('story.patch');
   await expect(guardValue).toContainText('allFromCatalog=true');
   await expect(guardValue).toContainText('dryRunByDefault=true');
+  await expect(guardValue).toContainText('activeProjectRootSafe=true');
   await expect(errorMessage).toBeHidden();
 });
 

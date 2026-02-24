@@ -1,0 +1,29 @@
+{
+  "storyId": "S038",
+  "validatedBy": "node-runtime-manual-check",
+  "checks": {
+    "DRY_RUN_REQUIRED_FOR_WRITE": {
+      "matched": true,
+      "reason": "Dry-run obligatoire pour story.patch. Preview d'impact requis avant exécution réelle.",
+      "correctiveActions": [
+        "ENFORCE_DRY_RUN_FOR_WRITE"
+      ]
+    },
+    "COMMAND_OUTSIDE_CATALOG": {
+      "matched": true,
+      "reason": "Commande hors catalogue: rm.rf.",
+      "correctiveActions": [
+        "BLOCK_NON_ALLOWLIST_COMMAND"
+      ]
+    },
+    "CRITICAL_ACTION_ROLE_REQUIRED": {
+      "matched": true,
+      "reason": "Rôle non autorisé pour action critique runtime.kill.",
+      "correctiveActions": [
+        "ENFORCE_CRITICAL_ROLE_POLICY"
+      ]
+    }
+  },
+  "result": "PASS",
+  "updatedAt": "2026-02-24T20:22:35Z"
+}

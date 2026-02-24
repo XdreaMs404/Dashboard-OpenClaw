@@ -16,6 +16,7 @@ function buildBaseInput() {
         command: 'openclaw gateway restart',
         mode: 'CRITICAL',
         allowedRoles: ['ADMIN'],
+        impactFiles: ['/root/.openclaw/workspace/projects/dashboard-openclaw/runtime/jobs.json'],
         parameters: [{ name: 'reason', type: 'string', required: true }]
       }
     ]
@@ -85,6 +86,44 @@ describe('command-allowlist-catalog edge', () => {
 
     expect(result.allowed).toBe(true);
     expect(result.reasonCode).toBe('OK');
+  });
+
+  it('reports impact outside active project root on blocked apply attempts (NFR-021)', () => {
+    const input = {
+      catalogVersion: '2026.02.24-root',
+      commands: [
+        {
+          id: 'story.patch',
+          command: 'bash scripts/update-story-status.sh',
+          mode: 'WRITE',
+          parameters: [
+            { name: 'sid', type: 'string', required: true },
+            { name: 'status', type: 'string', required: true, enum: ['OPEN', 'DONE'] }
+          ]
+        }
+      ],
+      executionRequests: [
+        {
+          commandId: 'story.patch',
+          dryRun: false,
+          role: 'DEV',
+          impactFiles: ['/etc/passwd'],
+          args: { sid: 'S038', status: 'DONE' }
+        }
+      ]
+    };
+
+    const result = buildCommandAllowlistCatalog(input, {
+      activeProjectRoot: '/root/.openclaw/workspace/projects/dashboard-openclaw'
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('DRY_RUN_REQUIRED_FOR_WRITE');
+    expect(result.diagnostics.impactPreviewOutsideProjectCount).toBe(1);
+    expect(result.diagnostics.impactPreview).toMatchObject({
+      files: ['/etc/passwd'],
+      allInsideActiveProjectRoot: false
+    });
   });
 
   it('rejects enum mismatch in command arguments', () => {

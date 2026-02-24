@@ -1,0 +1,42 @@
+{
+  "storyId": "S038",
+  "epicId": "E04",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 95,
+    "D2": 96,
+    "D3": 94,
+    "D4": 95,
+    "D5": 93,
+    "D6": 92,
+    "designExcellence": 94
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S038/vitest-s038.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S038/playwright-s038.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S038/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S038/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S038/reason-copy-check.json"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX S038 PASS: dry-run by default conservé pour toutes commandes write/critical, preview d’impact affiché dans diagnostics avant tentative apply, et lisibilité responsive validée mobile/tablette/desktop sans overflow.",
+  "updatedAt": "2026-02-24T20:22:30Z"
+}

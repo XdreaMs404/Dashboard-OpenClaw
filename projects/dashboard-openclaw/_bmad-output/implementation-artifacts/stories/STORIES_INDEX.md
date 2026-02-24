@@ -39,7 +39,7 @@
 | S035 | E03 | Pont d’ingestion des preuves UX vers G4-UX | DONE |
 | S036 | E03 | Gouvernance des exceptions de gate | DONE |
 | S037 | E04 | Catalogue commandes allowlist versionné | DONE |
-| S038 | E04 | Dry-run by default pour toute commande write | TODO |
+| S038 | E04 | Dry-run by default pour toute commande write | DONE |
 | S039 | E04 | Preview d’impact fichiers avant apply | TODO |
 | S040 | E04 | Double confirmation pour actions destructives | TODO |
 | S041 | E04 | Contrôle RBAC avant exécution | TODO |

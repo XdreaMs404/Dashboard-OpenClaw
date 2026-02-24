@@ -1,0 +1,12 @@
+{
+  "storyId": "S038",
+  "scenario": "command-allowlist-catalog",
+  "viewports": [
+    { "name": "mobile", "width": 390, "height": 844, "overflow": false },
+    { "name": "tablet", "width": 768, "height": 1024, "overflow": false },
+    { "name": "desktop", "width": 1440, "height": 900, "overflow": false }
+  ],
+  "validatedBy": "tests/e2e/command-allowlist-catalog.spec.js",
+  "result": "PASS",
+  "updatedAt": "2026-02-24T20:22:35Z"
+}

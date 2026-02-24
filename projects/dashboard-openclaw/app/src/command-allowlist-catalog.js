@@ -98,6 +98,55 @@ function normalizeRoles(value) {
   return output;
 }
 
+function normalizeImpactFiles(value) {
+  const source = Array.isArray(value) ? value : [];
+  const output = [];
+  const seen = new Set();
+
+  for (const entry of source) {
+    const normalized = normalizeText(String(entry ?? ''));
+
+    if (normalized.length === 0 || seen.has(normalized)) {
+      continue;
+    }
+
+    seen.add(normalized);
+    output.push(normalized);
+  }
+
+  return output;
+}
+
+function normalizeActiveProjectRoot(value) {
+  const normalized = normalizeText(String(value ?? ''));
+
+  if (normalized.length === 0) {
+    return '';
+  }
+
+  return normalized.endsWith('/') ? normalized.slice(0, -1) : normalized;
+}
+
+function isPathWithinActiveProjectRoot(pathValue, activeProjectRoot) {
+  if (activeProjectRoot.length === 0) {
+    return true;
+  }
+
+  return pathValue === activeProjectRoot || pathValue.startsWith(`${activeProjectRoot}/`);
+}
+
+function resolveImpactFiles(request, catalogEntry) {
+  const requestImpactFiles = normalizeImpactFiles(
+    request?.impactFiles ?? request?.impactedFiles ?? request?.preview?.files
+  );
+
+  if (requestImpactFiles.length > 0) {
+    return requestImpactFiles;
+  }
+
+  return normalizeImpactFiles(catalogEntry?.impactFiles ?? []);
+}
+
 function createResult({ allowed, reasonCode, reason, diagnostics, catalog, executionGuard, correctiveActions }) {
   const normalizedReasonCode = normalizeReasonCode(reasonCode) ?? 'INVALID_COMMAND_CATALOG_INPUT';
   const defaultActions = DEFAULT_CORRECTIVE_ACTIONS[normalizedReasonCode] ?? [];
@@ -392,6 +441,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       mode,
       allowDryRun: mode === 'READ' ? Boolean(entry.allowDryRun) : true,
       allowedRoles: normalizeRoles(entry.allowedRoles ?? entry.roles),
+      impactFiles: normalizeImpactFiles(entry.impactFiles ?? entry.impactedFiles ?? entry.preview?.files),
       parameters: parameterValidation.parameters.map((parameter) => ({
         name: parameter.name,
         type: parameter.type,
@@ -410,6 +460,9 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
 
   const executionRequests = Array.isArray(payload.executionRequests) ? payload.executionRequests : [];
   const strictRoleCheck = runtimeOptions.strictRoleCheck !== false;
+  const activeProjectRoot = normalizeActiveProjectRoot(
+    runtimeOptions.activeProjectRoot ?? payload.activeProjectRoot
+  );
 
   const diagnostics = {
     catalogVersion: version,
@@ -418,9 +471,13 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     writeCount: commands.filter((entry) => entry.mode === 'WRITE').length,
     criticalCount: commands.filter((entry) => entry.mode === 'CRITICAL').length,
     executionCount: executionRequests.length,
+    activeProjectRoot: activeProjectRoot || null,
     outsideCatalogCount: 0,
     dryRunViolations: 0,
     criticalRoleViolations: 0,
+    impactPreviewProvidedCount: 0,
+    impactPreviewMissingCount: 0,
+    impactPreviewOutsideProjectCount: 0,
     validatedExecutions: 0
   };
 
@@ -440,14 +497,48 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
 
     const catalogEntry = commandById.get(commandId);
     const requestDryRun = request?.dryRun !== false;
+    const impactFiles = resolveImpactFiles(request, catalogEntry);
+    const impactInsideActiveProjectRoot =
+      activeProjectRoot.length === 0 ||
+      impactFiles.every((filePath) => isPathWithinActiveProjectRoot(filePath, activeProjectRoot));
+
+    if (impactFiles.length > 0) {
+      diagnostics.impactPreviewProvidedCount += 1;
+    }
+
+    if (!impactInsideActiveProjectRoot) {
+      diagnostics.impactPreviewOutsideProjectCount += 1;
+    }
 
     if ((catalogEntry.mode === 'WRITE' || catalogEntry.mode === 'CRITICAL') && !requestDryRun) {
       diagnostics.dryRunViolations += 1;
+
+      if (impactFiles.length === 0) {
+        diagnostics.impactPreviewMissingCount += 1;
+      }
+
+      const baseReason = `Dry-run obligatoire pour ${commandId}.`;
+      const reasonWithImpactHint =
+        impactFiles.length === 0
+          ? `${baseReason} Preview d'impact requis avant exécution réelle.`
+          : !impactInsideActiveProjectRoot
+            ? `${baseReason} Impact hors projet actif détecté.`
+            : baseReason;
+
       return createResult({
         allowed: false,
         reasonCode: 'DRY_RUN_REQUIRED_FOR_WRITE',
-        reason: `Dry-run obligatoire pour ${commandId}.`,
-        diagnostics
+        reason: reasonWithImpactHint,
+        diagnostics: {
+          ...diagnostics,
+          commandId,
+          impactPreview: {
+            commandId,
+            files: impactFiles,
+            allInsideActiveProjectRoot: impactInsideActiveProjectRoot,
+            activeProjectRoot: activeProjectRoot || null
+          }
+        }
       });
     }
 
@@ -491,7 +582,9 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
   const executionGuard = {
     allFromCatalog: diagnostics.outsideCatalogCount === 0,
     dryRunByDefault: diagnostics.dryRunViolations === 0,
-    criticalRoleCompliant: diagnostics.criticalRoleViolations === 0
+    criticalRoleCompliant: diagnostics.criticalRoleViolations === 0,
+    impactPreviewReadyForWrite: diagnostics.impactPreviewMissingCount === 0,
+    activeProjectRootSafe: diagnostics.impactPreviewOutsideProjectCount === 0
   };
 
   return createResult({

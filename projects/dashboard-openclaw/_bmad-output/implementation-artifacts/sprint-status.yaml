@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-24T17:17:04Z"
+updated_at_utc: "2026-02-24T20:26:27Z"
 
 development_status:
   epic-1: done
@@ -52,7 +52,7 @@ development_status:
 
   epic-4: in-progress
   4-37-catalogue-commandes-allowlist-versionne: done
-  4-38-dry-run-by-default-pour-toute-commande-write: backlog
+  4-38-dry-run-by-default-pour-toute-commande-write: done
   4-39-preview-d-impact-fichiers-avant-apply: backlog
   4-40-double-confirmation-pour-actions-destructives: backlog
   4-41-controle-rbac-avant-execution: backlog
