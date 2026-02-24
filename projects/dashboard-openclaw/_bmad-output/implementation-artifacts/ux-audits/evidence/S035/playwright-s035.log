@@ -1,0 +1,11 @@
+
+Running 6 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/g4-dual-evaluation.spec.js:425:1 › g4 dual demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  2 [chromium] › tests/e2e/g4-dual-evaluation.spec.js:353:1 › g4 dual demo covers empty/loading/error/success with reason, counters, verdict, matrix and actions (2.2s)
+  ✓  4 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on mobile (668ms)
+  ✓  3 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:240:1 › g4 ux evidence bridge demo covers empty/loading/error/success with gate and G4 correlation outputs (1.5s)
+  ✓  5 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on tablet (688ms)
+  ✓  6 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on desktop (694ms)
+
+  6 passed (5.5s)

@@ -1,0 +1,12 @@
+{
+  "storyId": "S035",
+  "scenario": "g4-ux-evidence-bridge",
+  "viewports": [
+    { "name": "mobile", "width": 390, "height": 844, "overflow": false },
+    { "name": "tablet", "width": 820, "height": 1180, "overflow": false },
+    { "name": "desktop", "width": 1366, "height": 768, "overflow": false }
+  ],
+  "validatedBy": "tests/e2e/g4-ux-evidence-bridge.spec.js",
+  "result": "PASS",
+  "updatedAt": "2026-02-24T13:14:46Z"
+}

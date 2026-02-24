@@ -1,0 +1,8 @@
+{
+  "storyId": "S035",
+  "scenario": "g4-ux-evidence-bridge",
+  "states": ["empty", "loading", "error", "success"],
+  "validatedBy": "tests/e2e/g4-ux-evidence-bridge.spec.js",
+  "result": "PASS",
+  "updatedAt": "2026-02-24T13:14:46Z"
+}

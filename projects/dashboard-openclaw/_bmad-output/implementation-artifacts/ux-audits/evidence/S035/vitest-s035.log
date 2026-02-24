@@ -1,0 +1,13 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/edge/g4-dual-evaluation.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-ux-evidence-bridge.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-ux-evidence-bridge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-dual-evaluation.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m34 passed[39m[22m[90m (34)[39m
+[2m   Start at [22m 13:14:32
+[2m   Duration [22m 585ms[2m (transform 649ms, setup 0ms, import 1.02s, tests 71ms, environment 1ms)[22m
+

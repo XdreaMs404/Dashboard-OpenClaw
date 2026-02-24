@@ -36,7 +36,7 @@
 | S032 | E03 | Simulation de verdict pré-soumission | DONE |
 | S033 | E03 | Tableau tendances des verdicts | DONE |
 | S034 | E03 | Export rapport gate (verdict+preuves+actions) | DONE |
-| S035 | E03 | Pont d’ingestion des preuves UX vers G4-UX | TODO |
+| S035 | E03 | Pont d’ingestion des preuves UX vers G4-UX | DONE |
 | S036 | E03 | Gouvernance des exceptions de gate | TODO |
 | S037 | E04 | Catalogue commandes allowlist versionné | TODO |
 | S038 | E04 | Dry-run by default pour toute commande write | TODO |
