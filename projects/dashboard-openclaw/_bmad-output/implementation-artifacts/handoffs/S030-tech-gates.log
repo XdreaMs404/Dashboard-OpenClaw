@@ -1,0 +1,112 @@
+
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
+
+✅ Lint OK
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
+✅ Typecheck (syntax) OK
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/edge/gate-concerns-actions.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-concerns-actions.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 46[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m   Start at [22m 04:55:45
+[2m   Duration [22m 571ms[2m (transform 439ms, setup 0ms, import 599ms, tests 68ms, environment 0ms)[22m
+
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/gate-concerns-actions.spec.js:469:1 › concerns actions demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  1 [chromium] › tests/e2e/gate-concerns-actions.spec.js:380:1 › concerns actions demo covers empty/loading/error/success and required output fields (3.0s)
+
+  2 passed (4.4s)
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/edge/gate-concerns-actions.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-concerns-actions.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 50[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m   Start at [22m 04:55:52
+[2m   Duration [22m 644ms[2m (transform 373ms, setup 0ms, import 543ms, tests 70ms, environment 0ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.49 |    95.75 |   96.55 |     100 |                   
+ ...rns-actions.js |   99.49 |    95.75 |   96.55 |     100 | ...69,474,530,563 
+-------------------|---------|----------|---------|---------|-------------------
+
+> bmad-total-app@0.1.0 build
+> node ./scripts/build.mjs
+
+✅ Build OK
+
+> bmad-total-app@0.1.0 security:deps
+> npm audit --audit-level=high
+
+found 0 vulnerabilities
+▶ FAST lint
+
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
+
+✅ Lint OK
+▶ FAST typecheck
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
+✅ Typecheck (syntax) OK
+▶ FAST targeted tests from story Comment tester
+▶ npx vitest run tests/unit/gate-concerns-actions.test.js tests/edge/gate-concerns-actions.edge.test.js
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/edge/gate-concerns-actions.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-concerns-actions.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m   Start at [22m 04:55:58
+[2m   Duration [22m 521ms[2m (transform 369ms, setup 0ms, import 546ms, tests 61ms, environment 0ms)[22m
+
+▶ npx playwright test tests/e2e/gate-concerns-actions.spec.js --output=/root/.openclaw/workspace/projects/dashboard-openclaw/app/test-results/fast-S030-1771908958-867781-1
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/gate-concerns-actions.spec.js:469:1 › concerns actions demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  2 [chromium] › tests/e2e/gate-concerns-actions.spec.js:380:1 › concerns actions demo covers empty/loading/error/success and required output fields (3.1s)
+
+  2 passed (4.5s)
+▶ npx vitest run tests/unit/gate-concerns-actions.test.js tests/edge/gate-concerns-actions.edge.test.js --coverage --coverage.include=src/gate-concerns-actions.js
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/edge/gate-concerns-actions.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-concerns-actions.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 51[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m22 passed[39m[22m[90m (22)[39m
+[2m   Start at [22m 04:56:05
+[2m   Duration [22m 703ms[2m (transform 408ms, setup 0ms, import 604ms, tests 75ms, environment 0ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.49 |    95.75 |   96.55 |     100 |                   
+ ...rns-actions.js |   99.49 |    95.75 |   96.55 |     100 | ...69,474,530,563 
+-------------------|---------|----------|---------|---------|-------------------
+✅ FAST_QUALITY_GATES_OK (S030)
+✅ S030_TECH_GATES_OK
