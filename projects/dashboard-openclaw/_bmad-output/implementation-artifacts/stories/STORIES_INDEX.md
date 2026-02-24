@@ -35,7 +35,7 @@
 | S031 | E03 | Versioning des policies de gate | DONE |
 | S032 | E03 | Simulation de verdict pré-soumission | DONE |
 | S033 | E03 | Tableau tendances des verdicts | DONE |
-| S034 | E03 | Export rapport gate (verdict+preuves+actions) | TODO |
+| S034 | E03 | Export rapport gate (verdict+preuves+actions) | DONE |
 | S035 | E03 | Pont d’ingestion des preuves UX vers G4-UX | TODO |
 | S036 | E03 | Gouvernance des exceptions de gate | TODO |
 | S037 | E04 | Catalogue commandes allowlist versionné | TODO |

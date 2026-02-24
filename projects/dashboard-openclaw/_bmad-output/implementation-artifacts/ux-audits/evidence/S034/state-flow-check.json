@@ -1,0 +1,8 @@
+{
+  "storyId": "S034",
+  "scenario": "gate-report-export",
+  "states": ["empty", "loading", "error", "success"],
+  "validatedBy": "tests/e2e/gate-report-export.spec.js",
+  "result": "PASS",
+  "updatedAt": "2026-02-24T12:21:53Z"
+}

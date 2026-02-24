@@ -18,23 +18,23 @@ Sortie stable S034:
 `{ allowed, reasonCode, reason, diagnostics, gateView, reportExport, report, correctiveActions }`
 
 ## AC couverts
-- AC-01 (FR-020): export nominal avec `verdict`, `evidenceRefs`, `openActions`, `reportExport.canExport=true`.
-- AC-02 (FR-011): contrôle strict vue G1→G5; rejet sans bypass sur vue incomplète (`GATE_VIEW_INCOMPLETE`).
-- AC-03 (NFR-031): validation des 4 états UI critiques via e2e (`empty/loading/error/success`).
-- AC-04 (NFR-002): budget latence p95 contrôlé (<2.5s), échec explicite si dépassé (`EXPORT_LATENCY_BUDGET_EXCEEDED`).
+- AC-01 FR-020: export rapport gate incluant verdict + preuves + actions ouvertes (`report`).
+- AC-02 FR-011 (négatif): vue G1→G5 unique exigée avec `status/owner/updatedAt`, fail-closed sinon (`GATE_VIEW_INCOMPLETE` / `INVALID_GATE_REPORT_GATE`).
+- AC-03 NFR-031: 4 états UI validés via e2e (`empty/loading/error/success`).
+- AC-04 NFR-002: budget p95 < 2.5s contrôlé (`EXPORT_LATENCY_BUDGET_EXCEEDED` en dépassement).
 
 ## Preuves DEV exécutées
 - `npm run lint` ✅
 - `npm run typecheck` ✅
-- `npm run test -- tests/unit/gate-report-export.test.js tests/edge/gate-report-export.edge.test.js` ✅
-- `npm run test:e2e -- tests/e2e/gate-report-export.spec.js --output=test-results/e2e-s034` ✅
+- `npx vitest run tests/unit/gate-report-export.test.js tests/edge/gate-report-export.edge.test.js tests/unit/gate-verdict-trends-table.test.js tests/edge/gate-verdict-trends-table.edge.test.js` ✅
+- `npx playwright test tests/e2e/gate-report-export.spec.js tests/e2e/gate-verdict-trends-table.spec.js --output=test-results/e2e-s034` ✅
 - `BMAD_PROJECT_ROOT=/root/.openclaw/workspace/projects/dashboard-openclaw bash /root/.openclaw/workspace/bmad-total/scripts/run-fast-quality-gates.sh S034` ✅
 
 ## Points TEA à vérifier
-1. Non-régression des reason codes et du contrat de sortie sur branches nominales/erreurs.
-2. Validation stricte des entrées (`verdict`, gate rows/map, actions ouvertes, preuve).
-3. Vérification latence p95 et comportement fail-closed au dépassement du budget.
-4. Alignement export bloqué vs export autorisé (`reportExport.requested/canExport/blockers`).
+1. Blocage fail-closed sur preuves manquantes et vue gate incomplète.
+2. Contrôle budget latence p95 (2.5s) et reasonCode associé.
+3. Stabilité export `index.js` + non-régression S033.
+4. Chaîne gates complète (`run-story-gates.sh S034`).
 
 ## Next handoff
 TEA → Reviewer (H17)

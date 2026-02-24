@@ -1,0 +1,13 @@
+
+Running 8 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/gate-report-export.spec.js:303:3 › gate report export demo remains readable without horizontal overflow on mobile (773ms)
+  ✓  3 [chromium] › tests/e2e/gate-report-export.spec.js:303:3 › gate report export demo remains readable without horizontal overflow on tablet (507ms)
+  ✓  4 [chromium] › tests/e2e/gate-report-export.spec.js:303:3 › gate report export demo remains readable without horizontal overflow on desktop (695ms)
+  ✓  2 [chromium] › tests/e2e/gate-report-export.spec.js:245:1 › gate report export demo covers empty/loading/error/success with gate+evidence+actions output (2.1s)
+  ✓  6 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on mobile (736ms)
+  ✓  5 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:236:1 › verdict trends table demo covers empty/loading/error/success with export context (1.6s)
+  ✓  7 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on tablet (731ms)
+  ✓  8 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on desktop (717ms)
+
+  8 passed (5.7s)
