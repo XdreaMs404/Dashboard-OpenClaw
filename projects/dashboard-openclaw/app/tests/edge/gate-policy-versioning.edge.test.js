@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { versionGatePolicy } from '../../src/gate-policy-versioning.js';
 import { simulateGateVerdictBeforeSubmission } from '../../src/gate-pre-submit-simulation.js';
 
@@ -42,6 +42,10 @@ function validConcernsActionResult(overrides = {}) {
 }
 
 describe('gate-policy-versioning edge cases', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('fails closed on non-object payloads', () => {
     const samples = [undefined, null, true, 42, 'S031', []];
 
@@ -690,5 +694,444 @@ describe('gate-policy-versioning edge cases', () => {
     expect(blockedFallback.reasonCode).toBe('INVALID_PHASE');
     expect(blockedFallback.reason).toContain('Source Concerns Action bloquée');
     expect(blockedFallback.correctiveActions).toEqual(['ALIGN_CANONICAL_PHASE']);
+  });
+
+  it('couvre les branches fallback de la simulation (verdict/sourceVerdict, timings non finis, options non objet)', () => {
+    const dateNowSpy = vi.spyOn(Date, 'now').mockReturnValue(1700000000000);
+
+    const nonFiniteTimers = versionGatePolicy(
+      {
+        concernsActionResult: {
+          ...validConcernsActionResult(),
+          diagnostics: {
+            ...validConcernsActionResult().diagnostics,
+            verdict: 'PASS',
+            concernsActionRequired: false,
+            actionCreated: false,
+            sourceReasonCode: 'OK'
+          },
+          concernsAction: undefined
+        },
+        policyVersioning: {
+          policyScope: 'gate',
+          activeVersion: '1.2.0',
+          requestedVersion: '1.2.0',
+          previousVersion: '1.1.5'
+        },
+        simulation: {
+          eligible: true,
+          readOnly: true,
+          additionalSignals: [
+            {
+              status: 'CONCERNS',
+              blocking: true,
+              factorId: '   ',
+              detail: '   '
+            }
+          ]
+        },
+        simulationCorrectiveActions: [undefined, 'POST_SIM_VALIDATION']
+      },
+      {
+        nowMs: (() => {
+          const values = [Number.NaN, 1, 2, Number.NaN, Number.NaN];
+          return () => values.shift() ?? Number.NaN;
+        })()
+      }
+    );
+
+    expect(nonFiniteTimers.reasonCode).toBe('OK');
+    expect(nonFiniteTimers.simulation.simulatedVerdict).toBe('FAIL');
+    expect(nonFiniteTimers.simulation.factors.some((factor) => factor.factorId === 'signal-1')).toBe(true);
+    expect(nonFiniteTimers.correctiveActions).toContain('POST_SIM_VALIDATION');
+    expect(nonFiniteTimers.diagnostics.durationMs).toBeGreaterThanOrEqual(0);
+    expect(nonFiniteTimers.simulation.evaluatedAt).toBe(new Date(1700000000000).toISOString());
+
+    const withSourceVerdict = simulateGateVerdictBeforeSubmission(
+      {
+        sourceVerdict: 'PASS',
+        simulation: {
+          eligible: true,
+          readOnly: true
+        },
+        correctiveActions: [null, 'SIM_KEEP']
+      },
+      'invalid-options'
+    );
+
+    expect(withSourceVerdict.reasonCode).toBe('OK');
+    expect(withSourceVerdict.correctiveActions).toContain('SIM_KEEP');
+
+    const nonObjectPayload = simulateGateVerdictBeforeSubmission('bad-input', null);
+    expect(nonObjectPayload.reasonCode).toBe('INVALID_GATE_SIMULATION_INPUT');
+
+    dateNowSpy.mockRestore();
+  });
+
+  it('couvre les fallbacks policy/version/history et branches String(error)', () => {
+    const sourceSnapshotFallback = versionGatePolicy(
+      {
+        concernsActionResult: {
+          ...validConcernsActionResult(),
+          diagnostics: {
+            ...validConcernsActionResult().diagnostics,
+            verdict: 'PASS',
+            concernsActionRequired: false,
+            actionCreated: false,
+            sourceReasonCode: 'OK'
+          },
+          concernsAction: undefined,
+          policySnapshot: {
+            policyScope: 'gate',
+            version: '2.4.0'
+          }
+        },
+        gateId: '',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        }
+      },
+      'bad-runtime-options'
+    );
+
+    expect(sourceSnapshotFallback.reasonCode).toBe('OK');
+    expect(sourceSnapshotFallback.policyVersioning.activeVersion).toBe('2.4.0');
+    expect(sourceSnapshotFallback.policyVersioning.previousVersion).toBe('2.4.0');
+    expect(sourceSnapshotFallback.policyVersioning.policyId).toBe('POLICY-G4');
+    expect(sourceSnapshotFallback.diagnostics.sourceReasonCode).toBe('OK');
+
+    const missingPolicySnapshot = versionGatePolicy({
+      concernsActionResult: {
+        ...validConcernsActionResult(),
+        diagnostics: {
+          ...validConcernsActionResult().diagnostics,
+          verdict: 'PASS',
+          concernsActionRequired: false,
+          actionCreated: false
+        },
+        concernsAction: undefined,
+        policySnapshot: null
+      },
+      simulationInput: {
+        eligible: true,
+        readOnly: true
+      }
+    });
+
+    expect(missingPolicySnapshot.reasonCode).toBe('GATE_POLICY_VERSION_MISSING');
+    expect(missingPolicySnapshot.policyVersioning.policyScope).toBe('gate');
+    expect(missingPolicySnapshot.policyVersioning.activeVersion).toBeNull();
+    expect(missingPolicySnapshot.policyVersioning.requestedVersion).toBeNull();
+    expect(missingPolicySnapshot.policyVersioning.nextVersion).toBeNull();
+
+    const blankReasonCode = versionGatePolicy({
+      concernsActionResult: {
+        allowed: true,
+        reasonCode: '   '
+      }
+    });
+
+    expect(blankReasonCode.reasonCode).toBe('INVALID_GATE_POLICY_INPUT');
+    expect(blankReasonCode.reason).toContain('vide');
+
+    const previousVersionFallback = versionGatePolicy({
+      concernsActionResult: validConcernsActionResult(),
+      policyVersioning: {
+        policyScope: 'gate',
+        activeVersion: '1.2.0',
+        requestedVersion: '1.2.0',
+        previousVersion: ''
+      },
+      historyEntry: {
+        policyId: 'POLICY-G4',
+        nextVersion: '1.2.0',
+        changedBy: 'qa-owner',
+        changeType: 'UPDATE',
+        changedAt: '2026-02-24T05:30:00.000Z'
+      },
+      simulationInput: {
+        eligible: true,
+        readOnly: true
+      }
+    });
+
+    expect(previousVersionFallback.reasonCode).toBe('OK');
+    expect(previousVersionFallback.policyVersioning.historyEntry.previousVersion).toBe('1.2.0');
+
+    const invalidHistoryNullFields = versionGatePolicy({
+      concernsActionResult: validConcernsActionResult(),
+      policyVersioning: {
+        policyScope: 'gate',
+        activeVersion: '1.2.0',
+        requestedVersion: '1.2.0',
+        previousVersion: '1.1.5'
+      },
+      historyEntry: {
+        policyId: '',
+        previousVersion: '',
+        nextVersion: '',
+        changedBy: 'qa-owner',
+        changeType: 'UPDATE',
+        changedAt: '2026-02-24T05:30:00.000Z'
+      }
+    });
+
+    expect(invalidHistoryNullFields.reasonCode).toBe('GATE_POLICY_HISTORY_INCOMPLETE');
+    expect(invalidHistoryNullFields.policyVersioning.historyEntry.policyId).toBeNull();
+    expect(invalidHistoryNullFields.policyVersioning.historyEntry.previousVersion).toBeNull();
+    expect(invalidHistoryNullFields.policyVersioning.historyEntry.nextVersion).toBeNull();
+
+    const dueAtDateValid = versionGatePolicy({
+      concernsActionResult: {
+        ...validConcernsActionResult(),
+        concernsAction: {
+          ...validConcernsActionResult().concernsAction,
+          dueAt: new Date('2026-03-03T10:00:00.000Z')
+        }
+      },
+      policyVersioning: {
+        policyScope: 'gate',
+        activeVersion: '1.2.0',
+        requestedVersion: '1.2.0',
+        previousVersion: '1.1.5'
+      }
+    });
+
+    expect(dueAtDateValid.reasonCode).toBe('OK');
+
+    const dueAtNonFiniteNumber = versionGatePolicy({
+      concernsActionResult: {
+        ...validConcernsActionResult(),
+        concernsAction: {
+          ...validConcernsActionResult().concernsAction,
+          dueAt: Number.NaN
+        }
+      },
+      policyVersioning: {
+        policyScope: 'gate',
+        activeVersion: '1.2.0',
+        requestedVersion: '1.2.0',
+        previousVersion: '1.1.5'
+      }
+    });
+
+    expect(dueAtNonFiniteNumber.reasonCode).toBe('INVALID_GATE_POLICY_INPUT');
+
+    const delegatedWithoutObjectOptions = versionGatePolicy(
+      {
+        concernsActionInput: {}
+      },
+      {
+        concernsActionOptions: 'bad-options'
+      }
+    );
+
+    expect(delegatedWithoutObjectOptions.reasonCode).toBe('INVALID_CONCERNS_ACTION_INPUT');
+
+    const simulationThrowsString = versionGatePolicy(
+      {
+        concernsActionResult: validConcernsActionResult(),
+        policyVersioning: {
+          policyScope: 'gate',
+          activeVersion: '1.2.0',
+          requestedVersion: '1.2.0',
+          previousVersion: '1.1.5'
+        }
+      },
+      {
+        simulationOptions: {
+          nowMs: () => {
+            throw 'boom-string-sim';
+          }
+        }
+      }
+    );
+
+    expect(simulationThrowsString.reasonCode).toBe('INVALID_GATE_SIMULATION_INPUT');
+    expect(simulationThrowsString.reason).toContain('boom-string-sim');
+  });
+
+  it('couvre les branches parseTimestamp/duration/tri du helper simulation pour le gate coverage S031', () => {
+    const dateNowSpy = vi.spyOn(Date, 'now').mockReturnValue(1700000000000);
+
+    const invalidSimulationInputType = simulateGateVerdictBeforeSubmission({
+      baseVerdict: 'PASS',
+      simulationInput: 'bad'
+    });
+
+    expect(invalidSimulationInputType.reasonCode).toBe('INVALID_GATE_SIMULATION_INPUT');
+
+    const ineligibleAlreadyTagged = simulateGateVerdictBeforeSubmission({
+      baseVerdict: 'PASS',
+      simulationInput: {
+        eligible: false
+      },
+      correctiveActions: ['ENABLE_PRE_SUBMIT_SIMULATION', 'B-ACTION', 'A-ACTION']
+    });
+
+    expect(ineligibleAlreadyTagged.reasonCode).toBe('INVALID_GATE_SIMULATION_INPUT');
+    expect(ineligibleAlreadyTagged.correctiveActions).toEqual([
+      'A-ACTION',
+      'B-ACTION',
+      'ENABLE_PRE_SUBMIT_SIMULATION'
+    ]);
+
+    const withDateNow = simulateGateVerdictBeforeSubmission(
+      {
+        baseVerdict: 'PASS',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        },
+        correctiveActions: ['B', 'A']
+      },
+      {
+        nowMs: (() => {
+          const values = [100, 120, 140, new Date('2026-02-24T06:00:00.000Z'), 200];
+          return () => values.shift() ?? 200;
+        })()
+      }
+    );
+
+    expect(withDateNow.reasonCode).toBe('OK');
+    expect(withDateNow.correctiveActions).toEqual(['A', 'B']);
+    expect(withDateNow.simulation.evaluatedAt).toBe('2026-02-24T06:00:00.000Z');
+
+    const withInvalidDateObject = simulateGateVerdictBeforeSubmission(
+      {
+        baseVerdict: 'PASS',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        }
+      },
+      {
+        nowMs: (() => {
+          const values = [100, 120, 140, new Date('invalid'), 200];
+          return () => values.shift() ?? 200;
+        })()
+      }
+    );
+
+    expect(withInvalidDateObject.reasonCode).toBe('OK');
+    expect(withInvalidDateObject.simulation.evaluatedAt).toBe(new Date(1700000000000).toISOString());
+
+    const withIsoStringNow = simulateGateVerdictBeforeSubmission(
+      {
+        baseVerdict: 'PASS',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        }
+      },
+      {
+        nowMs: (() => {
+          const values = [100, 120, 140, '2026-02-24T06:00:01.000Z', 200];
+          return () => values.shift() ?? 200;
+        })()
+      }
+    );
+
+    expect(withIsoStringNow.reasonCode).toBe('OK');
+    expect(withIsoStringNow.simulation.evaluatedAt).toBe('2026-02-24T06:00:01.000Z');
+
+    const withInvalidStringNow = simulateGateVerdictBeforeSubmission(
+      {
+        baseVerdict: 'PASS',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        }
+      },
+      {
+        nowMs: (() => {
+          const values = [100, 120, 140, 'not-a-date', 200];
+          return () => values.shift() ?? 200;
+        })()
+      }
+    );
+
+    expect(withInvalidStringNow.reasonCode).toBe('OK');
+    expect(withInvalidStringNow.simulation.evaluatedAt).toBe(new Date(1700000000000).toISOString());
+
+    const withEmptyStringNow = simulateGateVerdictBeforeSubmission(
+      {
+        baseVerdict: 'PASS',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        }
+      },
+      {
+        nowMs: (() => {
+          const values = [100, 120, 140, '   ', 200];
+          return () => values.shift() ?? 200;
+        })()
+      }
+    );
+
+    expect(withEmptyStringNow.reasonCode).toBe('OK');
+    expect(withEmptyStringNow.simulation.evaluatedAt).toBe(new Date(1700000000000).toISOString());
+
+    const withObjectNow = simulateGateVerdictBeforeSubmission(
+      {
+        baseVerdict: 'PASS',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        }
+      },
+      {
+        nowMs: (() => {
+          const values = [100, 120, 140, { any: 'object' }, 200];
+          return () => values.shift() ?? 200;
+        })()
+      }
+    );
+
+    expect(withObjectNow.reasonCode).toBe('OK');
+    expect(withObjectNow.simulation.evaluatedAt).toBe(new Date(1700000000000).toISOString());
+
+    const withNaNNumberNow = simulateGateVerdictBeforeSubmission(
+      {
+        baseVerdict: 'PASS',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        }
+      },
+      {
+        nowMs: (() => {
+          const values = [100, 120, 140, Number.NaN, Number.NaN];
+          return () => values.shift() ?? Number.NaN;
+        })()
+      }
+    );
+
+    expect(withNaNNumberNow.reasonCode).toBe('OK');
+    expect(withNaNNumberNow.diagnostics.durationMs).toBeGreaterThanOrEqual(0);
+    expect(withNaNNumberNow.simulation.evaluatedAt).toBe(new Date(1700000000000).toISOString());
+
+    const withNegativeDurationSample = simulateGateVerdictBeforeSubmission(
+      {
+        baseVerdict: 'PASS',
+        simulationInput: {
+          eligible: true,
+          readOnly: true
+        }
+      },
+      {
+        nowMs: (() => {
+          const values = [Number.NaN, 50, 40, '2026-02-24T06:00:02.000Z', 30];
+          return () => values.shift() ?? 30;
+        })()
+      }
+    );
+
+    expect(withNegativeDurationSample.reasonCode).toBe('OK');
+    expect(withNegativeDurationSample.diagnostics.durationMs).toBeGreaterThanOrEqual(0);
+
+    dateNowSpy.mockRestore();
   });
 });

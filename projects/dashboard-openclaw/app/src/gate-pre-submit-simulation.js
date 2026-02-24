@@ -346,7 +346,7 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
         simulationEligible: false,
         simulatedVerdict: null,
         durationMs: toDurationMs(startedAtMs, nowMs()),
-        p95SimulationMs: 0,
+        p95SimulationMs: computePercentile(samples, 95),
         sourceReasonCode: normalizeText(payload.sourceReasonCode) || 'INVALID_GATE_SIMULATION_INPUT'
       },
       simulation: {
@@ -365,6 +365,8 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
 
   const evaluatedAtMs = parseTimestampMs(nowMs()) ?? Date.now();
   const correctiveActions = normalizeArray(payload.correctiveActions);
+  const durationMs = toDurationMs(startedAtMs, nowMs());
+  samples.push(durationMs);
 
   return createResult({
     allowed: true,
@@ -375,7 +377,7 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
     diagnostics: {
       simulationEligible: true,
       simulatedVerdict,
-      durationMs: toDurationMs(startedAtMs, nowMs()),
+      durationMs,
       p95SimulationMs: computePercentile(samples, 95),
       sourceReasonCode: normalizeText(payload.sourceReasonCode) || 'OK'
     },

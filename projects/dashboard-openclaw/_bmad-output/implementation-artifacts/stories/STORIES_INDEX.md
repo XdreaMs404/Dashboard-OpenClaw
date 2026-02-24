@@ -32,7 +32,7 @@
 | S028 | E03 | Blocage DONE si sous-gate non PASS | DONE |
 | S029 | E03 | Validation preuve primaire obligatoire | DONE |
 | S030 | E03 | Création automatique actions CONCERNS | DONE |
-| S031 | E03 | Versioning des policies de gate | TODO |
+| S031 | E03 | Versioning des policies de gate | DONE |
 | S032 | E03 | Simulation de verdict pré-soumission | TODO |
 | S033 | E03 | Tableau tendances des verdicts | TODO |
 | S034 | E03 | Export rapport gate (verdict+preuves+actions) | TODO |
