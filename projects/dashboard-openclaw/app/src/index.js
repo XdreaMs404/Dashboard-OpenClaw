@@ -31,6 +31,7 @@ import { versionGatePolicy } from './gate-policy-versioning.js';
 import { simulateGateVerdictBeforeSubmission } from './gate-pre-submit-simulation.js';
 import { buildSimulationTrendSnapshot } from './gate-simulation-trends.js';
 import { buildGateVerdictTrendsTable } from './gate-verdict-trends-table.js';
+import { buildGateReportExport } from './gate-report-export.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -61,6 +62,7 @@ export {
   simulateGateVerdictBeforeSubmission,
   buildSimulationTrendSnapshot,
   buildGateVerdictTrendsTable,
+  buildGateReportExport,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
