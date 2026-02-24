@@ -1,0 +1,110 @@
+{
+  "storyId": "S030",
+  "runAt": "2026-02-24T04:43:07.353Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_CONCERNS_ACTION_INPUT",
+      "expectedReasonCode": "INVALID_CONCERNS_ACTION_INPUT",
+      "reason": "Aucune source exploitable: fournir primaryEvidenceResult ou primaryEvidenceInput.",
+      "diagnostics": "verdict=— | concernsActionRequired=false | actionCreated=false | p95=0 | source=INVALID_CONCERNS_ACTION_INPUT | policyVersion=—",
+      "concernsAction": "created=false | actionId=— | gateId=— | storyId=— | assignee=— | dueAt=— | status=—",
+      "policySnapshot": "scope=— | version=—",
+      "historyEntry": "actionId=— | policyVersion=— | changedAt=— | changedBy=— | changeType=—",
+      "correctiveActions": [
+        "FIX_CONCERNS_ACTION_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "assignment-invalid",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "CONCERNS_ACTION_ASSIGNMENT_INVALID",
+      "expectedReasonCode": "CONCERNS_ACTION_ASSIGNMENT_INVALID",
+      "reason": "Action CONCERNS invalide: assignee non vide, dueAt ISO valide et status OPEN requis.",
+      "diagnostics": "verdict=CONCERNS | concernsActionRequired=true | actionCreated=false | p95=0 | source=OK | policyVersion=—",
+      "concernsAction": "created=false | actionId=4714aa03-1080-4ab3-bcee-1d38bbb07b6e | gateId=G4 | storyId=S030 | assignee=— | dueAt=— | status=OPEN",
+      "policySnapshot": "scope=— | version=—",
+      "historyEntry": "actionId=— | policyVersion=— | changedAt=— | changedBy=— | changeType=—",
+      "correctiveActions": [
+        "ASSIGN_CONCERNS_OWNER",
+        "SET_CONCERNS_DUE_DATE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "policy-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "GATE_POLICY_VERSION_MISSING",
+      "expectedReasonCode": "GATE_POLICY_VERSION_MISSING",
+      "reason": "Policy snapshot invalide: policyScope=\"gate\" et version non vide requis.",
+      "diagnostics": "verdict=CONCERNS | concernsActionRequired=true | actionCreated=false | p95=0 | source=OK | policyVersion=—",
+      "concernsAction": "created=false | actionId=404c5d3f-4060-4ded-94ed-2aa793206ce7 | gateId=G4 | storyId=S030 | assignee=qa-owner | dueAt=2026-03-03T10:00:00.000Z | status=OPEN",
+      "policySnapshot": "scope=gate | version=—",
+      "historyEntry": "actionId=— | policyVersion=— | changedAt=— | changedBy=— | changeType=—",
+      "correctiveActions": [
+        "LINK_GATE_POLICY_VERSION"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "history-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "CONCERNS_ACTION_HISTORY_INCOMPLETE",
+      "expectedReasonCode": "CONCERNS_ACTION_HISTORY_INCOMPLETE",
+      "reason": "Historisation action CONCERNS incomplète: actionId, policyVersion, changedAt, changedBy, changeType requis.",
+      "diagnostics": "verdict=CONCERNS | concernsActionRequired=true | actionCreated=false | p95=0 | source=OK | policyVersion=gate-policy-v3",
+      "concernsAction": "created=true | actionId=ad4636dc-3ad4-4eb4-bfd0-4067ae709f44 | gateId=G4 | storyId=S030 | assignee=qa-owner | dueAt=2026-03-03T10:00:00.000Z | status=OPEN",
+      "policySnapshot": "scope=gate | version=gate-policy-v3",
+      "historyEntry": "actionId=ad4636dc-3ad4-4eb4-bfd0-4067ae709f44 | policyVersion=gate-policy-v3 | changedAt=2026-02-24T04:43:07.353Z | changedBy=qa-owner | changeType=—",
+      "correctiveActions": [
+        "COMPLETE_CONCERNS_ACTION_HISTORY"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "pass-no-action",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Aucune action CONCERNS créée: verdict PASS.",
+      "diagnostics": "verdict=PASS | concernsActionRequired=false | actionCreated=false | p95=0 | source=OK | policyVersion=—",
+      "concernsAction": "created=false | actionId=— | gateId=— | storyId=— | assignee=— | dueAt=— | status=—",
+      "policySnapshot": "scope=— | version=—",
+      "historyEntry": "actionId=— | policyVersion=— | changedAt=— | changedBy=— | changeType=—",
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Action CONCERNS créée automatiquement avec policy snapshot et historique.",
+      "diagnostics": "verdict=CONCERNS | concernsActionRequired=true | actionCreated=true | p95=0 | source=GATE_VERDICT_CONCERNS | policyVersion=gate-policy-v3",
+      "concernsAction": "created=true | actionId=act-001 | gateId=G4-UX | storyId=S030 | assignee=qa-owner | dueAt=2026-03-03T10:00:00.000Z | status=OPEN",
+      "policySnapshot": "scope=gate | version=gate-policy-v3",
+      "historyEntry": "actionId=act-001 | policyVersion=gate-policy-v3 | changedAt=2026-02-24T04:12:00.000Z | changedBy=dev-bot | changeType=CREATE",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

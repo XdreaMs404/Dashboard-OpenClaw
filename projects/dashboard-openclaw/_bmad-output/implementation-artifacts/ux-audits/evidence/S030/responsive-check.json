@@ -1,0 +1,124 @@
+{
+  "storyId": "S030",
+  "runAt": "2026-02-24T04:43:08.501Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S030/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Action CONCERNS créée automatiquement avec policy snapshot et historique.",
+      "diagnostics": "verdict=CONCERNS | concernsActionRequired=true | actionCreated=true | p95=0 | source=GATE_VERDICT_CONCERNS | policyVersion=gate-policy-v3",
+      "concernsAction": "created=true | actionId=act-001 | gateId=G4-UX | storyId=S030 | assignee=qa-owner | dueAt=2026-03-03T10:00:00.000Z | status=OPEN",
+      "policySnapshot": "scope=gate | version=gate-policy-v3",
+      "historyEntry": "actionId=act-001 | policyVersion=gate-policy-v3 | changedAt=2026-02-24T04:12:00.000Z | changedBy=dev-bot | changeType=CREATE",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "action": 0,
+        "policy": 0,
+        "history": 0,
+        "corrections": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S030/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Action CONCERNS créée automatiquement avec policy snapshot et historique.",
+      "diagnostics": "verdict=CONCERNS | concernsActionRequired=true | actionCreated=true | p95=0 | source=GATE_VERDICT_CONCERNS | policyVersion=gate-policy-v3",
+      "concernsAction": "created=true | actionId=act-001 | gateId=G4-UX | storyId=S030 | assignee=qa-owner | dueAt=2026-03-03T10:00:00.000Z | status=OPEN",
+      "policySnapshot": "scope=gate | version=gate-policy-v3",
+      "historyEntry": "actionId=act-001 | policyVersion=gate-policy-v3 | changedAt=2026-02-24T04:12:00.000Z | changedBy=dev-bot | changeType=CREATE",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "action": 0,
+        "policy": 0,
+        "history": 0,
+        "corrections": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S030/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Action CONCERNS créée automatiquement avec policy snapshot et historique.",
+      "diagnostics": "verdict=CONCERNS | concernsActionRequired=true | actionCreated=true | p95=0 | source=GATE_VERDICT_CONCERNS | policyVersion=gate-policy-v3",
+      "concernsAction": "created=true | actionId=act-001 | gateId=G4-UX | storyId=S030 | assignee=qa-owner | dueAt=2026-03-03T10:00:00.000Z | status=OPEN",
+      "policySnapshot": "scope=gate | version=gate-policy-v3",
+      "historyEntry": "actionId=act-001 | policyVersion=gate-policy-v3 | changedAt=2026-02-24T04:12:00.000Z | changedBy=dev-bot | changeType=CREATE",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "action": 0,
+        "policy": 0,
+        "history": 0,
+        "corrections": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
