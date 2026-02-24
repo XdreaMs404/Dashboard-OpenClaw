@@ -1,0 +1,118 @@
+{
+  "storyId": "S031",
+  "runAt": "2026-02-24T05:53:55.565Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S031/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Policy gate versionnée (1.2.0) avec simulation pré-soumission CONCERNS.",
+      "diagnostics": "policyVersion=1.2.0 | historyEntryCount=1 | simulationEligible=true | simulatedVerdict=CONCERNS | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "policyVersioning": "policyId=POLICY-G4-UX | scope=gate | active=1.2.0 | requested=1.2.0 | isActive=true | history.changeType=CREATE",
+      "simulation": "eligible=true | simulatedVerdict=CONCERNS | nonMutative=true | factors=3 | evaluatedAt=2026-02-24T05:53:54.771Z",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "policy": 0,
+        "sim": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S031/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Policy gate versionnée (1.2.0) avec simulation pré-soumission CONCERNS.",
+      "diagnostics": "policyVersion=1.2.0 | historyEntryCount=1 | simulationEligible=true | simulatedVerdict=CONCERNS | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "policyVersioning": "policyId=POLICY-G4-UX | scope=gate | active=1.2.0 | requested=1.2.0 | isActive=true | history.changeType=CREATE",
+      "simulation": "eligible=true | simulatedVerdict=CONCERNS | nonMutative=true | factors=3 | evaluatedAt=2026-02-24T05:53:55.118Z",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "policy": 0,
+        "sim": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S031/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Policy gate versionnée (1.2.0) avec simulation pré-soumission CONCERNS.",
+      "diagnostics": "policyVersion=1.2.0 | historyEntryCount=1 | simulationEligible=true | simulatedVerdict=CONCERNS | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "policyVersioning": "policyId=POLICY-G4-UX | scope=gate | active=1.2.0 | requested=1.2.0 | isActive=true | history.changeType=CREATE",
+      "simulation": "eligible=true | simulatedVerdict=CONCERNS | nonMutative=true | factors=3 | evaluatedAt=2026-02-24T05:53:55.451Z",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "policy": 0,
+        "sim": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

@@ -1,0 +1,92 @@
+{
+  "storyId": "S031",
+  "runAt": "2026-02-24T05:53:54.416Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_GATE_POLICY_INPUT",
+      "expectedReasonCode": "INVALID_GATE_POLICY_INPUT",
+      "reason": "Aucune source exploitable: fournir concernsActionResult ou concernsActionInput.",
+      "diagnostics": "policyVersion=— | historyEntryCount=0 | simulationEligible=false | simulatedVerdict=— | p95=0 | source=INVALID_GATE_POLICY_INPUT",
+      "policyVersioning": "policyId=— | scope=— | active=— | requested=— | isActive=false | history.changeType=—",
+      "simulation": "eligible=false | simulatedVerdict=— | nonMutative=true | factors=0 | evaluatedAt=—",
+      "correctiveActions": [
+        "FIX_GATE_POLICY_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "policy-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "GATE_POLICY_VERSION_MISSING",
+      "expectedReasonCode": "GATE_POLICY_VERSION_MISSING",
+      "reason": "policyVersioning invalide: policyScope=\"gate\" et activeVersion semver requis.",
+      "diagnostics": "policyVersion=bad-semver | historyEntryCount=0 | simulationEligible=false | simulatedVerdict=— | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "policyVersioning": "policyId=POLICY-G4-UX | scope=gate | active=bad-semver | requested=bad-semver | isActive=true | history.changeType=—",
+      "simulation": "eligible=false | simulatedVerdict=— | nonMutative=true | factors=0 | evaluatedAt=—",
+      "correctiveActions": [
+        "LINK_GATE_POLICY_VERSION",
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "policy-stale",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "POLICY_VERSION_NOT_ACTIVE",
+      "expectedReasonCode": "POLICY_VERSION_NOT_ACTIVE",
+      "reason": "Version policy inactive/stale: requested=1.1.0, active=1.2.0.",
+      "diagnostics": "policyVersion=1.2.0 | historyEntryCount=0 | simulationEligible=false | simulatedVerdict=— | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "policyVersioning": "policyId=POLICY-G4-UX | scope=gate | active=1.2.0 | requested=1.1.0 | isActive=true | history.changeType=—",
+      "simulation": "eligible=false | simulatedVerdict=— | nonMutative=true | factors=0 | evaluatedAt=—",
+      "correctiveActions": [
+        "SYNC_ACTIVE_POLICY_VERSION",
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "simulation-invalid",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_GATE_SIMULATION_INPUT",
+      "expectedReasonCode": "INVALID_GATE_SIMULATION_INPUT",
+      "reason": "Simulation inéligible: définir simulationInput.eligible=true.",
+      "diagnostics": "policyVersion=1.2.0 | historyEntryCount=1 | simulationEligible=false | simulatedVerdict=— | p95=1 | source=GATE_VERDICT_CONCERNS",
+      "policyVersioning": "policyId=POLICY-G4-UX | scope=gate | active=1.2.0 | requested=1.2.0 | isActive=true | history.changeType=CREATE",
+      "simulation": "eligible=false | simulatedVerdict=— | nonMutative=true | factors=0 | evaluatedAt=—",
+      "correctiveActions": [
+        "ENABLE_PRE_SUBMIT_SIMULATION",
+        "FIX_GATE_SIMULATION_INPUT",
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Policy gate versionnée (1.2.0) avec simulation pré-soumission CONCERNS.",
+      "diagnostics": "policyVersion=1.2.0 | historyEntryCount=1 | simulationEligible=true | simulatedVerdict=CONCERNS | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "policyVersioning": "policyId=POLICY-G4-UX | scope=gate | active=1.2.0 | requested=1.2.0 | isActive=true | history.changeType=CREATE",
+      "simulation": "eligible=true | simulatedVerdict=CONCERNS | nonMutative=true | factors=3 | evaluatedAt=2026-02-24T05:53:54.416Z",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
