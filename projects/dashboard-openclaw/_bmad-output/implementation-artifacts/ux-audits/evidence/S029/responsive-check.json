@@ -1,0 +1,118 @@
+{
+  "storyId": "S029",
+  "runAt": "2026-02-24T03:44:14.582Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S029/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Preuve primaire valide et action CONCERNS assignée avec échéance.",
+      "diagnostics": "verdict=CONCERNS | canMarkDone=false | evidence=1 | concernsActionRequired=true | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "primaryEvidence": "required=true | valid=true | count=1 | min=1 | refs=1",
+      "concernsAction": "required=true | valid=true | assignee=ux-owner | dueAt=2026-03-01T10:00:00.000Z | status=OPEN",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "primary": 0,
+        "concerns": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S029/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Preuve primaire valide et action CONCERNS assignée avec échéance.",
+      "diagnostics": "verdict=CONCERNS | canMarkDone=false | evidence=1 | concernsActionRequired=true | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "primaryEvidence": "required=true | valid=true | count=1 | min=1 | refs=1",
+      "concernsAction": "required=true | valid=true | assignee=ux-owner | dueAt=2026-03-01T10:00:00.000Z | status=OPEN",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "primary": 0,
+        "concerns": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S029/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Preuve primaire valide et action CONCERNS assignée avec échéance.",
+      "diagnostics": "verdict=CONCERNS | canMarkDone=false | evidence=1 | concernsActionRequired=true | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "primaryEvidence": "required=true | valid=true | count=1 | min=1 | refs=1",
+      "concernsAction": "required=true | valid=true | assignee=ux-owner | dueAt=2026-03-01T10:00:00.000Z | status=OPEN",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diag": 0,
+        "primary": 0,
+        "concerns": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

@@ -1,0 +1,90 @@
+{
+  "storyId": "S029",
+  "runAt": "2026-02-24T03:44:13.455Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_PRIMARY_EVIDENCE_INPUT",
+      "expectedReasonCode": "INVALID_PRIMARY_EVIDENCE_INPUT",
+      "reason": "Aucune source exploitable: fournir doneTransitionGuardResult ou doneTransitionGuardInput.",
+      "diagnostics": "verdict=— | canMarkDone=false | evidence=0 | concernsActionRequired=false | p95=0 | source=INVALID_PRIMARY_EVIDENCE_INPUT",
+      "primaryEvidence": "required=true | valid=false | count=0 | min=1 | refs=0",
+      "concernsAction": "required=false | valid=false | assignee=— | dueAt=— | status=—",
+      "correctiveActions": [
+        "FIX_PRIMARY_EVIDENCE_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "evidence-missing",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "EVIDENCE_CHAIN_INCOMPLETE",
+      "expectedReasonCode": "EVIDENCE_CHAIN_INCOMPLETE",
+      "reason": "Chaîne de preuve primaire incomplète: evidenceCount=0, minimum=1.",
+      "diagnostics": "verdict=PASS | canMarkDone=false | evidence=0 | concernsActionRequired=false | p95=0 | source=OK",
+      "primaryEvidence": "required=true | valid=false | count=0 | min=1 | refs=0",
+      "concernsAction": "required=false | valid=false | assignee=— | dueAt=— | status=—",
+      "correctiveActions": [
+        "BLOCK_DONE_TRANSITION",
+        "LINK_PRIMARY_EVIDENCE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "concerns-invalid",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "CONCERNS_ACTION_ASSIGNMENT_INVALID",
+      "expectedReasonCode": "CONCERNS_ACTION_ASSIGNMENT_INVALID",
+      "reason": "Action CONCERNS invalide: assignee non vide, dueAt ISO valide et status OPEN requis.",
+      "diagnostics": "verdict=CONCERNS | canMarkDone=false | evidence=1 | concernsActionRequired=true | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "primaryEvidence": "required=true | valid=true | count=1 | min=1 | refs=1",
+      "concernsAction": "required=true | valid=false | assignee=— | dueAt=— | status=OPEN",
+      "correctiveActions": [
+        "ASSIGN_CONCERNS_OWNER",
+        "SET_CONCERNS_DUE_DATE"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "concerns-success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Preuve primaire valide et action CONCERNS assignée avec échéance.",
+      "diagnostics": "verdict=CONCERNS | canMarkDone=false | evidence=1 | concernsActionRequired=true | p95=0 | source=GATE_VERDICT_CONCERNS",
+      "primaryEvidence": "required=true | valid=true | count=1 | min=1 | refs=1",
+      "concernsAction": "required=true | valid=true | assignee=ux-owner | dueAt=2026-03-01T10:00:00.000Z | status=OPEN",
+      "correctiveActions": [
+        "TRACK_CONCERNS_ACTION"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Preuve primaire valide: décision de gate conforme.",
+      "diagnostics": "verdict=PASS | canMarkDone=true | evidence=1 | concernsActionRequired=false | p95=0 | source=OK",
+      "primaryEvidence": "required=true | valid=true | count=1 | min=1 | refs=1",
+      "concernsAction": "required=false | valid=true | assignee=— | dueAt=— | status=—",
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
