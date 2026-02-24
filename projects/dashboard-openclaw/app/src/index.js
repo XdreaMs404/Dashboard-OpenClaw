@@ -22,6 +22,7 @@ import { evaluatePhaseTransitionOverride } from './phase-transition-override.js'
 import { BMAD_PHASE_ORDER, validatePhaseTransition } from './phase-transition-validator.js';
 import { recordPhaseGateGovernanceDecision } from './phase-gate-governance-journal.js';
 import { buildGateCenterStatus } from './gate-center-status.js';
+import { evaluateG4DualCorrelation } from './g4-dual-evaluation.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -43,6 +44,7 @@ export {
   ingestBmadArtifacts,
   recordPhaseGateGovernanceDecision,
   buildGateCenterStatus,
+  evaluateG4DualCorrelation,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
