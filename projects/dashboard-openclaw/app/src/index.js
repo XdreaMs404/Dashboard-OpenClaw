@@ -27,6 +27,8 @@ import { calculateGateVerdict } from './gate-verdict-calculator.js';
 import { guardDoneTransition } from './done-transition-guard.js';
 import { validatePrimaryGateEvidence } from './gate-primary-evidence-validator.js';
 import { createGateConcernsAction } from './gate-concerns-actions.js';
+import { versionGatePolicy } from './gate-policy-versioning.js';
+import { simulateGateVerdictBeforeSubmission } from './gate-pre-submit-simulation.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -53,6 +55,8 @@ export {
   guardDoneTransition,
   validatePrimaryGateEvidence,
   createGateConcernsAction,
+  versionGatePolicy,
+  simulateGateVerdictBeforeSubmission,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
