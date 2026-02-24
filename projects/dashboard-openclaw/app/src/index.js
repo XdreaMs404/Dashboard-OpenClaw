@@ -26,6 +26,7 @@ import { evaluateG4DualCorrelation } from './g4-dual-evaluation.js';
 import { calculateGateVerdict } from './gate-verdict-calculator.js';
 import { guardDoneTransition } from './done-transition-guard.js';
 import { validatePrimaryGateEvidence } from './gate-primary-evidence-validator.js';
+import { createGateConcernsAction } from './gate-concerns-actions.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -51,6 +52,7 @@ export {
   calculateGateVerdict,
   guardDoneTransition,
   validatePrimaryGateEvidence,
+  createGateConcernsAction,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
