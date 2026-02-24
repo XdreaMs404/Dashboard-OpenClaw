@@ -1,10 +1,11 @@
 # Runtime story log — S027
 
-- Dernière mise à jour: **2026-02-24 01:53:24 UTC**
+- Dernière mise à jour: **2026-02-24 01:53:45 UTC**
 - Étape courante: **tea** (bmad-tea)
 - Return-to-step: **-**
-- Temps écoulé total: **59.28 min**
-- Résultat checkpoint: **RESET_ATTEMPT:uxqa**
+- Temps écoulé total: **59.63 min**
+- Résultat checkpoint: **CHECKPOINT_CLEARED**
+- Note: **Checkpoint supprimé après transition story.**
 
 ## Durée cumulée par étape (agents)
 
@@ -13,7 +14,7 @@
 | pm | bmad-pm | 4.18 | 1 | 0 |
 | dev | bmad-dev | 36.27 | 1 | 0 |
 | uxqa | bmad-ux-qa | 18.84 | 1 | 0 |
-| tea | bmad-tea | 0.0 | 1 | 0 |
+| tea | bmad-tea | 0.35 | 1 | 0 |
 | reviewer | bmad-reviewer | 0.0 | 0 | 0 |
 | techwriter | bmad-tech-writer | 0.0 | 0 | 0 |
 | final_gates | system-gates | 0.0 | 0 | 0 |
@@ -25,7 +26,7 @@
 | 1 | pm | bmad-pm | 2026-02-24 00:54:08 UTC | 2026-02-24 00:58:18 UTC | 4.18 |
 | 2 | dev | bmad-dev | 2026-02-24 00:58:18 UTC | 2026-02-24 01:34:34 UTC | 36.27 |
 | 3 | uxqa | bmad-ux-qa | 2026-02-24 01:34:34 UTC | 2026-02-24 01:53:24 UTC | 18.84 |
-| 4 | tea | bmad-tea | 2026-02-24 01:53:24 UTC | 2026-02-24 01:53:24 UTC | 0.0 |
+| 4 | tea | bmad-tea | 2026-02-24 01:53:24 UTC | 2026-02-24 01:53:45 UTC | 0.35 |
 
 ## Blocages détectés
 
@@ -64,3 +65,4 @@ Aucun blocage détecté dans l'historique checkpoint.
 | 2026-02-24 01:52:42 UTC | activate | checkpoint activated | uxqa → uxqa | - | 0/0/0/0/0/0 |
 | 2026-02-24 01:53:24 UTC | set-step | tea | uxqa → tea | - | 0/0/0/0/0/0 |
 | 2026-02-24 01:53:24 UTC | reset-attempt | uxqa | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-02-24 01:53:45 UTC | clear | checkpoint cleared | tea → tea | - | 0/0/0/0/0/0 |
