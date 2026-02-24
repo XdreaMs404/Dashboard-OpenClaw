@@ -1,0 +1,9 @@
+
+Running 4 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/gate-pre-submit-simulation.spec.js:301:3 › pre-submit simulation demo stays readable on mobile (730ms)
+  ✓  3 [chromium] › tests/e2e/gate-pre-submit-simulation.spec.js:301:3 › pre-submit simulation demo stays readable on tablet (656ms)
+  ✓  1 [chromium] › tests/e2e/gate-pre-submit-simulation.spec.js:239:1 › pre-submit simulation demo covers empty/loading/error/success and S032 fields (1.9s)
+  ✓  4 [chromium] › tests/e2e/gate-pre-submit-simulation.spec.js:301:3 › pre-submit simulation demo stays readable on desktop (714ms)
+
+  4 passed (3.5s)

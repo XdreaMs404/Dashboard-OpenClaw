@@ -1,0 +1,11 @@
+{
+  "storyId": "S032",
+  "responsive": {
+    "mobile": "PASS",
+    "tablet": "PASS",
+    "desktop": "PASS"
+  },
+  "overflowHorizontal": false,
+  "source": "tests/e2e/gate-pre-submit-simulation.spec.js",
+  "validatedAt": "2026-02-24T10:26:30Z"
+}

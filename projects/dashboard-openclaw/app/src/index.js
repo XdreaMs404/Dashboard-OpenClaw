@@ -29,6 +29,7 @@ import { validatePrimaryGateEvidence } from './gate-primary-evidence-validator.j
 import { createGateConcernsAction } from './gate-concerns-actions.js';
 import { versionGatePolicy } from './gate-policy-versioning.js';
 import { simulateGateVerdictBeforeSubmission } from './gate-pre-submit-simulation.js';
+import { buildSimulationTrendSnapshot } from './gate-simulation-trends.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -57,6 +58,7 @@ export {
   createGateConcernsAction,
   versionGatePolicy,
   simulateGateVerdictBeforeSubmission,
+  buildSimulationTrendSnapshot,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

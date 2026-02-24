@@ -1,3 +1,5 @@
+import { buildSimulationTrendSnapshot } from './gate-simulation-trends.js';
+
 const STATUS_SET = new Set(['PASS', 'CONCERNS', 'FAIL']);
 
 function isObject(value) {
@@ -28,6 +30,11 @@ function normalizeText(value) {
   }
 
   return value.trim();
+}
+
+function normalizeReasonCode(value) {
+  const normalized = normalizeText(value);
+  return normalized.length > 0 ? normalized : null;
 }
 
 function normalizeStatus(value) {
@@ -119,6 +126,27 @@ function ensureAction(actions, action) {
   if (!actions.includes(action)) {
     actions.push(action);
   }
+}
+
+function defaultTrendSnapshot() {
+  return {
+    phase: null,
+    period: null,
+    passCount: 0,
+    concernsCount: 0,
+    failCount: 0,
+    totalCount: 0,
+    trendDirection: 'FLAT',
+    windowStartAt: null,
+    windowEndAt: null
+  };
+}
+
+function defaultEvidenceChain() {
+  return {
+    primaryEvidenceRefs: [],
+    trendEvidenceRefs: []
+  };
 }
 
 function normalizeSimulationInput(payload) {
@@ -239,7 +267,12 @@ function buildFactors(baseVerdict, simulatedVerdict, simulationInput) {
     factors.push({
       factorId: signal.factorId,
       status: signal.severity,
-      impact: signal.blocking || signal.severity === 'FAIL' ? 'BLOCK' : signal.severity === 'CONCERNS' ? 'DEGRADE' : 'NEUTRAL',
+      impact:
+        signal.blocking || signal.severity === 'FAIL'
+          ? 'BLOCK'
+          : signal.severity === 'CONCERNS'
+            ? 'DEGRADE'
+            : 'NEUTRAL',
       detail: signal.detail ?? `signal=${signal.severity}`
     });
   }
@@ -254,12 +287,178 @@ function buildFactors(baseVerdict, simulatedVerdict, simulationInput) {
   return factors;
 }
 
+function normalizePolicyResult(policyResult, fallbackBaseVerdict, fallbackSourceReasonCode) {
+  if (!isObject(policyResult) || typeof policyResult.allowed !== 'boolean') {
+    return {
+      valid: false,
+      reason:
+        'policyVersionResult invalide: objet attendu avec { allowed:boolean, reasonCode:string, diagnostics? }.'
+    };
+  }
+
+  const reasonCode = normalizeReasonCode(policyResult.reasonCode) ?? 'INVALID_GATE_SIMULATION_INPUT';
+  const sourceReasonCode =
+    normalizeReasonCode(policyResult.diagnostics?.sourceReasonCode) ??
+    normalizeReasonCode(fallbackSourceReasonCode) ??
+    reasonCode;
+
+  if (!policyResult.allowed) {
+    return {
+      valid: true,
+      blocked: true,
+      reasonCode,
+      sourceReasonCode,
+      reason:
+        normalizeText(policyResult.reason) ||
+        `Blocage amont propagé sans réécriture (${reasonCode}).`,
+      correctiveActions: normalizeArray(policyResult.correctiveActions)
+    };
+  }
+
+  const baseVerdict = normalizeStatus(
+    policyResult.diagnostics?.simulatedVerdict ??
+      policyResult.diagnostics?.verdict ??
+      fallbackBaseVerdict
+  );
+
+  if (!baseVerdict) {
+    return {
+      valid: false,
+      reason:
+        'policyVersionResult allowed=true mais verdict source introuvable (diagnostics.simulatedVerdict|verdict|baseVerdict).'
+    };
+  }
+
+  return {
+    valid: true,
+    blocked: false,
+    baseVerdict,
+    sourceReasonCode,
+    correctiveActions: normalizeArray(policyResult.correctiveActions)
+  };
+}
+
+function resolveSource(payload, runtimeOptions) {
+  const fallbackBaseVerdict = normalizeStatus(
+    payload.baseVerdict ?? payload.verdict ?? payload.sourceVerdict
+  );
+  const fallbackSourceReasonCode = normalizeReasonCode(payload.sourceReasonCode) ?? 'OK';
+
+  if (payload.policyVersionResult !== undefined) {
+    return normalizePolicyResult(
+      payload.policyVersionResult,
+      fallbackBaseVerdict,
+      fallbackSourceReasonCode
+    );
+  }
+
+  if (payload.policyVersionInput !== undefined) {
+    if (!isObject(payload.policyVersionInput)) {
+      return {
+        valid: false,
+        reason: 'policyVersionInput invalide: objet attendu si fourni.'
+      };
+    }
+
+    if (typeof runtimeOptions.versionGatePolicy !== 'function') {
+      return {
+        valid: false,
+        reason:
+          'policyVersionInput fourni sans delegate versionGatePolicy(options.versionGatePolicy).'
+      };
+    }
+
+    const delegateOptions = isObject(runtimeOptions.versionGatePolicyOptions)
+      ? runtimeOptions.versionGatePolicyOptions
+      : {};
+
+    let delegatedResult;
+
+    try {
+      delegatedResult = runtimeOptions.versionGatePolicy(payload.policyVersionInput, delegateOptions);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+
+      return {
+        valid: false,
+        reason: `versionGatePolicy a levé une exception: ${message}`
+      };
+    }
+
+    return normalizePolicyResult(delegatedResult, fallbackBaseVerdict, fallbackSourceReasonCode);
+  }
+
+  if (!fallbackBaseVerdict) {
+    return {
+      valid: false,
+      reason: 'baseVerdict/verdict/sourceVerdict invalide: PASS|CONCERNS|FAIL requis.'
+    };
+  }
+
+  return {
+    valid: true,
+    blocked: false,
+    baseVerdict: fallbackBaseVerdict,
+    sourceReasonCode: fallbackSourceReasonCode,
+    correctiveActions: []
+  };
+}
+
+function normalizeEvidenceChain(payload, trendSnapshot, simulatedVerdict) {
+  const evidenceInput = payload.evidenceChain;
+  const strictEvidence = payload.requireEvidenceChain === true || evidenceInput !== undefined;
+
+  if (evidenceInput !== undefined && !isObject(evidenceInput)) {
+    return {
+      valid: false,
+      reason:
+        'evidenceChain invalide: objet attendu avec primaryEvidenceRefs/trendEvidenceRefs.',
+      correctiveActions: ['LINK_PRIMARY_EVIDENCE']
+    };
+  }
+
+  const primaryEvidenceRefs = normalizeArray(
+    evidenceInput?.primaryEvidenceRefs ?? payload.primaryEvidenceRefs
+  );
+  const trendEvidenceRefs = normalizeArray(
+    evidenceInput?.trendEvidenceRefs ?? payload.trendEvidenceRefs
+  );
+
+  if (strictEvidence && (primaryEvidenceRefs.length === 0 || trendEvidenceRefs.length === 0)) {
+    return {
+      valid: false,
+      reason:
+        'Chaîne de preuve incomplète: primaryEvidenceRefs et trendEvidenceRefs sont requis.',
+      correctiveActions: ['LINK_PRIMARY_EVIDENCE']
+    };
+  }
+
+  const phase = normalizeText(trendSnapshot.phase) || 'G4';
+  const period = normalizeText(trendSnapshot.period) || 'default';
+
+  return {
+    valid: true,
+    evidenceChain: {
+      primaryEvidenceRefs:
+        primaryEvidenceRefs.length > 0
+          ? primaryEvidenceRefs
+          : [`simulation:${simulatedVerdict}`, `phase:${phase}`],
+      trendEvidenceRefs:
+        trendEvidenceRefs.length > 0
+          ? trendEvidenceRefs
+          : [`trend:${phase}:${period}`]
+    }
+  };
+}
+
 function createResult({
   allowed,
   reasonCode,
   reason,
   diagnostics,
   simulation,
+  trendSnapshot,
+  evidenceChain,
   correctiveActions
 }) {
   return {
@@ -274,6 +473,8 @@ function createResult({
       sourceReasonCode: diagnostics.sourceReasonCode
     },
     simulation: cloneValue(simulation),
+    trendSnapshot: cloneValue(trendSnapshot),
+    evidenceChain: cloneValue(evidenceChain),
     correctiveActions: [...correctiveActions]
   };
 }
@@ -281,7 +482,8 @@ function createResult({
 function createInvalidInputResult({
   reason,
   durationMs = 0,
-  sourceReasonCode = 'INVALID_GATE_SIMULATION_INPUT'
+  sourceReasonCode = 'INVALID_GATE_SIMULATION_INPUT',
+  correctiveActions = ['FIX_GATE_SIMULATION_INPUT']
 }) {
   return createResult({
     allowed: false,
@@ -301,7 +503,43 @@ function createInvalidInputResult({
       factors: [],
       evaluatedAt: null
     },
-    correctiveActions: ['FIX_GATE_SIMULATION_INPUT']
+    trendSnapshot: defaultTrendSnapshot(),
+    evidenceChain: defaultEvidenceChain(),
+    correctiveActions: normalizeArray(correctiveActions)
+  });
+}
+
+function createBlockedSourceResult({
+  reasonCode,
+  reason,
+  sourceReasonCode,
+  durationMs,
+  correctiveActions
+}) {
+  return createResult({
+    allowed: false,
+    reasonCode,
+    reason,
+    diagnostics: {
+      simulationEligible: false,
+      simulatedVerdict: null,
+      durationMs,
+      p95SimulationMs: 0,
+      sourceReasonCode
+    },
+    simulation: {
+      eligible: false,
+      simulatedVerdict: null,
+      nonMutative: true,
+      factors: [],
+      evaluatedAt: null
+    },
+    trendSnapshot: defaultTrendSnapshot(),
+    evidenceChain: defaultEvidenceChain(),
+    correctiveActions:
+      normalizeArray(correctiveActions).length > 0
+        ? normalizeArray(correctiveActions)
+        : ['FIX_GATE_SIMULATION_INPUT']
   });
 }
 
@@ -311,23 +549,34 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
   const nowMs = resolveNowProvider(runtimeOptions);
   const startedAtMs = nowMs();
 
-  const baseVerdict = normalizeStatus(payload.baseVerdict ?? payload.verdict ?? payload.sourceVerdict);
+  const sourceResolution = resolveSource(payload, runtimeOptions);
 
-  if (!baseVerdict) {
+  if (!sourceResolution.valid) {
     return createInvalidInputResult({
-      reason: 'baseVerdict/verdict/sourceVerdict invalide: PASS|CONCERNS|FAIL requis.',
+      reason: sourceResolution.reason,
       durationMs: toDurationMs(startedAtMs, nowMs()),
-      sourceReasonCode: normalizeText(payload.sourceReasonCode) || 'INVALID_GATE_SIMULATION_INPUT'
+      sourceReasonCode: normalizeReasonCode(payload.sourceReasonCode) ?? 'INVALID_GATE_SIMULATION_INPUT'
     });
   }
 
+  if (sourceResolution.blocked) {
+    return createBlockedSourceResult({
+      reasonCode: sourceResolution.reasonCode,
+      reason: sourceResolution.reason,
+      sourceReasonCode: sourceResolution.sourceReasonCode,
+      durationMs: toDurationMs(startedAtMs, nowMs()),
+      correctiveActions: sourceResolution.correctiveActions
+    });
+  }
+
+  const baseVerdict = sourceResolution.baseVerdict;
   const simulationResolution = normalizeSimulationInput(payload);
 
   if (!simulationResolution.valid) {
     return createInvalidInputResult({
       reason: simulationResolution.reason,
       durationMs: toDurationMs(startedAtMs, nowMs()),
-      sourceReasonCode: normalizeText(payload.sourceReasonCode) || 'INVALID_GATE_SIMULATION_INPUT'
+      sourceReasonCode: sourceResolution.sourceReasonCode
     });
   }
 
@@ -347,7 +596,7 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
         simulatedVerdict: null,
         durationMs: toDurationMs(startedAtMs, nowMs()),
         p95SimulationMs: computePercentile(samples, 95),
-        sourceReasonCode: normalizeText(payload.sourceReasonCode) || 'INVALID_GATE_SIMULATION_INPUT'
+        sourceReasonCode: sourceResolution.sourceReasonCode
       },
       simulation: {
         eligible: false,
@@ -356,6 +605,8 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
         factors: [],
         evaluatedAt: null
       },
+      trendSnapshot: defaultTrendSnapshot(),
+      evidenceChain: defaultEvidenceChain(),
       correctiveActions
     });
   }
@@ -364,9 +615,90 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
   samples.push(toDurationMs(evaluateStartedAtMs, nowMs()));
 
   const evaluatedAtMs = parseTimestampMs(nowMs()) ?? Date.now();
-  const correctiveActions = normalizeArray(payload.correctiveActions);
   const durationMs = toDurationMs(startedAtMs, nowMs());
   samples.push(durationMs);
+
+  const trendOptions = isObject(runtimeOptions.trendOptions) ? runtimeOptions.trendOptions : {};
+  const trendResult = buildSimulationTrendSnapshot(
+    {
+      ...payload,
+      baseVerdict,
+      simulatedVerdict,
+      sourceReasonCode: sourceResolution.sourceReasonCode
+    },
+    trendOptions
+  );
+
+  if (!trendResult.allowed) {
+    const correctiveActions = normalizeArray([
+      ...normalizeArray(payload.correctiveActions),
+      ...normalizeArray(trendResult.correctiveActions),
+      'FIX_TREND_WINDOW_INPUT'
+    ]);
+
+    return createResult({
+      allowed: false,
+      reasonCode: trendResult.reasonCode,
+      reason: normalizeText(trendResult.reason) || 'Tendance simulation invalide.',
+      diagnostics: {
+        simulationEligible: true,
+        simulatedVerdict,
+        durationMs,
+        p95SimulationMs: computePercentile(samples, 95),
+        sourceReasonCode: sourceResolution.sourceReasonCode
+      },
+      simulation: {
+        eligible: true,
+        simulatedVerdict,
+        nonMutative: simulationResolution.simulationInput.readOnly,
+        factors: buildFactors(baseVerdict, simulatedVerdict, simulationResolution.simulationInput),
+        evaluatedAt: new Date(evaluatedAtMs).toISOString()
+      },
+      trendSnapshot: isObject(trendResult.trendSnapshot)
+        ? trendResult.trendSnapshot
+        : defaultTrendSnapshot(),
+      evidenceChain: defaultEvidenceChain(),
+      correctiveActions
+    });
+  }
+
+  const evidenceResolution = normalizeEvidenceChain(
+    payload,
+    trendResult.trendSnapshot,
+    simulatedVerdict
+  );
+
+  if (!evidenceResolution.valid) {
+    const correctiveActions = normalizeArray([
+      ...normalizeArray(payload.correctiveActions),
+      ...normalizeArray(evidenceResolution.correctiveActions)
+    ]);
+
+    return createResult({
+      allowed: false,
+      reasonCode: 'EVIDENCE_CHAIN_INCOMPLETE',
+      reason: evidenceResolution.reason,
+      diagnostics: {
+        simulationEligible: true,
+        simulatedVerdict,
+        durationMs,
+        p95SimulationMs: computePercentile(samples, 95),
+        sourceReasonCode: sourceResolution.sourceReasonCode
+      },
+      simulation: {
+        eligible: true,
+        simulatedVerdict,
+        nonMutative: simulationResolution.simulationInput.readOnly,
+        factors: buildFactors(baseVerdict, simulatedVerdict, simulationResolution.simulationInput),
+        evaluatedAt: new Date(evaluatedAtMs).toISOString()
+      },
+      trendSnapshot: trendResult.trendSnapshot,
+      evidenceChain: defaultEvidenceChain(),
+      correctiveActions
+    });
+  }
+
+  const correctiveActions = normalizeArray(payload.correctiveActions);
 
   return createResult({
     allowed: true,
@@ -379,7 +711,7 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
       simulatedVerdict,
       durationMs,
       p95SimulationMs: computePercentile(samples, 95),
-      sourceReasonCode: normalizeText(payload.sourceReasonCode) || 'OK'
+      sourceReasonCode: sourceResolution.sourceReasonCode
     },
     simulation: {
       eligible: true,
@@ -388,6 +720,8 @@ export function simulateGateVerdictBeforeSubmission(input, options = {}) {
       factors: buildFactors(baseVerdict, simulatedVerdict, simulationResolution.simulationInput),
       evaluatedAt: new Date(evaluatedAtMs).toISOString()
     },
+    trendSnapshot: trendResult.trendSnapshot,
+    evidenceChain: evidenceResolution.evidenceChain,
     correctiveActions
   });
 }
