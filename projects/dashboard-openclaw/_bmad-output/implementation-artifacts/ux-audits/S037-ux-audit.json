@@ -1,0 +1,42 @@
+{
+  "storyId": "S037",
+  "epicId": "E04",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 95,
+    "D2": 96,
+    "D3": 94,
+    "D4": 95,
+    "D5": 93,
+    "D6": 92,
+    "designExcellence": 94
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S037/vitest-s037.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S037/playwright-s037.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S037/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S037/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S037/reason-copy-check.json"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX S037 PASS: catalogue allowlist versionné clair (reasonCode/reason/diagnostics/catalog/executionGuard), microcopy de refus validée sur COMMAND_OUTSIDE_CATALOG/DRY_RUN_REQUIRED_FOR_WRITE/CRITICAL_ACTION_ROLE_REQUIRED/UNSAFE_PARAMETER_VALUE, et responsive mobile/tablette/desktop sans overflow.",
+  "updatedAt": "2026-02-24T16:42:17Z"
+}
