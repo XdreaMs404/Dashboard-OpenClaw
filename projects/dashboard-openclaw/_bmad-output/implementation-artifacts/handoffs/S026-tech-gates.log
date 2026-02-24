@@ -1,0 +1,71 @@
+$ npm run lint
+
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
+
+✅ Lint OK
+$ npm run typecheck
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
+✅ Typecheck (syntax) OK
+$ npx vitest run tests/unit/g4-dual-evaluation.test.js tests/edge/g4-dual-evaluation.edge.test.js
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/edge/g4-dual-evaluation.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-dual-evaluation.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
+[2m   Start at [22m 00:51:38
+[2m   Duration [22m 527ms[2m (transform 342ms, setup 0ms, import 501ms, tests 66ms, environment 0ms)[22m
+
+$ npx playwright test tests/e2e/g4-dual-evaluation.spec.js
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/g4-dual-evaluation.spec.js:425:1 › g4 dual demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  1 [chromium] › tests/e2e/g4-dual-evaluation.spec.js:353:1 › g4 dual demo covers empty/loading/error/success with reason, counters, verdict, matrix and actions (2.3s)
+
+  2 passed (3.7s)
+$ npx vitest run tests/unit/g4-dual-evaluation.test.js tests/edge/g4-dual-evaluation.edge.test.js --coverage --coverage.include=src/g4-dual-evaluation.js --coverage.reporter=text --coverage.reporter=json-summary
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/edge/g4-dual-evaluation.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-dual-evaluation.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
+[2m   Start at [22m 00:51:45
+[2m   Duration [22m 701ms[2m (transform 451ms, setup 0ms, import 614ms, tests 65ms, environment 0ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   98.29 |    95.43 |     100 |   98.23 |                   
+ ...-evaluation.js |   98.29 |    95.43 |     100 |   98.23 | 219,397,539,736   
+-------------------|---------|----------|---------|---------|-------------------
+$ npm run build
+
+> bmad-total-app@0.1.0 build
+> node ./scripts/build.mjs
+
+✅ Build OK
+$ npm run security:deps
+
+> bmad-total-app@0.1.0 security:deps
+> npm audit --audit-level=high
+
+found 0 vulnerabilities
+✅ S026_TECH_GATES_OK
+
+[TEA checkpoint 2026-02-24T00:51:46Z]
+Coverage gate evaluation (module S026):
+- app/src/g4-dual-evaluation.js: 98.23% lines / 95.43% branches
+- Required threshold (story S026 AC-10): >=95% lines and >=95% branches
+✅ S026_MODULE_COVERAGE_GATE_OK
