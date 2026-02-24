@@ -23,6 +23,7 @@ import { BMAD_PHASE_ORDER, validatePhaseTransition } from './phase-transition-va
 import { recordPhaseGateGovernanceDecision } from './phase-gate-governance-journal.js';
 import { buildGateCenterStatus } from './gate-center-status.js';
 import { evaluateG4DualCorrelation } from './g4-dual-evaluation.js';
+import { calculateGateVerdict } from './gate-verdict-calculator.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -45,6 +46,7 @@ export {
   recordPhaseGateGovernanceDecision,
   buildGateCenterStatus,
   evaluateG4DualCorrelation,
+  calculateGateVerdict,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
