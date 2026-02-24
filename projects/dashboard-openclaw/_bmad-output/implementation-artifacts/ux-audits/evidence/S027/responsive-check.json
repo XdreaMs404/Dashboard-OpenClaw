@@ -1,0 +1,139 @@
+{
+  "storyId": "S027",
+  "runAt": "2026-02-24T01:49:12.322Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S027/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Verdict gate calculé: PASS (G4-T=PASS, G4-UX=PASS).",
+      "counts": "gates=5 | evidence=2 | g4t=PASS | g4ux=PASS | p95=0 | source=OK",
+      "verdict": "PASS",
+      "canMarkDone": "true",
+      "contributingFactors": [
+        "G4-T_STATUS => status=PASS impact=NEUTRAL",
+        "G4-UX_STATUS => status=PASS impact=NEUTRAL",
+        "EVIDENCE_CHAIN => status=PASS impact=NEUTRAL",
+        "FINAL_VERDICT => status=PASS impact=NEUTRAL"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "verdict": 0,
+        "canMarkDone": 0,
+        "factors": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 820,
+        "height": 1180
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S027/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Verdict gate calculé: PASS (G4-T=PASS, G4-UX=PASS).",
+      "counts": "gates=5 | evidence=2 | g4t=PASS | g4ux=PASS | p95=0 | source=OK",
+      "verdict": "PASS",
+      "canMarkDone": "true",
+      "contributingFactors": [
+        "G4-T_STATUS => status=PASS impact=NEUTRAL",
+        "G4-UX_STATUS => status=PASS impact=NEUTRAL",
+        "EVIDENCE_CHAIN => status=PASS impact=NEUTRAL",
+        "FINAL_VERDICT => status=PASS impact=NEUTRAL"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "verdict": 0,
+        "canMarkDone": 0,
+        "factors": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 768
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S027/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Verdict gate calculé: PASS (G4-T=PASS, G4-UX=PASS).",
+      "counts": "gates=5 | evidence=2 | g4t=PASS | g4ux=PASS | p95=0 | source=OK",
+      "verdict": "PASS",
+      "canMarkDone": "true",
+      "contributingFactors": [
+        "G4-T_STATUS => status=PASS impact=NEUTRAL",
+        "G4-UX_STATUS => status=PASS impact=NEUTRAL",
+        "EVIDENCE_CHAIN => status=PASS impact=NEUTRAL",
+        "FINAL_VERDICT => status=PASS impact=NEUTRAL"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "counts": 0,
+        "verdict": 0,
+        "canMarkDone": 0,
+        "factors": 0,
+        "actions": 0,
+        "error": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

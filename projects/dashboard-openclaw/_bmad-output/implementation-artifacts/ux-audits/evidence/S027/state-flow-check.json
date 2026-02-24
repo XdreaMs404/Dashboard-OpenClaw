@@ -1,0 +1,92 @@
+{
+  "storyId": "S027",
+  "runAt": "2026-02-24T01:49:11.201Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_GATE_VERDICT_INPUT",
+      "expectedReasonCode": "INVALID_GATE_VERDICT_INPUT",
+      "reason": "Aucune source exploitable: fournir g4DualResult ou g4DualInput.",
+      "verdict": null,
+      "canMarkDone": false,
+      "counts": "gates=0 | evidence=0 | g4t=— | g4ux=— | p95=0 | source=INVALID_GATE_VERDICT_INPUT",
+      "contributingFactors": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_GATE_VERDICT_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "G4_SUBGATES_UNSYNC",
+      "expectedReasonCode": "G4_SUBGATES_UNSYNC",
+      "reason": "Sous-gates non synchronisées.",
+      "verdict": null,
+      "canMarkDone": false,
+      "counts": "gates=0 | evidence=0 | g4t=— | g4ux=— | p95=0 | source=G4_SUBGATES_UNSYNC",
+      "contributingFactors": [
+        "—"
+      ],
+      "correctiveActions": [
+        "SYNC_G4_SUBGATES"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "concerns",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "GATE_VERDICT_CONCERNS",
+      "expectedReasonCode": "GATE_VERDICT_CONCERNS",
+      "reason": "Verdict gate calculé: CONCERNS (G4-T=CONCERNS, G4-UX=PASS).",
+      "verdict": "CONCERNS",
+      "canMarkDone": false,
+      "counts": "gates=5 | evidence=1 | g4t=CONCERNS | g4ux=PASS | p95=0 | source=OK",
+      "contributingFactors": [
+        "G4-T_STATUS => status=CONCERNS impact=DEGRADE",
+        "G4-UX_STATUS => status=PASS impact=NEUTRAL",
+        "EVIDENCE_CHAIN => status=PASS impact=NEUTRAL",
+        "FINAL_VERDICT => status=CONCERNS impact=BLOCK"
+      ],
+      "correctiveActions": [
+        "BLOCK_DONE_TRANSITION",
+        "REVIEW_GATE_CONCERNS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Verdict gate calculé: PASS (G4-T=PASS, G4-UX=PASS).",
+      "verdict": "PASS",
+      "canMarkDone": true,
+      "counts": "gates=5 | evidence=2 | g4t=PASS | g4ux=PASS | p95=0 | source=OK",
+      "contributingFactors": [
+        "G4-T_STATUS => status=PASS impact=NEUTRAL",
+        "G4-UX_STATUS => status=PASS impact=NEUTRAL",
+        "EVIDENCE_CHAIN => status=PASS impact=NEUTRAL",
+        "FINAL_VERDICT => status=PASS impact=NEUTRAL"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
