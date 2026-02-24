@@ -1,0 +1,12 @@
+{
+  "storyId": "S036",
+  "scenario": "phase-gate-governance-journal",
+  "viewports": [
+    { "name": "mobile", "width": 390, "height": 844, "overflow": false },
+    { "name": "tablet", "width": 820, "height": 1180, "overflow": false },
+    { "name": "desktop", "width": 1366, "height": 768, "overflow": false }
+  ],
+  "validatedBy": "tests/e2e/phase-gate-governance-journal.spec.js",
+  "result": "PASS",
+  "updatedAt": "2026-02-24T15:35:00Z"
+}

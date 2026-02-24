@@ -1,0 +1,41 @@
+{
+  "storyId": "S036",
+  "epicId": "E03",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 94,
+    "D2": 96,
+    "D3": 93,
+    "D4": 94,
+    "D5": 93,
+    "D6": 92,
+    "designExcellence": 93
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S036/vitest-s036.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S036/playwright-s036.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S036/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S036/responsive-check.json"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX S036 PASS: journal de gouvernance lisible et actionnable (reasonCode, owner, decisionEntry/history, correctiveActions), états empty/loading/error/success couverts, et responsive mobile/tablette/desktop sans overflow avec cohérence visuelle Gate Center.",
+  "updatedAt": "2026-02-24T15:35:00Z"
+}

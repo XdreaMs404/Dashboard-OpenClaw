@@ -1,0 +1,8 @@
+{
+  "storyId": "S036",
+  "scenario": "phase-gate-governance-journal",
+  "states": ["empty", "loading", "error", "success"],
+  "validatedBy": "tests/e2e/phase-gate-governance-journal.spec.js",
+  "result": "PASS",
+  "updatedAt": "2026-02-24T15:35:00Z"
+}

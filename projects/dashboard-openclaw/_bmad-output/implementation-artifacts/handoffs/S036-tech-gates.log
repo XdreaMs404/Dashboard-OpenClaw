@@ -1,0 +1,375 @@
+▶ technical quality gates
+▶ lint
+
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
+
+✅ Lint OK
+▶ typecheck
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
+✅ Typecheck (syntax) OK
+▶ unit/integration tests
+
+> bmad-total-app@0.1.0 test
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/unit/gate-policy-versioning.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 88[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-table-indexer.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 91[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-version-diff.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 89[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-evidence-graph.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-section-extractor.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 61[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-verdict-calculator.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 62[2mms[22m[39m
+ [32m✓[39m tests/unit/done-transition-guard.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-concerns-actions.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 43[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-fulltext-search.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 54[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-context-filter.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-corpus-backfill.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-primary-evidence-validator.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 46[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-fulltext-search.edge.test.js [2m([22m[2m25 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-risk-annotations.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-staleness-indicator.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-table-indexer.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-risk-annotations.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-metadata-validator.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-policy-versioning.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-section-extractor.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-parse-diagnostics.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m21 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-gate-governance-journal.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-ingestion-pipeline.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-dual-evaluation.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-context-filter.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-staleness-indicator.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-dual-evaluation.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-version-diff.edge.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-evidence-graph.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-gate-governance-journal.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-parse-diagnostics.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-verdict-calculator.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-concerns-actions.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-pre-submit-simulation.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-primary-evidence-validator.edge.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/edge/done-transition-guard.edge.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-corpus-backfill.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-history.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-dependency-matrix.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-dependency-matrix.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-state-projection.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-progression-alert.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m22 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-ingestion-pipeline.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-progression-alert.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-override.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-metadata-validator.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-guards-orchestrator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-validator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-override.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-sla-alert.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-report-export.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-ux-evidence-bridge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/core.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-verdict-trends-table.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-pre-submit-simulation.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-prerequisites-validator.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-simulation-trends.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-report-export.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-verdict-trends-table.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-ux-evidence-bridge.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-simulation-trends.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m70 passed[39m[22m[90m (70)[39m
+[2m      Tests [22m [1m[32m835 passed[39m[22m[90m (835)[39m
+[2m   Start at [22m 15:54:47
+[2m   Duration [22m 5.70s[2m (transform 1.17s, setup 0ms, import 6.15s, tests 1.81s, environment 11ms)[22m
+
+▶ e2e tests (isolated output: /root/.openclaw/workspace/projects/dashboard-openclaw/app/test-results/e2e-gates-1771948493-1025194)
+
+> bmad-total-app@0.1.0 test:e2e
+> playwright test --output=${PLAYWRIGHT_OUTPUT_DIR:-test-results}
+
+
+Running 75 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/artifact-context-filter.spec.js:427:1 › artifact context filter demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓   2 [chromium] › tests/e2e/artifact-context-filter.spec.js:354:1 › artifact context filter demo covers empty/loading/error/success with reason, counters, filters, diffCandidates and correctiveActions (2.3s)
+  ✓   4 [chromium] › tests/e2e/artifact-corpus-backfill.spec.js:463:1 › artifact corpus backfill demo stays readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓   3 [chromium] › tests/e2e/artifact-corpus-backfill.spec.js:371:1 › artifact corpus backfill demo covers empty/loading/error/success states with diagnostics and actions (2.6s)
+  ✓   6 [chromium] › tests/e2e/artifact-evidence-graph.spec.js:434:1 › artifact evidence graph demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓   5 [chromium] › tests/e2e/artifact-evidence-graph.spec.js:351:1 › artifact evidence graph demo covers empty/loading/error/success with reason, counters, graph, backlinks, orphan evidence and actions (2.5s)
+  ✓   7 [chromium] › tests/e2e/artifact-fulltext-search.spec.js:286:1 › artifact fulltext search demo covers empty/loading/error/success with reason, counters, filters and correctiveActions (2.0s)
+  ✓   8 [chromium] › tests/e2e/artifact-fulltext-search.spec.js:354:1 › artifact fulltext search demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  10 [chromium] › tests/e2e/artifact-ingestion-pipeline.spec.js:389:1 › artifact ingestion demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓   9 [chromium] › tests/e2e/artifact-ingestion-pipeline.spec.js:293:1 › artifact ingestion demo covers empty/loading/error/success with explicit reason, counters and correctiveActions (3.4s)
+  ✓  12 [chromium] › tests/e2e/artifact-metadata-validator.spec.js:389:1 › artifact metadata validator demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  11 [chromium] › tests/e2e/artifact-metadata-validator.spec.js:293:1 › artifact metadata validator demo covers empty/loading/error/success with explicit reason, counters and correctiveActions (3.3s)
+  ✓  14 [chromium] › tests/e2e/artifact-parse-diagnostics.spec.js:428:1 › artifact parse diagnostics demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  13 [chromium] › tests/e2e/artifact-parse-diagnostics.spec.js:345:1 › artifact parse diagnostics demo covers empty/loading/error/success with reason, counters, issues, recommendations, dlq and actions (2.5s)
+  ✓  16 [chromium] › tests/e2e/artifact-risk-annotations.spec.js:486:1 › artifact risk annotations demo remains readable without horizontal overflow on mobile/tablet/desktop (1.8s)
+  ✓  15 [chromium] › tests/e2e/artifact-risk-annotations.spec.js:403:1 › artifact risk annotations demo covers empty/loading/error/success with reason, counters, tags, annotations, catalog and actions (2.5s)
+  ✓  18 [chromium] › tests/e2e/artifact-section-extractor.spec.js:409:1 › artifact section extractor demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  17 [chromium] › tests/e2e/artifact-section-extractor.spec.js:304:1 › artifact section extractor demo covers empty/loading/error/success with explicit reason, section counters and correctiveActions (3.8s)
+  ✓  19 [chromium] › tests/e2e/artifact-staleness-indicator.spec.js:337:1 › artifact staleness demo covers empty/loading/error/success with reason, counters, stale badges and actions (2.5s)
+  ✓  20 [chromium] › tests/e2e/artifact-staleness-indicator.spec.js:417:1 › artifact staleness demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  22 [chromium] › tests/e2e/artifact-table-indexer.spec.js:475:1 › artifact table indexer demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  21 [chromium] › tests/e2e/artifact-table-indexer.spec.js:360:1 › artifact table indexer demo covers empty/loading/error/success with explicit reason, counters and correctiveActions (4.3s)
+  ✓  23 [chromium] › tests/e2e/artifact-version-diff.spec.js:318:1 › artifact version diff demo covers empty/loading/error/success with reason, counters, diff, provenance and actions (2.1s)
+  ✓  24 [chromium] › tests/e2e/artifact-version-diff.spec.js:388:1 › artifact version diff demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  25 [chromium] › tests/e2e/done-transition-guard.spec.js:279:1 › done transition guard demo covers empty/loading/error/success with reason, counters, doneTransition and actions (2.0s)
+  ✓  26 [chromium] › tests/e2e/done-transition-guard.spec.js:348:1 › done transition guard demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  27 [chromium] › tests/e2e/g4-dual-evaluation.spec.js:353:1 › g4 dual demo covers empty/loading/error/success with reason, counters, verdict, matrix and actions (2.0s)
+  ✓  28 [chromium] › tests/e2e/g4-dual-evaluation.spec.js:425:1 › g4 dual demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  30 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on mobile (644ms)
+  ✓  31 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on tablet (696ms)
+  ✓  29 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:240:1 › g4 ux evidence bridge demo covers empty/loading/error/success with gate and G4 correlation outputs (2.0s)
+  ✓  32 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on desktop (716ms)
+  ✓  34 [chromium] › tests/e2e/gate-center-status.spec.js:527:1 › gate center demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  33 [chromium] › tests/e2e/gate-center-status.spec.js:443:1 › gate center demo covers empty/loading/error/success with counters, gates, subgates and actions (2.5s)
+  ✓  36 [chromium] › tests/e2e/gate-concerns-actions.spec.js:469:1 › concerns actions demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  35 [chromium] › tests/e2e/gate-concerns-actions.spec.js:380:1 › concerns actions demo covers empty/loading/error/success and required output fields (2.9s)
+  ✓  37 [chromium] › tests/e2e/gate-policy-versioning.spec.js:327:1 › policy versioning demo covers empty/loading/error/success with policy and simulation fields (2.5s)
+  ✓  38 [chromium] › tests/e2e/gate-policy-versioning.spec.js:401:1 › policy versioning demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  40 [chromium] › tests/e2e/gate-pre-submit-simulation.spec.js:301:3 › pre-submit simulation demo stays readable on mobile (635ms)
+  ✓  41 [chromium] › tests/e2e/gate-pre-submit-simulation.spec.js:301:3 › pre-submit simulation demo stays readable on tablet (650ms)
+  ✓  39 [chromium] › tests/e2e/gate-pre-submit-simulation.spec.js:239:1 › pre-submit simulation demo covers empty/loading/error/success and S032 fields (2.1s)
+  ✓  42 [chromium] › tests/e2e/gate-pre-submit-simulation.spec.js:301:3 › pre-submit simulation demo stays readable on desktop (790ms)
+  ✓  44 [chromium] › tests/e2e/gate-primary-evidence-validator.spec.js:397:1 › primary evidence validator demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  43 [chromium] › tests/e2e/gate-primary-evidence-validator.spec.js:315:1 › primary evidence validator demo covers empty/loading/error/success and required fields (2.6s)
+  ✓  46 [chromium] › tests/e2e/gate-report-export.spec.js:303:3 › gate report export demo remains readable without horizontal overflow on mobile (664ms)
+  ✓  45 [chromium] › tests/e2e/gate-report-export.spec.js:245:1 › gate report export demo covers empty/loading/error/success with gate+evidence+actions output (2.0s)
+  ✓  47 [chromium] › tests/e2e/gate-report-export.spec.js:303:3 › gate report export demo remains readable without horizontal overflow on tablet (660ms)
+  ✓  48 [chromium] › tests/e2e/gate-report-export.spec.js:303:3 › gate report export demo remains readable without horizontal overflow on desktop (725ms)
+  ✓  49 [chromium] › tests/e2e/gate-verdict-calculator.spec.js:315:1 › gate verdict demo covers empty/loading/error/success with reason, counters, verdict, canMarkDone, factors and actions (2.0s)
+  ✓  50 [chromium] › tests/e2e/gate-verdict-calculator.spec.js:386:1 › gate verdict demo remains readable without horizontal overflow on mobile/tablet/desktop (1.6s)
+  ✓  52 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on mobile (635ms)
+  ✓  53 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on tablet (670ms)
+  ✓  51 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:236:1 › verdict trends table demo covers empty/loading/error/success with export context (1.5s)
+  ✓  54 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on desktop (717ms)
+  ✓  55 [chromium] › tests/e2e/normalize-user-name.spec.js:92:1 › normalize user name flow covers empty/loading/error/success states (1.1s)
+  ✓  57 [chromium] › tests/e2e/phase-dependency-matrix.spec.js:545:1 › phase dependency matrix demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  56 [chromium] › tests/e2e/phase-dependency-matrix.spec.js:437:1 › phase dependency matrix demo covers empty/loading/error/success with explicit reason, owner, blockers and corrective actions (3.4s)
+  ✓  58 [chromium] › tests/e2e/phase-gate-governance-journal.spec.js:349:1 › phase gate governance journal demo covers empty/loading/error/success with explicit reason and decisions (2.0s)
+  ✓  59 [chromium] › tests/e2e/phase-gate-governance-journal.spec.js:426:1 › phase gate governance journal demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  60 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:272:1 › phase guards demo covers empty/loading/error/success with explicit reason, plan and failure diagnostics (1.6s)
+  ✓  61 [chromium] › tests/e2e/phase-guards-orchestrator.spec.js:335:1 › phase guards demo keeps rendered content without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  62 [chromium] › tests/e2e/phase-prerequisites-validator.spec.js:237:1 › phase prerequisites demo covers empty/loading/error/success with explicit blocking reason and missing list (2.0s)
+  ✓  63 [chromium] › tests/e2e/phase-prerequisites-validator.spec.js:299:1 › phase prerequisites demo keeps success rendering without horizontal overflow on mobile/tablet/desktop (1.6s)
+  ✓  65 [chromium] › tests/e2e/phase-progression-alert.spec.js:503:1 › phase progression alert demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  64 [chromium] › tests/e2e/phase-progression-alert.spec.js:386:1 › phase progression alert demo covers empty/loading/error/success and explicit alert context (3.5s)
+  ✓  66 [chromium] › tests/e2e/phase-sla-alert.spec.js:274:1 › phase SLA alert demo covers empty/loading/error/success with reason, severity and correctiveActions (2.1s)
+  ✓  67 [chromium] › tests/e2e/phase-sla-alert.spec.js:345:1 › phase SLA alert demo remains readable without horizontal overflow on mobile/tablet/desktop (1.6s)
+  ✓  68 [chromium] › tests/e2e/phase-state-projection.spec.js:302:1 › phase state projection demo covers empty/loading/error/success with FR-004/FR-005 fields (1.6s)
+  ✓  69 [chromium] › tests/e2e/phase-state-projection.spec.js:377:1 › phase state projection success payload stays without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  70 [chromium] › tests/e2e/phase-transition-history.spec.js:279:1 › transition history demo covers empty/loading/error/success with reason and history rows (2.0s)
+  ✓  71 [chromium] › tests/e2e/phase-transition-history.spec.js:346:1 › transition history demo stays readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  73 [chromium] › tests/e2e/phase-transition-override.spec.js:364:1 › phase transition override demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓  72 [chromium] › tests/e2e/phase-transition-override.spec.js:278:1 › phase transition override demo covers empty/loading/error/success with reason and override states (2.6s)
+  ✓  75 [chromium] › tests/e2e/smoke.spec.js:3:1 › basic app smoke on data URL (181ms)
+  ✓  74 [chromium] › tests/e2e/phase-transition-validator.spec.js:129:1 › phase transition demo covers empty/loading/error/success and shows blocking reason (1.5s)
+
+  75 passed (1.2m)
+▶ edge-case tests
+
+> bmad-total-app@0.1.0 test:edge
+> vitest run tests/edge
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/edge/artifact-table-indexer.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-fulltext-search.edge.test.js [2m([22m[2m25 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-policy-versioning.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m21 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-section-extractor.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-context-filter.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-evidence-graph.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-dual-evaluation.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-version-diff.edge.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-staleness-indicator.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-gate-governance-journal.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-parse-diagnostics.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-verdict-calculator.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-risk-annotations.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/edge/done-transition-guard.edge.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-concerns-actions.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-primary-evidence-validator.edge.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-dependency-matrix.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-corpus-backfill.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-metadata-validator.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-ingestion-pipeline.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-progression-alert.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m22 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-override.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-report-export.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-pre-submit-simulation.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-verdict-trends-table.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-ux-evidence-bridge.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-simulation-trends.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m35 passed[39m[22m[90m (35)[39m
+[2m      Tests [22m [1m[32m491 passed[39m[22m[90m (491)[39m
+[2m   Start at [22m 15:56:07
+[2m   Duration [22m 2.48s[2m (transform 970ms, setup 0ms, import 2.08s, tests 678ms, environment 5ms)[22m
+
+▶ coverage tests
+
+> bmad-total-app@0.1.0 test:coverage
+> vitest run --coverage
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/unit/artifact-version-diff.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 87[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-table-indexer.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 113[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-policy-versioning.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 125[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-verdict-calculator.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 70[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-fulltext-search.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-section-extractor.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 64[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-context-filter.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-primary-evidence-validator.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-corpus-backfill.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 54[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-staleness-indicator.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-concerns-actions.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-evidence-graph.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-fulltext-search.edge.test.js [2m([22m[2m25 tests[22m[2m)[22m[32m 43[2mms[22m[39m
+ [32m✓[39m tests/unit/done-transition-guard.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-risk-annotations.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 48[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-table-indexer.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-policy-versioning.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-parse-diagnostics.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-dual-evaluation.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-dual-evaluation.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 53[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-ingestion-pipeline.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-context-filter.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-metadata-validator.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-version-diff.edge.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-metadata-validator.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-section-extractor.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-staleness-indicator.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-gate-governance-journal.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-risk-annotations.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-verdict-calculator.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m21 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-evidence-graph.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-corpus-backfill.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-history.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-parse-diagnostics.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-concerns-actions.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-primary-evidence-validator.edge.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-gate-governance-journal.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/edge/done-transition-guard.edge.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-dependency-matrix.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-guards-orchestrator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-dependency-matrix.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-ingestion-pipeline.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-progression-alert.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-state-projection.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m22 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-progression-alert.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-override.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-pre-submit-simulation.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-override.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-simulation-trends.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-report-export.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-pre-submit-simulation.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-sla-alert.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-prerequisites-validator.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-ux-evidence-bridge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-verdict-trends-table.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-validator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-verdict-trends-table.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-simulation-trends.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-report-export.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-ux-evidence-bridge.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/core.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m70 passed[39m[22m[90m (70)[39m
+[2m      Tests [22m [1m[32m835 passed[39m[22m[90m (835)[39m
+[2m   Start at [22m 15:56:10
+[2m   Duration [22m 7.34s[2m (transform 1.21s, setup 0ms, import 6.34s, tests 1.99s, environment 11ms)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   98.04 |    93.78 |   99.17 |   98.08 |                   
+ ...text-filter.js |   99.63 |    98.29 |     100 |   99.62 | 471               
+ ...us-backfill.js |   99.72 |    98.22 |     100 |   99.71 | 521               
+ ...dence-graph.js |    98.8 |    97.79 |     100 |   98.73 | 486,496,504       
+ ...text-search.js |   98.97 |    98.57 |     100 |   98.92 | 363,369,375,381   
+ ...on-pipeline.js |     100 |      100 |     100 |     100 |                   
+ ...a-validator.js |   98.51 |    95.21 |     100 |   98.45 | ...,706,1000,1004 
+ ...diagnostics.js |   99.48 |    99.41 |   97.56 |     100 | 612               
+ ...annotations.js |   99.13 |    95.88 |     100 |   99.08 | 186,218,253       
+ ...n-extractor.js |    99.3 |    97.92 |     100 |   99.26 | 95,602            
+ ...s-indicator.js |   99.65 |    98.85 |     100 |   99.64 | 837               
+ ...ble-indexer.js |   99.13 |    96.99 |     100 |   99.09 | 632,647-648       
+ ...ersion-diff.js |   99.35 |    96.03 |     100 |   99.31 | 663-670           
+ core.js           |     100 |      100 |     100 |     100 |                   
+ ...ition-guard.js |   99.34 |    96.06 |      96 |     100 | ...22,296,348,496 
+ ...-evaluation.js |   98.29 |    95.43 |     100 |   98.23 | 219,397,539,736   
+ ...ence-bridge.js |   85.64 |    59.24 |     100 |   85.41 | ...51,464,505,539 
+ ...nter-status.js |   99.31 |     99.2 |     100 |   99.28 | 210,675           
+ ...rns-actions.js |   99.49 |    95.75 |   96.55 |     100 | ...69,474,530,563 
+ ...-versioning.js |   99.05 |    98.14 |   96.87 |   99.51 | 684               
+ ...-simulation.js |   97.26 |    91.66 |     100 |   97.15 | ...57,380-382,412 
+ ...e-validator.js |   98.91 |    98.31 |   96.29 |   99.44 | 234               
+ ...port-export.js |   85.92 |    57.81 |     100 |   85.71 | ...76,576,628,670 
+ ...tion-trends.js |   91.16 |    78.09 |    93.1 |    91.9 | ...55,332,356,511 
+ ...-calculator.js |   99.17 |    99.21 |   97.36 |   99.57 | 742               
+ ...rends-table.js |   85.27 |    69.63 |   93.33 |   85.05 | ...42,357,377,414 
+ index.js          |       0 |        0 |       0 |       0 |                   
+ ...ency-matrix.js |   99.64 |    99.23 |     100 |   99.63 | 106               
+ ...nce-journal.js |     100 |     96.3 |     100 |     100 | ...66,754,761,797 
+ ...rchestrator.js |     100 |      100 |     100 |     100 |                   
+ ...s-validator.js |    98.8 |    97.59 |     100 |   98.79 | 48                
+ ...ssion-alert.js |    99.6 |    95.96 |     100 |    99.6 | 98                
+ ...e-sla-alert.js |     100 |    97.05 |     100 |     100 | 57,63,106,366     
+ ...-projection.js |   99.32 |    97.91 |     100 |   99.32 | 245               
+ ...ion-history.js |     100 |    97.53 |     100 |     100 | 81,166,330,359    
+ ...on-override.js |   99.25 |    98.57 |     100 |   99.24 | 96                
+ ...n-validator.js |   97.36 |    95.34 |     100 |   97.36 | 16                
+-------------------|---------|----------|---------|---------|-------------------
+✅ Coverage lines: 98.08% >= 85%
+✅ Coverage statements: 98.04% >= 85%
+✅ Coverage functions: 99.17% >= 85%
+✅ Coverage branches: 93.78% >= 85%
+✅ COVERAGE_THRESHOLD_OK
+found 0 vulnerabilities
+✅ SECURITY_SCAN_OK
+▶ build
+
+> bmad-total-app@0.1.0 build
+> node ./scripts/build.mjs
+
+✅ Build OK
+✅ QUALITY_GATES_OK
+▶ ux gates
+✅ UX_GATES_OK (S036) design=93 D2=96
+✅ STORY_GATES_OK (S036)

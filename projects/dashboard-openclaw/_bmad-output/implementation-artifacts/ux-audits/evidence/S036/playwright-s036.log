@@ -1,0 +1,9 @@
+
+Running 4 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/gate-center-status.spec.js:527:1 › gate center demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  2 [chromium] › tests/e2e/gate-center-status.spec.js:443:1 › gate center demo covers empty/loading/error/success with counters, gates, subgates and actions (2.7s)
+  ✓  3 [chromium] › tests/e2e/phase-gate-governance-journal.spec.js:349:1 › phase gate governance journal demo covers empty/loading/error/success with explicit reason and decisions (2.2s)
+  ✓  4 [chromium] › tests/e2e/phase-gate-governance-journal.spec.js:426:1 › phase gate governance journal demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+
+  4 passed (5.8s)

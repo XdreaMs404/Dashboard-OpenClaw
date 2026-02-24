@@ -1,10 +1,11 @@
 # Runtime story log — S035
 
-- Dernière mise à jour: **2026-02-24 13:16:33 UTC**
+- Dernière mise à jour: **2026-02-24 13:19:30 UTC**
 - Étape courante: **uxqa** (bmad-ux-qa)
 - Return-to-step: **-**
-- Temps écoulé total: **50.31 min**
-- Résultat checkpoint: **ALERT45_SET**
+- Temps écoulé total: **53.26 min**
+- Résultat checkpoint: **CHECKPOINT_CLEARED**
+- Note: **Checkpoint supprimé après transition story.**
 
 ## Durée cumulée par étape (agents)
 
@@ -12,7 +13,7 @@
 |---|---|---:|---:|---:|
 | pm | bmad-pm | 2.1 | 1 | 0 |
 | dev | bmad-dev | 47.75 | 1 | 0 |
-| uxqa | bmad-ux-qa | 0.45 | 1 | 0 |
+| uxqa | bmad-ux-qa | 3.4 | 1 | 0 |
 | tea | bmad-tea | 0.0 | 0 | 0 |
 | reviewer | bmad-reviewer | 0.0 | 0 | 0 |
 | techwriter | bmad-tech-writer | 0.0 | 0 | 0 |
@@ -24,7 +25,7 @@
 |---:|---|---|---|---|---:|
 | 1 | pm | bmad-pm | 2026-02-24 12:26:14 UTC | 2026-02-24 12:28:20 UTC | 2.1 |
 | 2 | dev | bmad-dev | 2026-02-24 12:28:20 UTC | 2026-02-24 13:16:06 UTC | 47.75 |
-| 3 | uxqa | bmad-ux-qa | 2026-02-24 13:16:06 UTC | 2026-02-24 13:16:33 UTC | 0.45 |
+| 3 | uxqa | bmad-ux-qa | 2026-02-24 13:16:06 UTC | 2026-02-24 13:19:30 UTC | 3.4 |
 
 ## Blocages détectés
 
@@ -71,3 +72,4 @@
 | 2026-02-24 13:16:06 UTC | reset-attempt | dev | uxqa → uxqa | - | 0/0/0/0/0/0 |
 | 2026-02-24 13:16:06 UTC | activate | checkpoint activated | uxqa → uxqa | - | 0/0/0/0/0/0 |
 | 2026-02-24 13:16:33 UTC | set-alert | 45 | uxqa → uxqa | - | 0/0/0/0/0/0 |
+| 2026-02-24 13:19:30 UTC | clear | checkpoint cleared | uxqa → uxqa | - | 0/0/0/0/0/0 |
