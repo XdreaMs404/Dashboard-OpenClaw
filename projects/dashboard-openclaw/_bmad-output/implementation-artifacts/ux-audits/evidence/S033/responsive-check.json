@@ -1,0 +1,24 @@
+{
+  "storyId": "S033",
+  "viewports": [
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "tablet",
+      "width": 820,
+      "height": 1180,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "desktop",
+      "width": 1366,
+      "height": 768,
+      "horizontalOverflow": false
+    }
+  ],
+  "updatedAt": "2026-02-24T11:20:31Z"
+}

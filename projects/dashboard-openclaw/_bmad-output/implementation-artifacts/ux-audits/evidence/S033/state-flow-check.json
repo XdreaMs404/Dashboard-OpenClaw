@@ -1,0 +1,17 @@
+{
+  "storyId": "S033",
+  "states": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "widgets": [
+    "reasonCode",
+    "diagnostics",
+    "totals",
+    "rows",
+    "reportExport"
+  ],
+  "updatedAt": "2026-02-24T11:20:31Z"
+}

@@ -1,0 +1,9 @@
+
+Running 4 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on mobile (819ms)
+  ✓  1 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:236:1 › verdict trends table demo covers empty/loading/error/success with export context (1.4s)
+  ✓  3 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on tablet (721ms)
+  ✓  4 [chromium] › tests/e2e/gate-verdict-trends-table.spec.js:294:3 › verdict trends table demo remains readable without horizontal overflow on desktop (730ms)
+
+  4 passed (3.7s)
