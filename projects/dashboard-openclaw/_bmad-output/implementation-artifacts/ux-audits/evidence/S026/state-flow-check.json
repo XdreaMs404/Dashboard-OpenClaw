@@ -1,0 +1,98 @@
+{
+  "storyId": "S026",
+  "runAt": "2026-02-24T00:49:43.175Z",
+  "statesSeen": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "traces": [
+    {
+      "scenario": "invalid-input",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "INVALID_G4_DUAL_INPUT",
+      "expectedReasonCode": "INVALID_G4_DUAL_INPUT",
+      "reason": "Aucune source exploitable: fournir gateCenterResult ou gateCenterInput.",
+      "counts": "g4t=— | g4ux=— | dual=— | mismatch=0 | p95=0 | source=INVALID_G4_DUAL_INPUT",
+      "dualVerdict": null,
+      "subGates": [
+        "undefined => status=null owner=null evidence=0",
+        "undefined => status=null owner=null evidence=0"
+      ],
+      "matrix": [
+        "—"
+      ],
+      "correctiveActions": [
+        "FIX_G4_DUAL_INPUT"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "blocked-upstream",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "GATE_STATUS_INCOMPLETE",
+      "expectedReasonCode": "GATE_STATUS_INCOMPLETE",
+      "reason": "Gate metadata incomplète.",
+      "counts": "g4t=— | g4ux=— | dual=— | mismatch=0 | p95=0 | source=GATE_STATUS_INCOMPLETE",
+      "dualVerdict": null,
+      "subGates": [
+        "undefined => status=null owner=null evidence=0",
+        "undefined => status=null owner=null evidence=0"
+      ],
+      "matrix": [
+        "—"
+      ],
+      "correctiveActions": [
+        "COMPLETE_GATE_STATUS_FIELDS"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "unsync",
+      "finalState": "error",
+      "expectedState": "error",
+      "reasonCode": "G4_SUBGATES_UNSYNC",
+      "expectedReasonCode": "G4_SUBGATES_UNSYNC",
+      "reason": "Décalage horodatage G4-T/G4-UX=1201000ms (> 5000ms). Décalage horodatage G4/global=1203000ms (> 5000ms).",
+      "counts": "g4t=PASS | g4ux=PASS | dual=PASS | mismatch=2 | p95=1 | source=OK",
+      "dualVerdict": "PASS",
+      "subGates": [
+        "G4-T => status=PASS owner=owner-g4t evidence=2",
+        "G4-UX => status=PASS owner=owner-g4ux evidence=3"
+      ],
+      "matrix": [
+        "PASS/PASS => PASS (RULE-G4-01)"
+      ],
+      "correctiveActions": [
+        "BLOCK_DONE_TRANSITION",
+        "SYNC_G4_SUBGATES"
+      ],
+      "pass": true
+    },
+    {
+      "scenario": "success",
+      "finalState": "success",
+      "expectedState": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "reason": "Corrélation duale G4 évaluée: G4-T=PASS, G4-UX=PASS, verdict=PASS.",
+      "counts": "g4t=PASS | g4ux=PASS | dual=PASS | mismatch=0 | p95=0 | source=OK",
+      "dualVerdict": "PASS",
+      "subGates": [
+        "G4-T => status=PASS owner=owner-g4t evidence=2",
+        "G4-UX => status=PASS owner=owner-g4ux evidence=3"
+      ],
+      "matrix": [
+        "PASS/PASS => PASS (RULE-G4-01)"
+      ],
+      "correctiveActions": [
+        "—"
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
