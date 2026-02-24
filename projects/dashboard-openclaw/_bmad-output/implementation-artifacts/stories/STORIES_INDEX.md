@@ -28,7 +28,7 @@
 | S024 | E02 | Backfill historique + migration corpus existant | DONE |
 | S025 | E03 | Gate Center unifié avec statut et owner | DONE |
 | S026 | E03 | Évaluation duale G4-T/G4-UX corrélée | DONE |
-| S027 | E03 | Calculateur verdict PASS/CONCERNS/FAIL | TODO |
+| S027 | E03 | Calculateur verdict PASS/CONCERNS/FAIL | DONE |
 | S028 | E03 | Blocage DONE si sous-gate non PASS | TODO |
 | S029 | E03 | Validation preuve primaire obligatoire | TODO |
 | S030 | E03 | Création automatique actions CONCERNS | TODO |
