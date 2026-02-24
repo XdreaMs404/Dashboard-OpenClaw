@@ -574,6 +574,258 @@ describe('gate-center-status unit', () => {
     expect(result.diagnostics).toHaveProperty('sourceReasonCode');
   });
 
+  it('normalizes Date/invalid timestamps from gateSnapshots and guards non-finite clocks', () => {
+    const result = buildGateCenterStatus(
+      {
+        governanceDecisionResult: governanceDecisionResult(),
+        gateSnapshots: [
+          {
+            gateId: 'G1',
+            owner: 'owner-g1-date',
+            status: 'PASS',
+            updatedAt: new Date('2026-02-23T21:00:07.000Z')
+          },
+          {
+            gateId: 'G2',
+            owner: 'owner-g2-invalid-date',
+            status: 'PASS',
+            updatedAt: new Date('invalid-date')
+          },
+          {
+            gateId: 'G3',
+            owner: 'owner-g3-invalid-string',
+            status: 'PASS',
+            updatedAt: 'not-a-date'
+          }
+        ]
+      },
+      {
+        nowMs: () => Number.NaN
+      }
+    );
+
+    expect(result.reasonCode).toBe('OK');
+    expect(result.gateCenter.find((entry) => entry.gateId === 'G1')).toMatchObject({
+      owner: 'owner-g1-date'
+    });
+    expect(result.gateCenter.find((entry) => entry.gateId === 'G2')).toMatchObject({
+      owner: 'owner-g2'
+    });
+    expect(result.gateCenter.find((entry) => entry.gateId === 'G3')).toMatchObject({
+      owner: 'owner-g3'
+    });
+    expect(result.diagnostics.durationMs).toBe(0);
+    expect(result.diagnostics.p95BuildMs).toBe(0);
+  });
+
+  it('consumes decisionEntry when decisionHistory is omitted', () => {
+    const result = buildGateCenterStatus({
+      governanceDecisionResult: governanceDecisionResult({
+        decisionHistory: undefined,
+        decisionEntry: {
+          gateId: 'G1',
+          owner: 'owner-from-entry',
+          status: 'PASS',
+          reasonCode: 'OK',
+          updatedAt: '2026-02-23T21:00:00.000Z'
+        }
+      })
+    });
+
+    expect(result.reasonCode).toBe('GATE_STATUS_INCOMPLETE');
+    expect(result.gateCenter.find((entry) => entry.gateId === 'G1')).toMatchObject({
+      owner: 'owner-from-entry',
+      status: 'PASS'
+    });
+  });
+
+  it('covers merge precedence for older and timestamp-missing snapshots', () => {
+    const carryOver = governanceDecisionResult().decisionHistory.filter(
+      (entry) => !['G1', 'G2', 'G3'].includes(entry.gateId)
+    );
+
+    const result = buildGateCenterStatus({
+      governanceDecisionResult: governanceDecisionResult({
+        decisionHistory: [
+          {
+            gateId: 'G1',
+            owner: 'owner-g1-old',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T20:00:00.000Z'
+          },
+          {
+            gateId: 'G1',
+            owner: 'owner-g1-new',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:00.000Z'
+          },
+          {
+            gateId: 'G1',
+            owner: 'owner-g1-older',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T19:00:00.000Z'
+          },
+          {
+            gateId: 'G2',
+            owner: 'owner-g2-no-ts-start',
+            status: 'PASS',
+            reasonCode: 'OK'
+          },
+          {
+            gateId: 'G2',
+            owner: 'owner-g2-with-ts',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:01.000Z'
+          },
+          {
+            gateId: 'G2',
+            owner: 'owner-g2-no-ts-late',
+            status: 'PASS',
+            reasonCode: 'OK'
+          },
+          {
+            gateId: 'G3',
+            owner: 'owner-g3-no-ts-a',
+            status: 'PASS',
+            reasonCode: 'OK'
+          },
+          {
+            gateId: 'G3',
+            owner: 'owner-g3-no-ts-b',
+            status: 'PASS',
+            reasonCode: 'OK'
+          },
+          {
+            gateId: 'G3',
+            owner: 'owner-g3-with-ts-final',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:02.000Z'
+          },
+          ...carryOver
+        ]
+      })
+    });
+
+    expect(result.reasonCode).toBe('OK');
+    expect(result.gateCenter.find((entry) => entry.gateId === 'G1')).toMatchObject({
+      owner: 'owner-g1-new'
+    });
+    expect(result.gateCenter.find((entry) => entry.gateId === 'G2')).toMatchObject({
+      owner: 'owner-g2-with-ts'
+    });
+    expect(result.gateCenter.find((entry) => entry.gateId === 'G3')).toMatchObject({
+      owner: 'owner-g3-with-ts-final'
+    });
+  });
+
+  it('falls back to OK reason codes when PASS snapshots omit them', () => {
+    const decisionHistory = governanceDecisionResult().decisionHistory.map((entry) => {
+      if (entry.gateId !== 'G1') {
+        return entry;
+      }
+
+      return {
+        ...entry,
+        reasonCode: undefined,
+        sourceReasonCode: undefined
+      };
+    });
+
+    const result = buildGateCenterStatus({
+      governanceDecisionResult: governanceDecisionResult({
+        decisionHistory
+      })
+    });
+
+    expect(result.reasonCode).toBe('OK');
+    expect(result.gateCenter.find((entry) => entry.gateId === 'G1')).toMatchObject({
+      reasonCode: 'OK',
+      sourceReasonCode: 'OK'
+    });
+  });
+
+  it('reports invalid reasonCode as vide when governanceDecisionResult.reasonCode is blank', () => {
+    const result = buildGateCenterStatus({
+      governanceDecisionResult: {
+        allowed: true,
+        reasonCode: '   ',
+        diagnostics: {
+          sourceReasonCode: 'OK'
+        }
+      }
+    });
+
+    expect(result.reasonCode).toBe('INVALID_GATE_CENTER_INPUT');
+    expect(result.reason).toContain('vide');
+  });
+
+  it('keeps BLOCK_DONE_TRANSITION unique when already provided for G4 mismatch', () => {
+    const result = buildGateCenterStatus({
+      governanceDecisionResult: governanceDecisionResult({
+        decisionHistory: [
+          {
+            gateId: 'G1',
+            owner: 'owner-g1',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:00.000Z'
+          },
+          {
+            gateId: 'G2',
+            owner: 'owner-g2',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:01.000Z'
+          },
+          {
+            gateId: 'G3',
+            owner: 'owner-g3',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:02.000Z'
+          },
+          {
+            gateId: 'G4',
+            owner: 'owner-g4',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:03.000Z'
+          },
+          {
+            gateId: 'G5',
+            owner: 'owner-g5',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:04.000Z'
+          },
+          {
+            gateId: 'G4-T',
+            owner: 'owner-g4t',
+            status: 'PASS',
+            reasonCode: 'OK',
+            updatedAt: '2026-02-23T21:00:05.000Z'
+          },
+          {
+            gateId: 'G4-UX',
+            owner: 'owner-g4ux',
+            status: 'FAIL',
+            reasonCode: 'TRANSITION_NOT_ALLOWED',
+            updatedAt: '2026-02-23T21:00:06.000Z'
+          }
+        ]
+      }),
+      correctiveActions: ['ALIGN_G4_SUBGATES', 'BLOCK_DONE_TRANSITION']
+    });
+
+    expect(result.reasonCode).toBe('G4_SUBGATE_MISMATCH');
+    expect(result.correctiveActions.filter((action) => action === 'BLOCK_DONE_TRANSITION')).toHaveLength(1);
+  });
+
   it('meets performance thresholds on synthetic stream of 500 snapshots', () => {
     const gateIds = ['G1', 'G2', 'G3', 'G4', 'G5', 'G4-T', 'G4-UX'];
 

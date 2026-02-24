@@ -460,7 +460,7 @@ function normalizeGateSnapshot(rawSnapshot, label) {
   const sourceReasonCode =
     normalizeReasonCode(rawSnapshot.sourceReasonCode) ??
     reasonCode ??
-    (status === 'PASS' ? 'OK' : 'INVALID_GOVERNANCE_DECISION_INPUT');
+    'INVALID_GOVERNANCE_DECISION_INPUT';
 
   return {
     valid: true,
@@ -541,13 +541,20 @@ function isSnapshotNewer(candidate, current) {
     return true;
   }
 
-  const candidateMs = Number(candidate.updatedAtMs);
-  const currentMs = Number(current.updatedAtMs);
-  const candidateHasTs = Number.isFinite(candidateMs);
-  const currentHasTs = Number.isFinite(currentMs);
+  const candidateMsRaw = Number(candidate.updatedAtMs);
+  const currentMsRaw = Number(current.updatedAtMs);
+
+  const candidateHasTs =
+    candidate.updatedAtMs !== null &&
+    candidate.updatedAtMs !== undefined &&
+    Number.isFinite(candidateMsRaw);
+  const currentHasTs =
+    current.updatedAtMs !== null &&
+    current.updatedAtMs !== undefined &&
+    Number.isFinite(currentMsRaw);
 
   if (candidateHasTs && currentHasTs) {
-    return candidateMs >= currentMs;
+    return candidateMsRaw >= currentMsRaw;
   }
 
   if (candidateHasTs && !currentHasTs) {

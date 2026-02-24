@@ -49,11 +49,11 @@
 
 ## Couverture S025
 - `app/src/gate-center-status.js`:
-  - **96.91% statements**
-  - **91.09% branches**
+  - **99.31% statements**
+  - **99.20% branches**
   - **100% functions**
-  - **96.77% lines**
-- Seuil story S025 atteint pour ce module (>=95 lignes). Branche >=85 global app respectée.
+  - **99.28% lines**
+- Seuil story S025 validé pour ce module (`>=95% lignes` et `>=95% branches`).
 
 ## Mapping AC S025 -> tests
 - AC-01..AC-10 (fonctionnel/erreurs/perf):

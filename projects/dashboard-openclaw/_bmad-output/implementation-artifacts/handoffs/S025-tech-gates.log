@@ -1,55 +1,62 @@
+$ npm run lint
 
 > bmad-total-app@0.1.0 lint
 > node ./scripts/lint.mjs
 
 ✅ Lint OK
+$ npm run typecheck
 
 > bmad-total-app@0.1.0 typecheck
 > node ./scripts/typecheck.mjs
 
 ✅ Typecheck (syntax) OK
+$ npx vitest run tests/unit/gate-center-status.test.js tests/edge/gate-center-status.edge.test.js
 
 [1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
 
- [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 29[2mms[22m[39m
- [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 33[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
-[2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
-[2m   Start at [22m 23:41:37
-[2m   Duration [22m 504ms[2m (transform 334ms, setup 0ms, import 489ms, tests 62ms, environment 0ms)[22m
+[2m      Tests [22m [1m[32m31 passed[39m[22m[90m (31)[39m
+[2m   Start at [22m 23:58:40
+[2m   Duration [22m 508ms[2m (transform 382ms, setup 0ms, import 529ms, tests 74ms, environment 0ms)[22m
 
+$ npx playwright test tests/e2e/gate-center-status.spec.js
 
 Running 2 tests using 2 workers
 
-  ✓  1 [chromium] › tests/e2e/gate-center-status.spec.js:527:1 › gate center demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
-  ✓  2 [chromium] › tests/e2e/gate-center-status.spec.js:443:1 › gate center demo covers empty/loading/error/success with counters, gates, subgates and actions (2.7s)
+  ✓  2 [chromium] › tests/e2e/gate-center-status.spec.js:527:1 › gate center demo remains readable without horizontal overflow on mobile/tablet/desktop (1.9s)
+  ✓  1 [chromium] › tests/e2e/gate-center-status.spec.js:443:1 › gate center demo covers empty/loading/error/success with counters, gates, subgates and actions (2.7s)
 
-  2 passed (4.1s)
+  2 passed (4.2s)
+$ npx vitest run tests/unit/gate-center-status.test.js tests/edge/gate-center-status.edge.test.js --coverage --coverage.include=src/gate-center-status.js --coverage.reporter=text --coverage.reporter=json-summary
 
 [1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
       [2mCoverage enabled with [22m[33mv8[39m
 
- [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 30[2mms[22m[39m
- [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 36[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
-[2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
-[2m   Start at [22m 23:41:44
-[2m   Duration [22m 648ms[2m (transform 363ms, setup 0ms, import 514ms, tests 70ms, environment 0ms)[22m
+[2m      Tests [22m [1m[32m31 passed[39m[22m[90m (31)[39m
+[2m   Start at [22m 23:58:47
+[2m   Duration [22m 625ms[2m (transform 382ms, setup 0ms, import 510ms, tests 63ms, environment 0ms)[22m
 
 [34m % [39m[2mCoverage report from [22m[33mv8[39m
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   96.91 |    91.09 |     100 |   96.77 |                   
- ...nter-status.js |   96.91 |    91.09 |     100 |   96.77 | ...10,553-561,668 
+All files          |   99.31 |     99.2 |     100 |   99.28 |                   
+ ...nter-status.js |   99.31 |     99.2 |     100 |   99.28 | 210,675           
 -------------------|---------|----------|---------|---------|-------------------
+$ npm run build
 
 > bmad-total-app@0.1.0 build
 > node ./scripts/build.mjs
 
 ✅ Build OK
+$ npm run security:deps
 
 > bmad-total-app@0.1.0 security:deps
 > npm audit --audit-level=high
@@ -57,8 +64,8 @@ All files          |   96.91 |    91.09 |     100 |   96.77 |
 found 0 vulnerabilities
 ✅ S025_TECH_GATES_OK
 
-[TEA checkpoint 2026-02-23T23:42:00Z]
+[TEA checkpoint 2026-02-23T23:58:48Z]
 Coverage gate evaluation (module S025):
-- app/src/gate-center-status.js: 96.77% lines / 91.09% branches
+- app/src/gate-center-status.js: 99.28% lines / 99.20% branches
 - Required threshold (story S025 AC-10): >=95% lines and >=95% branches
-❌ S025_MODULE_COVERAGE_GATE_FAILED
+✅ S025_MODULE_COVERAGE_GATE_OK
