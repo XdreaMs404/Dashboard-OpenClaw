@@ -38,7 +38,7 @@
 | S034 | E03 | Export rapport gate (verdict+preuves+actions) | DONE |
 | S035 | E03 | Pont d’ingestion des preuves UX vers G4-UX | DONE |
 | S036 | E03 | Gouvernance des exceptions de gate | DONE |
-| S037 | E04 | Catalogue commandes allowlist versionné | TODO |
+| S037 | E04 | Catalogue commandes allowlist versionné | DONE |
 | S038 | E04 | Dry-run by default pour toute commande write | TODO |
 | S039 | E04 | Preview d’impact fichiers avant apply | TODO |
 | S040 | E04 | Double confirmation pour actions destructives | TODO |
