@@ -1,17 +1,18 @@
 # Runtime story log — S028
 
-- Dernière mise à jour: **2026-02-24 02:16:06 UTC**
+- Dernière mise à jour: **2026-02-24 02:56:48 UTC**
 - Étape courante: **dev** (bmad-dev)
 - Return-to-step: **-**
-- Temps écoulé total: **22.34 min**
-- Résultat checkpoint: **ACTIVATE**
+- Temps écoulé total: **63.04 min**
+- Résultat checkpoint: **CHECKPOINT_CLEARED**
+- Note: **Checkpoint supprimé après transition story.**
 
 ## Durée cumulée par étape (agents)
 
 | Étape | Agent | Durée cumulée (min) | Passages | Attempts |
 |---|---|---:|---:|---:|
 | pm | bmad-pm | 6.7 | 1 | 0 |
-| dev | bmad-dev | 15.64 | 1 | 0 |
+| dev | bmad-dev | 56.34 | 1 | 0 |
 | uxqa | bmad-ux-qa | 0.0 | 0 | 0 |
 | tea | bmad-tea | 0.0 | 0 | 0 |
 | reviewer | bmad-reviewer | 0.0 | 0 | 0 |
@@ -23,7 +24,7 @@
 | # | Étape | Agent | Début | Fin | Durée (min) |
 |---:|---|---|---|---|---:|
 | 1 | pm | bmad-pm | 2026-02-24 01:53:45 UTC | 2026-02-24 02:00:27 UTC | 6.7 |
-| 2 | dev | bmad-dev | 2026-02-24 02:00:27 UTC | 2026-02-24 02:16:06 UTC | 15.64 |
+| 2 | dev | bmad-dev | 2026-02-24 02:00:27 UTC | 2026-02-24 02:56:48 UTC | 56.34 |
 
 ## Blocages détectés
 
@@ -48,3 +49,4 @@ Aucun blocage détecté dans l'historique checkpoint.
 | 2026-02-24 02:04:07 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
 | 2026-02-24 02:10:02 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
 | 2026-02-24 02:16:06 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-02-24 02:56:48 UTC | clear | checkpoint cleared | dev → dev | - | 0/0/0/0/0/0 |

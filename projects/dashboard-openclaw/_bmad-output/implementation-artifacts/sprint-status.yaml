@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-24T02:56:37Z"
+updated_at_utc: "2026-02-24T03:57:25Z"
 
 development_status:
   epic-1: done
@@ -40,7 +40,7 @@ development_status:
   3-26-evaluation-duale-g4-t-g4-ux-correlee: done
   3-27-calculateur-verdict-pass-concerns-fail: done
   3-28-blocage-done-si-sous-gate-non-pass: done
-  3-29-validation-preuve-primaire-obligatoire: backlog
+  3-29-validation-preuve-primaire-obligatoire: done
   3-30-creation-automatique-actions-concerns: backlog
   3-31-versioning-des-policies-de-gate: backlog
   3-32-simulation-de-verdict-pre-soumission: backlog
