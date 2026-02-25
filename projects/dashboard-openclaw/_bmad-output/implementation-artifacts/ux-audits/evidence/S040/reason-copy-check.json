@@ -1,0 +1,33 @@
+{
+  "storyId": "S040",
+  "checks": [
+    {
+      "expectedCode": "ROLE_PERMISSION_REQUIRED",
+      "reasonCode": "ROLE_PERMISSION_REQUIRED",
+      "reason": "Rôle non autorisé pour commande story.patch.",
+      "correctiveActions": [
+        "ENFORCE_ROLE_POLICY"
+      ],
+      "executionGuard": null
+    },
+    {
+      "expectedCode": "DOUBLE_CONFIRMATION_REQUIRED",
+      "reasonCode": "DOUBLE_CONFIRMATION_REQUIRED",
+      "reason": "Double confirmation requise pour action critique runtime.kill.",
+      "correctiveActions": [
+        "ENFORCE_DOUBLE_CONFIRMATION"
+      ],
+      "executionGuard": null
+    },
+    {
+      "expectedCode": "DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED",
+      "reasonCode": "DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED",
+      "reason": "Les deux confirmateurs doivent être distincts pour runtime.kill.",
+      "correctiveActions": [
+        "ENFORCE_DISTINCT_CONFIRMERS"
+      ],
+      "executionGuard": null
+    }
+  ],
+  "status": "validated"
+}

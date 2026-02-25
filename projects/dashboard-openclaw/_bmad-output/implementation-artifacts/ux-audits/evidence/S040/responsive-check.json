@@ -1,0 +1,11 @@
+{
+  "storyId": "S040",
+  "viewports": [
+    "mobile-390x844",
+    "tablet-768x1024",
+    "desktop-1440x900"
+  ],
+  "horizontalOverflow": false,
+  "status": "validated",
+  "source": "tests/e2e/command-allowlist-catalog.spec.js"
+}
