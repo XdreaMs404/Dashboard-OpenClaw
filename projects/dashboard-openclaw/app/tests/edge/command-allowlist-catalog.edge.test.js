@@ -3,13 +3,24 @@ import { buildCommandAllowlistCatalog } from '../../src/command-allowlist-catalo
 
 function buildBaseInput() {
   return {
-    catalogVersion: '2026.02.24-edge',
+    catalogVersion: '2026.02.25-edge-s040',
     commands: [
       {
         id: 'status.read',
         command: 'openclaw status',
         mode: 'READ',
         parameters: [{ name: 'verbose', type: 'boolean', required: false }]
+      },
+      {
+        id: 'story.patch',
+        command: 'bash scripts/update-story-status.sh',
+        mode: 'WRITE',
+        allowedRoles: ['DEV', 'TEA'],
+        impactFiles: ['/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S040.md'],
+        parameters: [
+          { name: 'sid', type: 'string', required: true },
+          { name: 'status', type: 'string', required: true, enum: ['OPEN', 'DONE'] }
+        ]
       },
       {
         id: 'runtime.kill',
@@ -108,7 +119,7 @@ describe('command-allowlist-catalog edge', () => {
           dryRun: false,
           role: 'DEV',
           impactFiles: ['/etc/passwd'],
-          args: { sid: 'S038', status: 'DONE' }
+          args: { sid: 'S040', status: 'DONE' }
         }
       ]
     };
@@ -124,6 +135,85 @@ describe('command-allowlist-catalog edge', () => {
       files: ['/etc/passwd'],
       allInsideActiveProjectRoot: false
     });
+  });
+
+  it('blocks write command when role is not allowed (FR-037)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'story.patch',
+        dryRun: true,
+        role: 'UXQA',
+        args: { sid: 'S040', status: 'OPEN' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('ROLE_PERMISSION_REQUIRED');
+  });
+
+  it('blocks destructive critical command without double confirmation (FR-036)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('DOUBLE_CONFIRMATION_REQUIRED');
+  });
+
+  it('blocks destructive critical command when confirmations are not distinct (FR-036)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'alex.dev'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED');
+  });
+
+  it('accepts destructive critical command when role + double confirmation are valid', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S040-EDGE-001'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+    expect(result.executionGuard.doubleConfirmationReady).toBe(true);
+    expect(result.executionGuard.rolePolicyCompliant).toBe(true);
   });
 
   it('rejects enum mismatch in command arguments', () => {
@@ -145,7 +235,7 @@ describe('command-allowlist-catalog edge', () => {
           commandId: 'story.patch',
           dryRun: true,
           role: 'DEV',
-          args: { sid: 'S037', status: 'IN_PROGRESS' }
+          args: { sid: 'S040', status: 'IN_PROGRESS' }
         }
       ]
     };

@@ -41,7 +41,7 @@
 | S037 | E04 | Catalogue commandes allowlist versionné | DONE |
 | S038 | E04 | Dry-run by default pour toute commande write | DONE |
 | S039 | E04 | Preview d’impact fichiers avant apply | DONE |
-| S040 | E04 | Double confirmation pour actions destructives | TODO |
+| S040 | E04 | Double confirmation pour actions destructives | DONE |
 | S041 | E04 | Contrôle RBAC avant exécution | TODO |
 | S042 | E04 | Contexte actif signé active_project_root | TODO |
 | S043 | E04 | Journal append-only des commandes | TODO |

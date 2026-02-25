@@ -10,7 +10,10 @@ const REASON_CODES = Object.freeze([
   'PARAMETER_SCHEMA_REQUIRED',
   'COMMAND_OUTSIDE_CATALOG',
   'DRY_RUN_REQUIRED_FOR_WRITE',
+  'DOUBLE_CONFIRMATION_REQUIRED',
+  'DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED',
   'CRITICAL_ACTION_ROLE_REQUIRED',
+  'ROLE_PERMISSION_REQUIRED',
   'INVALID_PARAMETER_VALUE',
   'UNSAFE_PARAMETER_VALUE'
 ]);
@@ -25,7 +28,10 @@ const DEFAULT_CORRECTIVE_ACTIONS = Object.freeze({
   PARAMETER_SCHEMA_REQUIRED: ['DEFINE_PARAMETER_SCHEMA'],
   COMMAND_OUTSIDE_CATALOG: ['BLOCK_NON_ALLOWLIST_COMMAND'],
   DRY_RUN_REQUIRED_FOR_WRITE: ['ENFORCE_DRY_RUN_FOR_WRITE'],
+  DOUBLE_CONFIRMATION_REQUIRED: ['ENFORCE_DOUBLE_CONFIRMATION'],
+  DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED: ['ENFORCE_DISTINCT_CONFIRMERS'],
   CRITICAL_ACTION_ROLE_REQUIRED: ['ENFORCE_CRITICAL_ROLE_POLICY'],
+  ROLE_PERMISSION_REQUIRED: ['ENFORCE_ROLE_POLICY'],
   INVALID_PARAMETER_VALUE: ['FIX_PARAMETER_VALUES'],
   UNSAFE_PARAMETER_VALUE: ['SANITIZE_COMMAND_PARAMETERS']
 });
@@ -145,6 +151,66 @@ function resolveImpactFiles(request, catalogEntry) {
   }
 
   return normalizeImpactFiles(catalogEntry?.impactFiles ?? []);
+}
+
+function resolveDoubleConfirmation(request) {
+  const confirmation = isObject(request?.confirmation) ? request.confirmation : {};
+
+  let firstActor = normalizeText(
+    confirmation.firstActor ?? confirmation.primaryActor ?? confirmation.requestedBy ?? confirmation.first
+  );
+  let secondActor = normalizeText(
+    confirmation.secondActor ??
+      confirmation.secondaryActor ??
+      confirmation.approvedBy ??
+      confirmation.approver ??
+      confirmation.second
+  );
+
+  if ((firstActor.length === 0 || secondActor.length === 0) && Array.isArray(request?.confirmations)) {
+    const actors = request.confirmations
+      .map((entry) => {
+        if (typeof entry === 'string') {
+          return normalizeText(entry);
+        }
+
+        if (!isObject(entry)) {
+          return '';
+        }
+
+        return normalizeText(entry.actor ?? entry.by ?? entry.name ?? entry.id);
+      })
+      .filter((entry) => entry.length > 0);
+
+    if (firstActor.length === 0 && actors.length > 0) {
+      firstActor = actors[0];
+    }
+
+    if (secondActor.length === 0 && actors.length > 1) {
+      secondActor = actors[1];
+    }
+  }
+
+  const confirmationId = normalizeText(
+    confirmation.confirmationId ??
+      confirmation.token ??
+      confirmation.ticket ??
+      request?.confirmationId ??
+      request?.confirmationToken
+  );
+
+  const firstActorNormalized = firstActor.toLocaleLowerCase();
+  const secondActorNormalized = secondActor.toLocaleLowerCase();
+
+  return {
+    required: true,
+    firstActor,
+    secondActor,
+    confirmationId: confirmationId || null,
+    provided: firstActor.length > 0 && secondActor.length > 0,
+    distinctActors:
+      firstActor.length > 0 && secondActor.length > 0 && firstActorNormalized !== secondActorNormalized
+  };
 }
 
 function createResult({ allowed, reasonCode, reason, diagnostics, catalog, executionGuard, correctiveActions }) {
@@ -474,7 +540,11 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     activeProjectRoot: activeProjectRoot || null,
     outsideCatalogCount: 0,
     dryRunViolations: 0,
+    roleViolations: 0,
     criticalRoleViolations: 0,
+    doubleConfirmationMissingCount: 0,
+    doubleConfirmationConflictCount: 0,
+    doubleConfirmationSatisfiedCount: 0,
     impactPreviewProvidedCount: 0,
     impactPreviewMissingCount: 0,
     impactPreviewOutsideProjectCount: 0,
@@ -501,6 +571,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     const impactInsideActiveProjectRoot =
       activeProjectRoot.length === 0 ||
       impactFiles.every((filePath) => isPathWithinActiveProjectRoot(filePath, activeProjectRoot));
+    const isHighImpactExecution = catalogEntry.mode === 'CRITICAL' && requestDryRun === false;
 
     if (impactFiles.length > 0) {
       diagnostics.impactPreviewProvidedCount += 1;
@@ -510,7 +581,83 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       diagnostics.impactPreviewOutsideProjectCount += 1;
     }
 
-    if ((catalogEntry.mode === 'WRITE' || catalogEntry.mode === 'CRITICAL') && !requestDryRun) {
+    if (
+      strictRoleCheck &&
+      catalogEntry.allowedRoles.length > 0 &&
+      !catalogEntry.allowedRoles.includes(normalizedRole)
+    ) {
+      diagnostics.roleViolations += 1;
+
+      const isCriticalRoleViolation = catalogEntry.mode === 'CRITICAL';
+      if (isCriticalRoleViolation) {
+        diagnostics.criticalRoleViolations += 1;
+      }
+
+      return createResult({
+        allowed: false,
+        reasonCode: isCriticalRoleViolation ? 'CRITICAL_ACTION_ROLE_REQUIRED' : 'ROLE_PERMISSION_REQUIRED',
+        reason: isCriticalRoleViolation
+          ? `Rôle non autorisé pour action critique ${commandId}.`
+          : `Rôle non autorisé pour commande ${commandId}.`,
+        diagnostics: {
+          ...diagnostics,
+          commandId,
+          commandMode: catalogEntry.mode,
+          role: normalizedRole || 'UNKNOWN',
+          allowedRoles: catalogEntry.allowedRoles
+        }
+      });
+    }
+
+    if (isHighImpactExecution) {
+      const doubleConfirmation = resolveDoubleConfirmation(request);
+
+      if (!doubleConfirmation.provided) {
+        diagnostics.doubleConfirmationMissingCount += 1;
+
+        return createResult({
+          allowed: false,
+          reasonCode: 'DOUBLE_CONFIRMATION_REQUIRED',
+          reason: `Double confirmation requise pour action critique ${commandId}.`,
+          diagnostics: {
+            ...diagnostics,
+            commandId,
+            doubleConfirmation,
+            impactPreview: {
+              commandId,
+              files: impactFiles,
+              allInsideActiveProjectRoot: impactInsideActiveProjectRoot,
+              activeProjectRoot: activeProjectRoot || null
+            }
+          }
+        });
+      }
+
+      if (!doubleConfirmation.distinctActors) {
+        diagnostics.doubleConfirmationConflictCount += 1;
+
+        return createResult({
+          allowed: false,
+          reasonCode: 'DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED',
+          reason: `Les deux confirmateurs doivent être distincts pour ${commandId}.`,
+          diagnostics: {
+            ...diagnostics,
+            commandId,
+            doubleConfirmation,
+            impactPreview: {
+              commandId,
+              files: impactFiles,
+              allInsideActiveProjectRoot: impactInsideActiveProjectRoot,
+              activeProjectRoot: activeProjectRoot || null
+            }
+          }
+        });
+      }
+
+      diagnostics.doubleConfirmationSatisfiedCount += 1;
+    }
+
+    if (catalogEntry.mode === 'WRITE' && !requestDryRun) {
       diagnostics.dryRunViolations += 1;
 
       if (impactFiles.length === 0) {
@@ -542,25 +689,6 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       });
     }
 
-    if (
-      strictRoleCheck &&
-      catalogEntry.mode === 'CRITICAL' &&
-      catalogEntry.allowedRoles.length > 0 &&
-      !catalogEntry.allowedRoles.includes(normalizedRole)
-    ) {
-      diagnostics.criticalRoleViolations += 1;
-      return createResult({
-        allowed: false,
-        reasonCode: 'CRITICAL_ACTION_ROLE_REQUIRED',
-        reason: `Rôle non autorisé pour action critique ${commandId}.`,
-        diagnostics: {
-          ...diagnostics,
-          role: normalizedRole || 'UNKNOWN',
-          allowedRoles: catalogEntry.allowedRoles
-        }
-      });
-    }
-
     const parameterValidation = validateExecutionArguments(catalogEntry.parameters, request?.args ?? {});
 
     if (!parameterValidation.valid) {
@@ -582,7 +710,11 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
   const executionGuard = {
     allFromCatalog: diagnostics.outsideCatalogCount === 0,
     dryRunByDefault: diagnostics.dryRunViolations === 0,
+    rolePolicyCompliant: diagnostics.roleViolations === 0,
     criticalRoleCompliant: diagnostics.criticalRoleViolations === 0,
+    doubleConfirmationReady:
+      diagnostics.doubleConfirmationMissingCount === 0 &&
+      diagnostics.doubleConfirmationConflictCount === 0,
     impactPreviewReadyForWrite: diagnostics.impactPreviewMissingCount === 0,
     activeProjectRootSafe: diagnostics.impactPreviewOutsideProjectCount === 0
   };

@@ -4,7 +4,7 @@ import { buildCommandAllowlistCatalog as buildCommandAllowlistCatalogFromIndex }
 
 function buildCatalogInput() {
   return {
-    catalogVersion: '2026.02.24-e04s01',
+    catalogVersion: '2026.02.25-e04s04',
     commands: [
       {
         id: 'status.read',
@@ -17,7 +17,7 @@ function buildCatalogInput() {
         command: 'bash scripts/update-story-status.sh',
         mode: 'WRITE',
         allowedRoles: ['DEV', 'TEA'],
-        impactFiles: ['projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S037.md'],
+        impactFiles: ['projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S040.md'],
         parameters: [
           { name: 'sid', type: 'string', required: true, pattern: '^S[0-9]{3}$' },
           { name: 'status', type: 'string', required: true, enum: ['OPEN', 'DONE'] }
@@ -49,7 +49,7 @@ describe('command-allowlist-catalog unit', () => {
         commandId: 'story.patch',
         dryRun: true,
         role: 'DEV',
-        args: { sid: 'S037', status: 'OPEN' }
+        args: { sid: 'S040', status: 'OPEN' }
       }
     ];
 
@@ -59,7 +59,7 @@ describe('command-allowlist-catalog unit', () => {
       allowed: true,
       reasonCode: 'OK',
       diagnostics: {
-        catalogVersion: '2026.02.24-e04s01',
+        catalogVersion: '2026.02.25-e04s04',
         commandCount: 3,
         executionCount: 2,
         outsideCatalogCount: 0,
@@ -82,7 +82,7 @@ describe('command-allowlist-catalog unit', () => {
         commandId: 'story.patch',
         dryRun: false,
         role: 'DEV',
-        args: { sid: 'S037', status: 'DONE' }
+        args: { sid: 'S040', status: 'DONE' }
       }
     ];
 
@@ -94,7 +94,7 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.diagnostics.impactPreviewMissingCount).toBe(0);
     expect(result.diagnostics.impactPreview).toMatchObject({
       commandId: 'story.patch',
-      files: ['projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S037.md']
+      files: ['projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S040.md']
     });
   });
 
@@ -104,7 +104,7 @@ describe('command-allowlist-catalog unit', () => {
       {
         commandId: 'story.patch',
         role: 'DEV',
-        args: { sid: 'S037', status: 'OPEN' }
+        args: { sid: 'S040', status: 'OPEN' }
       }
     ];
 
@@ -126,9 +126,9 @@ describe('command-allowlist-catalog unit', () => {
         dryRun: false,
         role: 'DEV',
         impactFiles: [
-          '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S037.md'
+          '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S040.md'
         ],
-        args: { sid: 'S037', status: 'DONE' }
+        args: { sid: 'S040', status: 'DONE' }
       }
     ];
 
@@ -142,7 +142,7 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.diagnostics.impactPreview).toMatchObject({
       commandId: 'story.patch',
       files: [
-        '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S037.md'
+        '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S040.md'
       ],
       allInsideActiveProjectRoot: true
     });
@@ -182,6 +182,93 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.allowed).toBe(false);
     expect(result.reasonCode).toBe('CRITICAL_ACTION_ROLE_REQUIRED');
     expect(result.correctiveActions).toContain('ENFORCE_CRITICAL_ROLE_POLICY');
+  });
+
+  it('enforces role-based permissions for write commands before execution (FR-037)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'story.patch',
+        dryRun: true,
+        role: 'UXQA',
+        args: { sid: 'S040', status: 'OPEN' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('ROLE_PERMISSION_REQUIRED');
+    expect(result.correctiveActions).toContain('ENFORCE_ROLE_POLICY');
+  });
+
+  it('requires double confirmation for destructive critical apply attempts (FR-036)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('DOUBLE_CONFIRMATION_REQUIRED');
+    expect(result.correctiveActions).toContain('ENFORCE_DOUBLE_CONFIRMATION');
+  });
+
+  it('requires distinct actors for destructive critical double confirmation (FR-036)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'alex.dev',
+          confirmationId: 'CONF-S040-001'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED');
+    expect(result.correctiveActions).toContain('ENFORCE_DISTINCT_CONFIRMERS');
+  });
+
+  it('allows destructive critical apply with valid role and double confirmation (FR-036/FR-037)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S040-002'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+    expect(result.diagnostics.doubleConfirmationSatisfiedCount).toBe(1);
+    expect(result.executionGuard).toMatchObject({
+      rolePolicyCompliant: true,
+      doubleConfirmationReady: true,
+      criticalRoleCompliant: true
+    });
   });
 
   it('blocks unsafe parameter values to reduce shell-injection risk (S02)', () => {

@@ -179,7 +179,7 @@ const demoPageHtml = `
 
 function buildCatalog() {
   return {
-    catalogVersion: '2026.02.24-e04s01',
+    catalogVersion: '2026.02.25-e04s04',
     commands: [
       {
         id: 'status.read',
@@ -192,7 +192,7 @@ function buildCatalog() {
         command: 'bash scripts/update-story-status.sh',
         mode: 'WRITE',
         allowedRoles: ['DEV', 'TEA'],
-        impactFiles: ['/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S038.md'],
+        impactFiles: ['/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S040.md'],
         parameters: [
           { name: 'sid', type: 'string', required: true, pattern: '^S[0-9]{3}$' },
           { name: 'status', type: 'string', required: true, enum: ['OPEN', 'DONE'] }
@@ -225,7 +225,7 @@ function runScenario(scenario) {
           commandId: 'story.patch',
           dryRun: true,
           role: 'DEV',
-          args: { sid: 'S037', status: 'OPEN' }
+          args: { sid: 'S040', status: 'OPEN' }
         }
       ]
     });
@@ -253,7 +253,7 @@ function runScenario(scenario) {
           commandId: 'story.patch',
           dryRun: false,
           role: 'DEV',
-          args: { sid: 'S037', status: 'DONE' }
+          args: { sid: 'S040', status: 'DONE' }
         }
       ]
     });
@@ -269,9 +269,9 @@ function runScenario(scenario) {
             dryRun: false,
             role: 'DEV',
             impactFiles: [
-              '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S038.md'
+              '/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/stories/S040.md'
             ],
-            args: { sid: 'S038', status: 'DONE' }
+            args: { sid: 'S040', status: 'DONE' }
           }
         ]
       },
