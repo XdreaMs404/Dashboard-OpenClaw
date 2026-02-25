@@ -1,0 +1,14 @@
+{
+  "storyId": "S039",
+  "reasonCodes": [
+    "DRY_RUN_REQUIRED_FOR_WRITE",
+    "COMMAND_OUTSIDE_CATALOG",
+    "CRITICAL_ACTION_ROLE_REQUIRED"
+  ],
+  "impactPreviewFields": [
+    "commandId",
+    "files",
+    "allInsideActiveProjectRoot"
+  ],
+  "status": "validated"
+}

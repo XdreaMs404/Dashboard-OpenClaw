@@ -1,0 +1,8 @@
+$ npx playwright test tests/e2e/command-allowlist-catalog.spec.js --output=test-results/e2e-s039
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/command-allowlist-catalog.spec.js:345:1 › command allowlist catalog demo remains readable without horizontal overflow on mobile/tablet/desktop (586ms)
+  ✓  1 [chromium] › tests/e2e/command-allowlist-catalog.spec.js:292:1 › command allowlist catalog demo covers empty/loading/error/success with guard diagnostics (2.6s)
+
+  2 passed (3.9s)

@@ -1,0 +1,10 @@
+{
+  "storyId": "S039",
+  "viewports": [
+    "mobile-390x844",
+    "tablet-768x1024",
+    "desktop-1440x900"
+  ],
+  "horizontalOverflow": false,
+  "status": "validated"
+}
