@@ -2,7 +2,10 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
-import { buildCommandAllowlistCatalog } from '../src/command-allowlist-catalog.js';
+import {
+  buildCommandAllowlistCatalog,
+  signActiveProjectRoot
+} from '../src/command-allowlist-catalog.js';
 
 const sid = String(process.argv[2] || '').trim();
 if (!/^S\d{3}$/.test(sid)) {
@@ -25,6 +28,9 @@ const evidenceDir = path.join(
   'evidence',
   sid
 );
+
+const ACTIVE_PROJECT_ROOT = '/root/.openclaw/workspace/projects/dashboard-openclaw';
+const ACTIVE_PROJECT_ROOT_SIGNING_SECRET = 'ux-evidence-secret-s042';
 
 const demoPageHtml = `
 <!doctype html>
@@ -301,7 +307,12 @@ function runScenario(scenario) {
         ]
       },
       {
-        activeProjectRoot: '/root/.openclaw/workspace/projects/dashboard-openclaw'
+        activeProjectRoot: ACTIVE_PROJECT_ROOT,
+        activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET,
+        activeProjectRootSignature: signActiveProjectRoot(
+          ACTIVE_PROJECT_ROOT,
+          ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+        )
       }
     );
   }
@@ -313,6 +324,24 @@ function buildReasonCopyChecks() {
   const catalog = buildCatalog();
 
   const checks = [];
+
+  const signatureRequired = buildCommandAllowlistCatalog(
+    {
+      ...catalog,
+      executionRequests: [{ commandId: 'status.read', dryRun: true, role: 'DEV', args: { verbose: true } }]
+    },
+    {
+      activeProjectRoot: ACTIVE_PROJECT_ROOT,
+      activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+    }
+  );
+  checks.push({
+    expectedCode: 'ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED',
+    reasonCode: signatureRequired.reasonCode,
+    reason: signatureRequired.reason,
+    correctiveActions: signatureRequired.correctiveActions,
+    executionGuard: signatureRequired.executionGuard ?? null
+  });
 
   const roleDenied = buildCommandAllowlistCatalog({
     ...catalog,
@@ -355,7 +384,14 @@ function buildReasonCopyChecks() {
         }
       ]
     },
-    { activeProjectRoot: '/root/.openclaw/workspace/projects/dashboard-openclaw' }
+    {
+      activeProjectRoot: ACTIVE_PROJECT_ROOT,
+      activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET,
+      activeProjectRootSignature: signActiveProjectRoot(
+        ACTIVE_PROJECT_ROOT,
+        ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+      )
+    }
   );
   checks.push({
     expectedCode: 'DRY_RUN_REQUIRED_FOR_WRITE',

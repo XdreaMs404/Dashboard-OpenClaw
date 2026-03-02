@@ -1,5 +1,11 @@
 import { expect, test } from '@playwright/test';
-import { buildCommandAllowlistCatalog } from '../../src/command-allowlist-catalog.js';
+import {
+  buildCommandAllowlistCatalog,
+  signActiveProjectRoot
+} from '../../src/command-allowlist-catalog.js';
+
+const ACTIVE_PROJECT_ROOT = '/root/.openclaw/workspace/projects/dashboard-openclaw';
+const ACTIVE_PROJECT_ROOT_SIGNING_SECRET = 'e2e-secret-s042';
 
 const demoPageHtml = `
 <!doctype html>
@@ -276,7 +282,12 @@ function runScenario(scenario) {
         ]
       },
       {
-        activeProjectRoot: '/root/.openclaw/workspace/projects/dashboard-openclaw'
+        activeProjectRoot: ACTIVE_PROJECT_ROOT,
+        activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET,
+        activeProjectRootSignature: signActiveProjectRoot(
+          ACTIVE_PROJECT_ROOT,
+          ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+        )
       }
     );
   }

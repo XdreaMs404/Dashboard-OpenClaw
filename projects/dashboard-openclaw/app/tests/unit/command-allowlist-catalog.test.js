@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { buildCommandAllowlistCatalog } from '../../src/command-allowlist-catalog.js';
-import { buildCommandAllowlistCatalog as buildCommandAllowlistCatalogFromIndex } from '../../src/index.js';
+import {
+  buildCommandAllowlistCatalog,
+  signActiveProjectRoot
+} from '../../src/command-allowlist-catalog.js';
+import {
+  buildCommandAllowlistCatalog as buildCommandAllowlistCatalogFromIndex,
+  signActiveProjectRoot as signActiveProjectRootFromIndex
+} from '../../src/index.js';
+
+const ACTIVE_PROJECT_ROOT = '/root/.openclaw/workspace/projects/dashboard-openclaw';
+const ACTIVE_PROJECT_ROOT_SIGNING_SECRET = 'unit-secret-s042';
 
 function buildCatalogInput() {
   return {
@@ -32,6 +41,17 @@ function buildCatalogInput() {
         parameters: [{ name: 'reason', type: 'string', required: true }]
       }
     ]
+  };
+}
+
+function buildSignedRuntimeOptions() {
+  return {
+    activeProjectRoot: ACTIVE_PROJECT_ROOT,
+    activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET,
+    activeProjectRootSignature: signActiveProjectRoot(
+      ACTIVE_PROJECT_ROOT,
+      ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+    )
   };
 }
 
@@ -133,7 +153,7 @@ describe('command-allowlist-catalog unit', () => {
     ];
 
     const result = buildCommandAllowlistCatalog(input, {
-      activeProjectRoot: '/root/.openclaw/workspace/projects/dashboard-openclaw'
+      ...buildSignedRuntimeOptions()
     });
 
     expect(result.allowed).toBe(false);
@@ -271,6 +291,69 @@ describe('command-allowlist-catalog unit', () => {
     });
   });
 
+  it('requires active_project_root signature when context is provided (S042)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      activeProjectRoot: ACTIVE_PROJECT_ROOT,
+      activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED');
+    expect(result.correctiveActions).toContain('SIGN_ACTIVE_PROJECT_ROOT_CONTEXT');
+  });
+
+  it('rejects invalid active_project_root signature (S042)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      activeProjectRoot: ACTIVE_PROJECT_ROOT,
+      activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET,
+      activeProjectRootSignature: 'apr-v1-invalid'
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID');
+    expect(result.correctiveActions).toContain('REGENERATE_ACTIVE_PROJECT_ROOT_SIGNATURE');
+  });
+
+  it('accepts valid signed active_project_root context (S042)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      ...buildSignedRuntimeOptions()
+    });
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+    expect(result.executionGuard.activeProjectRootSigned).toBe(true);
+  });
+
   it('blocks unsafe parameter values to reduce shell-injection risk (S02)', () => {
     const input = buildCatalogInput();
     input.executionRequests = [
@@ -291,7 +374,12 @@ describe('command-allowlist-catalog unit', () => {
 
   it('is exported from index', () => {
     const result = buildCommandAllowlistCatalogFromIndex(buildCatalogInput());
+    const signature = signActiveProjectRootFromIndex(
+      ACTIVE_PROJECT_ROOT,
+      ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+    );
 
     expect(result.reasonCode).toBe('OK');
+    expect(signature).toMatch(/^apr-v1-[a-f0-9]{16}$/);
   });
 });

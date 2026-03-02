@@ -1,5 +1,8 @@
 import { clamp, normalizeEmail, normalizeUserName, safeDivide } from './core.js';
-import { buildCommandAllowlistCatalog } from './command-allowlist-catalog.js';
+import {
+  buildCommandAllowlistCatalog,
+  signActiveProjectRoot
+} from './command-allowlist-catalog.js';
 import { validatePhasePrerequisites } from './phase-prerequisites-validator.js';
 import { orchestratePhaseGuards } from './phase-guards-orchestrator.js';
 import { buildPhaseStateProjection } from './phase-state-projection.js';
@@ -44,6 +47,7 @@ export {
   buildArtifactParseDiagnostics,
   buildArtifactStalenessIndicator,
   buildCommandAllowlistCatalog,
+  signActiveProjectRoot,
   diffArtifactVersions,
   buildPhaseDependencyMatrix,
   buildPhaseStateProjection,

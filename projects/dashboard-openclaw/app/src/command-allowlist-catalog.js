@@ -14,6 +14,8 @@ const REASON_CODES = Object.freeze([
   'DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED',
   'CRITICAL_ACTION_ROLE_REQUIRED',
   'ROLE_PERMISSION_REQUIRED',
+  'ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED',
+  'ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID',
   'INVALID_PARAMETER_VALUE',
   'UNSAFE_PARAMETER_VALUE'
 ]);
@@ -32,11 +34,14 @@ const DEFAULT_CORRECTIVE_ACTIONS = Object.freeze({
   DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED: ['ENFORCE_DISTINCT_CONFIRMERS'],
   CRITICAL_ACTION_ROLE_REQUIRED: ['ENFORCE_CRITICAL_ROLE_POLICY'],
   ROLE_PERMISSION_REQUIRED: ['ENFORCE_ROLE_POLICY'],
+  ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED: ['SIGN_ACTIVE_PROJECT_ROOT_CONTEXT'],
+  ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID: ['REGENERATE_ACTIVE_PROJECT_ROOT_SIGNATURE'],
   INVALID_PARAMETER_VALUE: ['FIX_PARAMETER_VALUES'],
   UNSAFE_PARAMETER_VALUE: ['SANITIZE_COMMAND_PARAMETERS']
 });
 
 const UNSAFE_VALUE_PATTERN = /(;|&&|\|\||`|\$\(|\n|\r)/;
+const DEFAULT_ACTIVE_PROJECT_ROOT_SIGNING_SECRET = 'bmad-active-project-root-signature-v1';
 
 function isObject(value) {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
@@ -131,6 +136,39 @@ function normalizeActiveProjectRoot(value) {
   }
 
   return normalized.endsWith('/') ? normalized.slice(0, -1) : normalized;
+}
+
+function hashSignatureInput(value) {
+  let h1 = 0xdeadbeef ^ value.length;
+  let h2 = 0x41c6ce57 ^ value.length;
+
+  for (let index = 0; index < value.length; index += 1) {
+    const code = value.charCodeAt(index);
+    h1 = Math.imul(h1 ^ code, 2654435761);
+    h2 = Math.imul(h2 ^ code, 1597334677);
+  }
+
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+
+  const partA = (h1 >>> 0).toString(16).padStart(8, '0');
+  const partB = (h2 >>> 0).toString(16).padStart(8, '0');
+
+  return `${partA}${partB}`;
+}
+
+export function signActiveProjectRoot(activeProjectRoot, signingSecret = DEFAULT_ACTIVE_PROJECT_ROOT_SIGNING_SECRET) {
+  const normalizedRoot = normalizeActiveProjectRoot(activeProjectRoot);
+  const normalizedSecret = normalizeText(String(signingSecret ?? ''));
+
+  if (normalizedRoot.length === 0) {
+    return '';
+  }
+
+  const signatureInput = `${normalizedRoot}|${normalizedSecret || DEFAULT_ACTIVE_PROJECT_ROOT_SIGNING_SECRET}`;
+  const digest = hashSignatureInput(signatureInput);
+
+  return `apr-v1-${digest}`;
 }
 
 function isPathWithinActiveProjectRoot(pathValue, activeProjectRoot) {
@@ -530,6 +568,26 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     runtimeOptions.activeProjectRoot ?? payload.activeProjectRoot
   );
 
+  const enforceSignedActiveProjectRoot =
+    activeProjectRoot.length > 0 && runtimeOptions.enforceSignedActiveProjectRoot !== false;
+
+  const activeProjectRootSigningSecret = normalizeText(
+    String(
+      runtimeOptions.activeProjectRootSigningSecret ??
+        payload.activeProjectRootSigningSecret ??
+        DEFAULT_ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+    )
+  );
+
+  const activeProjectRootSignature = normalizeText(
+    String(runtimeOptions.activeProjectRootSignature ?? payload.activeProjectRootSignature ?? '')
+  );
+
+  const expectedActiveProjectRootSignature = signActiveProjectRoot(
+    activeProjectRoot,
+    activeProjectRootSigningSecret
+  );
+
   const diagnostics = {
     catalogVersion: version,
     commandCount: commands.length,
@@ -538,6 +596,9 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     criticalCount: commands.filter((entry) => entry.mode === 'CRITICAL').length,
     executionCount: executionRequests.length,
     activeProjectRoot: activeProjectRoot || null,
+    activeProjectRootSigned: enforceSignedActiveProjectRoot
+      ? activeProjectRootSignature.length > 0 && activeProjectRootSignature === expectedActiveProjectRootSignature
+      : null,
     outsideCatalogCount: 0,
     dryRunViolations: 0,
     roleViolations: 0,
@@ -550,6 +611,30 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     impactPreviewOutsideProjectCount: 0,
     validatedExecutions: 0
   };
+
+  if (enforceSignedActiveProjectRoot && executionRequests.length > 0) {
+    if (activeProjectRootSignature.length === 0) {
+      return createResult({
+        allowed: false,
+        reasonCode: 'ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED',
+        reason: 'Signature active_project_root requise avant exécution.',
+        diagnostics
+      });
+    }
+
+    if (activeProjectRootSignature !== expectedActiveProjectRootSignature) {
+      return createResult({
+        allowed: false,
+        reasonCode: 'ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID',
+        reason: 'Signature active_project_root invalide ou altérée.',
+        diagnostics: {
+          ...diagnostics,
+          activeProjectRootSignaturePrefix: activeProjectRootSignature.slice(0, 12),
+          expectedSignaturePrefix: expectedActiveProjectRootSignature.slice(0, 12)
+        }
+      });
+    }
+  }
 
   for (const request of executionRequests) {
     const commandId = normalizeIdentifier(request?.commandId ?? request?.id ?? request?.command);
@@ -716,7 +801,9 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       diagnostics.doubleConfirmationMissingCount === 0 &&
       diagnostics.doubleConfirmationConflictCount === 0,
     impactPreviewReadyForWrite: diagnostics.impactPreviewMissingCount === 0,
-    activeProjectRootSafe: diagnostics.impactPreviewOutsideProjectCount === 0
+    activeProjectRootSafe: diagnostics.impactPreviewOutsideProjectCount === 0,
+    activeProjectRootSigned:
+      !enforceSignedActiveProjectRoot || activeProjectRootSignature === expectedActiveProjectRootSignature
   };
 
   return createResult({

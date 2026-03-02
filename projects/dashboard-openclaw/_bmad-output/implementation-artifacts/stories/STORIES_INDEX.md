@@ -43,7 +43,7 @@
 | S039 | E04 | Preview d’impact fichiers avant apply | DONE |
 | S040 | E04 | Double confirmation pour actions destructives | DONE |
 | S041 | E04 | Contrôle RBAC avant exécution | DONE |
-| S042 | E04 | Contexte actif signé active_project_root | TODO |
+| S042 | E04 | Contexte actif signé active_project_root | DONE |
 | S043 | E04 | Journal append-only des commandes | TODO |
 | S044 | E04 | Timeout/retry/idempotency key pilotés | TODO |
 | S045 | E04 | Ordonnancement concurrent et backpressure | TODO |

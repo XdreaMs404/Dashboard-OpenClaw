@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-03-02T13:35:31Z"
+updated_at_utc: "2026-03-02T17:50:31Z"
 
 development_status:
   epic-1: done
@@ -56,7 +56,7 @@ development_status:
   4-39-preview-d-impact-fichiers-avant-apply: done
   4-40-double-confirmation-pour-actions-destructives: done
   4-41-controle-rbac-avant-execution: done
-  4-42-contexte-actif-signe-active-project-root: backlog
+  4-42-contexte-actif-signe-active-project-root: done
   4-43-journal-append-only-des-commandes: backlog
   4-44-timeout-retry-idempotency-key-pilotes: backlog
   4-45-ordonnancement-concurrent-et-backpressure: backlog

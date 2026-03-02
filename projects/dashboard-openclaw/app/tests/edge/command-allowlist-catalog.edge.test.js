@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { buildCommandAllowlistCatalog } from '../../src/command-allowlist-catalog.js';
+import {
+  buildCommandAllowlistCatalog,
+  signActiveProjectRoot
+} from '../../src/command-allowlist-catalog.js';
+
+const ACTIVE_PROJECT_ROOT = '/root/.openclaw/workspace/projects/dashboard-openclaw';
+const ACTIVE_PROJECT_ROOT_SIGNING_SECRET = 'edge-secret-s042';
 
 function buildBaseInput() {
   return {
@@ -125,7 +131,12 @@ describe('command-allowlist-catalog edge', () => {
     };
 
     const result = buildCommandAllowlistCatalog(input, {
-      activeProjectRoot: '/root/.openclaw/workspace/projects/dashboard-openclaw'
+      activeProjectRoot: ACTIVE_PROJECT_ROOT,
+      activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET,
+      activeProjectRootSignature: signActiveProjectRoot(
+        ACTIVE_PROJECT_ROOT,
+        ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+      )
     });
 
     expect(result.allowed).toBe(false);
@@ -135,6 +146,26 @@ describe('command-allowlist-catalog edge', () => {
       files: ['/etc/passwd'],
       allInsideActiveProjectRoot: false
     });
+  });
+
+  it('requires signed active project context when activeProjectRoot is supplied (S042)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      activeProjectRoot: ACTIVE_PROJECT_ROOT,
+      activeProjectRootSigningSecret: ACTIVE_PROJECT_ROOT_SIGNING_SECRET
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED');
   });
 
   it('blocks write command when role is not allowed (FR-037)', () => {
