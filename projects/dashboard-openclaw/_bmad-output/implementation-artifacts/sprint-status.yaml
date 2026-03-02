@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-02-25T03:13:56Z"
+updated_at_utc: "2026-03-02T13:35:31Z"
 
 development_status:
   epic-1: done
@@ -18,7 +18,7 @@ development_status:
   1-10-carte-dependances-inter-phases-en-temps-reel: done
   1-11-detection-anomalies-de-progression-et-alertes: done
   1-12-journal-decisionnel-de-gouvernance-phase-gate: done
-  epic-1-retrospective: optional
+  epic-1-retrospective: done
 
   epic-2: done
   2-13-pipeline-ingestion-markdown-yaml-sous-allowlist: done
@@ -33,7 +33,7 @@ development_status:
   2-22-diagnostic-parse-errors-et-recommandations: done
   2-23-tags-risques-et-annotations-contextuelles: done
   2-24-backfill-historique-migration-corpus-existant: done
-  epic-2-retrospective: optional
+  epic-2-retrospective: done
 
   epic-3: done
   3-25-gate-center-unifie-avec-statut-et-owner: done
@@ -48,14 +48,14 @@ development_status:
   3-34-export-rapport-gate-verdict-preuves-actions: done
   3-35-pont-d-ingestion-des-preuves-ux-vers-g4-ux: done
   3-36-gouvernance-des-exceptions-de-gate: done
-  epic-3-retrospective: optional
+  epic-3-retrospective: done
 
   epic-4: in-progress
   4-37-catalogue-commandes-allowlist-versionne: done
   4-38-dry-run-by-default-pour-toute-commande-write: done
   4-39-preview-d-impact-fichiers-avant-apply: done
   4-40-double-confirmation-pour-actions-destructives: done
-  4-41-controle-rbac-avant-execution: backlog
+  4-41-controle-rbac-avant-execution: done
   4-42-contexte-actif-signe-active-project-root: backlog
   4-43-journal-append-only-des-commandes: backlog
   4-44-timeout-retry-idempotency-key-pilotes: backlog
@@ -63,7 +63,7 @@ development_status:
   4-46-kill-switch-operationnel-immediat: backlog
   4-47-override-policy-avec-approbation-nominative: backlog
   4-48-bibliotheque-templates-de-commandes-validees: backlog
-  epic-4-retrospective: optional
+  epic-4-retrospective: pending
 
   epic-5: backlog
   5-49-tableau-aqcd-explicable-formule-source: backlog
@@ -78,7 +78,7 @@ development_status:
   5-58-suivi-actions-h21-h22-h23-jusqu-a-cloture: backlog
   5-59-vue-executive-sponsor-simplifiee: backlog
   5-60-instrumentation-baseline-tcd-et-roi: backlog
-  epic-5-retrospective: optional
+  epic-5-retrospective: pending
 
   epic-6: backlog
   6-61-contrat-4-etats-pour-widgets-critiques: backlog
@@ -93,7 +93,7 @@ development_status:
   6-70-preferences-motion-prefers-reduced-motion: backlog
   6-71-harnais-de-tests-usability-rapides: backlog
   6-72-tableau-de-bord-regressions-ux: backlog
-  epic-6-retrospective: optional
+  epic-6-retrospective: pending
 
   epic-7: backlog
   7-73-dashboards-personnalises-par-role: backlog
@@ -108,7 +108,7 @@ development_status:
   7-82-reporting-ack-critique-10-min: backlog
   7-83-permissions-collaboration-orientees-role: backlog
   7-84-playbooks-communication-de-crise: backlog
-  epic-7-retrospective: optional
+  epic-7-retrospective: pending
 
   epic-8: backlog
   8-85-switcher-projet-avec-confirmation-contextuelle: backlog
@@ -123,7 +123,7 @@ development_status:
   8-94-monitoring-sante-connecteurs: backlog
   8-95-scheduler-synchronisation-read-first: backlog
   8-96-assistant-onboarding-nouveau-projet: backlog
-  epic-8-retrospective: optional
+  epic-8-retrospective: pending
 
   epic-9: backlog
   9-97-connecteur-notion-pour-preuves-referencees: backlog
@@ -138,7 +138,7 @@ development_status:
   9-106-classification-et-tagging-des-donnees: backlog
   9-107-pack-preuves-conformite-automatise: backlog
   9-108-checklist-hardening-enterprise-pilote: backlog
-  epic-9-retrospective: optional
+  epic-9-retrospective: pending
 
   epic-10: backlog
   10-109-registre-versionne-des-contrats-api-events: backlog
@@ -153,7 +153,7 @@ development_status:
   10-118-alertes-finops-budgets-et-derives: backlog
   10-119-automatisation-slo-error-budget: backlog
   10-120-suite-benchmarks-performance-continue: backlog
-  epic-10-retrospective: optional
+  epic-10-retrospective: pending
 
   epic-11: backlog
   11-121-mode-stale-but-available-pilote: backlog
@@ -168,7 +168,7 @@ development_status:
   11-130-tracker-sla-remediation-vulnerabilites: backlog
   11-131-hardening-self-host-security-baseline: backlog
   11-132-comite-gouvernance-overrides-securite: backlog
-  epic-11-retrospective: optional
+  epic-11-retrospective: pending
 
   epic-12: backlog
   12-133-generateur-checklist-readiness-h10: backlog
@@ -183,4 +183,4 @@ development_status:
   12-142-atelier-simulation-go-no-go-h10: backlog
   12-143-boucle-feedback-post-go-live: backlog
   12-144-contrat-de-handoff-final-vers-h10: backlog
-  epic-12-retrospective: optional
+  epic-12-retrospective: pending

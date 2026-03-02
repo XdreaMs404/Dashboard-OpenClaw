@@ -30,6 +30,13 @@ data['storyId'] = sid
 if eid:
     data['epicId'] = eid
 
+evidence_dir = f"_bmad-output/implementation-artifacts/ux-audits/evidence/{sid}"
+data['evidence'] = [
+    f"{evidence_dir}/responsive-mobile.png",
+    f"{evidence_dir}/responsive-tablet.png",
+    f"{evidence_dir}/responsive-desktop.png",
+]
+
 data['updatedAt'] = datetime.now(timezone.utc).isoformat()
 
 with open(out, 'w', encoding='utf-8') as f:

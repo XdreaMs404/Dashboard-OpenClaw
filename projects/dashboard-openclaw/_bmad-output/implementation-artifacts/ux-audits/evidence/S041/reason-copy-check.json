@@ -1,0 +1,34 @@
+{
+  "storyId": "S041",
+  "checks": [
+    {
+      "expectedCode": "ROLE_PERMISSION_REQUIRED",
+      "reasonCode": "ROLE_PERMISSION_REQUIRED",
+      "reason": "Rôle non autorisé pour commande story.patch.",
+      "correctiveActions": [
+        "ENFORCE_ROLE_POLICY"
+      ],
+      "executionGuard": null
+    },
+    {
+      "expectedCode": "CRITICAL_ACTION_ROLE_REQUIRED",
+      "reasonCode": "CRITICAL_ACTION_ROLE_REQUIRED",
+      "reason": "Rôle non autorisé pour action critique runtime.kill.",
+      "correctiveActions": [
+        "ENFORCE_CRITICAL_ROLE_POLICY"
+      ],
+      "executionGuard": null
+    },
+    {
+      "expectedCode": "DRY_RUN_REQUIRED_FOR_WRITE",
+      "reasonCode": "DRY_RUN_REQUIRED_FOR_WRITE",
+      "reason": "Dry-run obligatoire pour story.patch. Impact hors projet actif détecté.",
+      "correctiveActions": [
+        "ENFORCE_DRY_RUN_FOR_WRITE"
+      ],
+      "activeProjectRootSafe": false,
+      "impactPreviewOutsideProjectCount": 1
+    }
+  ],
+  "status": "validated"
+}

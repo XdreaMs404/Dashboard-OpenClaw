@@ -19,10 +19,11 @@ AUDIT_JSON="$IMPL/ux-audits/${SID}-ux-audit.json"
 [ -f "$STORY" ] || { echo "❌ Missing story: $STORY"; exit 1; }
 [ -f "$AUDIT_JSON" ] || { echo "❌ Missing UX audit file: $AUDIT_JSON"; exit 1; }
 
-node - "$CFG" "$AUDIT_JSON" "$SID" <<'NODE'
+node - "$CFG" "$AUDIT_JSON" "$SID" "$PROJECT_ROOT" <<'NODE'
 const fs = require('node:fs');
+const path = require('node:path');
 
-const [cfgPath, auditPath, sid] = process.argv.slice(2);
+const [cfgPath, auditPath, sid, projectRoot] = process.argv.slice(2);
 
 function fail(msg) {
   console.error(`❌ ${msg}`);
@@ -57,6 +58,28 @@ const evidenceMin = Number(cfg.uxGate.requiredEvidenceMin || 0);
 const evidence = Array.isArray(audit.evidence) ? audit.evidence.filter(Boolean) : [];
 if (evidence.length < evidenceMin) {
   fail(`Insufficient UX evidence: ${evidence.length}/${evidenceMin}`);
+}
+
+const visualCfg = cfg.uxGate?.requiredVisualEvidence || {};
+const visualEnabled = visualCfg.enabled !== false;
+if (visualEnabled) {
+  const requiredVisualFiles = Array.isArray(visualCfg.files) && visualCfg.files.length > 0
+    ? visualCfg.files
+    : ['responsive-mobile.png', 'responsive-tablet.png', 'responsive-desktop.png'];
+  const requireFilesOnDisk = visualCfg.requireFilesOnDisk !== false;
+
+  for (const fileName of requiredVisualFiles) {
+    const match = evidence.find((entry) => String(entry).toLowerCase().includes(String(fileName).toLowerCase()));
+    if (!match) {
+      fail(`Missing required visual evidence reference: ${fileName}`);
+    }
+    if (requireFilesOnDisk) {
+      const resolved = path.isAbsolute(match) ? match : path.join(projectRoot, match);
+      if (!fs.existsSync(resolved)) {
+        fail(`Missing required visual evidence file on disk: ${match}`);
+      }
+    }
+  }
 }
 
 const designExcellence = Number(audit.scores?.designExcellence ?? -1);

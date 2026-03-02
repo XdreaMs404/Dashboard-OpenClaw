@@ -66,6 +66,27 @@ def epic_state(stories):
         return 'in-progress'
     return 'backlog'
 
+
+def retro_state(eid: str, e_state: str) -> str:
+    """
+    Status policy:
+    - epic not done -> pending
+    - epic done + retro valid -> done
+    - epic done + retro missing/invalid -> required
+    """
+    if e_state != 'done':
+        return 'pending'
+
+    retro = project_root / '_bmad-output' / 'implementation-artifacts' / 'retros' / f'{eid}-retro.md'
+    if not retro.exists():
+        return 'required'
+
+    text = retro.read_text(encoding='utf-8', errors='ignore')
+    actions = sum(1 for ln in text.splitlines() if re.match(r'^\s*-\s*\[ \]\s+', ln))
+    has_adapt = "## Adaptations pour l'epic suivant" in text
+    return 'done' if (actions >= 3 and has_adapt) else 'required'
+
+
 lines = []
 lines.append('generated: auto')
 lines.append('project: Dashboard OpenClaw')
@@ -78,12 +99,13 @@ lines.append('development_status:')
 for eid in sorted(by_epic.keys(), key=lambda e: int(e[1:])):
     epic_num = int(eid[1:])
     stories = by_epic[eid]
-    lines.append(f'  epic-{epic_num}: {epic_state(stories)}')
+    e_state = epic_state(stories)
+    lines.append(f'  epic-{epic_num}: {e_state}')
     for sid, title, st in stories:
         sid_num = int(sid[1:])
         slug = slugify(title) or f'story-{sid_num}'
         lines.append(f'  {epic_num}-{sid_num:02d}-{slug}: {st}')
-    lines.append(f'  epic-{epic_num}-retrospective: optional')
+    lines.append(f'  epic-{epic_num}-retrospective: {retro_state(eid, e_state)}')
     lines.append('')
 
 if not by_epic:

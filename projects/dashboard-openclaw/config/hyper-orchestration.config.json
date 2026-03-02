@@ -57,6 +57,15 @@
       "success"
     ],
     "requiredEvidenceMin": 3,
+    "requiredVisualEvidence": {
+      "enabled": true,
+      "files": [
+        "responsive-mobile.png",
+        "responsive-tablet.png",
+        "responsive-desktop.png"
+      ],
+      "requireFilesOnDisk": true
+    },
     "wcagTarget": "2.2-AA"
   }
 }
