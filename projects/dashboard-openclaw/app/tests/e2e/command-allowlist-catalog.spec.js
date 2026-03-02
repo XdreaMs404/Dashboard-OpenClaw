@@ -64,6 +64,7 @@ const demoPageHtml = `
         <option value="outside-catalog">Commande hors catalogue</option>
         <option value="dry-run-required">Dry-run requis</option>
         <option value="apply-impact-preview">Preview impact avant apply</option>
+        <option value="tampered-journal">Journal append-only altéré</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -292,6 +293,41 @@ function runScenario(scenario) {
     );
   }
 
+  if (scenario === 'tampered-journal') {
+    return buildCommandAllowlistCatalog({
+      ...buildCatalog(),
+      commandJournal: {
+        model: 'append-only-command-journal',
+        entries: [
+          {
+            index: 1,
+            prevHash: 'cj-v1-genesis',
+            commandId: 'status.read',
+            mode: 'READ',
+            actor: 'DEV',
+            approver: null,
+            result: 'ALLOWED',
+            reasonCode: 'OK',
+            dryRun: true,
+            idempotencyKey: 'IK-E2E-S043-001',
+            retryCount: 0,
+            timeoutMs: 120000,
+            timestamp: '2026-03-02T22:20:00.000Z',
+            hash: ''
+          }
+        ]
+      },
+      executionRequests: [
+        {
+          commandId: 'status.read',
+          dryRun: true,
+          role: 'DEV',
+          args: { verbose: true }
+        }
+      ]
+    });
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -339,6 +375,11 @@ test('command allowlist catalog demo covers empty/loading/error/success with gua
   await expect(reasonCodeValue).toHaveText('DRY_RUN_REQUIRED_FOR_WRITE');
   await expect(impactPreviewValue).toContainText('commandId=story.patch');
   await expect(impactPreviewValue).toContainText('inProject=true');
+
+  await scenario.selectOption('tampered-journal');
+  await action.click();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('COMMAND_JOURNAL_TAMPER_DETECTED');
 
   await scenario.selectOption('success');
   await action.click();

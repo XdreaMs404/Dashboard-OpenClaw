@@ -354,6 +354,76 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.executionGuard.activeProjectRootSigned).toBe(true);
   });
 
+  it('maintains an append-only command journal for allowed executions (S043/FR-039)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true },
+        idempotencyKey: 'IK-S043-001',
+        timeoutMs: 120000,
+        retryCount: 0,
+        timestamp: '2026-03-02T22:00:00.000Z'
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+    expect(result.commandJournal).toMatchObject({
+      model: 'append-only-command-journal',
+      appendOnly: true,
+      entryCount: 1
+    });
+    expect(result.commandJournal.entries[0]).toMatchObject({
+      commandId: 'status.read',
+      result: 'ALLOWED',
+      reasonCode: 'OK',
+      idempotencyKey: 'IK-S043-001',
+      timeoutMs: 120000,
+      retryCount: 0
+    });
+    expect(result.commandJournal.entries[0].hash).toMatch(/^cj-v1-[a-f0-9]{16}$/);
+  });
+
+  it('detects command journal tampering and blocks execution (S043/S01)', () => {
+    const baseline = buildCatalogInput();
+    baseline.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true },
+        timestamp: '2026-03-02T22:05:00.000Z'
+      }
+    ];
+
+    const baselineResult = buildCommandAllowlistCatalog(baseline);
+    const tamperedJournal = structuredClone(baselineResult.commandJournal);
+    tamperedJournal.entries[0].hash = 'cj-v1-tampered';
+
+    const input = buildCatalogInput();
+    input.commandJournal = tamperedJournal;
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true },
+        timestamp: '2026-03-02T22:06:00.000Z'
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('COMMAND_JOURNAL_TAMPER_DETECTED');
+    expect(result.correctiveActions).toContain('RESTORE_APPEND_ONLY_COMMAND_JOURNAL');
+  });
+
   it('blocks unsafe parameter values to reduce shell-injection risk (S02)', () => {
     const input = buildCatalogInput();
     input.executionRequests = [

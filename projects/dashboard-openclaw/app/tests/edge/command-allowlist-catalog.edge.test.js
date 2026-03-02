@@ -247,6 +247,45 @@ describe('command-allowlist-catalog edge', () => {
     expect(result.executionGuard.rolePolicyCompliant).toBe(true);
   });
 
+  it('rejects tampered append-only command journal payload (S043)', () => {
+    const input = buildBaseInput();
+    input.commandJournal = {
+      model: 'append-only-command-journal',
+      entries: [
+        {
+          index: 1,
+          prevHash: 'cj-v1-genesis',
+          commandId: 'status.read',
+          mode: 'READ',
+          actor: 'DEV',
+          approver: null,
+          result: 'ALLOWED',
+          reasonCode: 'OK',
+          dryRun: true,
+          idempotencyKey: 'IK-S043-EDGE-001',
+          retryCount: 0,
+          timeoutMs: 120000,
+          timestamp: '2026-03-02T22:10:00.000Z',
+          hash: ''
+        }
+      ]
+    };
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('COMMAND_JOURNAL_TAMPER_DETECTED');
+    expect(result.correctiveActions).toContain('RESTORE_APPEND_ONLY_COMMAND_JOURNAL');
+  });
+
   it('rejects enum mismatch in command arguments', () => {
     const input = {
       catalogVersion: '2026.02.24-enum',

@@ -89,6 +89,7 @@ const demoPageHtml = `
         <option value="outside-catalog">Commande hors catalogue</option>
         <option value="dry-run-required">Dry-run requis</option>
         <option value="apply-impact-preview">Preview impact avant apply</option>
+        <option value="tampered-journal">Journal append-only altéré</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -317,6 +318,41 @@ function runScenario(scenario) {
     );
   }
 
+  if (scenario === 'tampered-journal') {
+    return buildCommandAllowlistCatalog({
+      ...buildCatalog(),
+      commandJournal: {
+        model: 'append-only-command-journal',
+        entries: [
+          {
+            index: 1,
+            prevHash: 'cj-v1-genesis',
+            commandId: 'status.read',
+            mode: 'READ',
+            actor: 'DEV',
+            approver: null,
+            result: 'ALLOWED',
+            reasonCode: 'OK',
+            dryRun: true,
+            idempotencyKey: 'IK-UX-S043-001',
+            retryCount: 0,
+            timeoutMs: 120000,
+            timestamp: '2026-03-02T22:20:00.000Z',
+            hash: ''
+          }
+        ]
+      },
+      executionRequests: [
+        {
+          commandId: 'status.read',
+          dryRun: true,
+          role: 'DEV',
+          args: { verbose: true }
+        }
+      ]
+    });
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -341,6 +377,39 @@ function buildReasonCopyChecks() {
     reason: signatureRequired.reason,
     correctiveActions: signatureRequired.correctiveActions,
     executionGuard: signatureRequired.executionGuard ?? null
+  });
+
+  const tamperedJournal = buildCommandAllowlistCatalog({
+    ...catalog,
+    commandJournal: {
+      model: 'append-only-command-journal',
+      entries: [
+        {
+          index: 1,
+          prevHash: 'cj-v1-genesis',
+          commandId: 'status.read',
+          mode: 'READ',
+          actor: 'DEV',
+          approver: null,
+          result: 'ALLOWED',
+          reasonCode: 'OK',
+          dryRun: true,
+          idempotencyKey: 'IK-UX-S043-002',
+          retryCount: 0,
+          timeoutMs: 120000,
+          timestamp: '2026-03-02T22:20:00.000Z',
+          hash: ''
+        }
+      ]
+    },
+    executionRequests: [{ commandId: 'status.read', dryRun: true, role: 'DEV', args: { verbose: true } }]
+  });
+  checks.push({
+    expectedCode: 'COMMAND_JOURNAL_TAMPER_DETECTED',
+    reasonCode: tamperedJournal.reasonCode,
+    reason: tamperedJournal.reason,
+    correctiveActions: tamperedJournal.correctiveActions,
+    executionGuard: tamperedJournal.executionGuard ?? null
   });
 
   const roleDenied = buildCommandAllowlistCatalog({

@@ -1,17 +1,16 @@
 # Runtime story log — S999
 
-- Dernière mise à jour: **2026-03-02 16:26:32 UTC**
+- Dernière mise à jour: **2026-03-02 20:34:37 UTC**
 - Étape courante: **pm** (bmad-pm)
 - Return-to-step: **-**
-- Temps écoulé total: **87.66 min**
-- Résultat checkpoint: **CHECKPOINT_CLEARED**
-- Note: **Checkpoint supprimé après transition story.**
+- Temps écoulé total: **163.71 min**
+- Résultat checkpoint: **ACTIVATE**
 
 ## Durée cumulée par étape (agents)
 
 | Étape | Agent | Durée cumulée (min) | Passages | Attempts |
 |---|---|---:|---:|---:|
-| pm | bmad-pm | 87.66 | 1 | 0 |
+| pm | bmad-pm | 163.71 | 1 | 0 |
 | dev | bmad-dev | 0.0 | 0 | 0 |
 | uxqa | bmad-ux-qa | 0.0 | 0 | 0 |
 | tea | bmad-tea | 0.0 | 0 | 0 |
@@ -23,7 +22,7 @@
 
 | # | Étape | Agent | Début | Fin | Durée (min) |
 |---:|---|---|---|---|---:|
-| 1 | pm | bmad-pm | 2026-03-02 14:58:52 UTC | 2026-03-02 16:26:32 UTC | 87.66 |
+| 1 | pm | bmad-pm | 2026-03-02 17:50:54 UTC | 2026-03-02 20:34:37 UTC | 163.71 |
 
 ## Blocages détectés
 
@@ -37,6 +36,8 @@ Aucune action de déblocage explicite enregistrée pour le moment.
 
 | Horodatage | Action | Détail | Étape avant → après | Return-to-step | Attempts (pm/dev/uxqa/tea/reviewer/tw) |
 |---|---|---|---|---|---|
-| 2026-03-02 14:58:52 UTC | bootstrap | checkpoint initialized | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 14:58:52 UTC | activate | checkpoint activated | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 16:26:32 UTC | clear | checkpoint cleared | pm → pm | - | 0/0/0/0/0/0 |
+| 2026-03-02 17:50:54 UTC | bootstrap | checkpoint initialized | pm → pm | - | 0/0/0/0/0/0 |
+| 2026-03-02 17:50:54 UTC | activate-warning | non-canonical sid ignored for current.sid (S999) | pm → pm | - | 0/0/0/0/0/0 |
+| 2026-03-02 17:50:54 UTC | activate | checkpoint activated | pm → pm | - | 0/0/0/0/0/0 |
+| 2026-03-02 20:34:37 UTC | activate-warning | non-canonical sid ignored for current.sid (S999) | pm → pm | - | 0/0/0/0/0/0 |
+| 2026-03-02 20:34:37 UTC | activate | checkpoint activated | pm → pm | - | 0/0/0/0/0/0 |

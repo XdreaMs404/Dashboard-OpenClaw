@@ -16,6 +16,7 @@ const REASON_CODES = Object.freeze([
   'ROLE_PERMISSION_REQUIRED',
   'ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED',
   'ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID',
+  'COMMAND_JOURNAL_TAMPER_DETECTED',
   'INVALID_PARAMETER_VALUE',
   'UNSAFE_PARAMETER_VALUE'
 ]);
@@ -36,6 +37,7 @@ const DEFAULT_CORRECTIVE_ACTIONS = Object.freeze({
   ROLE_PERMISSION_REQUIRED: ['ENFORCE_ROLE_POLICY'],
   ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED: ['SIGN_ACTIVE_PROJECT_ROOT_CONTEXT'],
   ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID: ['REGENERATE_ACTIVE_PROJECT_ROOT_SIGNATURE'],
+  COMMAND_JOURNAL_TAMPER_DETECTED: ['RESTORE_APPEND_ONLY_COMMAND_JOURNAL'],
   INVALID_PARAMETER_VALUE: ['FIX_PARAMETER_VALUES'],
   UNSAFE_PARAMETER_VALUE: ['SANITIZE_COMMAND_PARAMETERS']
 });
@@ -171,6 +173,135 @@ export function signActiveProjectRoot(activeProjectRoot, signingSecret = DEFAULT
   return `apr-v1-${digest}`;
 }
 
+function normalizeJournalTimestamp(value) {
+  const normalized = normalizeText(String(value ?? ''));
+
+  if (normalized.length === 0) {
+    return new Date().toISOString();
+  }
+
+  return normalized;
+}
+
+function normalizeJournalInteger(value, fallback = 0) {
+  const parsed = Number(value);
+
+  if (!Number.isFinite(parsed)) {
+    return fallback;
+  }
+
+  return Math.max(0, Math.trunc(parsed));
+}
+
+function buildCommandJournalHashPayload(entry) {
+  return {
+    index: normalizeJournalInteger(entry.index, 0),
+    prevHash: normalizeText(entry.prevHash),
+    commandId: normalizeIdentifier(entry.commandId),
+    mode: normalizeText(String(entry.mode ?? '')).toUpperCase(),
+    actor: normalizeText(String(entry.actor ?? '')).toUpperCase(),
+    approver: normalizeText(String(entry.approver ?? '')) || null,
+    result: normalizeText(String(entry.result ?? '')).toUpperCase(),
+    reasonCode: normalizeText(String(entry.reasonCode ?? '')),
+    dryRun: Boolean(entry.dryRun),
+    idempotencyKey: normalizeText(String(entry.idempotencyKey ?? '')) || null,
+    retryCount: normalizeJournalInteger(entry.retryCount, 0),
+    timeoutMs: normalizeJournalInteger(entry.timeoutMs, 0),
+    timestamp: normalizeJournalTimestamp(entry.timestamp)
+  };
+}
+
+function computeCommandJournalHash(entry) {
+  const payload = buildCommandJournalHashPayload(entry);
+  const digest = hashSignatureInput(JSON.stringify(payload));
+
+  return `cj-v1-${digest}`;
+}
+
+function normalizeCommandJournalEntry(rawEntry, index, prevHash) {
+  const payload = buildCommandJournalHashPayload({
+    ...rawEntry,
+    index,
+    prevHash
+  });
+
+  const entry = {
+    ...payload,
+    hash: normalizeText(String(rawEntry?.hash ?? ''))
+  };
+
+  return entry;
+}
+
+function initializeCommandJournal(commandJournal) {
+  const entriesInput = Array.isArray(commandJournal?.entries) ? commandJournal.entries : [];
+  const entries = [];
+  let prevHash = 'cj-v1-genesis';
+
+  for (let idx = 0; idx < entriesInput.length; idx += 1) {
+    const normalized = normalizeCommandJournalEntry(entriesInput[idx], idx + 1, prevHash);
+
+    if (normalized.hash.length === 0) {
+      return {
+        valid: false,
+        reason: 'missing_hash',
+        entries,
+        lastHash: prevHash
+      };
+    }
+
+    const expectedHash = computeCommandJournalHash(normalized);
+    if (normalized.hash !== expectedHash) {
+      return {
+        valid: false,
+        reason: 'hash_mismatch',
+        entries,
+        lastHash: prevHash
+      };
+    }
+
+    entries.push({
+      ...normalized,
+      hash: expectedHash
+    });
+    prevHash = expectedHash;
+  }
+
+  return {
+    valid: true,
+    reason: 'ok',
+    entries,
+    lastHash: prevHash
+  };
+}
+
+function appendCommandJournalEntry(journalState, rawEntry) {
+  const index = journalState.entries.length + 1;
+  const entry = normalizeCommandJournalEntry(rawEntry, index, journalState.lastHash);
+  const hash = computeCommandJournalHash(entry);
+
+  const storedEntry = {
+    ...entry,
+    hash
+  };
+
+  journalState.entries.push(storedEntry);
+  journalState.lastHash = hash;
+
+  return storedEntry;
+}
+
+function buildCommandJournalSnapshot(journalState) {
+  return {
+    model: 'append-only-command-journal',
+    version: 'cj-v1',
+    appendOnly: true,
+    entryCount: journalState.entries.length,
+    lastHash: journalState.lastHash,
+    entries: journalState.entries.map((entry) => ({ ...entry }))
+  };
+}
+
 function isPathWithinActiveProjectRoot(pathValue, activeProjectRoot) {
   if (activeProjectRoot.length === 0) {
     return true;
@@ -251,7 +382,16 @@ function resolveDoubleConfirmation(request) {
   };
 }
 
-function createResult({ allowed, reasonCode, reason, diagnostics, catalog, executionGuard, correctiveActions }) {
+function createResult({
+  allowed,
+  reasonCode,
+  reason,
+  diagnostics,
+  catalog,
+  executionGuard,
+  commandJournal,
+  correctiveActions
+}) {
   const normalizedReasonCode = normalizeReasonCode(reasonCode) ?? 'INVALID_COMMAND_CATALOG_INPUT';
   const defaultActions = DEFAULT_CORRECTIVE_ACTIONS[normalizedReasonCode] ?? [];
   const actions = Array.isArray(correctiveActions)
@@ -265,6 +405,7 @@ function createResult({ allowed, reasonCode, reason, diagnostics, catalog, execu
     diagnostics: cloneValue(diagnostics ?? {}),
     catalog: cloneValue(catalog ?? null),
     executionGuard: cloneValue(executionGuard ?? null),
+    commandJournal: cloneValue(commandJournal ?? null),
     correctiveActions: cloneValue(actions)
   };
 }
@@ -612,22 +753,97 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     validatedExecutions: 0
   };
 
+  const commandJournalState = initializeCommandJournal(payload.commandJournal);
+
+  const buildResultWithJournal = ({
+    allowed,
+    reasonCode,
+    reason,
+    diagnosticsValue,
+    catalogValue = null,
+    executionGuardValue = null,
+    correctiveActions
+  }) =>
+    createResult({
+      allowed,
+      reasonCode,
+      reason,
+      diagnostics: diagnosticsValue,
+      catalog: catalogValue,
+      executionGuard: executionGuardValue,
+      commandJournal: buildCommandJournalSnapshot(commandJournalState),
+      correctiveActions
+    });
+
+  const appendExecutionJournal = ({ request, reasonCode, commandMode = 'UNKNOWN', commandIdOverride }) => {
+    const confirmation = isObject(request?.confirmation) ? request.confirmation : {};
+    const approver = normalizeText(
+      confirmation.secondActor ??
+        confirmation.approvedBy ??
+        confirmation.approver ??
+        request?.approvedBy ??
+        request?.approver
+    );
+
+    appendCommandJournalEntry(commandJournalState, {
+      commandId:
+        normalizeIdentifier(commandIdOverride ?? request?.commandId ?? request?.id ?? request?.command) || 'unknown',
+      mode: normalizeText(String(commandMode ?? 'UNKNOWN')).toUpperCase() || 'UNKNOWN',
+      actor: normalizeText(String(request?.role ?? payload.role ?? 'UNKNOWN')).toUpperCase() || 'UNKNOWN',
+      approver: approver || null,
+      result: reasonCode === 'OK' ? 'ALLOWED' : 'BLOCKED',
+      reasonCode,
+      dryRun: request?.dryRun !== false,
+      idempotencyKey: normalizeText(String(request?.idempotencyKey ?? request?.idempotency_key ?? '')) || null,
+      retryCount: normalizeJournalInteger(request?.retryCount ?? request?.retry ?? 0, 0),
+      timeoutMs: normalizeJournalInteger(request?.timeoutMs ?? request?.timeout ?? 0, 0),
+      timestamp: normalizeJournalTimestamp(request?.timestamp ?? request?.requestedAt)
+    });
+  };
+
+  if (!commandJournalState.valid) {
+    return buildResultWithJournal({
+      allowed: false,
+      reasonCode: 'COMMAND_JOURNAL_TAMPER_DETECTED',
+      reason: 'Journal append-only invalide: intégrité rompue.',
+      diagnosticsValue: {
+        ...diagnostics,
+        commandJournalIntegrity: 'invalid',
+        commandJournalFailureReason: commandJournalState.reason
+      }
+    });
+  }
+
   if (enforceSignedActiveProjectRoot && executionRequests.length > 0) {
+    const firstRequest = executionRequests[0];
+
     if (activeProjectRootSignature.length === 0) {
-      return createResult({
+      appendExecutionJournal({
+        request: firstRequest,
+        reasonCode: 'ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED',
+        commandIdOverride: firstRequest?.commandId ?? firstRequest?.id ?? firstRequest?.command
+      });
+
+      return buildResultWithJournal({
         allowed: false,
         reasonCode: 'ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED',
         reason: 'Signature active_project_root requise avant exécution.',
-        diagnostics
+        diagnosticsValue: diagnostics
       });
     }
 
     if (activeProjectRootSignature !== expectedActiveProjectRootSignature) {
-      return createResult({
+      appendExecutionJournal({
+        request: firstRequest,
+        reasonCode: 'ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID',
+        commandIdOverride: firstRequest?.commandId ?? firstRequest?.id ?? firstRequest?.command
+      });
+
+      return buildResultWithJournal({
         allowed: false,
         reasonCode: 'ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID',
         reason: 'Signature active_project_root invalide ou altérée.',
-        diagnostics: {
+        diagnosticsValue: {
           ...diagnostics,
           activeProjectRootSignaturePrefix: activeProjectRootSignature.slice(0, 12),
           expectedSignaturePrefix: expectedActiveProjectRootSignature.slice(0, 12)
@@ -642,11 +858,12 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
 
     if (!commandById.has(commandId)) {
       diagnostics.outsideCatalogCount += 1;
-      return createResult({
+      appendExecutionJournal({ request, reasonCode: 'COMMAND_OUTSIDE_CATALOG', commandIdOverride: commandId });
+      return buildResultWithJournal({
         allowed: false,
         reasonCode: 'COMMAND_OUTSIDE_CATALOG',
         reason: `Commande hors catalogue: ${commandId || 'unknown'}.`,
-        diagnostics
+        diagnosticsValue: diagnostics
       });
     }
 
@@ -678,13 +895,16 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
         diagnostics.criticalRoleViolations += 1;
       }
 
-      return createResult({
+      const reasonCode = isCriticalRoleViolation ? 'CRITICAL_ACTION_ROLE_REQUIRED' : 'ROLE_PERMISSION_REQUIRED';
+      appendExecutionJournal({ request, reasonCode, commandMode: catalogEntry.mode });
+
+      return buildResultWithJournal({
         allowed: false,
-        reasonCode: isCriticalRoleViolation ? 'CRITICAL_ACTION_ROLE_REQUIRED' : 'ROLE_PERMISSION_REQUIRED',
+        reasonCode,
         reason: isCriticalRoleViolation
           ? `Rôle non autorisé pour action critique ${commandId}.`
           : `Rôle non autorisé pour commande ${commandId}.`,
-        diagnostics: {
+        diagnosticsValue: {
           ...diagnostics,
           commandId,
           commandMode: catalogEntry.mode,
@@ -700,11 +920,17 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       if (!doubleConfirmation.provided) {
         diagnostics.doubleConfirmationMissingCount += 1;
 
-        return createResult({
+        appendExecutionJournal({
+          request,
+          reasonCode: 'DOUBLE_CONFIRMATION_REQUIRED',
+          commandMode: catalogEntry.mode
+        });
+
+        return buildResultWithJournal({
           allowed: false,
           reasonCode: 'DOUBLE_CONFIRMATION_REQUIRED',
           reason: `Double confirmation requise pour action critique ${commandId}.`,
-          diagnostics: {
+          diagnosticsValue: {
             ...diagnostics,
             commandId,
             doubleConfirmation,
@@ -721,11 +947,17 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       if (!doubleConfirmation.distinctActors) {
         diagnostics.doubleConfirmationConflictCount += 1;
 
-        return createResult({
+        appendExecutionJournal({
+          request,
+          reasonCode: 'DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED',
+          commandMode: catalogEntry.mode
+        });
+
+        return buildResultWithJournal({
           allowed: false,
           reasonCode: 'DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED',
           reason: `Les deux confirmateurs doivent être distincts pour ${commandId}.`,
-          diagnostics: {
+          diagnosticsValue: {
             ...diagnostics,
             commandId,
             doubleConfirmation,
@@ -757,11 +989,17 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
             ? `${baseReason} Impact hors projet actif détecté.`
             : baseReason;
 
-      return createResult({
+      appendExecutionJournal({
+        request,
+        reasonCode: 'DRY_RUN_REQUIRED_FOR_WRITE',
+        commandMode: catalogEntry.mode
+      });
+
+      return buildResultWithJournal({
         allowed: false,
         reasonCode: 'DRY_RUN_REQUIRED_FOR_WRITE',
         reason: reasonWithImpactHint,
-        diagnostics: {
+        diagnosticsValue: {
           ...diagnostics,
           commandId,
           impactPreview: {
@@ -777,11 +1015,17 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     const parameterValidation = validateExecutionArguments(catalogEntry.parameters, request?.args ?? {});
 
     if (!parameterValidation.valid) {
-      return createResult({
+      appendExecutionJournal({
+        request,
+        reasonCode: parameterValidation.reasonCode,
+        commandMode: catalogEntry.mode
+      });
+
+      return buildResultWithJournal({
         allowed: false,
         reasonCode: parameterValidation.reasonCode,
         reason: parameterValidation.reason,
-        diagnostics: {
+        diagnosticsValue: {
           ...diagnostics,
           commandId,
           ...(parameterValidation.diagnostics ?? {})
@@ -790,6 +1034,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     }
 
     diagnostics.validatedExecutions += 1;
+    appendExecutionJournal({ request, reasonCode: 'OK', commandMode: catalogEntry.mode });
   }
 
   const executionGuard = {
@@ -806,15 +1051,15 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       !enforceSignedActiveProjectRoot || activeProjectRootSignature === expectedActiveProjectRootSignature
   };
 
-  return createResult({
+  return buildResultWithJournal({
     allowed: true,
     reasonCode: 'OK',
     reason: 'Catalogue allowlist versionné valide et exécutions contrôlées.',
-    diagnostics,
-    catalog: {
+    diagnosticsValue: diagnostics,
+    catalogValue: {
       version,
       commands
     },
-    executionGuard
+    executionGuardValue: executionGuard
   });
 }
