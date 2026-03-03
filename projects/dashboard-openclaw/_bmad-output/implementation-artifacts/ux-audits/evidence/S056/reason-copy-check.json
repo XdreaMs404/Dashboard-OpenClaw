@@ -1,0 +1,37 @@
+{
+  "storyId": "S056",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_VALIDATED_DECISION_COST_INPUT",
+      "reasonCode": "INVALID_AQCD_VALIDATED_DECISION_COST_INPUT",
+      "reason": "Entrée S056 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_VALIDATED_DECISION_COST_INPUT_STRUCTURE"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_PHASE_WASTE_RATIO_REQUIRED",
+      "reasonCode": "AQCD_PHASE_WASTE_RATIO_REQUIRED",
+      "reason": "S056 requiert la mesure du waste ratio par phase (FR-053).",
+      "correctiveActions": [
+        "ADD_PHASE_WASTE_RATIO_SERIES"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_WASTE_RATIO_ALERT_REQUIRED",
+      "reasonCode": "AQCD_WASTE_RATIO_ALERT_REQUIRED",
+      "reason": "Dérive waste ratio détectée: configuration d’alerte requise (wasteAlerting.enabled + channels).",
+      "correctiveActions": [
+        "CONFIGURE_WASTE_RATIO_ALERTING"
+      ]
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Coût moyen par décision validée calculé, waste ratio par phase monitoré et alertes dérive actives.",
+      "correctiveActions": [],
+      "averageCostPerValidatedDecision": 2.05
+    }
+  ],
+  "status": "validated"
+}

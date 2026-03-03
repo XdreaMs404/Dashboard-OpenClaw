@@ -1,0 +1,82 @@
+{
+  "storyId": "S056",
+  "runAt": "2026-03-03T16:36:17.027Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S056/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "hasAlertRole": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "cost": 0,
+        "waste": 0,
+        "alerts": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S056/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "hasAlertRole": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "cost": 0,
+        "waste": 0,
+        "alerts": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S056/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "hasAlertRole": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "cost": 0,
+        "waste": 0,
+        "alerts": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
