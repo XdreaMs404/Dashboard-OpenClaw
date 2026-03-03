@@ -1,0 +1,44 @@
+{
+  "storyId": "S059",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_SPONSOR_VIEW_INPUT",
+      "reasonCode": "INVALID_AQCD_SPONSOR_VIEW_INPUT",
+      "reason": "Entrée S059 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_SPONSOR_VIEW_INPUT_STRUCTURE"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_FORMULA_SOURCE_MISSING",
+      "reasonCode": "AQCD_FORMULA_SOURCE_MISSING",
+      "reason": "Source manquante pour autonomy.A1.",
+      "correctiveActions": [
+        "LINK_AQCD_SOURCE_REFERENCES"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_SPONSOR_SNAPSHOT_HISTORY_REQUIRED",
+      "reasonCode": "AQCD_SPONSOR_SNAPSHOT_HISTORY_REQUIRED",
+      "reason": "Historique snapshots insuffisant: 3 snapshots minimum requis (FR-046).",
+      "correctiveActions": [
+        "ADD_SPONSOR_PERIODIC_SNAPSHOTS"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_SNAPSHOT_CONTINUITY_GAP",
+      "reasonCode": "AQCD_SNAPSHOT_CONTINUITY_GAP",
+      "reason": "Continuité snapshots AQCD rompue: maxGapMs=777600000 > allowedGapMs=172800000.",
+      "correctiveActions": [
+        "RESTORE_AQCD_SNAPSHOT_CADENCE"
+      ]
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Vue exécutive sponsor simplifiée prête: scores AQCD sourcés et tendance périodique visibles.",
+      "correctiveActions": []
+    }
+  ],
+  "status": "validated"
+}

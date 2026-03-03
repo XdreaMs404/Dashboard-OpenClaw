@@ -1,0 +1,10 @@
+{
+  "storyId": "S059",
+  "states": [
+    "empty",
+    "loading",
+    "error",
+    "success"
+  ],
+  "status": "validated"
+}
