@@ -1,0 +1,42 @@
+{
+  "storyId": "S051",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_READINESS_INPUT",
+      "reasonCode": "INVALID_AQCD_READINESS_INPUT",
+      "reason": "Entrée S051 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_READINESS_INPUT_STRUCTURE"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_COMPARATIVE_SNAPSHOTS_REQUIRED",
+      "reasonCode": "AQCD_COMPARATIVE_SNAPSHOTS_REQUIRED",
+      "reason": "Comparatif S050 indisponible: au moins 2 snapshots AQCD sont requis.",
+      "correctiveActions": [
+        "ADD_AQCD_PERIODIC_SNAPSHOTS"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_READINESS_THRESHOLD_UNMET",
+      "reasonCode": "AQCD_READINESS_THRESHOLD_UNMET",
+      "reason": "Readiness S051 insuffisant: 59.5 < 70.",
+      "correctiveActions": [
+        "IMPROVE_AQCD_READINESS_FACTORS"
+      ],
+      "recommendations": 2
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Readiness score rule-based v1 validé (S051).",
+      "correctiveActions": [],
+      "readiness": {
+        "score": 97,
+        "threshold": 70,
+        "met": true
+      }
+    }
+  ],
+  "status": "validated"
+}

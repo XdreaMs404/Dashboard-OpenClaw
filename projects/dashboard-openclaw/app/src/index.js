@@ -39,6 +39,7 @@ import { buildGateReportExport } from './gate-report-export.js';
 import { bridgeUxEvidenceToG4 } from './g4-ux-evidence-bridge.js';
 import { buildAqcdExplainableScoreboard } from './aqcd-scoreboard.js';
 import { buildAqcdSnapshotComparisons } from './aqcd-snapshot-comparisons.js';
+import { buildAqcdReadinessRules } from './aqcd-readiness-rules.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -75,6 +76,7 @@ export {
   bridgeUxEvidenceToG4,
   buildAqcdExplainableScoreboard,
   buildAqcdSnapshotComparisons,
+  buildAqcdReadinessRules,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

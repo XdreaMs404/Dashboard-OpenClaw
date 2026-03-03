@@ -1,0 +1,106 @@
+{
+  "storyId": "S051",
+  "runAt": "2026-03-03T08:13:16.356Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S051/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Readiness score rule-based v1 validé (S051).",
+      "diagnostics": "ref=S051 | readiness=97 | threshold=70 | rules=S051-v1",
+      "readiness": "score=97 | threshold=70 | met=true | band=INDUSTRIAL",
+      "recommendations": "count=0 | firstAction=— | firstOwner=— | firstEvidence=—",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "readiness": 0,
+        "recommendations": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S051/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Readiness score rule-based v1 validé (S051).",
+      "diagnostics": "ref=S051 | readiness=97 | threshold=70 | rules=S051-v1",
+      "readiness": "score=97 | threshold=70 | met=true | band=INDUSTRIAL",
+      "recommendations": "count=0 | firstAction=— | firstOwner=— | firstEvidence=—",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "readiness": 0,
+        "recommendations": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S051/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Readiness score rule-based v1 validé (S051).",
+      "diagnostics": "ref=S051 | readiness=97 | threshold=70 | rules=S051-v1",
+      "readiness": "score=97 | threshold=70 | met=true | band=INDUSTRIAL",
+      "recommendations": "count=0 | firstAction=— | firstOwner=— | firstEvidence=—",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "readiness": 0,
+        "recommendations": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

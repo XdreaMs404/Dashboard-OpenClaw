@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/aqcd-readiness-rules.spec.js:326:1 › aqcd readiness v1 demo remains readable without horizontal overflow on mobile/tablet/desktop (866ms)
+  ✓  1 [chromium] › tests/e2e/aqcd-readiness-rules.spec.js:284:1 › aqcd readiness v1 demo covers empty/loading/error/success with readiness factors and recommendations (2.1s)
+
+  2 passed (3.4s)
