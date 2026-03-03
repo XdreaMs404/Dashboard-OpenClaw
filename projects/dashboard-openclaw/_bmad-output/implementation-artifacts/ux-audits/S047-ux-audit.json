@@ -1,0 +1,45 @@
+{
+  "storyId": "S047",
+  "epicId": "E04",
+  "verdict": "PASS",
+  "g4Ux": "PASS",
+  "reviewer": "ux-qa-auditor",
+  "wcagTarget": "2.2-AA",
+  "scores": {
+    "D1": 94,
+    "D2": 95,
+    "D3": 93,
+    "D4": 94,
+    "D5": 92,
+    "D6": 92,
+    "designExcellence": 93
+  },
+  "checks": {
+    "designSystemCompliance": true,
+    "accessibilityAA": true,
+    "responsiveCoverage": true,
+    "interactionStates": true,
+    "visualHierarchy": true,
+    "perceivedPerformance": true
+  },
+  "stateCoverage": {
+    "loading": true,
+    "empty": true,
+    "error": true,
+    "success": true
+  },
+  "evidence": [
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S047/vitest-s047.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S047/playwright-s047.log",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S047/state-flow-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S047/reason-copy-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S047/responsive-check.json",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S047/responsive-mobile.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S047/responsive-tablet.png",
+    "_bmad-output/implementation-artifacts/ux-audits/evidence/S047/responsive-desktop.png"
+  ],
+  "issues": [],
+  "requiredFixes": [],
+  "notes": "Audit UX S047 PASS: override policy avec approbation nominative + template validé lisibles côté UX, états empty/loading/error/success validés, rendu responsive sans overflow mobile/tablette/desktop.",
+  "updatedAt": "2026-03-03T03:18:00Z"
+}
