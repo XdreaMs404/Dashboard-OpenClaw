@@ -37,6 +37,7 @@ import { buildSimulationTrendSnapshot } from './gate-simulation-trends.js';
 import { buildGateVerdictTrendsTable } from './gate-verdict-trends-table.js';
 import { buildGateReportExport } from './gate-report-export.js';
 import { bridgeUxEvidenceToG4 } from './g4-ux-evidence-bridge.js';
+import { buildAqcdExplainableScoreboard } from './aqcd-scoreboard.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -71,6 +72,7 @@ export {
   buildGateVerdictTrendsTable,
   buildGateReportExport,
   bridgeUxEvidenceToG4,
+  buildAqcdExplainableScoreboard,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

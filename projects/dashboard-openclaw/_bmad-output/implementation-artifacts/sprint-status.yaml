@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-03-03T05:16:00Z"
+updated_at_utc: "2026-03-03T06:16:08Z"
 
 development_status:
   epic-1: done
@@ -65,8 +65,8 @@ development_status:
   4-48-bibliotheque-templates-de-commandes-validees: done
   epic-4-retrospective: done
 
-  epic-5: backlog
-  5-49-tableau-aqcd-explicable-formule-source: backlog
+  epic-5: in-progress
+  5-49-tableau-aqcd-explicable-formule-source: done
   5-50-snapshots-aqcd-periodiques-et-comparatifs: backlog
   5-51-readiness-score-rule-based-v1: backlog
   5-52-top-3-actions-prioritaires-par-gate: backlog

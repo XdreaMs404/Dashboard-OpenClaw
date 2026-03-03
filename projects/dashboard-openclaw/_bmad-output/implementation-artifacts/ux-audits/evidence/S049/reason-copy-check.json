@@ -1,0 +1,91 @@
+{
+  "storyId": "S049",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_SCOREBOARD_INPUT",
+      "reasonCode": "INVALID_AQCD_SCOREBOARD_INPUT",
+      "reason": "Entrée AQCD invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_INPUT_STRUCTURE"
+      ],
+      "diagnostics": {}
+    },
+    {
+      "expectedCode": "AQCD_FORMULA_SOURCE_MISSING",
+      "reasonCode": "AQCD_FORMULA_SOURCE_MISSING",
+      "reason": "Source manquante pour qualityTech.Q3.",
+      "correctiveActions": [
+        "LINK_AQCD_SOURCE_REFERENCES"
+      ],
+      "diagnostics": {
+        "dimension": "qualityTech",
+        "metricsKey": "qualityTech"
+      }
+    },
+    {
+      "expectedCode": "AQCD_LATENCY_BUDGET_EXCEEDED",
+      "reasonCode": "AQCD_LATENCY_BUDGET_EXCEEDED",
+      "reason": "Latence p95 AQCD hors budget: 2800ms > 2500ms.",
+      "correctiveActions": [
+        "OPTIMIZE_AQCD_PROJECTION_LATENCY"
+      ],
+      "diagnostics": {
+        "window": "story",
+        "windowRef": "S049",
+        "band": "STABLE",
+        "bandOrder": [
+          "NON_ACCEPTABLE",
+          "FRAGILE",
+          "STABLE",
+          "INDUSTRIAL"
+        ],
+        "scores": {
+          "autonomy": 89,
+          "qualityTech": 84.4,
+          "costEfficiency": 75.4,
+          "designExcellence": 86.7,
+          "global": 84.33
+        },
+        "baselineTarget": 65,
+        "baselineMet": true,
+        "latencyBudgetMs": 2500,
+        "p95LatencyMs": 2800,
+        "latencyBudgetMet": false,
+        "snapshotCount": 1
+      }
+    },
+    {
+      "expectedCode": "AQCD_BASELINE_BELOW_TARGET",
+      "reasonCode": "AQCD_BASELINE_BELOW_TARGET",
+      "reason": "Readiness AQCD insuffisant: 20 < baseline 65.",
+      "correctiveActions": [
+        "IMPROVE_AQCD_READINESS_SCORE"
+      ],
+      "diagnostics": {
+        "window": "story",
+        "windowRef": "S049",
+        "band": "NON_ACCEPTABLE",
+        "bandOrder": [
+          "NON_ACCEPTABLE",
+          "FRAGILE",
+          "STABLE",
+          "INDUSTRIAL"
+        ],
+        "scores": {
+          "autonomy": 20,
+          "qualityTech": 20,
+          "costEfficiency": 20,
+          "designExcellence": 20,
+          "global": 20
+        },
+        "baselineTarget": 65,
+        "baselineMet": false,
+        "latencyBudgetMs": 2500,
+        "p95LatencyMs": 2100,
+        "latencyBudgetMet": true,
+        "snapshotCount": 1
+      }
+    }
+  ],
+  "status": "validated"
+}

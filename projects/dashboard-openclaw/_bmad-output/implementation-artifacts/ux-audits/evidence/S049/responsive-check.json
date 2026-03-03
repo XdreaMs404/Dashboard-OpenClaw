@@ -1,0 +1,106 @@
+{
+  "storyId": "S049",
+  "runAt": "2026-03-03T06:05:03.610Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S049/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Tableau AQCD explicable validé (formule + source + snapshots).",
+      "diagnostics": "window=story | ref=S049 | global=84.33 | baselineMet=true | p95=2100",
+      "formula": "global=qualityTech×scoreWeights.qualityTech + designExcellence×scoreWeights.designExcellence + autonomy×scoreWeights.autonomy + costEfficiency×scoreWeights.costEfficiency | autonomy=A1×0.35 + A2×0.25 + A3×0.20 + A4×0.20",
+      "snapshots": "series=1 | prev=75.8 | delta=8.53 | direction=up",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "formula": 0,
+        "snapshots": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S049/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Tableau AQCD explicable validé (formule + source + snapshots).",
+      "diagnostics": "window=story | ref=S049 | global=84.33 | baselineMet=true | p95=2100",
+      "formula": "global=qualityTech×scoreWeights.qualityTech + designExcellence×scoreWeights.designExcellence + autonomy×scoreWeights.autonomy + costEfficiency×scoreWeights.costEfficiency | autonomy=A1×0.35 + A2×0.25 + A3×0.20 + A4×0.20",
+      "snapshots": "series=1 | prev=75.8 | delta=8.53 | direction=up",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "formula": 0,
+        "snapshots": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S049/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Tableau AQCD explicable validé (formule + source + snapshots).",
+      "diagnostics": "window=story | ref=S049 | global=84.33 | baselineMet=true | p95=2100",
+      "formula": "global=qualityTech×scoreWeights.qualityTech + designExcellence×scoreWeights.designExcellence + autonomy×scoreWeights.autonomy + costEfficiency×scoreWeights.costEfficiency | autonomy=A1×0.35 + A2×0.25 + A3×0.20 + A4×0.20",
+      "snapshots": "series=1 | prev=75.8 | delta=8.53 | direction=up",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "formula": 0,
+        "snapshots": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

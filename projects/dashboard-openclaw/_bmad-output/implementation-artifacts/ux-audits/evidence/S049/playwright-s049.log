@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/aqcd-scoreboard.spec.js:296:1 › aqcd scoreboard demo remains readable without horizontal overflow on mobile/tablet/desktop (834ms)
+  ✓  2 [chromium] › tests/e2e/aqcd-scoreboard.spec.js:254:1 › aqcd scoreboard demo covers empty/loading/error/success with formula and source transparency (1.8s)
+
+  2 passed (3.2s)
