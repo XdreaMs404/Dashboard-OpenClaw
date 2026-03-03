@@ -275,6 +275,7 @@ describe('command-allowlist-catalog unit', () => {
           secondActor: 'pm.owner',
           confirmationId: 'CONF-S040-002'
         },
+        idempotencyKey: 'IK-S044-ALLOW-001',
         args: { reason: 'incident-critical' }
       }
     ];
@@ -422,6 +423,196 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.allowed).toBe(false);
     expect(result.reasonCode).toBe('COMMAND_JOURNAL_TAMPER_DETECTED');
     expect(result.correctiveActions).toContain('RESTORE_APPEND_ONLY_COMMAND_JOURNAL');
+  });
+
+  it('enforces max timeout policy for command runs (S044/FR-040)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S044-001'
+        },
+        idempotencyKey: 'IK-S044-TIMEOUT-001',
+        timeoutMs: 120001,
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('TIMEOUT_POLICY_VIOLATION');
+    expect(result.correctiveActions).toContain('ALIGN_TIMEOUT_POLICY');
+  });
+
+  it('enforces bounded retries for command runs (S044/FR-040)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        idempotencyKey: 'IK-S044-RETRY-001',
+        retryCount: 4,
+        args: { verbose: true }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('RETRY_POLICY_VIOLATION');
+    expect(result.correctiveActions).toContain('ALIGN_RETRY_POLICY');
+  });
+
+  it('requires idempotency key for apply/retry command runs (S044/FR-040)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S044-002'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('IDEMPOTENCY_KEY_REQUIRED');
+    expect(result.correctiveActions).toContain('SET_IDEMPOTENCY_KEY');
+  });
+
+  it('allows replay with same idempotency key when payload is identical (S044/FR-040)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        idempotencyKey: 'IK-S044-REPLAY-001',
+        retryCount: 1,
+        args: { verbose: true }
+      },
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        idempotencyKey: 'IK-S044-REPLAY-001',
+        retryCount: 1,
+        args: { verbose: true }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+    expect(result.diagnostics.idempotencyReplayCount).toBe(1);
+  });
+
+  it('blocks idempotency key reuse with divergent payloads (S044/S01)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        idempotencyKey: 'IK-S044-CONFLICT-001',
+        retryCount: 1,
+        args: { verbose: true }
+      },
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        idempotencyKey: 'IK-S044-CONFLICT-001',
+        retryCount: 1,
+        args: { verbose: false }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('IDEMPOTENCY_KEY_REUSE_CONFLICT');
+    expect(result.correctiveActions).toContain('ROTATE_IDEMPOTENCY_KEY');
+  });
+
+  it('sequences concurrent requests with priority and capacity slots (S044/FR-041)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        priority: 'low',
+        args: { verbose: true }
+      },
+      {
+        commandId: 'story.patch',
+        dryRun: true,
+        role: 'DEV',
+        priority: 'high',
+        args: { sid: 'S040', status: 'OPEN' }
+      },
+      {
+        commandId: 'runtime.kill',
+        dryRun: true,
+        role: 'ADMIN',
+        priority: 'critical',
+        args: { reason: 'maintenance' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, { executionCapacity: 2 });
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+    expect(result.executionGuard.sequencingPolicyCompliant).toBe(true);
+    expect(result.diagnostics.scheduledCommandOrder.map((entry) => entry.commandId)).toEqual([
+      'runtime.kill',
+      'story.patch',
+      'status.read'
+    ]);
+    expect(result.diagnostics.scheduledCommandOrder.map((entry) => entry.capacitySlot)).toEqual([1, 2, 1]);
+  });
+
+  it('rejects scheduling metadata that conflicts with computed capacity order (S044/FR-041)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        priority: 'low',
+        queuePosition: 1,
+        args: { verbose: true }
+      },
+      {
+        commandId: 'runtime.kill',
+        dryRun: true,
+        role: 'ADMIN',
+        priority: 'critical',
+        args: { reason: 'maintenance' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, { executionCapacity: 1 });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('EXECUTION_CAPACITY_EXCEEDED');
+    expect(result.correctiveActions).toContain('SEQUENCE_WITH_AVAILABLE_CAPACITY');
   });
 
   it('blocks unsafe parameter values to reduce shell-injection risk (S02)', () => {

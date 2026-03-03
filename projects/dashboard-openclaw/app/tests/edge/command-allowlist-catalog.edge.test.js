@@ -235,6 +235,7 @@ describe('command-allowlist-catalog edge', () => {
           secondActor: 'pm.owner',
           confirmationId: 'CONF-S040-EDGE-001'
         },
+        idempotencyKey: 'IK-S044-EDGE-ALLOW-001',
         args: { reason: 'incident-critical' }
       }
     ];
@@ -284,6 +285,83 @@ describe('command-allowlist-catalog edge', () => {
     expect(result.allowed).toBe(false);
     expect(result.reasonCode).toBe('COMMAND_JOURNAL_TAMPER_DETECTED');
     expect(result.correctiveActions).toContain('RESTORE_APPEND_ONLY_COMMAND_JOURNAL');
+  });
+
+  it('rejects run timeout above policy threshold (S044)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S044-EDGE-002'
+        },
+        idempotencyKey: 'IK-S044-EDGE-TIMEOUT-001',
+        timeoutMs: 150000,
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('TIMEOUT_POLICY_VIOLATION');
+  });
+
+  it('rejects idempotency key reuse when payload differs (S044)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        idempotencyKey: 'IK-S044-EDGE-CONFLICT-001',
+        retryCount: 1,
+        args: { verbose: true }
+      },
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        idempotencyKey: 'IK-S044-EDGE-CONFLICT-001',
+        retryCount: 1,
+        args: { verbose: false }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input);
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('IDEMPOTENCY_KEY_REUSE_CONFLICT');
+  });
+
+  it('rejects manual queue position mismatch against computed sequencing (S044)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        priority: 'low',
+        queuePosition: 1,
+        args: { verbose: true }
+      },
+      {
+        commandId: 'runtime.kill',
+        dryRun: true,
+        role: 'ADMIN',
+        priority: 'critical',
+        args: { reason: 'maintenance' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, { executionCapacity: 1 });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('EXECUTION_CAPACITY_EXCEEDED');
   });
 
   it('rejects enum mismatch in command arguments', () => {

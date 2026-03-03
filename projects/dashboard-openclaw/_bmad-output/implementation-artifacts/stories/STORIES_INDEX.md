@@ -45,7 +45,7 @@
 | S041 | E04 | Contrôle RBAC avant exécution | DONE |
 | S042 | E04 | Contexte actif signé active_project_root | DONE |
 | S043 | E04 | Journal append-only des commandes | DONE |
-| S044 | E04 | Timeout/retry/idempotency key pilotés | TODO |
+| S044 | E04 | Timeout/retry/idempotency key pilotés | DONE |
 | S045 | E04 | Ordonnancement concurrent et backpressure | TODO |
 | S046 | E04 | Kill-switch opérationnel immédiat | TODO |
 | S047 | E04 | Override policy avec approbation nominative | TODO |

@@ -17,6 +17,11 @@ const REASON_CODES = Object.freeze([
   'ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED',
   'ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID',
   'COMMAND_JOURNAL_TAMPER_DETECTED',
+  'TIMEOUT_POLICY_VIOLATION',
+  'RETRY_POLICY_VIOLATION',
+  'IDEMPOTENCY_KEY_REQUIRED',
+  'IDEMPOTENCY_KEY_REUSE_CONFLICT',
+  'EXECUTION_CAPACITY_EXCEEDED',
   'INVALID_PARAMETER_VALUE',
   'UNSAFE_PARAMETER_VALUE'
 ]);
@@ -38,12 +43,39 @@ const DEFAULT_CORRECTIVE_ACTIONS = Object.freeze({
   ACTIVE_PROJECT_ROOT_SIGNATURE_REQUIRED: ['SIGN_ACTIVE_PROJECT_ROOT_CONTEXT'],
   ACTIVE_PROJECT_ROOT_SIGNATURE_INVALID: ['REGENERATE_ACTIVE_PROJECT_ROOT_SIGNATURE'],
   COMMAND_JOURNAL_TAMPER_DETECTED: ['RESTORE_APPEND_ONLY_COMMAND_JOURNAL'],
+  TIMEOUT_POLICY_VIOLATION: ['ALIGN_TIMEOUT_POLICY'],
+  RETRY_POLICY_VIOLATION: ['ALIGN_RETRY_POLICY'],
+  IDEMPOTENCY_KEY_REQUIRED: ['SET_IDEMPOTENCY_KEY'],
+  IDEMPOTENCY_KEY_REUSE_CONFLICT: ['ROTATE_IDEMPOTENCY_KEY'],
+  EXECUTION_CAPACITY_EXCEEDED: ['SEQUENCE_WITH_AVAILABLE_CAPACITY'],
   INVALID_PARAMETER_VALUE: ['FIX_PARAMETER_VALUES'],
   UNSAFE_PARAMETER_VALUE: ['SANITIZE_COMMAND_PARAMETERS']
 });
 
 const UNSAFE_VALUE_PATTERN = /(;|&&|\|\||`|\$\(|\n|\r)/;
 const DEFAULT_ACTIVE_PROJECT_ROOT_SIGNING_SECRET = 'bmad-active-project-root-signature-v1';
+const DEFAULT_MAX_TIMEOUT_MS = 120000;
+const DEFAULT_MAX_RETRY_COUNT = 3;
+const DEFAULT_EXECUTION_CAPACITY = 1;
+
+const PRIORITY_WEIGHT_BY_MODE = Object.freeze({
+  CRITICAL: 0,
+  WRITE: 1,
+  READ: 2
+});
+
+const PRIORITY_WEIGHT_BY_LABEL = Object.freeze({
+  p0: 0,
+  critical: 0,
+  urgent: 0,
+  high: 1,
+  p1: 1,
+  normal: 2,
+  medium: 2,
+  p2: 2,
+  low: 3,
+  p3: 3
+});
 
 function isObject(value) {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
@@ -300,6 +332,125 @@ function buildCommandJournalSnapshot(journalState) {
     lastHash: journalState.lastHash,
     entries: journalState.entries.map((entry) => ({ ...entry }))
   };
+}
+
+function normalizePolicyInteger(value, fallback, minimum, maximum) {
+  const parsed = Number(value);
+
+  if (!Number.isFinite(parsed)) {
+    return fallback;
+  }
+
+  const rounded = Math.trunc(parsed);
+  return Math.min(maximum, Math.max(minimum, rounded));
+}
+
+function resolveExecutionPolicy(runtimeOptions, payload) {
+  const maxTimeoutMs = normalizePolicyInteger(
+    runtimeOptions.maxTimeoutMs ?? payload.maxTimeoutMs ?? DEFAULT_MAX_TIMEOUT_MS,
+    DEFAULT_MAX_TIMEOUT_MS,
+    1000,
+    DEFAULT_MAX_TIMEOUT_MS
+  );
+
+  const maxRetryCount = normalizePolicyInteger(
+    runtimeOptions.maxRetryCount ?? payload.maxRetryCount ?? DEFAULT_MAX_RETRY_COUNT,
+    DEFAULT_MAX_RETRY_COUNT,
+    0,
+    10
+  );
+
+  const executionCapacity = normalizePolicyInteger(
+    runtimeOptions.executionCapacity ?? payload.executionCapacity ?? DEFAULT_EXECUTION_CAPACITY,
+    DEFAULT_EXECUTION_CAPACITY,
+    1,
+    32
+  );
+
+  return {
+    maxTimeoutMs,
+    maxRetryCount,
+    executionCapacity
+  };
+}
+
+function resolvePriorityWeight(priorityValue, mode) {
+  if (typeof priorityValue === 'number' && Number.isFinite(priorityValue)) {
+    return normalizePolicyInteger(priorityValue, PRIORITY_WEIGHT_BY_MODE[mode] ?? 2, 0, 9);
+  }
+
+  const label = normalizeText(String(priorityValue ?? '')).toLowerCase();
+  if (label.length > 0 && PRIORITY_WEIGHT_BY_LABEL[label] !== undefined) {
+    return PRIORITY_WEIGHT_BY_LABEL[label];
+  }
+
+  return PRIORITY_WEIGHT_BY_MODE[mode] ?? 2;
+}
+
+function resolveExecutionSchedule(executionRequests, commandById, executionCapacity) {
+  return executionRequests
+    .map((request, originalIndex) => {
+      const commandId = normalizeIdentifier(request?.commandId ?? request?.id ?? request?.command);
+      const commandMode = commandById.get(commandId)?.mode ?? 'UNKNOWN';
+      const priorityWeight = resolvePriorityWeight(
+        request?.priority ?? request?.queuePriority ?? request?.runPriority,
+        commandMode
+      );
+
+      return {
+        request,
+        originalIndex,
+        commandId,
+        commandMode,
+        priorityWeight
+      };
+    })
+    .sort((left, right) => left.priorityWeight - right.priorityWeight || left.originalIndex - right.originalIndex)
+    .map((entry, index) => ({
+      ...entry,
+      queuePosition: index + 1,
+      capacitySlot: (index % executionCapacity) + 1
+    }));
+}
+
+function normalizeIdempotencyKey(value) {
+  return normalizeText(String(value ?? ''));
+}
+
+function canonicalizeValue(value) {
+  if (Array.isArray(value)) {
+    return value.map((entry) => canonicalizeValue(entry));
+  }
+
+  if (!isObject(value)) {
+    return value;
+  }
+
+  const output = {};
+  const keys = Object.keys(value).sort();
+
+  for (const key of keys) {
+    output[key] = canonicalizeValue(value[key]);
+  }
+
+  return output;
+}
+
+function buildIdempotencyFingerprint(request, commandId, commandMode) {
+  const args = isObject(request?.args) ? request.args : {};
+  const impactFiles = normalizeImpactFiles(request?.impactFiles ?? request?.impactedFiles ?? request?.preview?.files);
+
+  const payload = {
+    commandId,
+    commandMode,
+    dryRun: request?.dryRun !== false,
+    role: normalizeText(String(request?.role ?? '')).toUpperCase() || 'UNKNOWN',
+    args: canonicalizeValue(args),
+    impactFiles,
+    confirmation: canonicalizeValue(isObject(request?.confirmation) ? request.confirmation : {})
+  };
+
+  return JSON.stringify(payload);
 }
 
 function isPathWithinActiveProjectRoot(pathValue, activeProjectRoot) {
@@ -704,6 +855,12 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
   }
 
   const executionRequests = Array.isArray(payload.executionRequests) ? payload.executionRequests : [];
+  const executionPolicy = resolveExecutionPolicy(runtimeOptions, payload);
+  const scheduledExecutionRequests = resolveExecutionSchedule(
+    executionRequests,
+    commandById,
+    executionPolicy.executionCapacity
+  );
   const strictRoleCheck = runtimeOptions.strictRoleCheck !== false;
   const activeProjectRoot = normalizeActiveProjectRoot(
     runtimeOptions.activeProjectRoot ?? payload.activeProjectRoot
@@ -736,6 +893,18 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     writeCount: commands.filter((entry) => entry.mode === 'WRITE').length,
     criticalCount: commands.filter((entry) => entry.mode === 'CRITICAL').length,
     executionCount: executionRequests.length,
+    sequencedExecutionCount: scheduledExecutionRequests.length,
+    maxTimeoutMs: executionPolicy.maxTimeoutMs,
+    maxRetryCount: executionPolicy.maxRetryCount,
+    executionCapacity: executionPolicy.executionCapacity,
+    scheduledCommandOrder: scheduledExecutionRequests.map((entry) => ({
+      commandId: entry.commandId,
+      mode: entry.commandMode,
+      priorityWeight: entry.priorityWeight,
+      queuePosition: entry.queuePosition,
+      capacitySlot: entry.capacitySlot,
+      originalIndex: entry.originalIndex
+    })),
     activeProjectRoot: activeProjectRoot || null,
     activeProjectRootSigned: enforceSignedActiveProjectRoot
       ? activeProjectRootSignature.length > 0 && activeProjectRootSignature === expectedActiveProjectRootSignature
@@ -747,6 +916,12 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     doubleConfirmationMissingCount: 0,
     doubleConfirmationConflictCount: 0,
     doubleConfirmationSatisfiedCount: 0,
+    timeoutPolicyViolations: 0,
+    retryPolicyViolations: 0,
+    idempotencyRequiredCount: 0,
+    idempotencyReplayCount: 0,
+    idempotencyConflictCount: 0,
+    capacityViolations: 0,
     impactPreviewProvidedCount: 0,
     impactPreviewMissingCount: 0,
     impactPreviewOutsideProjectCount: 0,
@@ -852,9 +1027,58 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     }
   }
 
-  for (const request of executionRequests) {
-    const commandId = normalizeIdentifier(request?.commandId ?? request?.id ?? request?.command);
+  const idempotencyRegistry = new Map();
+
+  for (const scheduledRequest of scheduledExecutionRequests) {
+    const {
+      request,
+      commandId,
+      commandMode,
+      queuePosition,
+      capacitySlot,
+      originalIndex,
+      priorityWeight
+    } = scheduledRequest;
+
     const normalizedRole = normalizeText(String(request?.role ?? payload.role ?? '')).toUpperCase();
+
+    const requestedQueuePosition = Number(request?.queuePosition ?? request?.scheduledQueuePosition ?? NaN);
+    if (Number.isFinite(requestedQueuePosition) && Math.trunc(requestedQueuePosition) !== queuePosition) {
+      diagnostics.capacityViolations += 1;
+      appendExecutionJournal({ request, reasonCode: 'EXECUTION_CAPACITY_EXCEEDED', commandMode, commandIdOverride: commandId });
+      return buildResultWithJournal({
+        allowed: false,
+        reasonCode: 'EXECUTION_CAPACITY_EXCEEDED',
+        reason: `Ordonnancement invalide pour ${commandId || 'unknown'}: queuePosition attendue ${queuePosition}.`,
+        diagnosticsValue: {
+          ...diagnostics,
+          commandId,
+          queuePositionExpected: queuePosition,
+          queuePositionReceived: Math.trunc(requestedQueuePosition),
+          originalIndex,
+          priorityWeight
+        }
+      });
+    }
+
+    const requestedCapacitySlot = Number(request?.capacitySlot ?? request?.scheduledCapacitySlot ?? NaN);
+    if (Number.isFinite(requestedCapacitySlot) && Math.trunc(requestedCapacitySlot) !== capacitySlot) {
+      diagnostics.capacityViolations += 1;
+      appendExecutionJournal({ request, reasonCode: 'EXECUTION_CAPACITY_EXCEEDED', commandMode, commandIdOverride: commandId });
+      return buildResultWithJournal({
+        allowed: false,
+        reasonCode: 'EXECUTION_CAPACITY_EXCEEDED',
+        reason: `Capacité invalide pour ${commandId || 'unknown'}: slot attendu ${capacitySlot}.`,
+        diagnosticsValue: {
+          ...diagnostics,
+          commandId,
+          capacitySlotExpected: capacitySlot,
+          capacitySlotReceived: Math.trunc(requestedCapacitySlot),
+          originalIndex,
+          priorityWeight
+        }
+      });
+    }
 
     if (!commandById.has(commandId)) {
       diagnostics.outsideCatalogCount += 1;
@@ -863,13 +1087,83 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
         allowed: false,
         reasonCode: 'COMMAND_OUTSIDE_CATALOG',
         reason: `Commande hors catalogue: ${commandId || 'unknown'}.`,
-        diagnosticsValue: diagnostics
+        diagnosticsValue: {
+          ...diagnostics,
+          queuePosition,
+          capacitySlot,
+          originalIndex,
+          priorityWeight
+        }
       });
     }
 
     const catalogEntry = commandById.get(commandId);
     const requestDryRun = request?.dryRun !== false;
-    const impactFiles = resolveImpactFiles(request, catalogEntry);
+    const timeoutMs = normalizeJournalInteger(
+      request?.timeoutMs ?? request?.timeout ?? executionPolicy.maxTimeoutMs,
+      executionPolicy.maxTimeoutMs
+    );
+    const retryCount = normalizeJournalInteger(request?.retryCount ?? request?.retry ?? 0, 0);
+    const idempotencyKey = normalizeIdempotencyKey(request?.idempotencyKey ?? request?.idempotency_key);
+
+    const requestWithPolicy = {
+      ...request,
+      timeoutMs,
+      retryCount,
+      idempotencyKey
+    };
+
+    if (timeoutMs > executionPolicy.maxTimeoutMs) {
+      diagnostics.timeoutPolicyViolations += 1;
+      appendExecutionJournal({
+        request: requestWithPolicy,
+        reasonCode: 'TIMEOUT_POLICY_VIOLATION',
+        commandMode: catalogEntry.mode
+      });
+
+      return buildResultWithJournal({
+        allowed: false,
+        reasonCode: 'TIMEOUT_POLICY_VIOLATION',
+        reason: `Timeout max dépassé pour ${commandId}: ${timeoutMs}ms > ${executionPolicy.maxTimeoutMs}ms.`,
+        diagnosticsValue: {
+          ...diagnostics,
+          commandId,
+          timeoutMs,
+          maxTimeoutMs: executionPolicy.maxTimeoutMs,
+          queuePosition,
+          capacitySlot,
+          originalIndex,
+          priorityWeight
+        }
+      });
+    }
+
+    if (retryCount > executionPolicy.maxRetryCount) {
+      diagnostics.retryPolicyViolations += 1;
+      appendExecutionJournal({
+        request: requestWithPolicy,
+        reasonCode: 'RETRY_POLICY_VIOLATION',
+        commandMode: catalogEntry.mode
+      });
+
+      return buildResultWithJournal({
+        allowed: false,
+        reasonCode: 'RETRY_POLICY_VIOLATION',
+        reason: `Retry max dépassé pour ${commandId}: ${retryCount} > ${executionPolicy.maxRetryCount}.`,
+        diagnosticsValue: {
+          ...diagnostics,
+          commandId,
+          retryCount,
+          maxRetryCount: executionPolicy.maxRetryCount,
+          queuePosition,
+          capacitySlot,
+          originalIndex,
+          priorityWeight
+        }
+      });
+    }
+
+    const impactFiles = resolveImpactFiles(requestWithPolicy, catalogEntry);
     const impactInsideActiveProjectRoot =
       activeProjectRoot.length === 0 ||
       impactFiles.every((filePath) => isPathWithinActiveProjectRoot(filePath, activeProjectRoot));
@@ -896,7 +1190,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       }
 
       const reasonCode = isCriticalRoleViolation ? 'CRITICAL_ACTION_ROLE_REQUIRED' : 'ROLE_PERMISSION_REQUIRED';
-      appendExecutionJournal({ request, reasonCode, commandMode: catalogEntry.mode });
+      appendExecutionJournal({ request: requestWithPolicy, reasonCode, commandMode: catalogEntry.mode });
 
       return buildResultWithJournal({
         allowed: false,
@@ -909,19 +1203,23 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
           commandId,
           commandMode: catalogEntry.mode,
           role: normalizedRole || 'UNKNOWN',
-          allowedRoles: catalogEntry.allowedRoles
+          allowedRoles: catalogEntry.allowedRoles,
+          queuePosition,
+          capacitySlot,
+          originalIndex,
+          priorityWeight
         }
       });
     }
 
     if (isHighImpactExecution) {
-      const doubleConfirmation = resolveDoubleConfirmation(request);
+      const doubleConfirmation = resolveDoubleConfirmation(requestWithPolicy);
 
       if (!doubleConfirmation.provided) {
         diagnostics.doubleConfirmationMissingCount += 1;
 
         appendExecutionJournal({
-          request,
+          request: requestWithPolicy,
           reasonCode: 'DOUBLE_CONFIRMATION_REQUIRED',
           commandMode: catalogEntry.mode
         });
@@ -934,6 +1232,10 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
             ...diagnostics,
             commandId,
             doubleConfirmation,
+            queuePosition,
+            capacitySlot,
+            originalIndex,
+            priorityWeight,
             impactPreview: {
               commandId,
               files: impactFiles,
@@ -948,7 +1250,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
         diagnostics.doubleConfirmationConflictCount += 1;
 
         appendExecutionJournal({
-          request,
+          request: requestWithPolicy,
           reasonCode: 'DOUBLE_CONFIRMATION_DISTINCT_ACTORS_REQUIRED',
           commandMode: catalogEntry.mode
         });
@@ -961,6 +1263,10 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
             ...diagnostics,
             commandId,
             doubleConfirmation,
+            queuePosition,
+            capacitySlot,
+            originalIndex,
+            priorityWeight,
             impactPreview: {
               commandId,
               files: impactFiles,
@@ -990,7 +1296,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
             : baseReason;
 
       appendExecutionJournal({
-        request,
+        request: requestWithPolicy,
         reasonCode: 'DRY_RUN_REQUIRED_FOR_WRITE',
         commandMode: catalogEntry.mode
       });
@@ -1002,6 +1308,10 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
         diagnosticsValue: {
           ...diagnostics,
           commandId,
+          queuePosition,
+          capacitySlot,
+          originalIndex,
+          priorityWeight,
           impactPreview: {
             commandId,
             files: impactFiles,
@@ -1012,11 +1322,73 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       });
     }
 
-    const parameterValidation = validateExecutionArguments(catalogEntry.parameters, request?.args ?? {});
+    const requiresIdempotencyKey = requestDryRun === false || retryCount > 0;
+
+    if (requiresIdempotencyKey && idempotencyKey.length === 0) {
+      diagnostics.idempotencyRequiredCount += 1;
+      appendExecutionJournal({
+        request: requestWithPolicy,
+        reasonCode: 'IDEMPOTENCY_KEY_REQUIRED',
+        commandMode: catalogEntry.mode
+      });
+
+      return buildResultWithJournal({
+        allowed: false,
+        reasonCode: 'IDEMPOTENCY_KEY_REQUIRED',
+        reason: `Idempotency key requise pour ${commandId} (apply/retry).`,
+        diagnosticsValue: {
+          ...diagnostics,
+          commandId,
+          queuePosition,
+          capacitySlot,
+          originalIndex,
+          priorityWeight,
+          requestDryRun,
+          retryCount
+        }
+      });
+    }
+
+    if (idempotencyKey.length > 0) {
+      const fingerprint = buildIdempotencyFingerprint(requestWithPolicy, commandId, catalogEntry.mode);
+      const previousFingerprint = idempotencyRegistry.get(idempotencyKey);
+
+      if (previousFingerprint !== undefined) {
+        if (previousFingerprint === fingerprint) {
+          diagnostics.idempotencyReplayCount += 1;
+        } else {
+          diagnostics.idempotencyConflictCount += 1;
+          appendExecutionJournal({
+            request: requestWithPolicy,
+            reasonCode: 'IDEMPOTENCY_KEY_REUSE_CONFLICT',
+            commandMode: catalogEntry.mode
+          });
+
+          return buildResultWithJournal({
+            allowed: false,
+            reasonCode: 'IDEMPOTENCY_KEY_REUSE_CONFLICT',
+            reason: `Idempotency key réutilisée avec payload différent pour ${commandId}.`,
+            diagnosticsValue: {
+              ...diagnostics,
+              commandId,
+              idempotencyKey,
+              queuePosition,
+              capacitySlot,
+              originalIndex,
+              priorityWeight
+            }
+          });
+        }
+      } else {
+        idempotencyRegistry.set(idempotencyKey, fingerprint);
+      }
+    }
+
+    const parameterValidation = validateExecutionArguments(catalogEntry.parameters, requestWithPolicy?.args ?? {});
 
     if (!parameterValidation.valid) {
       appendExecutionJournal({
-        request,
+        request: requestWithPolicy,
         reasonCode: parameterValidation.reasonCode,
         commandMode: catalogEntry.mode
       });
@@ -1028,13 +1400,17 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
         diagnosticsValue: {
           ...diagnostics,
           commandId,
+          queuePosition,
+          capacitySlot,
+          originalIndex,
+          priorityWeight,
           ...(parameterValidation.diagnostics ?? {})
         }
       });
     }
 
     diagnostics.validatedExecutions += 1;
-    appendExecutionJournal({ request, reasonCode: 'OK', commandMode: catalogEntry.mode });
+    appendExecutionJournal({ request: requestWithPolicy, reasonCode: 'OK', commandMode: catalogEntry.mode });
   }
 
   const executionGuard = {
@@ -1045,10 +1421,20 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     doubleConfirmationReady:
       diagnostics.doubleConfirmationMissingCount === 0 &&
       diagnostics.doubleConfirmationConflictCount === 0,
+    timeoutPolicyCompliant: diagnostics.timeoutPolicyViolations === 0,
+    retryPolicyCompliant: diagnostics.retryPolicyViolations === 0,
+    idempotencyPolicyCompliant:
+      diagnostics.idempotencyRequiredCount === 0 && diagnostics.idempotencyConflictCount === 0,
+    capacityPolicyCompliant: diagnostics.capacityViolations === 0,
+    sequencingPolicyCompliant:
+      diagnostics.capacityViolations === 0 && diagnostics.sequencedExecutionCount === diagnostics.executionCount,
     impactPreviewReadyForWrite: diagnostics.impactPreviewMissingCount === 0,
     activeProjectRootSafe: diagnostics.impactPreviewOutsideProjectCount === 0,
     activeProjectRootSigned:
-      !enforceSignedActiveProjectRoot || activeProjectRootSignature === expectedActiveProjectRootSignature
+      !enforceSignedActiveProjectRoot || activeProjectRootSignature === expectedActiveProjectRootSignature,
+    maxTimeoutMs: executionPolicy.maxTimeoutMs,
+    maxRetryCount: executionPolicy.maxRetryCount,
+    executionCapacity: executionPolicy.executionCapacity
   };
 
   return buildResultWithJournal({
