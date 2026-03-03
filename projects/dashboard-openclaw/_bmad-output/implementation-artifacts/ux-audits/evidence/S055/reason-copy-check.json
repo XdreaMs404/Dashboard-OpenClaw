@@ -1,0 +1,37 @@
+{
+  "storyId": "S055",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_RISK_HEATMAP_INPUT",
+      "reasonCode": "INVALID_AQCD_RISK_HEATMAP_INPUT",
+      "reason": "Entrée S055 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_RISK_HEATMAP_INPUT_STRUCTURE"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_VALIDATED_DECISION_COST_REQUIRED",
+      "reasonCode": "AQCD_VALIDATED_DECISION_COST_REQUIRED",
+      "reason": "Aucune décision validée détectée pour calculer le coût moyen (FR-052).",
+      "correctiveActions": [
+        "ADD_VALIDATED_DECISION_COST_LOGS"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_CRITICAL_RUNBOOK_REQUIRED",
+      "reasonCode": "AQCD_CRITICAL_RUNBOOK_REQUIRED",
+      "reason": "Runbook critique requis/testé pour S055 (criticalRunbookRef + criticalRunbookValidated + criticalRunbookTestedAt).",
+      "correctiveActions": [
+        "PROVIDE_CRITICAL_RUNBOOK_PROOF"
+      ]
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Heatmap probabilité/impact et évolution validées avec coût moyen par décision validée.",
+      "correctiveActions": [],
+      "averageCostPerValidatedDecision": 2.1
+    }
+  ],
+  "status": "validated"
+}

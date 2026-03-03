@@ -1,0 +1,11 @@
+{
+  "storyId": "S055",
+  "states": [
+    "empty",
+    "loading",
+    "error",
+    "success"
+  ],
+  "status": "validated",
+  "source": "s055-uxqa-fix"
+}
