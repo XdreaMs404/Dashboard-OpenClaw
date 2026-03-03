@@ -54,7 +54,7 @@
 | S050 | E05 | Snapshots AQCD périodiques et comparatifs | DONE |
 | S051 | E05 | Readiness score rule-based v1 | DONE |
 | S052 | E05 | Top 3 actions prioritaires par gate | DONE |
-| S053 | E05 | Registre risques vivant owner/échéance/statut | TODO |
+| S053 | E05 | Registre risques vivant owner/échéance/statut | DONE |
 | S054 | E05 | Lien mitigation -> task -> preuve de fermeture | TODO |
 | S055 | E05 | Heatmap risques probabilité/impact | TODO |
 | S056 | E05 | Coût moyen par décision validée | TODO |

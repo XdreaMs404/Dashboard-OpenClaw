@@ -41,6 +41,7 @@ import { buildAqcdExplainableScoreboard } from './aqcd-scoreboard.js';
 import { buildAqcdSnapshotComparisons } from './aqcd-snapshot-comparisons.js';
 import { buildAqcdReadinessRules } from './aqcd-readiness-rules.js';
 import { buildAqcdGatePriorityActions } from './aqcd-gate-priority-actions.js';
+import { buildAqcdRiskRegister } from './aqcd-risk-register.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -79,6 +80,7 @@ export {
   buildAqcdSnapshotComparisons,
   buildAqcdReadinessRules,
   buildAqcdGatePriorityActions,
+  buildAqcdRiskRegister,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

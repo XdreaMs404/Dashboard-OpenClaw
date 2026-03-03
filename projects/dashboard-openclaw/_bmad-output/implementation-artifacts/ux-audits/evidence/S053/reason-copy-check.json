@@ -1,0 +1,37 @@
+{
+  "storyId": "S053",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_RISK_REGISTER_INPUT",
+      "reasonCode": "INVALID_AQCD_RISK_REGISTER_INPUT",
+      "reason": "Entrée S053 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_RISK_REGISTER_INPUT_STRUCTURE"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_MITIGATION_LINKS_REQUIRED",
+      "reasonCode": "AQCD_MITIGATION_LINKS_REQUIRED",
+      "reason": "Liens mitigation manquants pour risques ouverts: C02.",
+      "correctiveActions": [
+        "LINK_MITIGATION_TASK_PROOF"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_BASELINE_THRESHOLD_UNMET",
+      "reasonCode": "AQCD_BASELINE_THRESHOLD_UNMET",
+      "reason": "Baseline AQCD insuffisant: 92.5 < 95.",
+      "correctiveActions": [
+        "IMPROVE_AQCD_BASELINE_SCORE"
+      ]
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Registre risques vivant validé (owner/échéance/statut + liens mitigation).",
+      "correctiveActions": [],
+      "mitigationCoveragePct": 100
+    }
+  ],
+  "status": "validated"
+}
