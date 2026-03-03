@@ -36,6 +36,24 @@ function buildBaseInput() {
         impactFiles: ['/root/.openclaw/workspace/projects/dashboard-openclaw/runtime/jobs.json'],
         parameters: [{ name: 'reason', type: 'string', required: true }]
       }
+    ],
+    commandTemplates: [
+      {
+        id: 'runtime-kill-override-v1',
+        commandId: 'runtime.kill',
+        mode: 'CRITICAL',
+        validated: true,
+        status: 'validated',
+        version: '1.0.0'
+      },
+      {
+        id: 'story-patch-template-v1',
+        commandId: 'story.patch',
+        mode: 'WRITE',
+        validated: true,
+        status: 'validated',
+        version: '1.0.0'
+      }
     ]
   };
 }
@@ -431,7 +449,7 @@ describe('command-allowlist-catalog edge', () => {
     expect(result.reasonCode).toBe('POLICY_OVERRIDE_APPROVAL_REQUIRED');
   });
 
-  it('accepts kill-switch override only with valid nominative approval (S046)', () => {
+  it('rejects approved override when validated template is missing (S047/FR-044)', () => {
     const input = buildBaseInput();
     input.executionRequests = [
       {
@@ -441,15 +459,51 @@ describe('command-allowlist-catalog edge', () => {
         confirmation: {
           firstActor: 'alex.dev',
           secondActor: 'pm.owner',
-          confirmationId: 'CONF-S046-EDGE-002'
+          confirmationId: 'CONF-S047-EDGE-001'
         },
-        idempotencyKey: 'IK-S046-EDGE-OVR-002',
+        idempotencyKey: 'IK-S047-EDGE-OVR-001',
         policyOverride: {
           requested: true,
           requestedBy: 'alex.dev',
           approvedBy: 'security.lead',
-          approvalId: 'OVR-S046-EDGE-001',
+          approvalId: 'OVR-S047-EDGE-001',
           reason: 'Incident commander approval'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('POLICY_OVERRIDE_TEMPLATE_REQUIRED');
+  });
+
+  it('accepts kill-switch override only with valid nominative approval (S047)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S047-EDGE-002'
+        },
+        idempotencyKey: 'IK-S047-EDGE-OVR-002',
+        policyOverride: {
+          requested: true,
+          requestedBy: 'alex.dev',
+          approvedBy: 'security.lead',
+          approvalId: 'OVR-S047-EDGE-002',
+          reason: 'Incident commander approval',
+          templateId: 'runtime-kill-override-v1'
         },
         args: { reason: 'incident-critical' }
       }

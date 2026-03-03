@@ -93,6 +93,7 @@ const demoPageHtml = `
         <option value="queue-backpressure">Backpressure file pleine</option>
         <option value="write-kill-switch">Write kill-switch actif</option>
         <option value="override-without-approval">Override sans approbation nominative</option>
+        <option value="override-template-required">Override sans template validé</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -242,6 +243,24 @@ function buildCatalog() {
         allowedRoles: ['ADMIN'],
         impactFiles: ['/root/.openclaw/workspace/bmad-total/PROJECT_STATUS.md'],
         parameters: [{ name: 'reason', type: 'string', required: true }]
+      }
+    ],
+    commandTemplates: [
+      {
+        id: 'runtime-kill-override-v1',
+        commandId: 'runtime.kill',
+        mode: 'CRITICAL',
+        validated: true,
+        status: 'validated',
+        version: '1.0.0'
+      },
+      {
+        id: 'story-patch-template-v1',
+        commandId: 'story.patch',
+        mode: 'WRITE',
+        validated: true,
+        status: 'validated',
+        version: '1.0.0'
       }
     ]
   };
@@ -448,6 +467,41 @@ function runScenario(scenario) {
     );
   }
 
+  if (scenario === 'override-template-required') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'runtime.kill',
+            dryRun: false,
+            role: 'ADMIN',
+            confirmation: {
+              firstActor: 'alex.dev',
+              secondActor: 'pm.owner',
+              confirmationId: `CONF-${sid}-OVR-TPL-001`
+            },
+            idempotencyKey: `IK-${sid}-OVR-TPL-001`,
+            policyOverride: {
+              requested: true,
+              requestedBy: 'alex.dev',
+              approvedBy: 'security.lead',
+              approvalId: `OVR-${sid}-TPL-001`,
+              reason: 'Incident commander approval'
+            },
+            args: { reason: 'incident-critical' }
+          }
+        ]
+      },
+      {
+        writeKillSwitch: {
+          active: true,
+          reason: 'incident-bridge'
+        }
+      }
+    );
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -599,6 +653,47 @@ function buildReasonCopyChecks() {
     correctiveActions: overrideWithoutApproval.correctiveActions,
     executionGuard: overrideWithoutApproval.executionGuard ?? null,
     policyOverrideViolations: overrideWithoutApproval.diagnostics?.policyOverrideViolations ?? -1
+  });
+
+  const overrideWithoutTemplate = buildCommandAllowlistCatalog(
+    {
+      ...catalog,
+      executionRequests: [
+        {
+          commandId: 'runtime.kill',
+          dryRun: false,
+          role: 'ADMIN',
+          confirmation: {
+            firstActor: 'alex.dev',
+            secondActor: 'pm.owner',
+            confirmationId: `CONF-${sid}-OVR-TPL-UX-001`
+          },
+          idempotencyKey: `IK-${sid}-OVR-TPL-UX-001`,
+          policyOverride: {
+            requested: true,
+            requestedBy: 'alex.dev',
+            approvedBy: 'security.lead',
+            approvalId: `OVR-${sid}-TPL-UX-001`,
+            reason: 'Incident commander approval'
+          },
+          args: { reason: 'incident-critical' }
+        }
+      ]
+    },
+    {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    }
+  );
+  checks.push({
+    expectedCode: 'POLICY_OVERRIDE_TEMPLATE_REQUIRED',
+    reasonCode: overrideWithoutTemplate.reasonCode,
+    reason: overrideWithoutTemplate.reason,
+    correctiveActions: overrideWithoutTemplate.correctiveActions,
+    executionGuard: overrideWithoutTemplate.executionGuard ?? null,
+    commandTemplateViolations: overrideWithoutTemplate.diagnostics?.commandTemplateViolations ?? -1
   });
 
   const roleDenied = buildCommandAllowlistCatalog({

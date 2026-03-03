@@ -24,6 +24,7 @@ const REASON_CODES = Object.freeze([
   'EXECUTION_CAPACITY_EXCEEDED',
   'WRITE_KILL_SWITCH_ACTIVE',
   'POLICY_OVERRIDE_APPROVAL_REQUIRED',
+  'POLICY_OVERRIDE_TEMPLATE_REQUIRED',
   'INVALID_PARAMETER_VALUE',
   'UNSAFE_PARAMETER_VALUE'
 ]);
@@ -52,6 +53,7 @@ const DEFAULT_CORRECTIVE_ACTIONS = Object.freeze({
   EXECUTION_CAPACITY_EXCEEDED: ['SEQUENCE_WITH_AVAILABLE_CAPACITY'],
   WRITE_KILL_SWITCH_ACTIVE: ['RELEASE_WRITE_KILL_SWITCH_AFTER_INCIDENT_REVIEW'],
   POLICY_OVERRIDE_APPROVAL_REQUIRED: ['REQUIRE_NOMINATIVE_POLICY_APPROVAL'],
+  POLICY_OVERRIDE_TEMPLATE_REQUIRED: ['USE_VALIDATED_COMMAND_TEMPLATE'],
   INVALID_PARAMETER_VALUE: ['FIX_PARAMETER_VALUES'],
   UNSAFE_PARAMETER_VALUE: ['SANITIZE_COMMAND_PARAMETERS']
 });
@@ -487,6 +489,69 @@ function resolvePolicyOverrideState(request) {
   };
 }
 
+function resolvePolicyOverrideTemplateRef(request) {
+  const source = isObject(request?.policyOverride) ? request.policyOverride : {};
+
+  return normalizeIdentifier(
+    source.templateId ??
+      source.templateRef ??
+      source.template ??
+      request?.overrideTemplateId ??
+      request?.commandTemplateId ??
+      request?.templateId ??
+      request?.template
+  );
+}
+
+function resolveCommandTemplateCatalog(payload, runtimeOptions = {}) {
+  const source = Array.isArray(runtimeOptions.commandTemplates)
+    ? runtimeOptions.commandTemplates
+    : Array.isArray(payload.commandTemplates)
+      ? payload.commandTemplates
+      : Array.isArray(payload.catalog?.commandTemplates)
+        ? payload.catalog.commandTemplates
+        : [];
+
+  const templates = [];
+  const byId = new Map();
+
+  for (const rawTemplate of source) {
+    if (!isObject(rawTemplate)) {
+      continue;
+    }
+
+    const id = normalizeIdentifier(rawTemplate.id ?? rawTemplate.templateId ?? rawTemplate.name);
+    const commandId = normalizeIdentifier(
+      rawTemplate.commandId ?? rawTemplate.command ?? rawTemplate.forCommand ?? rawTemplate.commandRef
+    );
+
+    if (id.length === 0 || commandId.length === 0 || byId.has(id)) {
+      continue;
+    }
+
+    const modeCandidate = normalizeText(String(rawTemplate.mode ?? '')).toUpperCase();
+    const status = normalizeText(String(rawTemplate.status ?? rawTemplate.state ?? '')).toLowerCase();
+
+    const template = {
+      id,
+      commandId,
+      mode: MODE_SET.has(modeCandidate) ? modeCandidate : null,
+      validated: rawTemplate.validated !== false && status !== 'draft',
+      label:
+        normalizeText(String(rawTemplate.label ?? rawTemplate.title ?? rawTemplate.description ?? '')) || null,
+      version: normalizeText(String(rawTemplate.version ?? rawTemplate.schemaVersion ?? '')) || null
+    };
+
+    byId.set(id, template);
+    templates.push(template);
+  }
+
+  return {
+    templates,
+    byId
+  };
+}
+
 function resolvePriorityWeight(priorityValue, mode) {
   if (typeof priorityValue === 'number' && Number.isFinite(priorityValue)) {
     return normalizePolicyInteger(priorityValue, PRIORITY_WEIGHT_BY_MODE[mode] ?? 2, 0, 9);
@@ -553,6 +618,7 @@ function buildIdempotencyFingerprint(request, commandId, commandMode) {
   const args = isObject(request?.args) ? request.args : {};
   const impactFiles = normalizeImpactFiles(request?.impactFiles ?? request?.impactedFiles ?? request?.preview?.files);
   const policyOverride = resolvePolicyOverrideState(request);
+  const policyOverrideTemplateId = resolvePolicyOverrideTemplateRef(request) || null;
 
   const payload = {
     commandId,
@@ -562,6 +628,7 @@ function buildIdempotencyFingerprint(request, commandId, commandMode) {
     args: canonicalizeValue(args),
     impactFiles,
     confirmation: canonicalizeValue(isObject(request?.confirmation) ? request.confirmation : {}),
+    policyOverrideTemplateId,
     policyOverride: {
       requested: policyOverride.requested,
       approver: policyOverride.approver || null,
@@ -569,7 +636,8 @@ function buildIdempotencyFingerprint(request, commandId, commandMode) {
       reason: policyOverride.reason || null,
       requestedBy: policyOverride.requestedBy || null,
       approverDistinctFromRequester: policyOverride.approverDistinctFromRequester,
-      approved: policyOverride.approved
+      approved: policyOverride.approved,
+      templateId: policyOverrideTemplateId
     }
   };
 
@@ -985,6 +1053,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     executionPolicy.executionCapacity
   );
   const killSwitchState = normalizeKillSwitchState(runtimeOptions, payload);
+  const commandTemplateCatalog = resolveCommandTemplateCatalog(payload, runtimeOptions);
   const strictRoleCheck = runtimeOptions.strictRoleCheck !== false;
   const activeProjectRoot = normalizeActiveProjectRoot(
     runtimeOptions.activeProjectRoot ?? payload.activeProjectRoot
@@ -1013,6 +1082,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
   const diagnostics = {
     catalogVersion: version,
     commandCount: commands.length,
+    commandTemplateCount: commandTemplateCatalog.templates.length,
     readCount: commands.filter((entry) => entry.mode === 'READ').length,
     writeCount: commands.filter((entry) => entry.mode === 'WRITE').length,
     criticalCount: commands.filter((entry) => entry.mode === 'CRITICAL').length,
@@ -1059,6 +1129,8 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     policyOverrideRequestedCount: 0,
     policyOverrideViolations: 0,
     policyOverrideApprovedCount: 0,
+    commandTemplateUsageCount: 0,
+    commandTemplateViolations: 0,
     impactPreviewProvidedCount: 0,
     impactPreviewMissingCount: 0,
     impactPreviewOutsideProjectCount: 0,
@@ -1089,8 +1161,10 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
 
   const appendExecutionJournal = ({ request, reasonCode, commandMode = 'UNKNOWN', commandIdOverride }) => {
     const confirmation = isObject(request?.confirmation) ? request.confirmation : {};
+    const policyOverride = resolvePolicyOverrideState(request);
     const approver = normalizeText(
-      confirmation.secondActor ??
+      policyOverride.approver ??
+        confirmation.secondActor ??
         confirmation.approvedBy ??
         confirmation.approver ??
         request?.approvedBy ??
@@ -1277,8 +1351,10 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       idempotencyKey
     };
 
-    const isWriteClassExecution = requestDryRun === false && (catalogEntry.mode === 'WRITE' || catalogEntry.mode === 'CRITICAL');
+    const isWriteClassExecution =
+      requestDryRun === false && (catalogEntry.mode === 'WRITE' || catalogEntry.mode === 'CRITICAL');
     const policyOverride = resolvePolicyOverrideState(requestWithPolicy);
+    const policyOverrideTemplateId = resolvePolicyOverrideTemplateRef(requestWithPolicy);
 
     if (policyOverride.requested) {
       diagnostics.policyOverrideRequestedCount += 1;
@@ -1315,6 +1391,58 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
         });
       }
 
+      const policyOverrideTemplate = commandTemplateCatalog.byId.get(policyOverrideTemplateId);
+      const hasValidatedTemplate = Boolean(policyOverrideTemplate?.validated);
+      const templateMatchesCommand = Boolean(
+        policyOverrideTemplate && policyOverrideTemplate.commandId === commandId
+      );
+      const templateModeCompatible =
+        policyOverrideTemplate?.mode === null || policyOverrideTemplate?.mode === catalogEntry.mode;
+
+      if (!policyOverrideTemplateId || !hasValidatedTemplate || !templateMatchesCommand || !templateModeCompatible) {
+        diagnostics.policyOverrideViolations += 1;
+        diagnostics.commandTemplateViolations += 1;
+        appendExecutionJournal({
+          request: requestWithPolicy,
+          reasonCode: 'POLICY_OVERRIDE_TEMPLATE_REQUIRED',
+          commandMode: catalogEntry.mode
+        });
+
+        return buildResultWithJournal({
+          allowed: false,
+          reasonCode: 'POLICY_OVERRIDE_TEMPLATE_REQUIRED',
+          reason: `Override policy refusé pour ${commandId}: template validé requis pour l'action ciblée.`,
+          diagnosticsValue: {
+            ...diagnostics,
+            commandId,
+            queuePosition,
+            capacitySlot,
+            originalIndex,
+            priorityWeight,
+            policyOverride: {
+              requested: true,
+              approver: policyOverride.approver || null,
+              approvalId: policyOverride.approvalId || null,
+              reason: policyOverride.reason || null,
+              requestedBy: policyOverride.requestedBy || null,
+              approverDistinctFromRequester: policyOverride.approverDistinctFromRequester,
+              approved: policyOverride.approved,
+              templateId: policyOverrideTemplateId || null
+            },
+            commandTemplate: {
+              templateId: policyOverrideTemplateId || null,
+              exists: Boolean(policyOverrideTemplate),
+              validated: hasValidatedTemplate,
+              commandId: policyOverrideTemplate?.commandId ?? null,
+              commandMatches: templateMatchesCommand,
+              mode: policyOverrideTemplate?.mode ?? null,
+              modeMatches: templateModeCompatible
+            }
+          }
+        });
+      }
+
+      diagnostics.commandTemplateUsageCount += 1;
       diagnostics.policyOverrideApprovedCount += 1;
     }
 
@@ -1664,6 +1792,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     queueDepthCompliant: diagnostics.queueDepthViolations === 0,
     writeKillSwitchCompliant: diagnostics.writeKillSwitchViolations === 0,
     policyOverrideCompliant: diagnostics.policyOverrideViolations === 0,
+    commandTemplatePolicyCompliant: diagnostics.commandTemplateViolations === 0,
     sequencingPolicyCompliant:
       diagnostics.capacityViolations === 0 && diagnostics.sequencedExecutionCount === diagnostics.executionCount,
     impactPreviewReadyForWrite: diagnostics.impactPreviewMissingCount === 0,
@@ -1684,7 +1813,8 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     diagnosticsValue: diagnostics,
     catalogValue: {
       version,
-      commands
+      commands,
+      commandTemplates: commandTemplateCatalog.templates.map((template) => ({ ...template }))
     },
     executionGuardValue: executionGuard
   });

@@ -68,6 +68,7 @@ const demoPageHtml = `
         <option value="queue-backpressure">Backpressure file pleine</option>
         <option value="write-kill-switch">Write kill-switch actif</option>
         <option value="override-without-approval">Override sans approbation nominative</option>
+        <option value="override-template-required">Override sans template validé</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -215,6 +216,24 @@ function buildCatalog() {
         allowedRoles: ['ADMIN'],
         impactFiles: ['/root/.openclaw/workspace/bmad-total/PROJECT_STATUS.md'],
         parameters: [{ name: 'reason', type: 'string', required: true }]
+      }
+    ],
+    commandTemplates: [
+      {
+        id: 'runtime-kill-override-v1',
+        commandId: 'runtime.kill',
+        mode: 'CRITICAL',
+        validated: true,
+        status: 'validated',
+        version: '1.0.0'
+      },
+      {
+        id: 'story-patch-template-v1',
+        commandId: 'story.patch',
+        mode: 'WRITE',
+        validated: true,
+        status: 'validated',
+        version: '1.0.0'
       }
     ]
   };
@@ -423,6 +442,41 @@ function runScenario(scenario) {
     );
   }
 
+  if (scenario === 'override-template-required') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'runtime.kill',
+            dryRun: false,
+            role: 'ADMIN',
+            confirmation: {
+              firstActor: 'alex.dev',
+              secondActor: 'pm.owner',
+              confirmationId: 'CONF-E2E-S047-001'
+            },
+            idempotencyKey: 'IK-E2E-S047-001',
+            policyOverride: {
+              requested: true,
+              requestedBy: 'alex.dev',
+              approvedBy: 'security.lead',
+              approvalId: 'OVR-E2E-S047-001',
+              reason: 'Incident commander approval'
+            },
+            args: { reason: 'incident-critical' }
+          }
+        ]
+      },
+      {
+        writeKillSwitch: {
+          active: true,
+          reason: 'incident-bridge'
+        }
+      }
+    );
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -490,6 +544,11 @@ test('command allowlist catalog demo covers empty/loading/error/success with gua
   await action.click();
   await expect(stateIndicator).toHaveAttribute('data-state', 'error');
   await expect(reasonCodeValue).toHaveText('POLICY_OVERRIDE_APPROVAL_REQUIRED');
+
+  await scenario.selectOption('override-template-required');
+  await action.click();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('POLICY_OVERRIDE_TEMPLATE_REQUIRED');
 
   await scenario.selectOption('success');
   await action.click();

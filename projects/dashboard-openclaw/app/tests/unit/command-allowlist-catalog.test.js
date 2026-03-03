@@ -40,6 +40,24 @@ function buildCatalogInput() {
         impactFiles: ['/root/.openclaw/workspace/bmad-total/PROJECT_STATUS.md'],
         parameters: [{ name: 'reason', type: 'string', required: true }]
       }
+    ],
+    commandTemplates: [
+      {
+        id: 'runtime-kill-override-v1',
+        commandId: 'runtime.kill',
+        mode: 'CRITICAL',
+        validated: true,
+        status: 'validated',
+        version: '1.0.0'
+      },
+      {
+        id: 'story-patch-template-v1',
+        commandId: 'story.patch',
+        mode: 'WRITE',
+        validated: true,
+        status: 'validated',
+        version: '1.0.0'
+      }
     ]
   };
 }
@@ -711,7 +729,7 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.correctiveActions).toContain('REQUIRE_NOMINATIVE_POLICY_APPROVAL');
   });
 
-  it('allows write-class execution under kill-switch with valid nominative override approval (S046/FR-042)', () => {
+  it('requires validated command template for approved policy overrides (S047/FR-044)', () => {
     const input = buildCatalogInput();
     input.executionRequests = [
       {
@@ -721,14 +739,14 @@ describe('command-allowlist-catalog unit', () => {
         confirmation: {
           firstActor: 'alex.dev',
           secondActor: 'pm.owner',
-          confirmationId: 'CONF-S046-002'
+          confirmationId: 'CONF-S047-001'
         },
-        idempotencyKey: 'IK-S046-OVERRIDE-002',
+        idempotencyKey: 'IK-S047-OVERRIDE-001',
         policyOverride: {
           requested: true,
           requestedBy: 'alex.dev',
           approvedBy: 'security.lead',
-          approvalId: 'OVR-S046-001',
+          approvalId: 'OVR-S047-001',
           reason: 'Incident commander approval'
         },
         args: { reason: 'incident-critical' }
@@ -739,14 +757,54 @@ describe('command-allowlist-catalog unit', () => {
       writeKillSwitch: {
         active: true,
         reason: 'incident-bridge',
-        incidentId: 'INC-S046-001'
+        incidentId: 'INC-S047-001'
+      }
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('POLICY_OVERRIDE_TEMPLATE_REQUIRED');
+    expect(result.correctiveActions).toContain('USE_VALIDATED_COMMAND_TEMPLATE');
+  });
+
+  it('allows write-class execution under kill-switch with valid nominative override approval (S047)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S047-002'
+        },
+        idempotencyKey: 'IK-S047-OVERRIDE-002',
+        policyOverride: {
+          requested: true,
+          requestedBy: 'alex.dev',
+          approvedBy: 'security.lead',
+          approvalId: 'OVR-S047-002',
+          reason: 'Incident commander approval',
+          templateId: 'runtime-kill-override-v1'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge',
+        incidentId: 'INC-S047-002'
       }
     });
 
     expect(result.allowed).toBe(true);
     expect(result.reasonCode).toBe('OK');
     expect(result.diagnostics.policyOverrideApprovedCount).toBe(1);
+    expect(result.diagnostics.commandTemplateUsageCount).toBe(1);
     expect(result.executionGuard.policyOverrideCompliant).toBe(true);
+    expect(result.executionGuard.commandTemplatePolicyCompliant).toBe(true);
   });
 
   it('blocks unsafe parameter values to reduce shell-injection risk (S02)', () => {
