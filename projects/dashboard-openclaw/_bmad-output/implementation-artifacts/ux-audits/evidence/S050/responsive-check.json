@@ -1,0 +1,106 @@
+{
+  "storyId": "S050",
+  "runAt": "2026-03-03T07:13:01.561Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S050/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Snapshots AQCD périodiques et comparatifs validés (S050).",
+      "diagnostics": "ref=S050 | continuous=true | comparisons=2 | readiness=100",
+      "comparison": "count=2 | lastDirection=up | lastDelta=1.9",
+      "readiness": "score=100 | threshold=65 | met=true | rules=S050-v1",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "comparisons": 0,
+        "readiness": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S050/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Snapshots AQCD périodiques et comparatifs validés (S050).",
+      "diagnostics": "ref=S050 | continuous=true | comparisons=2 | readiness=100",
+      "comparison": "count=2 | lastDirection=up | lastDelta=1.9",
+      "readiness": "score=100 | threshold=65 | met=true | rules=S050-v1",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "comparisons": 0,
+        "readiness": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S050/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Snapshots AQCD périodiques et comparatifs validés (S050).",
+      "diagnostics": "ref=S050 | continuous=true | comparisons=2 | readiness=100",
+      "comparison": "count=2 | lastDirection=up | lastDelta=1.9",
+      "readiness": "score=100 | threshold=65 | met=true | rules=S050-v1",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "comparisons": 0,
+        "readiness": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

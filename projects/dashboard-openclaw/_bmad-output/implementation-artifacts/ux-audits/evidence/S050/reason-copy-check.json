@@ -1,0 +1,41 @@
+{
+  "storyId": "S050",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_SNAPSHOT_COMPARISON_INPUT",
+      "reasonCode": "INVALID_AQCD_SNAPSHOT_COMPARISON_INPUT",
+      "reason": "Entrée S050 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_SNAPSHOT_COMPARISON_INPUT"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_COMPARATIVE_SNAPSHOTS_REQUIRED",
+      "reasonCode": "AQCD_COMPARATIVE_SNAPSHOTS_REQUIRED",
+      "reason": "Comparatif S050 indisponible: au moins 2 snapshots AQCD sont requis.",
+      "correctiveActions": [
+        "ADD_AQCD_PERIODIC_SNAPSHOTS"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_SNAPSHOT_CONTINUITY_GAP",
+      "reasonCode": "AQCD_SNAPSHOT_CONTINUITY_GAP",
+      "reason": "Continuité snapshots AQCD rompue: maxGapMs=518400000 > allowedGapMs=129600000.",
+      "correctiveActions": [
+        "RESTORE_AQCD_SNAPSHOT_CADENCE"
+      ]
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Snapshots AQCD périodiques et comparatifs validés (S050).",
+      "correctiveActions": [],
+      "readiness": {
+        "score": 100,
+        "threshold": 65,
+        "met": true
+      }
+    }
+  ],
+  "status": "validated"
+}

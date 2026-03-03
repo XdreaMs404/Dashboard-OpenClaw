@@ -51,7 +51,7 @@
 | S047 | E04 | Override policy avec approbation nominative | DONE |
 | S048 | E04 | Bibliothèque templates de commandes validées | DONE |
 | S049 | E05 | Tableau AQCD explicable (formule + source) | DONE |
-| S050 | E05 | Snapshots AQCD périodiques et comparatifs | TODO |
+| S050 | E05 | Snapshots AQCD périodiques et comparatifs | DONE |
 | S051 | E05 | Readiness score rule-based v1 | TODO |
 | S052 | E05 | Top 3 actions prioritaires par gate | TODO |
 | S053 | E05 | Registre risques vivant owner/échéance/statut | TODO |

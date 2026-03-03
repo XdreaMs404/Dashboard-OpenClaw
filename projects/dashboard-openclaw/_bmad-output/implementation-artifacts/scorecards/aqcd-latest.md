@@ -1,7 +1,7 @@
 # AQCD Scorecard (latest)
 
 - Window: story (S000)
-- Updated: 2026-03-03T05:16:04.604Z
+- Updated: 2026-03-03T06:16:12.951Z
 - Band: **NON_ACCEPTABLE**
 
 ## Scores
