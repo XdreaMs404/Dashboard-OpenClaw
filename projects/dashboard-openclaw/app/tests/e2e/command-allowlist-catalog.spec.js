@@ -65,6 +65,8 @@ const demoPageHtml = `
         <option value="dry-run-required">Dry-run requis</option>
         <option value="apply-impact-preview">Preview impact avant apply</option>
         <option value="tampered-journal">Journal append-only altéré</option>
+        <option value="queue-backpressure">Backpressure file pleine</option>
+        <option value="write-kill-switch">Write kill-switch actif</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -328,6 +330,66 @@ function runScenario(scenario) {
     });
   }
 
+  if (scenario === 'queue-backpressure') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'status.read',
+            dryRun: true,
+            role: 'DEV',
+            args: { verbose: true }
+          },
+          {
+            commandId: 'status.read',
+            dryRun: true,
+            role: 'DEV',
+            args: { verbose: false }
+          },
+          {
+            commandId: 'story.patch',
+            dryRun: true,
+            role: 'DEV',
+            args: { sid: 'S040', status: 'OPEN' }
+          }
+        ]
+      },
+      {
+        executionCapacity: 1,
+        maxQueueDepth: 2
+      }
+    );
+  }
+
+  if (scenario === 'write-kill-switch') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'runtime.kill',
+            dryRun: false,
+            role: 'ADMIN',
+            confirmation: {
+              firstActor: 'alex.dev',
+              secondActor: 'pm.owner',
+              confirmationId: 'CONF-E2E-S045-001'
+            },
+            idempotencyKey: 'IK-E2E-S045-001',
+            args: { reason: 'incident-critical' }
+          }
+        ]
+      },
+      {
+        writeKillSwitch: {
+          active: true,
+          reason: 'incident-bridge'
+        }
+      }
+    );
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -380,6 +442,16 @@ test('command allowlist catalog demo covers empty/loading/error/success with gua
   await action.click();
   await expect(stateIndicator).toHaveAttribute('data-state', 'error');
   await expect(reasonCodeValue).toHaveText('COMMAND_JOURNAL_TAMPER_DETECTED');
+
+  await scenario.selectOption('queue-backpressure');
+  await action.click();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('EXECUTION_CAPACITY_EXCEEDED');
+
+  await scenario.selectOption('write-kill-switch');
+  await action.click();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('WRITE_KILL_SWITCH_ACTIVE');
 
   await scenario.selectOption('success');
   await action.click();

@@ -588,6 +588,69 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.diagnostics.scheduledCommandOrder.map((entry) => entry.capacitySlot)).toEqual([1, 2, 1]);
   });
 
+  it('blocks write-class apply executions when write kill-switch is active (S045/FR-042)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S045-001'
+        },
+        idempotencyKey: 'IK-S045-KILL-001',
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('WRITE_KILL_SWITCH_ACTIVE');
+    expect(result.correctiveActions).toContain('RELEASE_WRITE_KILL_SWITCH_AFTER_INCIDENT_REVIEW');
+  });
+
+  it('applies backpressure when queue depth exceeds capacity policy (S045/FR-041)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true }
+      },
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: false }
+      },
+      {
+        commandId: 'story.patch',
+        dryRun: true,
+        role: 'DEV',
+        args: { sid: 'S040', status: 'OPEN' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      executionCapacity: 1,
+      maxQueueDepth: 2
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('EXECUTION_CAPACITY_EXCEEDED');
+    expect(result.diagnostics.queueDepthViolations).toBe(1);
+    expect(result.correctiveActions).toContain('SEQUENCE_WITH_AVAILABLE_CAPACITY');
+  });
+
   it('rejects scheduling metadata that conflicts with computed capacity order (S044/FR-041)', () => {
     const input = buildCatalogInput();
     input.executionRequests = [

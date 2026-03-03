@@ -1,0 +1,11 @@
+{
+  "storyId": "S045",
+  "states": [
+    "empty",
+    "loading",
+    "error",
+    "success"
+  ],
+  "status": "validated",
+  "source": "tests/e2e/command-allowlist-catalog.spec.js"
+}

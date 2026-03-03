@@ -22,6 +22,7 @@ const REASON_CODES = Object.freeze([
   'IDEMPOTENCY_KEY_REQUIRED',
   'IDEMPOTENCY_KEY_REUSE_CONFLICT',
   'EXECUTION_CAPACITY_EXCEEDED',
+  'WRITE_KILL_SWITCH_ACTIVE',
   'INVALID_PARAMETER_VALUE',
   'UNSAFE_PARAMETER_VALUE'
 ]);
@@ -48,6 +49,7 @@ const DEFAULT_CORRECTIVE_ACTIONS = Object.freeze({
   IDEMPOTENCY_KEY_REQUIRED: ['SET_IDEMPOTENCY_KEY'],
   IDEMPOTENCY_KEY_REUSE_CONFLICT: ['ROTATE_IDEMPOTENCY_KEY'],
   EXECUTION_CAPACITY_EXCEEDED: ['SEQUENCE_WITH_AVAILABLE_CAPACITY'],
+  WRITE_KILL_SWITCH_ACTIVE: ['RELEASE_WRITE_KILL_SWITCH_AFTER_INCIDENT_REVIEW'],
   INVALID_PARAMETER_VALUE: ['FIX_PARAMETER_VALUES'],
   UNSAFE_PARAMETER_VALUE: ['SANITIZE_COMMAND_PARAMETERS']
 });
@@ -57,6 +59,7 @@ const DEFAULT_ACTIVE_PROJECT_ROOT_SIGNING_SECRET = 'bmad-active-project-root-sig
 const DEFAULT_MAX_TIMEOUT_MS = 120000;
 const DEFAULT_MAX_RETRY_COUNT = 3;
 const DEFAULT_EXECUTION_CAPACITY = 1;
+const DEFAULT_MAX_QUEUE_DEPTH_MULTIPLIER = 4;
 
 const PRIORITY_WEIGHT_BY_MODE = Object.freeze({
   CRITICAL: 0,
@@ -367,10 +370,52 @@ function resolveExecutionPolicy(runtimeOptions, payload) {
     32
   );
 
+  const defaultMaxQueueDepth = Math.max(
+    executionCapacity,
+    executionCapacity * DEFAULT_MAX_QUEUE_DEPTH_MULTIPLIER
+  );
+
+  const maxQueueDepth = normalizePolicyInteger(
+    runtimeOptions.maxQueueDepth ?? payload.maxQueueDepth ?? defaultMaxQueueDepth,
+    defaultMaxQueueDepth,
+    executionCapacity,
+    256
+  );
+
   return {
     maxTimeoutMs,
     maxRetryCount,
-    executionCapacity
+    executionCapacity,
+    maxQueueDepth
+  };
+}
+
+function normalizeKillSwitchState(runtimeOptions, payload) {
+  const source =
+    (isObject(runtimeOptions.writeKillSwitch) && runtimeOptions.writeKillSwitch) ||
+    (isObject(payload.writeKillSwitch) && payload.writeKillSwitch) ||
+    (isObject(payload.killSwitch) && payload.killSwitch) ||
+    {};
+
+  const active =
+    source.active === true ||
+    source.enabled === true ||
+    normalizeText(String(source.state ?? '')).toLowerCase() === 'active';
+
+  const reason = normalizeText(String(source.reason ?? source.message ?? '')) || null;
+  const incidentId =
+    normalizeText(String(source.incidentId ?? source.incident ?? source.ticket ?? '')) || null;
+  const activatedAt =
+    normalizeText(String(source.activatedAt ?? source.since ?? source.timestamp ?? '')) || null;
+  const activatedBy =
+    normalizeText(String(source.activatedBy ?? source.actor ?? source.owner ?? '')) || null;
+
+  return {
+    active,
+    reason,
+    incidentId,
+    activatedAt,
+    activatedBy
   };
 }
 
@@ -861,6 +906,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     commandById,
     executionPolicy.executionCapacity
   );
+  const killSwitchState = normalizeKillSwitchState(runtimeOptions, payload);
   const strictRoleCheck = runtimeOptions.strictRoleCheck !== false;
   const activeProjectRoot = normalizeActiveProjectRoot(
     runtimeOptions.activeProjectRoot ?? payload.activeProjectRoot
@@ -897,6 +943,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     maxTimeoutMs: executionPolicy.maxTimeoutMs,
     maxRetryCount: executionPolicy.maxRetryCount,
     executionCapacity: executionPolicy.executionCapacity,
+    maxQueueDepth: executionPolicy.maxQueueDepth,
     scheduledCommandOrder: scheduledExecutionRequests.map((entry) => ({
       commandId: entry.commandId,
       mode: entry.commandMode,
@@ -909,6 +956,13 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     activeProjectRootSigned: enforceSignedActiveProjectRoot
       ? activeProjectRootSignature.length > 0 && activeProjectRootSignature === expectedActiveProjectRootSignature
       : null,
+    writeKillSwitch: {
+      active: killSwitchState.active,
+      reason: killSwitchState.reason,
+      incidentId: killSwitchState.incidentId,
+      activatedAt: killSwitchState.activatedAt,
+      activatedBy: killSwitchState.activatedBy
+    },
     outsideCatalogCount: 0,
     dryRunViolations: 0,
     roleViolations: 0,
@@ -922,6 +976,8 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     idempotencyReplayCount: 0,
     idempotencyConflictCount: 0,
     capacityViolations: 0,
+    queueDepthViolations: 0,
+    writeKillSwitchViolations: 0,
     impactPreviewProvidedCount: 0,
     impactPreviewMissingCount: 0,
     impactPreviewOutsideProjectCount: 0,
@@ -1027,6 +1083,33 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     }
   }
 
+  if (scheduledExecutionRequests.length > executionPolicy.maxQueueDepth) {
+    diagnostics.capacityViolations += 1;
+    diagnostics.queueDepthViolations += 1;
+
+    const firstRequest = scheduledExecutionRequests[0]?.request ?? executionRequests[0];
+    if (firstRequest) {
+      appendExecutionJournal({
+        request: firstRequest,
+        reasonCode: 'EXECUTION_CAPACITY_EXCEEDED',
+        commandMode: 'UNKNOWN',
+        commandIdOverride: firstRequest?.commandId ?? firstRequest?.id ?? firstRequest?.command
+      });
+    }
+
+    return buildResultWithJournal({
+      allowed: false,
+      reasonCode: 'EXECUTION_CAPACITY_EXCEEDED',
+      reason: `Backpressure active: queue depth ${scheduledExecutionRequests.length} > max ${executionPolicy.maxQueueDepth}.`,
+      diagnosticsValue: {
+        ...diagnostics,
+        queueDepth: scheduledExecutionRequests.length,
+        maxQueueDepth: executionPolicy.maxQueueDepth,
+        queuedCommandIds: scheduledExecutionRequests.map((entry) => entry.commandId)
+      }
+    });
+  }
+
   const idempotencyRegistry = new Map();
 
   for (const scheduledRequest of scheduledExecutionRequests) {
@@ -1112,6 +1195,38 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       retryCount,
       idempotencyKey
     };
+
+    const isWriteClassExecution = requestDryRun === false && (catalogEntry.mode === 'WRITE' || catalogEntry.mode === 'CRITICAL');
+
+    if (killSwitchState.active && isWriteClassExecution) {
+      diagnostics.writeKillSwitchViolations += 1;
+      appendExecutionJournal({
+        request: requestWithPolicy,
+        reasonCode: 'WRITE_KILL_SWITCH_ACTIVE',
+        commandMode: catalogEntry.mode
+      });
+
+      return buildResultWithJournal({
+        allowed: false,
+        reasonCode: 'WRITE_KILL_SWITCH_ACTIVE',
+        reason: `Exécution bloquée: write kill-switch actif pour ${commandId}.`,
+        diagnosticsValue: {
+          ...diagnostics,
+          commandId,
+          queuePosition,
+          capacitySlot,
+          originalIndex,
+          priorityWeight,
+          writeKillSwitch: {
+            active: killSwitchState.active,
+            reason: killSwitchState.reason,
+            incidentId: killSwitchState.incidentId,
+            activatedAt: killSwitchState.activatedAt,
+            activatedBy: killSwitchState.activatedBy
+          }
+        }
+      });
+    }
 
     if (timeoutMs > executionPolicy.maxTimeoutMs) {
       diagnostics.timeoutPolicyViolations += 1;
@@ -1426,6 +1541,8 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     idempotencyPolicyCompliant:
       diagnostics.idempotencyRequiredCount === 0 && diagnostics.idempotencyConflictCount === 0,
     capacityPolicyCompliant: diagnostics.capacityViolations === 0,
+    queueDepthCompliant: diagnostics.queueDepthViolations === 0,
+    writeKillSwitchCompliant: diagnostics.writeKillSwitchViolations === 0,
     sequencingPolicyCompliant:
       diagnostics.capacityViolations === 0 && diagnostics.sequencedExecutionCount === diagnostics.executionCount,
     impactPreviewReadyForWrite: diagnostics.impactPreviewMissingCount === 0,
@@ -1434,7 +1551,9 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
       !enforceSignedActiveProjectRoot || activeProjectRootSignature === expectedActiveProjectRootSignature,
     maxTimeoutMs: executionPolicy.maxTimeoutMs,
     maxRetryCount: executionPolicy.maxRetryCount,
-    executionCapacity: executionPolicy.executionCapacity
+    executionCapacity: executionPolicy.executionCapacity,
+    maxQueueDepth: executionPolicy.maxQueueDepth,
+    writeKillSwitchActive: killSwitchState.active
   };
 
   return buildResultWithJournal({

@@ -338,6 +338,67 @@ describe('command-allowlist-catalog edge', () => {
     expect(result.reasonCode).toBe('IDEMPOTENCY_KEY_REUSE_CONFLICT');
   });
 
+  it('rejects write-class apply execution when write kill-switch is active (S045)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S045-EDGE-001'
+        },
+        idempotencyKey: 'IK-S045-EDGE-KILL-001',
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('WRITE_KILL_SWITCH_ACTIVE');
+  });
+
+  it('rejects queue depth overflow with deterministic backpressure (S045)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: true }
+      },
+      {
+        commandId: 'status.read',
+        dryRun: true,
+        role: 'DEV',
+        args: { verbose: false }
+      },
+      {
+        commandId: 'story.patch',
+        dryRun: true,
+        role: 'DEV',
+        args: { sid: 'S040', status: 'OPEN' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      executionCapacity: 1,
+      maxQueueDepth: 2
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('EXECUTION_CAPACITY_EXCEEDED');
+    expect(result.diagnostics.queueDepthViolations).toBe(1);
+  });
+
   it('rejects manual queue position mismatch against computed sequencing (S044)', () => {
     const input = buildBaseInput();
     input.executionRequests = [

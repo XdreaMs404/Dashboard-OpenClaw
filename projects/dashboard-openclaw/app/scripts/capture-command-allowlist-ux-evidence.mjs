@@ -90,6 +90,8 @@ const demoPageHtml = `
         <option value="dry-run-required">Dry-run requis</option>
         <option value="apply-impact-preview">Preview impact avant apply</option>
         <option value="tampered-journal">Journal append-only altéré</option>
+        <option value="queue-backpressure">Backpressure file pleine</option>
+        <option value="write-kill-switch">Write kill-switch actif</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -353,6 +355,66 @@ function runScenario(scenario) {
     });
   }
 
+  if (scenario === 'queue-backpressure') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'status.read',
+            dryRun: true,
+            role: 'DEV',
+            args: { verbose: true }
+          },
+          {
+            commandId: 'status.read',
+            dryRun: true,
+            role: 'DEV',
+            args: { verbose: false }
+          },
+          {
+            commandId: 'story.patch',
+            dryRun: true,
+            role: 'DEV',
+            args: { sid, status: 'OPEN' }
+          }
+        ]
+      },
+      {
+        executionCapacity: 1,
+        maxQueueDepth: 2
+      }
+    );
+  }
+
+  if (scenario === 'write-kill-switch') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'runtime.kill',
+            dryRun: false,
+            role: 'ADMIN',
+            confirmation: {
+              firstActor: 'alex.dev',
+              secondActor: 'pm.owner',
+              confirmationId: `CONF-${sid}-KILL-001`
+            },
+            idempotencyKey: `IK-${sid}-KILL-001`,
+            args: { reason: 'incident-critical' }
+          }
+        ]
+      },
+      {
+        writeKillSwitch: {
+          active: true,
+          reason: 'incident-bridge'
+        }
+      }
+    );
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -410,6 +472,62 @@ function buildReasonCopyChecks() {
     reason: tamperedJournal.reason,
     correctiveActions: tamperedJournal.correctiveActions,
     executionGuard: tamperedJournal.executionGuard ?? null
+  });
+
+  const queueBackpressure = buildCommandAllowlistCatalog(
+    {
+      ...catalog,
+      executionRequests: [
+        { commandId: 'status.read', dryRun: true, role: 'DEV', args: { verbose: true } },
+        { commandId: 'status.read', dryRun: true, role: 'DEV', args: { verbose: false } },
+        { commandId: 'story.patch', dryRun: true, role: 'DEV', args: { sid, status: 'OPEN' } }
+      ]
+    },
+    {
+      executionCapacity: 1,
+      maxQueueDepth: 2
+    }
+  );
+  checks.push({
+    expectedCode: 'EXECUTION_CAPACITY_EXCEEDED',
+    reasonCode: queueBackpressure.reasonCode,
+    reason: queueBackpressure.reason,
+    correctiveActions: queueBackpressure.correctiveActions,
+    executionGuard: queueBackpressure.executionGuard ?? null,
+    queueDepthViolations: queueBackpressure.diagnostics?.queueDepthViolations ?? -1
+  });
+
+  const writeKillSwitch = buildCommandAllowlistCatalog(
+    {
+      ...catalog,
+      executionRequests: [
+        {
+          commandId: 'runtime.kill',
+          dryRun: false,
+          role: 'ADMIN',
+          confirmation: {
+            firstActor: 'alex.dev',
+            secondActor: 'pm.owner',
+            confirmationId: `CONF-${sid}-KILL-UX-001`
+          },
+          idempotencyKey: `IK-${sid}-KILL-UX-001`,
+          args: { reason: 'incident-critical' }
+        }
+      ]
+    },
+    {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    }
+  );
+  checks.push({
+    expectedCode: 'WRITE_KILL_SWITCH_ACTIVE',
+    reasonCode: writeKillSwitch.reasonCode,
+    reason: writeKillSwitch.reason,
+    correctiveActions: writeKillSwitch.correctiveActions,
+    executionGuard: writeKillSwitch.executionGuard ?? null
   });
 
   const roleDenied = buildCommandAllowlistCatalog({
