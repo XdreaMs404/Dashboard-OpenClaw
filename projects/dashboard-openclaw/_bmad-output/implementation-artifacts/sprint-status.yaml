@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-03-03T08:36:14Z"
+updated_at_utc: "2026-03-03T10:18:09Z"
 
 development_status:
   epic-1: done
@@ -69,7 +69,7 @@ development_status:
   5-49-tableau-aqcd-explicable-formule-source: done
   5-50-snapshots-aqcd-periodiques-et-comparatifs: done
   5-51-readiness-score-rule-based-v1: done
-  5-52-top-3-actions-prioritaires-par-gate: backlog
+  5-52-top-3-actions-prioritaires-par-gate: done
   5-53-registre-risques-vivant-owner-echeance-statut: backlog
   5-54-lien-mitigation-task-preuve-de-fermeture: backlog
   5-55-heatmap-risques-probabilite-impact: backlog

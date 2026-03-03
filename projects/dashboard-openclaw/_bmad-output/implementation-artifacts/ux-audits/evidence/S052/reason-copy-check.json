@@ -1,0 +1,38 @@
+{
+  "storyId": "S052",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_GATE_PRIORITY_INPUT",
+      "reasonCode": "INVALID_AQCD_GATE_PRIORITY_INPUT",
+      "reason": "Entrée S052 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_GATE_PRIORITY_INPUT"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_RISK_REGISTER_INVALID",
+      "reasonCode": "AQCD_RISK_REGISTER_INVALID",
+      "reason": "riskRegister[0] invalide: owner requis.",
+      "correctiveActions": [
+        "FIX_AQCD_RISK_REGISTER_INPUT"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_RUNBOOK_EVIDENCE_REQUIRED",
+      "reasonCode": "AQCD_RUNBOOK_EVIDENCE_REQUIRED",
+      "reason": "Runbook critique requis pour S052 (runbookRef + runbookValidated=true).",
+      "correctiveActions": [
+        "PROVIDE_RUNBOOK_EVIDENCE"
+      ]
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Top 3 actions prioritaires par gate généré avec registre risques (S052).",
+      "correctiveActions": [],
+      "actionCount": 4,
+      "gateCount": 2
+    }
+  ],
+  "status": "validated"
+}

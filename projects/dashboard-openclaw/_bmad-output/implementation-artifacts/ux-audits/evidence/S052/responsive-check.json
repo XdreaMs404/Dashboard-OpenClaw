@@ -1,0 +1,106 @@
+{
+  "storyId": "S052",
+  "runAt": "2026-03-03T09:22:33.969Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S052/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Top 3 actions prioritaires par gate généré avec registre risques (S052).",
+      "diagnostics": "ref=S052 | gates=2 | actions=4 | runbook=true | p95=1800",
+      "actions": "groups=2 | firstAction=ACTION_G4_REDUCE_COST_DRIFT | firstOwner=PM | firstEvidence=_bmad-output/implementation-artifacts/handoffs/S052-dev-to-tea.md",
+      "risk": "open=2 | mitigated=0 | closed=0 | highestExposure=82",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "actions": 0,
+        "risk": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S052/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Top 3 actions prioritaires par gate généré avec registre risques (S052).",
+      "diagnostics": "ref=S052 | gates=2 | actions=4 | runbook=true | p95=1800",
+      "actions": "groups=2 | firstAction=ACTION_G4_REDUCE_COST_DRIFT | firstOwner=PM | firstEvidence=_bmad-output/implementation-artifacts/handoffs/S052-dev-to-tea.md",
+      "risk": "open=2 | mitigated=0 | closed=0 | highestExposure=82",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "actions": 0,
+        "risk": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S052/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "reason": "Top 3 actions prioritaires par gate généré avec registre risques (S052).",
+      "diagnostics": "ref=S052 | gates=2 | actions=4 | runbook=true | p95=1800",
+      "actions": "groups=2 | firstAction=ACTION_G4_REDUCE_COST_DRIFT | firstOwner=PM | firstEvidence=_bmad-output/implementation-artifacts/handoffs/S052-dev-to-tea.md",
+      "risk": "open=2 | mitigated=0 | closed=0 | highestExposure=82",
+      "ariaLiveStatus": "polite",
+      "ariaLiveSuccess": "polite",
+      "ariaAtomicSuccess": "true",
+      "hasAlertRole": true,
+      "focusReturnedToAction": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "body": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "actions": 0,
+        "risk": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}
