@@ -47,7 +47,7 @@
 | S043 | E04 | Journal append-only des commandes | DONE |
 | S044 | E04 | Timeout/retry/idempotency key pilotés | DONE |
 | S045 | E04 | Ordonnancement concurrent et backpressure | DONE |
-| S046 | E04 | Kill-switch opérationnel immédiat | TODO |
+| S046 | E04 | Kill-switch opérationnel immédiat | DONE |
 | S047 | E04 | Override policy avec approbation nominative | TODO |
 | S048 | E04 | Bibliothèque templates de commandes validées | TODO |
 | S049 | E05 | Tableau AQCD explicable (formule + source) | TODO |

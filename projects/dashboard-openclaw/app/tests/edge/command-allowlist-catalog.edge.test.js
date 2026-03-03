@@ -399,6 +399,73 @@ describe('command-allowlist-catalog edge', () => {
     expect(result.diagnostics.queueDepthViolations).toBe(1);
   });
 
+  it('rejects policy override without nominative approval metadata (S046)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S046-EDGE-001'
+        },
+        idempotencyKey: 'IK-S046-EDGE-OVR-001',
+        policyOverride: {
+          requested: true,
+          requestedBy: 'alex.dev'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('POLICY_OVERRIDE_APPROVAL_REQUIRED');
+  });
+
+  it('accepts kill-switch override only with valid nominative approval (S046)', () => {
+    const input = buildBaseInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S046-EDGE-002'
+        },
+        idempotencyKey: 'IK-S046-EDGE-OVR-002',
+        policyOverride: {
+          requested: true,
+          requestedBy: 'alex.dev',
+          approvedBy: 'security.lead',
+          approvalId: 'OVR-S046-EDGE-001',
+          reason: 'Incident commander approval'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    });
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+  });
+
   it('rejects manual queue position mismatch against computed sequencing (S044)', () => {
     const input = buildBaseInput();
     input.executionRequests = [

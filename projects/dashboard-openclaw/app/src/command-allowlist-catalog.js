@@ -23,6 +23,7 @@ const REASON_CODES = Object.freeze([
   'IDEMPOTENCY_KEY_REUSE_CONFLICT',
   'EXECUTION_CAPACITY_EXCEEDED',
   'WRITE_KILL_SWITCH_ACTIVE',
+  'POLICY_OVERRIDE_APPROVAL_REQUIRED',
   'INVALID_PARAMETER_VALUE',
   'UNSAFE_PARAMETER_VALUE'
 ]);
@@ -50,6 +51,7 @@ const DEFAULT_CORRECTIVE_ACTIONS = Object.freeze({
   IDEMPOTENCY_KEY_REUSE_CONFLICT: ['ROTATE_IDEMPOTENCY_KEY'],
   EXECUTION_CAPACITY_EXCEEDED: ['SEQUENCE_WITH_AVAILABLE_CAPACITY'],
   WRITE_KILL_SWITCH_ACTIVE: ['RELEASE_WRITE_KILL_SWITCH_AFTER_INCIDENT_REVIEW'],
+  POLICY_OVERRIDE_APPROVAL_REQUIRED: ['REQUIRE_NOMINATIVE_POLICY_APPROVAL'],
   INVALID_PARAMETER_VALUE: ['FIX_PARAMETER_VALUES'],
   UNSAFE_PARAMETER_VALUE: ['SANITIZE_COMMAND_PARAMETERS']
 });
@@ -419,6 +421,72 @@ function normalizeKillSwitchState(runtimeOptions, payload) {
   };
 }
 
+function resolvePolicyOverrideState(request) {
+  const rawOverride = request?.policyOverride ?? request?.overridePolicy ?? request?.policy?.override;
+  const source = isObject(rawOverride) ? rawOverride : {};
+
+  const requested =
+    rawOverride === true ||
+    request?.overrideRequested === true ||
+    request?.policyOverrideRequested === true ||
+    (isObject(rawOverride) && rawOverride.requested !== false);
+
+  const approver = normalizeText(
+    String(
+      source.approvedBy ??
+        source.approver ??
+        source.approvalActor ??
+        source.approvalOwner ??
+        request?.overrideApprovedBy ??
+        request?.overrideApprover ??
+        ''
+    )
+  );
+
+  const approvalId = normalizeText(
+    String(
+      source.approvalId ??
+        source.approvalTicket ??
+        source.ticket ??
+        source.reference ??
+        request?.overrideApprovalId ??
+        request?.overrideTicket ??
+        ''
+    )
+  );
+
+  const reason = normalizeText(
+    String(source.reason ?? source.justification ?? request?.overrideReason ?? request?.policyOverrideReason ?? '')
+  );
+
+  const requestedBy = normalizeText(
+    String(
+      source.requestedBy ??
+        source.actor ??
+        request?.requestedBy ??
+        request?.actor ??
+        request?.initiatedBy ??
+        request?.role ??
+        ''
+    )
+  );
+
+  const approverDistinctFromRequester =
+    approver.length === 0 ||
+    requestedBy.length === 0 ||
+    approver.toLocaleLowerCase() !== requestedBy.toLocaleLowerCase();
+
+  return {
+    requested,
+    approver,
+    approvalId,
+    reason,
+    requestedBy,
+    approverDistinctFromRequester,
+    approved: approver.length > 0 && approvalId.length > 0 && reason.length > 0
+  };
+}
+
 function resolvePriorityWeight(priorityValue, mode) {
   if (typeof priorityValue === 'number' && Number.isFinite(priorityValue)) {
     return normalizePolicyInteger(priorityValue, PRIORITY_WEIGHT_BY_MODE[mode] ?? 2, 0, 9);
@@ -484,6 +552,7 @@ function canonicalizeValue(value) {
 function buildIdempotencyFingerprint(request, commandId, commandMode) {
   const args = isObject(request?.args) ? request.args : {};
   const impactFiles = normalizeImpactFiles(request?.impactFiles ?? request?.impactedFiles ?? request?.preview?.files);
+  const policyOverride = resolvePolicyOverrideState(request);
 
   const payload = {
     commandId,
@@ -492,7 +561,16 @@ function buildIdempotencyFingerprint(request, commandId, commandMode) {
     role: normalizeText(String(request?.role ?? '')).toUpperCase() || 'UNKNOWN',
     args: canonicalizeValue(args),
     impactFiles,
-    confirmation: canonicalizeValue(isObject(request?.confirmation) ? request.confirmation : {})
+    confirmation: canonicalizeValue(isObject(request?.confirmation) ? request.confirmation : {}),
+    policyOverride: {
+      requested: policyOverride.requested,
+      approver: policyOverride.approver || null,
+      approvalId: policyOverride.approvalId || null,
+      reason: policyOverride.reason || null,
+      requestedBy: policyOverride.requestedBy || null,
+      approverDistinctFromRequester: policyOverride.approverDistinctFromRequester,
+      approved: policyOverride.approved
+    }
   };
 
   return JSON.stringify(payload);
@@ -978,6 +1056,9 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     capacityViolations: 0,
     queueDepthViolations: 0,
     writeKillSwitchViolations: 0,
+    policyOverrideRequestedCount: 0,
+    policyOverrideViolations: 0,
+    policyOverrideApprovedCount: 0,
     impactPreviewProvidedCount: 0,
     impactPreviewMissingCount: 0,
     impactPreviewOutsideProjectCount: 0,
@@ -1197,8 +1278,47 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     };
 
     const isWriteClassExecution = requestDryRun === false && (catalogEntry.mode === 'WRITE' || catalogEntry.mode === 'CRITICAL');
+    const policyOverride = resolvePolicyOverrideState(requestWithPolicy);
 
-    if (killSwitchState.active && isWriteClassExecution) {
+    if (policyOverride.requested) {
+      diagnostics.policyOverrideRequestedCount += 1;
+
+      if (!policyOverride.approved || !policyOverride.approverDistinctFromRequester) {
+        diagnostics.policyOverrideViolations += 1;
+        appendExecutionJournal({
+          request: requestWithPolicy,
+          reasonCode: 'POLICY_OVERRIDE_APPROVAL_REQUIRED',
+          commandMode: catalogEntry.mode
+        });
+
+        return buildResultWithJournal({
+          allowed: false,
+          reasonCode: 'POLICY_OVERRIDE_APPROVAL_REQUIRED',
+          reason: `Override policy refusé pour ${commandId}: approbation nominative valide requise.`,
+          diagnosticsValue: {
+            ...diagnostics,
+            commandId,
+            queuePosition,
+            capacitySlot,
+            originalIndex,
+            priorityWeight,
+            policyOverride: {
+              requested: true,
+              approver: policyOverride.approver || null,
+              approvalId: policyOverride.approvalId || null,
+              reason: policyOverride.reason || null,
+              requestedBy: policyOverride.requestedBy || null,
+              approverDistinctFromRequester: policyOverride.approverDistinctFromRequester,
+              approved: policyOverride.approved
+            }
+          }
+        });
+      }
+
+      diagnostics.policyOverrideApprovedCount += 1;
+    }
+
+    if (killSwitchState.active && isWriteClassExecution && !policyOverride.requested) {
       diagnostics.writeKillSwitchViolations += 1;
       appendExecutionJournal({
         request: requestWithPolicy,
@@ -1543,6 +1663,7 @@ export function buildCommandAllowlistCatalog(payload, runtimeOptions = {}) {
     capacityPolicyCompliant: diagnostics.capacityViolations === 0,
     queueDepthCompliant: diagnostics.queueDepthViolations === 0,
     writeKillSwitchCompliant: diagnostics.writeKillSwitchViolations === 0,
+    policyOverrideCompliant: diagnostics.policyOverrideViolations === 0,
     sequencingPolicyCompliant:
       diagnostics.capacityViolations === 0 && diagnostics.sequencedExecutionCount === diagnostics.executionCount,
     impactPreviewReadyForWrite: diagnostics.impactPreviewMissingCount === 0,

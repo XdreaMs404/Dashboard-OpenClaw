@@ -1,125 +1,87 @@
 # Runtime story log — S046
 
-- Dernière mise à jour: **2026-03-02 08:01:33 UTC**
-- Étape courante: **dev** (bmad-dev)
+- Dernière mise à jour: **2026-03-03 02:20:13 UTC**
+- Étape courante: **final_gates** (system-gates)
 - Return-to-step: **-**
-- Temps écoulé total: **150.8 min**
-- Résultat checkpoint: **CHECKPOINT_CLEARED**
-- Note: **Checkpoint supprimé après transition story.**
+- Temps écoulé total: **61.42 min**
+- Résultat checkpoint: **ACTIVATE**
 
 ## Durée cumulée par étape (agents)
 
 | Étape | Agent | Durée cumulée (min) | Passages | Attempts |
 |---|---|---:|---:|---:|
-| pm | bmad-pm | 2.51 | 3 | 0 |
-| dev | bmad-dev | 148.29 | 3 | 0 |
-| uxqa | bmad-ux-qa | 0.0 | 0 | 0 |
-| tea | bmad-tea | 0.0 | 0 | 0 |
-| reviewer | bmad-reviewer | 0.0 | 0 | 0 |
-| techwriter | bmad-tech-writer | 0.0 | 0 | 0 |
-| final_gates | system-gates | 0.0 | 0 | 0 |
+| pm | bmad-pm | 0.24 | 1 | 0 |
+| dev | bmad-dev | 26.86 | 1 | 0 |
+| uxqa | bmad-ux-qa | 4.74 | 1 | 0 |
+| tea | bmad-tea | 29.58 | 1 | 0 |
+| reviewer | bmad-reviewer | 0.0 | 1 | 0 |
+| techwriter | bmad-tech-writer | 0.0 | 1 | 0 |
+| final_gates | system-gates | 0.0 | 1 | 0 |
 
 ## Timeline des passages
 
 | # | Étape | Agent | Début | Fin | Durée (min) |
 |---:|---|---|---|---|---:|
-| 1 | pm | bmad-pm | 2026-03-02 05:30:45 UTC | 2026-03-02 05:31:01 UTC | 0.27 |
-| 2 | dev | bmad-dev | 2026-03-02 05:31:01 UTC | 2026-03-02 05:41:38 UTC | 10.62 |
-| 3 | pm | bmad-pm | 2026-03-02 05:41:38 UTC | 2026-03-02 05:42:49 UTC | 1.18 |
-| 4 | dev | bmad-dev | 2026-03-02 05:42:49 UTC | 2026-03-02 05:50:53 UTC | 8.05 |
-| 5 | pm | bmad-pm | 2026-03-02 05:50:53 UTC | 2026-03-02 05:51:56 UTC | 1.06 |
-| 6 | dev | bmad-dev | 2026-03-02 05:51:56 UTC | 2026-03-02 08:01:33 UTC | 129.61 |
+| 1 | pm | bmad-pm | 2026-03-03 01:18:47 UTC | 2026-03-03 01:19:02 UTC | 0.24 |
+| 2 | dev | bmad-dev | 2026-03-03 01:19:02 UTC | 2026-03-03 01:45:54 UTC | 26.86 |
+| 3 | uxqa | bmad-ux-qa | 2026-03-03 01:45:54 UTC | 2026-03-03 01:50:38 UTC | 4.74 |
+| 4 | tea | bmad-tea | 2026-03-03 01:50:38 UTC | 2026-03-03 02:20:13 UTC | 29.58 |
+| 5 | reviewer | bmad-reviewer | 2026-03-03 02:20:13 UTC | 2026-03-03 02:20:13 UTC | 0.0 |
+| 6 | techwriter | bmad-tech-writer | 2026-03-03 02:20:13 UTC | 2026-03-03 02:20:13 UTC | 0.0 |
+| 7 | final_gates | system-gates | 2026-03-03 02:20:13 UTC | 2026-03-03 02:20:13 UTC | 0.0 |
 
 ## Blocages détectés
 
-| Horodatage | Étape | Signal | Détail |
-|---|---|---|---|
-| 2026-03-02 05:32:58 UTC | dev | Tentative incrémentée | dev:1 |
-| 2026-03-02 05:34:30 UTC | dev | Tentative incrémentée | dev:2 |
-| 2026-03-02 05:37:30 UTC | dev | Tentative incrémentée | dev:3 |
-| 2026-03-02 05:39:38 UTC | dev | Tentative incrémentée | dev:4 |
-| 2026-03-02 05:41:38 UTC | dev | Tentative incrémentée | dev:5 |
-| 2026-03-02 05:44:58 UTC | dev | Tentative incrémentée | dev:1 |
-| 2026-03-02 05:46:21 UTC | dev | Tentative incrémentée | dev:2 |
-| 2026-03-02 05:47:55 UTC | dev | Tentative incrémentée | dev:3:deactivated_workspace |
-| 2026-03-02 05:49:17 UTC | dev | Tentative incrémentée | dev:4 |
-| 2026-03-02 05:50:53 UTC | dev | Tentative incrémentée | dev:5:deactivated_workspace |
-| 2026-03-02 05:54:02 UTC | dev | Tentative incrémentée | dev:1 |
-| 2026-03-02 05:55:25 UTC | dev | Tentative incrémentée | dev:2 |
-| 2026-03-02 05:57:05 UTC | dev | Tentative incrémentée | dev:3 |
-| 2026-03-02 06:00:04 UTC | dev | Tentative incrémentée | dev:4 |
-| 2026-03-02 06:04:42 UTC | dev | Tentative incrémentée | dev:5 |
+Aucun blocage détecté dans l'historique checkpoint.
 
 ## Actions de déblocage
 
 | Horodatage | Étape | Action | Détail |
 |---|---|---|---|
-| 2026-03-02 05:31:01 UTC | dev | Bascule de déblocage vers DEV | dev |
-| 2026-03-02 05:31:04 UTC | dev | Compteur reset | pm |
-| 2026-03-02 05:41:38 UTC | pm | Retour effacé | returnToStep cleared (dev escalation) |
-| 2026-03-02 05:41:38 UTC | pm | Compteur reset | dev |
-| 2026-03-02 05:42:49 UTC | dev | Bascule de déblocage vers DEV | dev |
-| 2026-03-02 05:42:52 UTC | dev | Compteur reset | pm |
-| 2026-03-02 05:50:53 UTC | pm | Retour effacé | returnToStep cleared (dev escalation) |
-| 2026-03-02 05:50:53 UTC | pm | Compteur reset | dev |
-| 2026-03-02 05:51:56 UTC | dev | Bascule de déblocage vers DEV | dev |
-| 2026-03-02 05:51:59 UTC | dev | Compteur reset | pm |
-| 2026-03-02 07:50:10 UTC | dev | Compteur reset | dev |
+| 2026-03-03 01:19:02 UTC | dev | Bascule de déblocage vers DEV | dev |
+| 2026-03-03 01:19:04 UTC | dev | Compteur reset | pm |
+| 2026-03-03 01:45:54 UTC | uxqa | Compteur reset | dev |
+| 2026-03-03 01:50:38 UTC | tea | Compteur reset | uxqa |
+| 2026-03-03 02:20:13 UTC | reviewer | Compteur reset | tea |
+| 2026-03-03 02:20:13 UTC | techwriter | Compteur reset | reviewer |
+| 2026-03-03 02:20:13 UTC | final_gates | Compteur reset | techwriter |
 
 ## Journal brut step-by-step
 
 | Horodatage | Action | Détail | Étape avant → après | Return-to-step | Attempts (pm/dev/uxqa/tea/reviewer/tw) |
 |---|---|---|---|---|---|
-| 2026-03-02 05:30:45 UTC | bootstrap | checkpoint initialized | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:30:45 UTC | activate | checkpoint activated | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:31:01 UTC | set-step | dev | pm → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:31:04 UTC | reset-attempt | pm | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:32:27 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:32:58 UTC | inc-attempt | dev:1 | dev → dev | - | 0/1/0/0/0/0 |
-| 2026-03-02 05:33:46 UTC | activate | checkpoint activated | dev → dev | - | 0/1/0/0/0/0 |
-| 2026-03-02 05:34:30 UTC | inc-attempt | dev:2 | dev → dev | - | 0/2/0/0/0/0 |
-| 2026-03-02 05:36:46 UTC | activate | checkpoint activated | dev → dev | - | 0/2/0/0/0/0 |
-| 2026-03-02 05:37:30 UTC | inc-attempt | dev:3 | dev → dev | - | 0/3/0/0/0/0 |
-| 2026-03-02 05:39:04 UTC | activate | checkpoint activated | dev → dev | - | 0/3/0/0/0/0 |
-| 2026-03-02 05:39:38 UTC | inc-attempt | dev:4 | dev → dev | - | 0/4/0/0/0/0 |
-| 2026-03-02 05:41:06 UTC | activate | checkpoint activated | dev → dev | - | 0/4/0/0/0/0 |
-| 2026-03-02 05:41:38 UTC | inc-attempt | dev:5 | dev → dev | - | 0/5/0/0/0/0 |
-| 2026-03-02 05:41:38 UTC | auto-recover | dev attempt cap=5 reached -> pm replan (round 1) | dev → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:41:38 UTC | clear-return | returnToStep cleared (dev escalation) | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:41:38 UTC | reset-attempt | dev | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:42:37 UTC | activate | checkpoint activated | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:42:49 UTC | set-step | dev | pm → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:42:52 UTC | reset-attempt | pm | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:44:12 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:44:58 UTC | inc-attempt | dev:1 | dev → dev | - | 0/1/0/0/0/0 |
-| 2026-03-02 05:45:37 UTC | activate | checkpoint activated | dev → dev | - | 0/1/0/0/0/0 |
-| 2026-03-02 05:46:21 UTC | inc-attempt | dev:2 | dev → dev | - | 0/2/0/0/0/0 |
-| 2026-03-02 05:47:20 UTC | activate | checkpoint activated | dev → dev | - | 0/2/0/0/0/0 |
-| 2026-03-02 05:47:55 UTC | inc-attempt | dev:3:deactivated_workspace | dev → dev | - | 0/3/0/0/0/0 |
-| 2026-03-02 05:48:44 UTC | activate | checkpoint activated | dev → dev | - | 0/3/0/0/0/0 |
-| 2026-03-02 05:49:17 UTC | inc-attempt | dev:4 | dev → dev | - | 0/4/0/0/0/0 |
-| 2026-03-02 05:50:07 UTC | activate | checkpoint activated | dev → dev | - | 0/4/0/0/0/0 |
-| 2026-03-02 05:50:53 UTC | inc-attempt | dev:5:deactivated_workspace | dev → dev | - | 0/5/0/0/0/0 |
-| 2026-03-02 05:50:53 UTC | auto-recover | dev attempt cap=5 reached -> pm replan (round 2) | dev → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:50:53 UTC | clear-return | returnToStep cleared (dev escalation) | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:50:53 UTC | reset-attempt | dev | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:51:43 UTC | activate | checkpoint activated | pm → pm | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:51:56 UTC | set-step | dev | pm → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:51:59 UTC | reset-attempt | pm | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:53:17 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 05:54:02 UTC | inc-attempt | dev:1 | dev → dev | - | 0/1/0/0/0/0 |
-| 2026-03-02 05:54:45 UTC | activate | checkpoint activated | dev → dev | - | 0/1/0/0/0/0 |
-| 2026-03-02 05:55:25 UTC | inc-attempt | dev:2 | dev → dev | - | 0/2/0/0/0/0 |
-| 2026-03-02 05:56:29 UTC | activate | checkpoint activated | dev → dev | - | 0/2/0/0/0/0 |
-| 2026-03-02 05:57:05 UTC | inc-attempt | dev:3 | dev → dev | - | 0/3/0/0/0/0 |
-| 2026-03-02 05:59:20 UTC | activate | checkpoint activated | dev → dev | - | 0/3/0/0/0/0 |
-| 2026-03-02 06:00:04 UTC | inc-attempt | dev:4 | dev → dev | - | 0/4/0/0/0/0 |
-| 2026-03-02 06:02:07 UTC | activate | checkpoint activated | dev → dev | - | 0/4/0/0/0/0 |
-| 2026-03-02 06:02:25 UTC | set-alert | 30 | dev → dev | - | 0/4/0/0/0/0 |
-| 2026-03-02 06:03:50 UTC | activate | checkpoint activated | dev → dev | - | 0/4/0/0/0/0 |
-| 2026-03-02 06:04:42 UTC | inc-attempt | dev:5 | dev → dev | - | 0/5/0/0/0/0 |
-| 2026-03-02 06:04:42 UTC | blocked | dev recovery cap reached (3>2) | dev → dev | - | 0/5/0/0/0/0 |
-| 2026-03-02 07:50:10 UTC | auto-rearm | dev blocked checkpoint rearmed (BLOCKED_DEV_RECOVERY_CAP:3:5) | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 07:50:10 UTC | reset-attempt | dev | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 07:50:10 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
-| 2026-03-02 08:01:33 UTC | clear | checkpoint cleared | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:18:47 UTC | bootstrap | checkpoint initialized | pm → pm | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:18:47 UTC | activate | checkpoint activated | pm → pm | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:19:02 UTC | set-step | dev | pm → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:19:04 UTC | reset-attempt | pm | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:20:29 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:24:38 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:29:13 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:33:41 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:36:45 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:41:49 UTC | activate | checkpoint activated | dev → dev | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:45:54 UTC | auto-promote | dev handoffs READY -> uxqa | dev → uxqa | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:45:54 UTC | reset-attempt | dev | uxqa → uxqa | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:45:54 UTC | activate | checkpoint activated | uxqa → uxqa | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:50:38 UTC | auto-promote | uxqa audit PASS -> tea | uxqa → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:50:38 UTC | reset-attempt | uxqa | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:50:38 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:50:55 UTC | set-alert | 30 | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:51:43 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:54:44 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:58:03 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:02:12 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:05:21 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:05:43 UTC | set-alert | 45 | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:08:17 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:12:41 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:15:53 UTC | activate | checkpoint activated | tea → tea | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | auto-promote | tea handoff READY -> reviewer | tea → reviewer | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | reset-attempt | tea | reviewer → reviewer | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | auto-generate | review fallback generated from tea evidence | reviewer → techwriter | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | auto-promote | review fallback -> techwriter | reviewer → techwriter | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | reset-attempt | reviewer | techwriter → techwriter | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | auto-generate | summary fallback generated from review evidence | techwriter → final_gates | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | auto-promote | summary fallback -> final_gates | techwriter → final_gates | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | reset-attempt | techwriter | final_gates → final_gates | - | 0/0/0/0/0/0 |
+| 2026-03-03 02:20:13 UTC | activate | checkpoint activated | final_gates → final_gates | - | 0/0/0/0/0/0 |

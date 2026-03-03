@@ -1,10 +1,11 @@
 # Runtime story log — S045
 
-- Dernière mise à jour: **2026-03-03 01:15:47 UTC**
+- Dernière mise à jour: **2026-03-03 01:17:48 UTC**
 - Étape courante: **final_gates** (system-gates)
 - Return-to-step: **-**
-- Temps écoulé total: **43.54 min**
-- Résultat checkpoint: **ACTIVATE**
+- Temps écoulé total: **45.55 min**
+- Résultat checkpoint: **CHECKPOINT_CLEARED**
+- Note: **Checkpoint supprimé après transition story.**
 
 ## Durée cumulée par étape (agents)
 
@@ -16,7 +17,7 @@
 | tea | bmad-tea | 22.38 | 1 | 0 |
 | reviewer | bmad-reviewer | 0.0 | 1 | 0 |
 | techwriter | bmad-tech-writer | 0.0 | 1 | 0 |
-| final_gates | system-gates | 0.0 | 1 | 0 |
+| final_gates | system-gates | 2.02 | 1 | 0 |
 
 ## Timeline des passages
 
@@ -28,7 +29,7 @@
 | 4 | tea | bmad-tea | 2026-03-03 00:53:24 UTC | 2026-03-03 01:15:47 UTC | 22.38 |
 | 5 | reviewer | bmad-reviewer | 2026-03-03 01:15:47 UTC | 2026-03-03 01:15:47 UTC | 0.0 |
 | 6 | techwriter | bmad-tech-writer | 2026-03-03 01:15:47 UTC | 2026-03-03 01:15:47 UTC | 0.0 |
-| 7 | final_gates | system-gates | 2026-03-03 01:15:47 UTC | 2026-03-03 01:15:47 UTC | 0.0 |
+| 7 | final_gates | system-gates | 2026-03-03 01:15:47 UTC | 2026-03-03 01:17:48 UTC | 2.02 |
 
 ## Blocages détectés
 
@@ -80,3 +81,4 @@ Aucun blocage détecté dans l'historique checkpoint.
 | 2026-03-03 01:15:47 UTC | auto-promote | summary fallback -> final_gates | techwriter → final_gates | - | 0/0/0/0/0/0 |
 | 2026-03-03 01:15:47 UTC | reset-attempt | techwriter | final_gates → final_gates | - | 0/0/0/0/0/0 |
 | 2026-03-03 01:15:47 UTC | activate | checkpoint activated | final_gates → final_gates | - | 0/0/0/0/0/0 |
+| 2026-03-03 01:17:48 UTC | clear | checkpoint cleared | final_gates → final_gates | - | 0/0/0/0/0/0 |

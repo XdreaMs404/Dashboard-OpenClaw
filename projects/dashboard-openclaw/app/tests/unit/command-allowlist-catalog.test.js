@@ -678,6 +678,77 @@ describe('command-allowlist-catalog unit', () => {
     expect(result.correctiveActions).toContain('SEQUENCE_WITH_AVAILABLE_CAPACITY');
   });
 
+  it('requires nominative approval for policy override requests (S046/FR-043)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S046-001'
+        },
+        idempotencyKey: 'IK-S046-OVERRIDE-001',
+        policyOverride: {
+          requested: true,
+          requestedBy: 'alex.dev'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    });
+
+    expect(result.allowed).toBe(false);
+    expect(result.reasonCode).toBe('POLICY_OVERRIDE_APPROVAL_REQUIRED');
+    expect(result.correctiveActions).toContain('REQUIRE_NOMINATIVE_POLICY_APPROVAL');
+  });
+
+  it('allows write-class execution under kill-switch with valid nominative override approval (S046/FR-042)', () => {
+    const input = buildCatalogInput();
+    input.executionRequests = [
+      {
+        commandId: 'runtime.kill',
+        dryRun: false,
+        role: 'ADMIN',
+        confirmation: {
+          firstActor: 'alex.dev',
+          secondActor: 'pm.owner',
+          confirmationId: 'CONF-S046-002'
+        },
+        idempotencyKey: 'IK-S046-OVERRIDE-002',
+        policyOverride: {
+          requested: true,
+          requestedBy: 'alex.dev',
+          approvedBy: 'security.lead',
+          approvalId: 'OVR-S046-001',
+          reason: 'Incident commander approval'
+        },
+        args: { reason: 'incident-critical' }
+      }
+    ];
+
+    const result = buildCommandAllowlistCatalog(input, {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge',
+        incidentId: 'INC-S046-001'
+      }
+    });
+
+    expect(result.allowed).toBe(true);
+    expect(result.reasonCode).toBe('OK');
+    expect(result.diagnostics.policyOverrideApprovedCount).toBe(1);
+    expect(result.executionGuard.policyOverrideCompliant).toBe(true);
+  });
+
   it('blocks unsafe parameter values to reduce shell-injection risk (S02)', () => {
     const input = buildCatalogInput();
     input.executionRequests = [

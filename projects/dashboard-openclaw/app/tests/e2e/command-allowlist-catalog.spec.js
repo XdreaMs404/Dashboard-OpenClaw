@@ -67,6 +67,7 @@ const demoPageHtml = `
         <option value="tampered-journal">Journal append-only altéré</option>
         <option value="queue-backpressure">Backpressure file pleine</option>
         <option value="write-kill-switch">Write kill-switch actif</option>
+        <option value="override-without-approval">Override sans approbation nominative</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -390,6 +391,38 @@ function runScenario(scenario) {
     );
   }
 
+  if (scenario === 'override-without-approval') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'runtime.kill',
+            dryRun: false,
+            role: 'ADMIN',
+            confirmation: {
+              firstActor: 'alex.dev',
+              secondActor: 'pm.owner',
+              confirmationId: 'CONF-E2E-S046-001'
+            },
+            idempotencyKey: 'IK-E2E-S046-001',
+            policyOverride: {
+              requested: true,
+              requestedBy: 'alex.dev'
+            },
+            args: { reason: 'incident-critical' }
+          }
+        ]
+      },
+      {
+        writeKillSwitch: {
+          active: true,
+          reason: 'incident-bridge'
+        }
+      }
+    );
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -452,6 +485,11 @@ test('command allowlist catalog demo covers empty/loading/error/success with gua
   await action.click();
   await expect(stateIndicator).toHaveAttribute('data-state', 'error');
   await expect(reasonCodeValue).toHaveText('WRITE_KILL_SWITCH_ACTIVE');
+
+  await scenario.selectOption('override-without-approval');
+  await action.click();
+  await expect(stateIndicator).toHaveAttribute('data-state', 'error');
+  await expect(reasonCodeValue).toHaveText('POLICY_OVERRIDE_APPROVAL_REQUIRED');
 
   await scenario.selectOption('success');
   await action.click();

@@ -92,6 +92,7 @@ const demoPageHtml = `
         <option value="tampered-journal">Journal append-only altéré</option>
         <option value="queue-backpressure">Backpressure file pleine</option>
         <option value="write-kill-switch">Write kill-switch actif</option>
+        <option value="override-without-approval">Override sans approbation nominative</option>
         <option value="success">Nominal</option>
       </select>
 
@@ -415,6 +416,38 @@ function runScenario(scenario) {
     );
   }
 
+  if (scenario === 'override-without-approval') {
+    return buildCommandAllowlistCatalog(
+      {
+        ...buildCatalog(),
+        executionRequests: [
+          {
+            commandId: 'runtime.kill',
+            dryRun: false,
+            role: 'ADMIN',
+            confirmation: {
+              firstActor: 'alex.dev',
+              secondActor: 'pm.owner',
+              confirmationId: `CONF-${sid}-OVR-001`
+            },
+            idempotencyKey: `IK-${sid}-OVR-001`,
+            policyOverride: {
+              requested: true,
+              requestedBy: 'alex.dev'
+            },
+            args: { reason: 'incident-critical' }
+          }
+        ]
+      },
+      {
+        writeKillSwitch: {
+          active: true,
+          reason: 'incident-bridge'
+        }
+      }
+    );
+  }
+
   return buildCommandAllowlistCatalog('bad-input');
 }
 
@@ -528,6 +561,44 @@ function buildReasonCopyChecks() {
     reason: writeKillSwitch.reason,
     correctiveActions: writeKillSwitch.correctiveActions,
     executionGuard: writeKillSwitch.executionGuard ?? null
+  });
+
+  const overrideWithoutApproval = buildCommandAllowlistCatalog(
+    {
+      ...catalog,
+      executionRequests: [
+        {
+          commandId: 'runtime.kill',
+          dryRun: false,
+          role: 'ADMIN',
+          confirmation: {
+            firstActor: 'alex.dev',
+            secondActor: 'pm.owner',
+            confirmationId: `CONF-${sid}-OVR-UX-001`
+          },
+          idempotencyKey: `IK-${sid}-OVR-UX-001`,
+          policyOverride: {
+            requested: true,
+            requestedBy: 'alex.dev'
+          },
+          args: { reason: 'incident-critical' }
+        }
+      ]
+    },
+    {
+      writeKillSwitch: {
+        active: true,
+        reason: 'incident-bridge'
+      }
+    }
+  );
+  checks.push({
+    expectedCode: 'POLICY_OVERRIDE_APPROVAL_REQUIRED',
+    reasonCode: overrideWithoutApproval.reasonCode,
+    reason: overrideWithoutApproval.reason,
+    correctiveActions: overrideWithoutApproval.correctiveActions,
+    executionGuard: overrideWithoutApproval.executionGuard ?? null,
+    policyOverrideViolations: overrideWithoutApproval.diagnostics?.policyOverrideViolations ?? -1
   });
 
   const roleDenied = buildCommandAllowlistCatalog({
