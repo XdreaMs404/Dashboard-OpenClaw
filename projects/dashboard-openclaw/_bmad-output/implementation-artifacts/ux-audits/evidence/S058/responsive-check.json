@@ -1,0 +1,79 @@
+{
+  "storyId": "S058",
+  "runAt": "2026-03-03T20:54:02.537Z",
+  "checks": [
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S058/responsive-mobile.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "hasAlertRole": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "closure": 0,
+        "phase": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 768,
+        "height": 1024
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S058/responsive-tablet.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "hasAlertRole": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "closure": 0,
+        "phase": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      "screenshot": "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts/ux-audits/evidence/S058/responsive-desktop.png",
+      "state": "success",
+      "reasonCode": "OK",
+      "hasAlertRole": true,
+      "scenarioHasLabel": true,
+      "headingOrderOk": true,
+      "overflow": {
+        "document": 0,
+        "reason": 0,
+        "diagnostics": 0,
+        "closure": 0,
+        "phase": 0,
+        "alert": 0,
+        "success": 0,
+        "max": 0
+      },
+      "pass": true
+    }
+  ],
+  "allPass": true
+}

@@ -1,0 +1,36 @@
+{
+  "storyId": "S058",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_RETRO_CLOSURE_INPUT",
+      "reasonCode": "INVALID_AQCD_RETRO_CLOSURE_INPUT",
+      "reason": "Entrée S058 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_RETRO_CLOSURE_INPUT_STRUCTURE"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_RETRO_PHASE_MISSING",
+      "reasonCode": "AQCD_RETRO_PHASE_MISSING",
+      "reason": "Phases rétro manquantes: H23.",
+      "correctiveActions": [
+        "ADD_MISSING_RETRO_PHASE_ACTIONS"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_RETRO_CLOSURE_PENDING",
+      "reasonCode": "AQCD_RETRO_CLOSURE_PENDING",
+      "reason": "Clôture non vérifiée: actions encore ouvertes (RETRO-H22-001).",
+      "correctiveActions": [
+        "CLOSE_REMAINING_RETRO_ACTIONS"
+      ]
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Suivi actions H21/H22/H23 clôturé avec preuves vérifiées et AQCD visible.",
+      "correctiveActions": []
+    }
+  ],
+  "status": "validated"
+}
