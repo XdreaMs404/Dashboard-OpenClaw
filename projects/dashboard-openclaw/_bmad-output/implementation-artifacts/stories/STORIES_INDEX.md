@@ -55,7 +55,7 @@
 | S051 | E05 | Readiness score rule-based v1 | DONE |
 | S052 | E05 | Top 3 actions prioritaires par gate | DONE |
 | S053 | E05 | Registre risques vivant owner/échéance/statut | DONE |
-| S054 | E05 | Lien mitigation -> task -> preuve de fermeture | TODO |
+| S054 | E05 | Lien mitigation -> task -> preuve de fermeture | DONE |
 | S055 | E05 | Heatmap risques probabilité/impact | TODO |
 | S056 | E05 | Coût moyen par décision validée | TODO |
 | S057 | E05 | Waste ratio par phase + alertes dérive | TODO |

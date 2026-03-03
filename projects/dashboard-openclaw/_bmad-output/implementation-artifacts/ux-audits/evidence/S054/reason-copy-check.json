@@ -1,0 +1,37 @@
+{
+  "storyId": "S054",
+  "checks": [
+    {
+      "expectedCode": "INVALID_AQCD_MITIGATION_LINK_INPUT",
+      "reasonCode": "INVALID_AQCD_MITIGATION_LINK_INPUT",
+      "reason": "Entrée S054 invalide: objet requis.",
+      "correctiveActions": [
+        "FIX_AQCD_MITIGATION_INPUT_STRUCTURE"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_MITIGATION_CLOSURE_PROOF_REQUIRED",
+      "reasonCode": "AQCD_MITIGATION_CLOSURE_PROOF_REQUIRED",
+      "reason": "Preuves de fermeture insuffisantes: 0/1 mitigation(s) fermée(s) attendue(s).",
+      "correctiveActions": [
+        "ATTACH_CLOSURE_PROOF_TO_MITIGATION"
+      ]
+    },
+    {
+      "expectedCode": "AQCD_HEATMAP_EVOLUTION_REQUIRED",
+      "reasonCode": "AQCD_HEATMAP_EVOLUTION_REQUIRED",
+      "reason": "Heatmap probabilité/impact et son évolution requis (>= 2 snapshots).",
+      "correctiveActions": [
+        "ADD_AQCD_HEATMAP_SERIES"
+      ]
+    },
+    {
+      "expectedCode": "OK",
+      "reasonCode": "OK",
+      "reason": "Liens mitigation→task→preuve validés avec heatmap probabilité/impact continue.",
+      "correctiveActions": [],
+      "heatmapContinuous": true
+    }
+  ],
+  "status": "validated"
+}

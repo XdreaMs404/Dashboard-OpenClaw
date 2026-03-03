@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-03-03T11:59:45Z"
+updated_at_utc: "2026-03-03T13:42:03Z"
 
 development_status:
   epic-1: done
@@ -71,7 +71,7 @@ development_status:
   5-51-readiness-score-rule-based-v1: done
   5-52-top-3-actions-prioritaires-par-gate: done
   5-53-registre-risques-vivant-owner-echeance-statut: done
-  5-54-lien-mitigation-task-preuve-de-fermeture: backlog
+  5-54-lien-mitigation-task-preuve-de-fermeture: done
   5-55-heatmap-risques-probabilite-impact: backlog
   5-56-cout-moyen-par-decision-validee: backlog
   5-57-waste-ratio-par-phase-alertes-derive: backlog

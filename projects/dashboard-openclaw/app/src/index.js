@@ -42,6 +42,7 @@ import { buildAqcdSnapshotComparisons } from './aqcd-snapshot-comparisons.js';
 import { buildAqcdReadinessRules } from './aqcd-readiness-rules.js';
 import { buildAqcdGatePriorityActions } from './aqcd-gate-priority-actions.js';
 import { buildAqcdRiskRegister } from './aqcd-risk-register.js';
+import { buildAqcdMitigationClosureLinks } from './aqcd-mitigation-closure-links.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -81,6 +82,7 @@ export {
   buildAqcdReadinessRules,
   buildAqcdGatePriorityActions,
   buildAqcdRiskRegister,
+  buildAqcdMitigationClosureLinks,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
