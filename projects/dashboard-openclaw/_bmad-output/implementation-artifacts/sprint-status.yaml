@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-03-04T02:19:30Z"
+updated_at_utc: "2026-03-04T04:54:22Z"
 
 development_status:
   epic-1: done
@@ -82,7 +82,7 @@ development_status:
 
   epic-6: in-progress
   6-61-contrat-4-etats-pour-widgets-critiques: done
-  6-62-navigation-clavier-complete-focus-visible: backlog
+  6-62-navigation-clavier-complete-focus-visible: done
   6-63-conformite-contraste-wcag-2-2-aa: backlog
   6-64-responsive-360-768-1366-1920-sans-perte-decisionnelle: backlog
   6-65-liaison-captures-ux-et-verdicts-g4-ux: backlog
