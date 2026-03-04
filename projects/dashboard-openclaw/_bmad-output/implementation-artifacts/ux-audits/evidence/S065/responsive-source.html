@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>S065 UX Evidence — G4-UX bridge</title>
+    <style>
+      :root { color-scheme: light; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 16px; }
+      main { width: min(100%, 1100px); }
+      .panel { border: 1px solid #d1d5db; border-radius: 12px; padding: 12px; margin-top: 12px; background: #fff; }
+      .kpi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .chip { border: 1px solid #bfdbfe; background: #eff6ff; color: #1e3a8a; border-radius: 999px; padding: 6px 10px; font-size: 12px; display: inline-block; }
+      .focus-target { border: 1px solid #1f2937; border-radius: 8px; background: #ffffff; color: #111827; padding: 8px 12px; }
+      .focus-target:focus-visible, button:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+      .focus-zone { display: flex; flex-wrap: wrap; gap: 8px; }
+      .row { display: grid; grid-template-columns: 120px 120px 1fr; gap: 8px; align-items: center; }
+      .muted { color: #334155; }
+      #proof-json { max-width: 100%; overflow-wrap: anywhere; word-break: break-word; white-space: pre-wrap; font-size: 12px; line-height: 1.4; }
+      @media (max-width: 640px) {
+        .kpi { grid-template-columns: 1fr; }
+        .row { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>S065 — Liaison captures UX et verdicts G4-UX</h1>
+      <p class="muted">Preuve responsive mobile/tablette/desktop pour le gate UXQA.</p>
+      <section class="panel">
+        <h2>Résumé bridge UX</h2>
+        <div class="kpi">
+          <div class="chip">reasonCode: OK</div>
+          <div class="chip">gateCount: 5</div>
+          <div class="chip">evidenceCount: 3</div>
+        </div>
+        <div class="row" style="margin-top:10px;"><strong>Corrélation</strong><span>G4-T ↔ G4-UX</span><span>correlationId: G4-CORR-S065</span></div>
+        <div class="row"><strong>SLA ingestion</strong><span>p95=1200ms</span><span>budget=2000ms</span></div>
+      </section>
+      <section class="panel">
+        <h2>Parcours clavier</h2>
+        <div class="focus-zone">
+          <button id="f0" class="focus-target" type="button">Filtre période</button>
+          <button id="f1" class="focus-target" type="button">Rafraîchir bridge</button>
+          <button id="f2" class="focus-target" type="button">Ouvrir preuve</button>
+        </div>
+      </section>
+      <section class="panel">
+        <h2>Payload de preuve</h2>
+        <pre id="proof-json">{"allowed":true,"reasonCode":"OK","g4Correlation":{"correlationId":"G4-CORR-S065","g4Tech":{"status":"PASS"},"g4Ux":{"status":"PASS","evidenceRefs":["proof://S065/mobile","proof://S065/tablet","proof://S065/desktop"]}}}</pre>
+      </section>
+    </main>
+  </body>
+</html>

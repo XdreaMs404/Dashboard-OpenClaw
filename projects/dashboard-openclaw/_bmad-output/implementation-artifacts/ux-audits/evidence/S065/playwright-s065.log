@@ -1,0 +1,9 @@
+
+Running 4 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on mobile (764ms)
+  ✓  3 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on tablet (676ms)
+  ✓  2 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:240:1 › g4 ux evidence bridge demo covers empty/loading/error/success with gate and G4 correlation outputs (1.8s)
+  ✓  4 [chromium] › tests/e2e/g4-ux-evidence-bridge.spec.js:298:3 › g4 ux bridge demo remains readable without horizontal overflow on desktop (718ms)
+
+  4 passed (3.5s)
