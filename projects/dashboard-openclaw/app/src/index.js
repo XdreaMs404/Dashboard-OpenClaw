@@ -53,6 +53,7 @@ import { buildUxKeyboardFocusVisibilityContract } from './ux-keyboard-focus-visi
 import { buildUxKeyboardFocusVisibleContract } from './ux-keyboard-focus-visible.js';
 import { buildUxWcagContrastConformity } from './ux-wcag-contrast-conformity.js';
 import { buildUxResponsiveDecisionContinuityContract } from './ux-responsive-decision-continuity-contract.js';
+import { buildUxDebtReductionLane } from './ux-debt-reduction-lane.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -103,6 +104,7 @@ export {
   buildUxKeyboardFocusVisibleContract,
   buildUxWcagContrastConformity,
   buildUxResponsiveDecisionContinuityContract,
+  buildUxDebtReductionLane,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

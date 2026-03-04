@@ -1,0 +1,28 @@
+{
+  "storyId": "S066",
+  "checks": [
+    {
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "overflow": 0,
+      "pass": true
+    },
+    {
+      "viewport": "tablet",
+      "width": 768,
+      "height": 1024,
+      "overflow": 0,
+      "pass": true
+    },
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 900,
+      "overflow": 0,
+      "pass": true
+    }
+  ],
+  "allPass": true,
+  "generatedAt": "2026-03-04T15:46:57.251Z"
+}

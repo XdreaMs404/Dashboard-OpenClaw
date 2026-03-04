@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>S066 UX Evidence — UX debt reduction lane</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 16px;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+      main {
+        width: min(100%, 1100px);
+        margin: 0 auto;
+      }
+      .panel {
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        padding: 12px;
+        margin-top: 12px;
+        background: #fff;
+        max-width: 100%;
+      }
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .kpi {
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+        color: #1e3a8a;
+        border-radius: 10px;
+        padding: 8px;
+        min-width: 0;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        border: 1px solid #86efac;
+        background: #f0fdf4;
+        color: #166534;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 12px;
+      }
+      .danger {
+        border-color: #fecaca;
+        background: #fef2f2;
+        color: #991b1b;
+      }
+      .lane {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .card {
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 10px;
+        min-width: 0;
+        background: #fff;
+      }
+      .focus-zone {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .focus-target {
+        border: 1px solid #1f2937;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #111827;
+        padding: 8px 12px;
+      }
+      .focus-target:focus-visible {
+        outline: 3px solid #1d4ed8;
+        outline-offset: 2px;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        margin: 0;
+      }
+      .muted {
+        color: #334155;
+      }
+      @media (max-width: 960px) {
+        .kpi-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .lane {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 520px) {
+        .kpi-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>S066 — Lane UX debt reduction</h1>
+      <p class="muted">Preuve UXQA responsive + états critiques empty/loading/error/success validés.</p>
+
+      <section class="panel" aria-label="Synthèse conformité">
+        <div class="kpi-grid">
+          <div class="kpi"><strong>reasonCode</strong><br />OK</div>
+          <div class="kpi"><strong>open / in-progress</strong><br />1 / 1</div>
+          <div class="kpi"><strong>Plan coverage</strong><br />100%</div>
+          <div class="kpi"><strong>Definition links</strong><br />100%</div>
+        </div>
+        <div class="chips" style="margin-top:10px;">
+          <span class="chip">T07 couvert</span>
+          <span class="chip">U01 couvert</span>
+          <span class="chip">WCAG 2.2 AA</span>
+          <span class="chip">0 blocker</span>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="États critiques">
+        <h2>États UX critiques</h2>
+        <div class="chips">
+          <span class="chip">empty ✓</span>
+          <span class="chip">loading ✓</span>
+          <span class="chip">error ✓</span>
+          <span class="chip">success ✓</span>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Lane UX">
+        <h2>Lane dettes UX</h2>
+        <div class="lane">
+          <article class="card">
+            <h3>OPEN</h3>
+            <p><strong>UXD-001</strong> — Réduire ambiguïté CONCERNS.</p>
+            <p class="muted">Plan: owner=ux-qa-auditor, targetDate=2026-03-20, metric="0 ambiguïté".</p>
+          </article>
+          <article class="card">
+            <h3>IN_PROGRESS</h3>
+            <p><strong>UXD-002</strong> — Clarifier dépendance G4-UX.</p>
+            <p class="muted">Plan: owner=bmad-pm, targetDate=2026-03-22, metric="100% stories contextualisées".</p>
+          </article>
+          <article class="card">
+            <h3>CLOSED</h3>
+            <p><strong>UXD-003</strong> — Ancienne dette close.</p>
+            <p class="muted">Conservée pour traçabilité.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Parcours clavier">
+        <h2>Parcours clavier</h2>
+        <div class="focus-zone">
+          <button class="focus-target" type="button">Filtre lane</button>
+          <button class="focus-target" type="button">Rafraîchir lane</button>
+          <button class="focus-target" type="button">Ouvrir dette</button>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Payload de preuve">
+        <h2>Payload</h2>
+        <pre>{
+  "allowed": true,
+  "reasonCode": "OK",
+  "summary": {
+    "openCount": 1,
+    "inProgressCount": 1,
+    "closedCount": 1,
+    "reductionPlanCoveragePct": 100,
+    "definitionLinkCoveragePct": 100
+  },
+  "riskCoverage": { "T07": true, "U01": true }
+}</pre>
+      </section>
+    </main>
+  </body>
+</html>
