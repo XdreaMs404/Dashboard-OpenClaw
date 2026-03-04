@@ -51,6 +51,7 @@ import { buildAqcdBaselineRoiInstrumentation } from './aqcd-baseline-roi-instrum
 import { buildUxCriticalWidgetStateContract } from './ux-critical-widget-state-contract.js';
 import { buildUxKeyboardFocusVisibilityContract } from './ux-keyboard-focus-visibility-contract.js';
 import { buildUxKeyboardFocusVisibleContract } from './ux-keyboard-focus-visible.js';
+import { buildUxWcagContrastConformity } from './ux-wcag-contrast-conformity.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -99,6 +100,7 @@ export {
   buildUxCriticalWidgetStateContract,
   buildUxKeyboardFocusVisibilityContract,
   buildUxKeyboardFocusVisibleContract,
+  buildUxWcagContrastConformity,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

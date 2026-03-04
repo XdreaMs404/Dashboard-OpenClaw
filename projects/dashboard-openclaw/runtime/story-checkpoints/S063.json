@@ -1,0 +1,1369 @@
+{
+  "sid": "S063",
+  "step": "final_gates",
+  "returnToStep": "",
+  "startedAtMs": 1772600279223,
+  "lastUpdatedMs": 1772612433181,
+  "lastStepResult": "ACTIVATE",
+  "alert30Sent": true,
+  "alert45Sent": true,
+  "attempts": {
+    "pm": 0,
+    "dev": 0,
+    "uxqa": 0,
+    "tea": 0,
+    "reviewer": 0,
+    "techwriter": 0
+  },
+  "recoveries": {
+    "dev": 0
+  },
+  "state": "active",
+  "status": "active",
+  "history": [
+    {
+      "tsMs": 1772600279223,
+      "action": "bootstrap",
+      "detail": "checkpoint initialized",
+      "stepBefore": "pm",
+      "stepAfter": "pm",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772600279224,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "pm",
+      "stepAfter": "pm",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772600300138,
+      "action": "set-step",
+      "detail": "dev",
+      "stepBefore": "pm",
+      "stepAfter": "dev",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772600302700,
+      "action": "reset-attempt",
+      "detail": "pm",
+      "stepBefore": "dev",
+      "stepAfter": "dev",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772600375754,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "dev",
+      "stepAfter": "dev",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772600639203,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "dev",
+      "stepAfter": "dev",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772600987573,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "dev",
+      "stepAfter": "dev",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601251598,
+      "action": "auto-promote",
+      "detail": "dev handoffs READY -> uxqa",
+      "stepBefore": "dev",
+      "stepAfter": "uxqa",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601251598,
+      "action": "reset-attempt",
+      "detail": "dev",
+      "stepBefore": "uxqa",
+      "stepAfter": "uxqa",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601251598,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "uxqa",
+      "stepAfter": "uxqa",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601318985,
+      "action": "inc-attempt",
+      "detail": "uxqa:1",
+      "stepBefore": "uxqa",
+      "stepAfter": "uxqa",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601322012,
+      "action": "set-return",
+      "detail": "uxqa",
+      "stepBefore": "uxqa",
+      "stepAfter": "uxqa",
+      "returnToStep": "uxqa",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601324065,
+      "action": "set-step",
+      "detail": "dev",
+      "stepBefore": "uxqa",
+      "stepAfter": "dev",
+      "returnToStep": "uxqa",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601444888,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "dev",
+      "stepAfter": "dev",
+      "returnToStep": "uxqa",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601798274,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "dev",
+      "stepAfter": "dev",
+      "returnToStep": "uxqa",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772601985424,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "dev",
+      "stepAfter": "dev",
+      "returnToStep": "uxqa",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602082660,
+      "action": "set-step",
+      "detail": "uxqa",
+      "stepBefore": "dev",
+      "stepAfter": "uxqa",
+      "returnToStep": "uxqa",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602086045,
+      "action": "clear-return",
+      "detail": "returnToStep cleared",
+      "stepBefore": "uxqa",
+      "stepAfter": "uxqa",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602088085,
+      "action": "reset-attempt",
+      "detail": "dev",
+      "stepBefore": "uxqa",
+      "stepAfter": "uxqa",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602153951,
+      "action": "auto-generate",
+      "detail": "uxqa handoff generated from audit PASS",
+      "stepBefore": "uxqa",
+      "stepAfter": "uxqa",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 1,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602153951,
+      "action": "auto-promote",
+      "detail": "uxqa audit PASS -> tea",
+      "stepBefore": "uxqa",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602153951,
+      "action": "reset-attempt",
+      "detail": "uxqa",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602153951,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602171086,
+      "action": "set-alert",
+      "detail": "30",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602246254,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602512505,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772602795367,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772603062579,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772603085001,
+      "action": "set-alert",
+      "detail": "45",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772603251914,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772603518604,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772603788543,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604046121,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "tea",
+      "stepAfter": "tea",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604132582,
+      "action": "set-step",
+      "detail": "reviewer",
+      "stepBefore": "tea",
+      "stepAfter": "reviewer",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604333109,
+      "action": "auto-generate",
+      "detail": "review fallback generated from tea evidence",
+      "stepBefore": "reviewer",
+      "stepAfter": "techwriter",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604333109,
+      "action": "auto-promote",
+      "detail": "review fallback -> techwriter",
+      "stepBefore": "reviewer",
+      "stepAfter": "techwriter",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604333109,
+      "action": "reset-attempt",
+      "detail": "reviewer",
+      "stepBefore": "techwriter",
+      "stepAfter": "techwriter",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604333110,
+      "action": "auto-generate",
+      "detail": "summary fallback generated from review evidence",
+      "stepBefore": "techwriter",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604333110,
+      "action": "auto-promote",
+      "detail": "summary fallback -> final_gates",
+      "stepBefore": "techwriter",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604333110,
+      "action": "reset-attempt",
+      "detail": "techwriter",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604333110,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604433286,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604692615,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772604788588,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772605060843,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772605188182,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772605404218,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772605680267,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772605945171,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772606215966,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772606383855,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772606583416,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772606664679,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772607024529,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772607109126,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772607294384,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772607558428,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772607738259,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772607821251,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772608021048,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772608295775,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772608555607,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772608621164,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772608905478,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772608996794,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772609094172,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772609357470,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772609568438,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772609819680,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772610077304,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772610182518,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772610345502,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772610548124,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772610602186,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772610717456,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772610988850,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772611260728,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772611508047,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772611618098,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772611882357,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772612146015,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772612240087,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772612342813,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    },
+    {
+      "tsMs": 1772612433181,
+      "action": "activate",
+      "detail": "checkpoint activated",
+      "stepBefore": "final_gates",
+      "stepAfter": "final_gates",
+      "returnToStep": "",
+      "attempts": {
+        "pm": 0,
+        "dev": 0,
+        "uxqa": 0,
+        "tea": 0,
+        "reviewer": 0,
+        "techwriter": 0
+      }
+    }
+  ]
+}

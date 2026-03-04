@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>S063 UX Evidence</title>
+<style>
+  :root { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color-scheme: light; }
+  body { margin: 0; padding: 16px; background: #f8fafc; color: #0f172a; }
+  .card { background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  h1 { margin: 0 0 8px 0; font-size: 1.25rem; }
+  h2 { margin: 0 0 8px 0; font-size: 1rem; }
+  .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
+  .pill { border: 1px solid #93c5fd; background: #eff6ff; border-radius: 999px; padding: 6px 10px; font-size: 0.875rem; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th, td { border: 1px solid #e2e8f0; padding: 6px; text-align: left; font-size: 0.8rem; overflow-wrap: anywhere; }
+  .ok { color: #065f46; font-weight: 700; }
+</style>
+</head>
+<body>
+  <section class="card">
+    <h1>S063 — Conformité contraste WCAG 2.2 AA</h1>
+    <p class="ok">Verdict runtime: OK — conformité WCAG AA, couverture responsive complète et budget décision &lt;= 90s validés.</p>
+    <div class="summary">
+      <div class="pill">Journeys complets: 3/3</div>
+      <div class="pill">Contraste: 2/2</div>
+      <div class="pill">Responsive: 3/3</div>
+      <div class="pill">Worst decision: 72s</div>
+      <div class="pill">Budget NFR-033: 90s</div>
+      <div class="pill">WCAG: WCAG-2.2-AA</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Parcours responsive décisionnels</h2>
+    <table>
+      <thead><tr><th>Viewport</th><th>Decision time (s)</th><th>Keyboard</th><th>Focus visible</th><th>Contraste</th><th>Overflow</th><th>Complet</th></tr></thead>
+      <tbody>
+        <tr><td>mobile</td><td>72</td><td>true</td><td>true</td><td>true</td><td>true</td><td>true</td></tr>
+        <tr><td>tablet</td><td>67</td><td>true</td><td>true</td><td>true</td><td>true</td><td>true</td></tr>
+        <tr><td>desktop</td><td>59</td><td>true</td><td>true</td><td>true</td><td>true</td><td>true</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Surfaces critiques contraste</h2>
+    <table>
+      <thead><tr><th>Surface</th><th>Foreground</th><th>Background</th><th>Ratio min</th><th>Pass</th></tr></thead>
+      <tbody>
+        <tr><td>gate-summary-card</td><td>#0f172a</td><td>#ffffff</td><td>4.5</td><td>true</td></tr>
+        <tr><td>focus-ring-primary</td><td>#1d4ed8</td><td>#ffffff</td><td>3.0</td><td>true</td></tr>
+      </tbody>
+    </table>
+  </section>
+</body>
+</html>
