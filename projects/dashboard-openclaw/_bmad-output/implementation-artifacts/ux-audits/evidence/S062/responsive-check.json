@@ -1,0 +1,22 @@
+{
+  "storyId": "S062",
+  "generatedAt": "2026-03-04T02:53:48.837Z",
+  "source": "playwright-generated from S062 contract payload",
+  "viewports": [
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    }
+  ]
+}

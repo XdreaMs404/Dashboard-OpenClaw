@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>S062 UX Evidence</title>
+<style>
+  :root { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color-scheme: light; }
+  body { margin: 0; padding: 16px; background: #f8fafc; color: #0f172a; }
+  .card { background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  h1 { margin: 0 0 8px 0; font-size: 1.25rem; }
+  h2 { margin: 0 0 8px 0; font-size: 1rem; }
+  .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
+  .pill { border: 1px solid #93c5fd; background: #eff6ff; border-radius: 999px; padding: 6px 10px; font-size: 0.875rem; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th, td { border: 1px solid #e2e8f0; padding: 6px; text-align: left; font-size: 0.8rem; overflow-wrap: anywhere; }
+  .ok { color: #065f46; font-weight: 700; }
+</style>
+</head>
+<body>
+  <section class="card">
+    <h1>S062 — Navigation clavier complète + focus visible</h1>
+    <p class="ok">Verdict runtime: OK — Navigation clavier complète, focus visible et conformité contraste validées.</p>
+    <div class="summary">
+      <div class="pill">Journeys complets: 2/2</div>
+      <div class="pill">Contraste: 3/3</div>
+      <div class="pill">Responsive: 3/3</div>
+      <div class="pill">WCAG: WCAG-2.2-AA</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Parcours clavier</h2>
+    <table>
+      <thead><tr><th>ID</th><th>Steps</th><th>Focus visible</th><th>Ordre logique</th><th>Trap-free</th></tr></thead>
+      <tbody><tr><td>journey-gate-overview</td><td>3</td><td>true</td><td>true</td><td>true</td></tr><tr><td>journey-ux-evidence</td><td>3</td><td>true</td><td>true</td><td>true</td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Contraste WCAG</h2>
+    <table>
+      <thead><tr><th>Surface</th><th>Ratio</th><th>Requis</th><th>Pass</th></tr></thead>
+      <tbody><tr><td>gate-header</td><td>5.1</td><td>4.5</td><td>true</td></tr><tr><td>focus-ring-primary</td><td>4.8</td><td>3</td><td>true</td></tr><tr><td>error-alert</td><td>6.4</td><td>4.5</td><td>true</td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Responsive checks</h2>
+    <table>
+      <thead><tr><th>Viewport</th><th>Pass</th><th>EvidenceRef</th></tr></thead>
+      <tbody><tr><td>mobile</td><td>true</td><td>_bmad-output/implementation-artifacts/ux-audits/evidence/S062/responsive-mobile.png</td></tr><tr><td>tablet</td><td>true</td><td>_bmad-output/implementation-artifacts/ux-audits/evidence/S062/responsive-tablet.png</td></tr><tr><td>desktop</td><td>true</td><td>_bmad-output/implementation-artifacts/ux-audits/evidence/S062/responsive-desktop.png</td></tr></tbody>
+    </table>
+  </section>
+</body>
+</html>
