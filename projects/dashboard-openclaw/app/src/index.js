@@ -48,6 +48,7 @@ import { buildAqcdValidatedDecisionCost } from './aqcd-validated-decision-cost.j
 import { buildAqcdRetroClosureTracking } from './aqcd-retro-closure-tracker.js';
 import { buildAqcdSponsorExecutiveView } from './aqcd-sponsor-executive-view.js';
 import { buildAqcdBaselineRoiInstrumentation } from './aqcd-baseline-roi-instrumentation.js';
+import { buildUxCriticalWidgetStateContract } from './ux-critical-widget-state-contract.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -93,6 +94,7 @@ export {
   buildAqcdRetroClosureTracking,
   buildAqcdSponsorExecutiveView,
   buildAqcdBaselineRoiInstrumentation,
+  buildUxCriticalWidgetStateContract,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
