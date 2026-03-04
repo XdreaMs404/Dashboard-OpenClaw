@@ -49,6 +49,8 @@ import { buildAqcdRetroClosureTracking } from './aqcd-retro-closure-tracker.js';
 import { buildAqcdSponsorExecutiveView } from './aqcd-sponsor-executive-view.js';
 import { buildAqcdBaselineRoiInstrumentation } from './aqcd-baseline-roi-instrumentation.js';
 import { buildUxCriticalWidgetStateContract } from './ux-critical-widget-state-contract.js';
+import { buildUxKeyboardFocusVisibilityContract } from './ux-keyboard-focus-visibility-contract.js';
+import { buildUxKeyboardFocusVisibleContract } from './ux-keyboard-focus-visible.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -95,6 +97,8 @@ export {
   buildAqcdSponsorExecutiveView,
   buildAqcdBaselineRoiInstrumentation,
   buildUxCriticalWidgetStateContract,
+  buildUxKeyboardFocusVisibilityContract,
+  buildUxKeyboardFocusVisibleContract,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
