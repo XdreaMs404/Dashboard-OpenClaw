@@ -61,7 +61,7 @@
 | S057 | E05 | Waste ratio par phase + alertes dérive | DONE |
 | S058 | E05 | Suivi actions H21/H22/H23 jusqu’à clôture | DONE |
 | S059 | E05 | Vue exécutive sponsor simplifiée | DONE |
-| S060 | E05 | Instrumentation baseline TCD et ROI | TODO |
+| S060 | E05 | Instrumentation baseline TCD et ROI | DONE |
 | S061 | E06 | Contrat 4 états pour widgets critiques | TODO |
 | S062 | E06 | Navigation clavier complète + focus visible | TODO |
 | S063 | E06 | Conformité contraste WCAG 2.2 AA | TODO |

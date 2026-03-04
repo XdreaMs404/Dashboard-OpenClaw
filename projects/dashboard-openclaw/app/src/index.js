@@ -47,6 +47,7 @@ import { buildAqcdRiskHeatmap } from './aqcd-risk-heatmap.js';
 import { buildAqcdValidatedDecisionCost } from './aqcd-validated-decision-cost.js';
 import { buildAqcdRetroClosureTracking } from './aqcd-retro-closure-tracker.js';
 import { buildAqcdSponsorExecutiveView } from './aqcd-sponsor-executive-view.js';
+import { buildAqcdBaselineRoiInstrumentation } from './aqcd-baseline-roi-instrumentation.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -91,6 +92,7 @@ export {
   buildAqcdValidatedDecisionCost,
   buildAqcdRetroClosureTracking,
   buildAqcdSponsorExecutiveView,
+  buildAqcdBaselineRoiInstrumentation,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
