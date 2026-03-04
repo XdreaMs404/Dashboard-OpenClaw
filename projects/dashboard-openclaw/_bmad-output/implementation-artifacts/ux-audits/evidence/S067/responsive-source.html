@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>S067 UX Evidence — Glossaire BMAD contextuel</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 16px;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+      main {
+        width: min(100%, 1100px);
+        margin: 0 auto;
+      }
+      .panel {
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        padding: 12px;
+        margin-top: 12px;
+        background: #fff;
+        max-width: 100%;
+      }
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .kpi {
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+        color: #1e3a8a;
+        border-radius: 10px;
+        padding: 8px;
+        min-width: 0;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        border: 1px solid #86efac;
+        background: #f0fdf4;
+        color: #166534;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 12px;
+      }
+      .chip.warn {
+        border-color: #fecaca;
+        background: #fef2f2;
+        color: #991b1b;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border-bottom: 1px solid #e2e8f0;
+        text-align: left;
+        padding: 8px;
+        vertical-align: top;
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      .focus-zone {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .focus-target {
+        border: 1px solid #1f2937;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #111827;
+        padding: 8px 12px;
+      }
+      .focus-target:focus-visible {
+        outline: 3px solid #1d4ed8;
+        outline-offset: 2px;
+      }
+      .muted {
+        color: #334155;
+      }
+      #proof-json,
+      #scenario-table,
+      td,
+      th {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      @media (max-width: 1024px) {
+        .kpi-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 640px) {
+        .kpi-grid {
+          grid-template-columns: 1fr;
+        }
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+        th {
+          font-weight: 700;
+          border-bottom: 0;
+          padding-bottom: 0;
+        }
+        td {
+          border-bottom: 1px solid #e2e8f0;
+          padding-top: 2px;
+        }
+        tr {
+          margin-bottom: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>S067 — Glossaire BMAD contextuel intégré</h1>
+      <p class="muted">Preuve UXQA: conformité FR-069/FR-070 + NFR-031/NFR-032, avec couverture états empty/loading/error/success et responsive mobile/tablette/desktop.</p>
+
+      <section class="panel" aria-label="Résumé conformité UX">
+        <div class="kpi-grid">
+          <div class="kpi"><strong>reasonCode nominal</strong><br />OK</div>
+          <div class="kpi"><strong>mapping slots</strong><br />3 / 3</div>
+          <div class="kpi"><strong>design checks</strong><br />100%</div>
+          <div class="kpi"><strong>responsive checks</strong><br />100%</div>
+        </div>
+        <div class="chips" style="margin-top:10px;">
+          <span class="chip">D1 design system ✓</span>
+          <span class="chip">D2 accessibilité WCAG 2.2 AA ✓</span>
+          <span class="chip">D3 responsive ✓</span>
+          <span class="chip">D4 états interaction ✓</span>
+          <span class="chip">D5 hiérarchie visuelle ✓</span>
+          <span class="chip">D6 performance perçue ✓</span>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Couverture états UX">
+        <h2>États UX critiques</h2>
+        <div class="chips">
+          <span class="chip">empty ✓</span>
+          <span class="chip">loading ✓</span>
+          <span class="chip">error ✓</span>
+          <span class="chip">success ✓</span>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Scénarios exécutés">
+        <h2>Scénarios e2e validés</h2>
+        <table id="scenario-table">
+          <thead>
+            <tr>
+              <th>Scénario</th>
+              <th>État final</th>
+              <th>reasonCode</th>
+              <th>Résultat attendu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>invalid-input</td>
+              <td>error</td>
+              <td><span class="chip warn">INVALID_UX_GLOSSARY_INPUT</span></td>
+              <td>Fail-closed sur entrée invalide</td>
+            </tr>
+            <tr>
+              <td>mapping-missing</td>
+              <td>error</td>
+              <td><span class="chip warn">UX_GLOSSARY_CONTEXT_MAPPING_REQUIRED</span></td>
+              <td>Blocage mapping contextuel incomplet (FR-069)</td>
+            </tr>
+            <tr>
+              <td>design-fail</td>
+              <td>error</td>
+              <td><span class="chip warn">UX_DESIGN_SYSTEM_CONSISTENCY_REQUIRED</span></td>
+              <td>Blocage incohérence spacing/typo/couleurs (FR-070)</td>
+            </tr>
+            <tr>
+              <td>success</td>
+              <td>success</td>
+              <td><span class="chip">OK</span></td>
+              <td>Glossaire contextuel + checks design + responsive OK</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel" aria-label="Parcours clavier">
+        <h2>Parcours clavier critique</h2>
+        <div class="focus-zone">
+          <button type="button" class="focus-target">Filtre termes</button>
+          <button type="button" class="focus-target">Rafraîchir glossaire</button>
+          <button type="button" class="focus-target">Ouvrir définition</button>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Payload de preuve">
+        <h2>Payload synthèse</h2>
+        <pre id="proof-json">{
+  "storyId": "S067",
+  "allowed": true,
+  "reasonCode": "OK",
+  "summary": {
+    "glossaryEntryCount": 3,
+    "contextualSlotCount": 3,
+    "mappedSlotCount": 3,
+    "designSystemCoveragePct": 100,
+    "responsiveCoveragePct": 100
+  },
+  "stateCoverage": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  }
+}</pre>
+      </section>
+    </main>
+  </body>
+</html>

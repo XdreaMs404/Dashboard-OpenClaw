@@ -54,6 +54,7 @@ import { buildUxKeyboardFocusVisibleContract } from './ux-keyboard-focus-visible
 import { buildUxWcagContrastConformity } from './ux-wcag-contrast-conformity.js';
 import { buildUxResponsiveDecisionContinuityContract } from './ux-responsive-decision-continuity-contract.js';
 import { buildUxDebtReductionLane } from './ux-debt-reduction-lane.js';
+import { buildUxContextualGlossaryIntegration } from './ux-contextual-glossary-integration.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -105,6 +106,7 @@ export {
   buildUxWcagContrastConformity,
   buildUxResponsiveDecisionContinuityContract,
   buildUxDebtReductionLane,
+  buildUxContextualGlossaryIntegration,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

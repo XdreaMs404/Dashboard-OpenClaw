@@ -1,0 +1,7 @@
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/ux-contextual-glossary-integration.spec.js:360:1 › ux contextual glossary demo remains readable without horizontal overflow on mobile/tablet/desktop (892ms)
+  ✓  2 [chromium] › tests/e2e/ux-contextual-glossary-integration.spec.js:307:1 › ux contextual glossary demo covers empty/loading/error/success with contextual mapping + design checks (1.9s)
+
+  2 passed (3.2s)

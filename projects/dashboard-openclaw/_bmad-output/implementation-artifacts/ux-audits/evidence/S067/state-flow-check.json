@@ -1,0 +1,65 @@
+{
+  "storyId": "S067",
+  "expectedStateCoverage": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "scenarios": [
+    {
+      "scenario": "invalid-input",
+      "reasonCode": "INVALID_UX_GLOSSARY_INPUT",
+      "expectedReasonCode": "INVALID_UX_GLOSSARY_INPUT",
+      "pass": true,
+      "allowed": false,
+      "finalState": "error",
+      "stateTransition": [
+        "empty",
+        "loading",
+        "error"
+      ]
+    },
+    {
+      "scenario": "mapping-missing",
+      "reasonCode": "UX_GLOSSARY_CONTEXT_MAPPING_REQUIRED",
+      "expectedReasonCode": "UX_GLOSSARY_CONTEXT_MAPPING_REQUIRED",
+      "pass": true,
+      "allowed": false,
+      "finalState": "error",
+      "stateTransition": [
+        "empty",
+        "loading",
+        "error"
+      ]
+    },
+    {
+      "scenario": "design-fail",
+      "reasonCode": "UX_DESIGN_SYSTEM_CONSISTENCY_REQUIRED",
+      "expectedReasonCode": "UX_DESIGN_SYSTEM_CONSISTENCY_REQUIRED",
+      "pass": true,
+      "allowed": false,
+      "finalState": "error",
+      "stateTransition": [
+        "empty",
+        "loading",
+        "error"
+      ]
+    },
+    {
+      "scenario": "success",
+      "reasonCode": "OK",
+      "expectedReasonCode": "OK",
+      "pass": true,
+      "allowed": true,
+      "finalState": "success",
+      "stateTransition": [
+        "empty",
+        "loading",
+        "success"
+      ]
+    }
+  ],
+  "allPass": true,
+  "generatedAt": "2026-03-04T19:44:24.473Z"
+}

@@ -68,7 +68,7 @@
 | S064 | E06 | Responsive 360/768/1366/1920 sans perte décisionnelle | DONE |
 | S065 | E06 | Liaison captures UX et verdicts G4-UX | DONE |
 | S066 | E06 | UX debt lane et plan de réduction | DONE |
-| S067 | E06 | Glossaire BMAD contextuel intégré | TODO |
+| S067 | E06 | Glossaire BMAD contextuel intégré | DONE |
 | S068 | E06 | Lint design tokens anti-style rogue | TODO |
 | S069 | E06 | Catalogue microcopie PASS/CONCERNS/FAIL | TODO |
 | S070 | E06 | Préférences motion (prefers-reduced-motion) | TODO |
