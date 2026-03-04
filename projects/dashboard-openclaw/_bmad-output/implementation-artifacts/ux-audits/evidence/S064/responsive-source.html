@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>S064 UX Evidence</title>
+<style>
+  :root {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    background: #f8fafc;
+    color: #0f172a;
+  }
+  .card {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  h1 { margin: 0 0 8px 0; font-size: 1.25rem; }
+  h2 { margin: 0 0 8px 0; font-size: 1rem; }
+  p { margin: 0 0 10px 0; overflow-wrap: anywhere; }
+  .ok { color: #065f46; font-weight: 700; }
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .pill {
+    border: 1px solid #93c5fd;
+    background: #eff6ff;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 0.875rem;
+    overflow-wrap: anywhere;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  th, td {
+    border: 1px solid #e2e8f0;
+    padding: 6px;
+    text-align: left;
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+    vertical-align: top;
+  }
+</style>
+</head>
+<body>
+  <section class="card">
+    <h1>S064 — Responsive 360/768/1366/1920 sans perte décisionnelle</h1>
+    <p class="ok">Verdict runtime: OK — FR-066/FR-067 validés, liens preuve→G4-UX complets, budget NFR-033 ≤ 90s respecté.</p>
+    <div class="summary">
+      <div class="pill">États UX couverts: empty/loading/error/success</div>
+      <div class="pill">Viewports requis: 360/768/1366/1920</div>
+      <div class="pill">Preuves complètes: 4/4</div>
+      <div class="pill">Liens G4-UX: 4/4</div>
+      <div class="pill">Worst decision: 77s</div>
+      <div class="pill">Budget décision: 90s</div>
+      <div class="pill">WCAG cible: 2.2-AA</div>
+      <div class="pill">Sous-gate UX: G4-UX</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Preuves responsive décisionnelles</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Viewport</th>
+          <th>Largeur</th>
+          <th>Decision (s)</th>
+          <th>Flow critique</th>
+          <th>Keyboard</th>
+          <th>Focus visible</th>
+          <th>Overflow</th>
+          <th>CaptureRef</th>
+          <th>VerdictRef</th>
+          <th>Subgate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>mobile</td>
+          <td>360</td>
+          <td>77</td>
+          <td>true</td>
+          <td>true</td>
+          <td>true</td>
+          <td>true</td>
+          <td>proof://S064/360-mobile.png</td>
+          <td>verdict://S064/mobile</td>
+          <td>G4-UX</td>
+        </tr>
+        <tr>
+          <td>tablet</td>
+          <td>768</td>
+          <td>70</td>
+          <td>true</td>
+          <td>true</td>
+          <td>true</td>
+          <td>true</td>
+          <td>proof://S064/768-tablet.png</td>
+          <td>verdict://S064/tablet</td>
+          <td>G4-UX</td>
+        </tr>
+        <tr>
+          <td>desktop</td>
+          <td>1366</td>
+          <td>63</td>
+          <td>true</td>
+          <td>true</td>
+          <td>true</td>
+          <td>true</td>
+          <td>proof://S064/1366-desktop.png</td>
+          <td>verdict://S064/desktop</td>
+          <td>G4-UX</td>
+        </tr>
+        <tr>
+          <td>desktop-wide</td>
+          <td>1920</td>
+          <td>61</td>
+          <td>true</td>
+          <td>true</td>
+          <td>true</td>
+          <td>true</td>
+          <td>proof://S064/1920-desktop-wide.png</td>
+          <td>verdict://S064/desktop-wide</td>
+          <td>G4-UX</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</body>
+</html>
