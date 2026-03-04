@@ -52,6 +52,7 @@ import { buildUxCriticalWidgetStateContract } from './ux-critical-widget-state-c
 import { buildUxKeyboardFocusVisibilityContract } from './ux-keyboard-focus-visibility-contract.js';
 import { buildUxKeyboardFocusVisibleContract } from './ux-keyboard-focus-visible.js';
 import { buildUxWcagContrastConformity } from './ux-wcag-contrast-conformity.js';
+import { buildUxResponsiveDecisionContinuityContract } from './ux-responsive-decision-continuity-contract.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -101,6 +102,7 @@ export {
   buildUxKeyboardFocusVisibilityContract,
   buildUxKeyboardFocusVisibleContract,
   buildUxWcagContrastConformity,
+  buildUxResponsiveDecisionContinuityContract,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

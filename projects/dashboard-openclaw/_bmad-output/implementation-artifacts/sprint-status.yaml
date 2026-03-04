@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-03-04T08:23:02Z"
+updated_at_utc: "2026-03-04T12:12:26Z"
 
 development_status:
   epic-1: done
@@ -84,7 +84,7 @@ development_status:
   6-61-contrat-4-etats-pour-widgets-critiques: done
   6-62-navigation-clavier-complete-focus-visible: done
   6-63-conformite-contraste-wcag-2-2-aa: done
-  6-64-responsive-360-768-1366-1920-sans-perte-decisionnelle: backlog
+  6-64-responsive-360-768-1366-1920-sans-perte-decisionnelle: done
   6-65-liaison-captures-ux-et-verdicts-g4-ux: backlog
   6-66-ux-debt-lane-et-plan-de-reduction: backlog
   6-67-glossaire-bmad-contextuel-integre: backlog

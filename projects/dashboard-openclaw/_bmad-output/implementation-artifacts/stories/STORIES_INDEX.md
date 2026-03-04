@@ -65,7 +65,7 @@
 | S061 | E06 | Contrat 4 états pour widgets critiques | DONE |
 | S062 | E06 | Navigation clavier complète + focus visible | DONE |
 | S063 | E06 | Conformité contraste WCAG 2.2 AA | DONE |
-| S064 | E06 | Responsive 360/768/1366/1920 sans perte décisionnelle | TODO |
+| S064 | E06 | Responsive 360/768/1366/1920 sans perte décisionnelle | DONE |
 | S065 | E06 | Liaison captures UX et verdicts G4-UX | TODO |
 | S066 | E06 | UX debt lane et plan de réduction | TODO |
 | S067 | E06 | Glossaire BMAD contextuel intégré | TODO |
