@@ -59,6 +59,7 @@ import { buildUxDesignTokenRogueLint } from './ux-design-token-rogue-lint.js';
 import { buildUxVerdictMicrocopyCatalog } from './ux-verdict-microcopy-catalog.js';
 import { buildUxMotionPreferenceContract } from './ux-motion-preference-contract.js';
 import { buildUxRapidUsabilityHarness } from './ux-rapid-usability-harness.js';
+import { buildUxRegressionDashboard } from './ux-regression-dashboard.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -115,6 +116,7 @@ export {
   buildUxVerdictMicrocopyCatalog,
   buildUxMotionPreferenceContract,
   buildUxRapidUsabilityHarness,
+  buildUxRegressionDashboard,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

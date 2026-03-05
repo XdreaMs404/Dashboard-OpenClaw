@@ -73,7 +73,7 @@
 | S069 | E06 | Catalogue microcopie PASS/CONCERNS/FAIL | DONE |
 | S070 | E06 | Préférences motion (prefers-reduced-motion) | DONE |
 | S071 | E06 | Harnais de tests usability rapides | DONE |
-| S072 | E06 | Tableau de bord régressions UX | TODO |
+| S072 | E06 | Tableau de bord régressions UX | DONE |
 | S073 | E07 | Dashboards personnalisés par rôle | TODO |
 | S074 | E07 | File d’actions priorisées contextualisées | TODO |
 | S075 | E07 | Notification center multisévérité | TODO |

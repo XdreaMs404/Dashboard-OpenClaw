@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>S072 UX Regression Dashboard Evidence</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 1rem;
+        background: #ffffff;
+        color: #0f172a;
+      }
+      .shell {
+        width: min(100%, 72rem);
+        display: grid;
+        gap: 1rem;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: .25rem .65rem;
+        border: 1px solid #1d4ed8;
+        color: #1d4ed8;
+        font-weight: 600;
+        font-size: .85rem;
+      }
+      .card {
+        border: 1px solid #d1d5db;
+        border-radius: .75rem;
+        padding: .75rem;
+        background: #f8fafc;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: .75rem;
+      }
+      .kv {
+        margin: 0;
+      }
+      .kv dt {
+        font-weight: 600;
+      }
+      .kv dd {
+        margin: .25rem 0 0;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: .45rem;
+        text-align: left;
+        vertical-align: top;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      th {
+        background: #e2e8f0;
+      }
+      code {
+        background: #e2e8f0;
+        padding: .1rem .3rem;
+        border-radius: .35rem;
+      }
+      .hint {
+        margin: 0;
+        color: #475569;
+      }
+      .status-empty,
+      .status-loading,
+      .status-error,
+      .status-success {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <h1>Tableau de bord régressions UX — S072</h1>
+        <p class="hint">Evidence snapshot pour audit UXQA strict.</p>
+        <span class="badge">reasonCode: OK</span>
+      </header>
+
+      <section class="card" aria-label="Couverture états">
+        <h2>Couverture états</h2>
+        <div class="grid">
+          <p class="status-empty">empty: ✅</p>
+          <p class="status-loading">loading: ✅</p>
+          <p class="status-error">error: ✅</p>
+          <p class="status-success">success: ✅</p>
+        </div>
+      </section>
+
+      <section class="card" aria-label="Synthèse">
+        <h2>Synthèse G4-UX</h2>
+        <dl class="grid">
+          <div class="kv"><dt>records</dt><dd id="records-value">6</dd></div>
+          <div class="kv"><dt>stateCoverage</dt><dd id="state-value">100%</dd></div>
+          <div class="kv"><dt>viewportCoverage</dt><dd id="viewport-value">100%</dd></div>
+          <div class="kv"><dt>subgateCoverage</dt><dd id="subgate-value">100%</dd></div>
+          <div class="kv"><dt>evidenceCoverage</dt><dd id="evidence-value">100%</dd></div>
+          <div class="kv"><dt>openBlockerCount</dt><dd id="blocker-value">0</dd></div>
+        </dl>
+      </section>
+
+      <section class="card" aria-label="Records UX regression">
+        <h2>Records</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>State</th>
+              <th>Viewport</th>
+              <th>Verdict</th>
+              <th>Subgate</th>
+              <th>Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                  <td>REG-EMPTY-MOBILE</td>
+                  <td>empty</td>
+                  <td>mobile</td>
+                  <td>PASS</td>
+                  <td>designSystemCompliance</td>
+                  <td><code>s072-empty-mobile.png</code> <code>s072-empty-mobile.json</code></td>
+                </tr><tr>
+                  <td>REG-LOADING-TABLET</td>
+                  <td>loading</td>
+                  <td>tablet</td>
+                  <td>CONCERNS</td>
+                  <td>accessibilityAA</td>
+                  <td><code>s072-loading-tablet.png</code></td>
+                </tr><tr>
+                  <td>REG-ERROR-DESKTOP</td>
+                  <td>error</td>
+                  <td>desktop</td>
+                  <td>FAIL</td>
+                  <td>responsiveCoverage</td>
+                  <td><code>s072-error-desktop.png</code></td>
+                </tr><tr>
+                  <td>REG-SUCCESS-MOBILE</td>
+                  <td>success</td>
+                  <td>mobile</td>
+                  <td>PASS</td>
+                  <td>interactionStates</td>
+                  <td><code>s072-success-mobile.png</code></td>
+                </tr><tr>
+                  <td>REG-LOADING-DESKTOP</td>
+                  <td>loading</td>
+                  <td>desktop</td>
+                  <td>CONCERNS</td>
+                  <td>visualHierarchy</td>
+                  <td><code>s072-loading-desktop.png</code></td>
+                </tr><tr>
+                  <td>REG-SUCCESS-TABLET</td>
+                  <td>success</td>
+                  <td>tablet</td>
+                  <td>PASS</td>
+                  <td>perceivedPerformance</td>
+                  <td><code>s072-success-tablet.png</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card" aria-label="Diagnostics">
+        <h2>Diagnostics</h2>
+        <pre id="diag-json" style="margin:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;">{
+  "widgetStateModelVersion": "S061-v1",
+  "criticalWidgetCount": 1,
+  "fullyCompliantCount": 1,
+  "fourStateCoveragePct": 100,
+  "keyboardCoveragePct": 100,
+  "uxScore": 92,
+  "uxMinScore": 85,
+  "blockerCount": 0,
+  "blockerLimit": 0,
+  "uxDebtModelVersion": "S066-v1",
+  "totalDebts": 2,
+  "openDebtCount": 2,
+  "blockerOpenCount": 1,
+  "definitionCount": 3,
+  "requiredRiskTags": [
+    "T07",
+    "U01"
+  ],
+  "missingRiskCoverage": [],
+  "uxGlossaryModelVersion": "S067-v1",
+  "glossaryEntryCount": 3,
+  "contextualSlotCount": 3,
+  "mappedSlotCount": 3,
+  "failedDesignCheckCount": 0,
+  "responsiveFailing": [],
+  "designTokenModelVersion": "S068-v1",
+  "criticalViewCount": 2,
+  "compliantViewCount": 2,
+  "fourStateGapCount": 0,
+  "rogueSurfaceCount": 0,
+  "undeclaredTokenSurfaceCount": 0,
+  "responsiveMissingCount": 0,
+  "decisionBudgetExceededCount": 0,
+  "decisionTimeBudgetSec": 90,
+  "worstDecisionTimeSec": 63,
+  "microcopyCatalogModelVersion": "S069-v1",
+  "requiredVerdicts": [
+    "PASS",
+    "CONCERNS",
+    "FAIL"
+  ],
+  "requiredStates": [
+    "empty",
+    "loading",
+    "error",
+    "success"
+  ],
+  "missingVerdicts": [],
+  "incompleteEntryCount": 0,
+  "keyboardGapCount": 0,
+  "ttfvExceededCount": 0,
+  "ttfvMaxDays": 14,
+  "motionPreferenceModelVersion": "S070-v1",
+  "missingModes": [],
+  "contrastFailureCount": 0,
+  "maxTtfvDays": 9,
+  "reducedTransitionMaxMs": 120,
+  "usabilityHarnessModelVersion": "S071-v1",
+  "requiredViewports": [
+    "mobile",
+    "tablet",
+    "desktop"
+  ],
+  "missingStates": [],
+  "missingViewports": [],
+  "failingSuiteCount": 0,
+  "slowSuiteCount": 0,
+  "evidenceGapCount": 0,
+  "uxRegressionModelVersion": "S072-v1",
+  "missingSubgates": [],
+  "openBlockerCount": 0,
+  "responsiveCoveragePct": 100
+}</pre>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "storyId": "S072",
+  "result": "PASS",
+  "states": {
+    "empty": true,
+    "loading": true,
+    "error": true,
+    "success": true
+  },
+  "source": "buildUxRegressionDashboard(buildS072Payload())",
+  "checkedAt": "2026-03-05T11:50:15.931Z"
+}

@@ -1,6 +1,6 @@
 # Canonical backlog integrity report
 
-generated_at_utc: 2026-03-05T11:18:40Z
+generated_at_utc: 2026-03-05T12:32:23Z
 project_root: /root/.openclaw/workspace/projects/dashboard-openclaw
 source_of_truth: /root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/planning-artifacts/epics.md
 
