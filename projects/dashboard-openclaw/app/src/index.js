@@ -58,6 +58,7 @@ import { buildUxContextualGlossaryIntegration } from './ux-contextual-glossary-i
 import { buildUxDesignTokenRogueLint } from './ux-design-token-rogue-lint.js';
 import { buildUxVerdictMicrocopyCatalog } from './ux-verdict-microcopy-catalog.js';
 import { buildUxMotionPreferenceContract } from './ux-motion-preference-contract.js';
+import { buildUxRapidUsabilityHarness } from './ux-rapid-usability-harness.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -113,6 +114,7 @@ export {
   buildUxDesignTokenRogueLint,
   buildUxVerdictMicrocopyCatalog,
   buildUxMotionPreferenceContract,
+  buildUxRapidUsabilityHarness,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

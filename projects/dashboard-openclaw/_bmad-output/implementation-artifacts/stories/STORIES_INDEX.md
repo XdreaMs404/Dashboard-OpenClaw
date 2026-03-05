@@ -72,7 +72,7 @@
 | S068 | E06 | Lint design tokens anti-style rogue | DONE |
 | S069 | E06 | Catalogue microcopie PASS/CONCERNS/FAIL | DONE |
 | S070 | E06 | Préférences motion (prefers-reduced-motion) | DONE |
-| S071 | E06 | Harnais de tests usability rapides | TODO |
+| S071 | E06 | Harnais de tests usability rapides | DONE |
 | S072 | E06 | Tableau de bord régressions UX | TODO |
 | S073 | E07 | Dashboards personnalisés par rôle | TODO |
 | S074 | E07 | File d’actions priorisées contextualisées | TODO |
