@@ -2,7 +2,7 @@ generated: auto
 project: Dashboard OpenClaw
 tracking_system: file-system
 story_location: "/root/.openclaw/workspace/projects/dashboard-openclaw/_bmad-output/implementation-artifacts"
-updated_at_utc: "2026-03-05T12:32:23Z"
+updated_at_utc: "2026-03-05T18:39:32Z"
 
 development_status:
   epic-1: done
@@ -95,8 +95,8 @@ development_status:
   6-72-tableau-de-bord-regressions-ux: done
   epic-6-retrospective: done
 
-  epic-7: backlog
-  7-73-dashboards-personnalises-par-role: backlog
+  epic-7: in-progress
+  7-73-dashboards-personnalises-par-role: done
   7-74-file-d-actions-priorisees-contextualisees: backlog
   7-75-notification-center-multiseverite: backlog
   7-76-throttling-dedup-anti-fatigue: backlog

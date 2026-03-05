@@ -60,6 +60,7 @@ import { buildUxVerdictMicrocopyCatalog } from './ux-verdict-microcopy-catalog.j
 import { buildUxMotionPreferenceContract } from './ux-motion-preference-contract.js';
 import { buildUxRapidUsabilityHarness } from './ux-rapid-usability-harness.js';
 import { buildUxRegressionDashboard } from './ux-regression-dashboard.js';
+import { buildRolePersonalizedDashboards } from './role-personalized-dashboards.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -117,6 +118,7 @@ export {
   buildUxMotionPreferenceContract,
   buildUxRapidUsabilityHarness,
   buildUxRegressionDashboard,
+  buildRolePersonalizedDashboards,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

@@ -1,0 +1,176 @@
+▶ technical quality gates
+▶ lint
+
+> bmad-total-app@0.1.0 lint
+> node ./scripts/lint.mjs
+
+✅ Lint OK
+▶ typecheck
+
+> bmad-total-app@0.1.0 typecheck
+> node ./scripts/typecheck.mjs
+
+✅ Typecheck (syntax) OK
+▶ unit/integration tests
+
+> bmad-total-app@0.1.0 test
+> vitest run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/root/.openclaw/workspace/projects/dashboard-openclaw/app[39m
+
+ [32m✓[39m tests/unit/artifact-section-extractor.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 63[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-table-indexer.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 94[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-policy-versioning.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 99[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-version-diff.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 66[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-verdict-calculator.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 51[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-fulltext-search.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-concerns-actions.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-corpus-backfill.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m tests/unit/done-transition-guard.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 43[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-sponsor-executive-view.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-rapid-usability-harness.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-context-filter.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-risk-annotations.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-evidence-graph.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-baseline-roi-instrumentation.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-table-indexer.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-retro-closure-tracker.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-validated-decision-cost.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-primary-evidence-validator.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-regression-dashboard.edge.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-staleness-indicator.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-fulltext-search.edge.test.js [2m([22m[2m25 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-center-status.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-sponsor-executive-view.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-concerns-actions.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-policy-versioning.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-baseline-roi-instrumentation.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-mitigation-closure-links.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-override.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-section-extractor.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-gate-governance-journal.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-metadata-validator.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-regression-dashboard.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-retro-closure-tracker.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-parse-diagnostics.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-dual-evaluation.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-history.edge.test.js [2m([22m[2m21 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-motion-preference-contract.edge.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-center-status.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-rapid-usability-harness.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-motion-preference-contract.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-validated-decision-cost.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-evidence-graph.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-dual-evaluation.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-mitigation-closure-links.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-risk-register.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-version-diff.edge.test.js [2m([22m[2m16 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-context-filter.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/unit/artifact-ingestion-pipeline.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-staleness-indicator.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-risk-annotations.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-verdict-calculator.edge.test.js [2m([22m[2m12 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-gate-priority-actions.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m tests/unit/command-allowlist-catalog.test.js [2m([22m[2m29 tests[22m[2m)[22m[32m 50[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-risk-heatmap.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-prerequisites-validator.edge.test.js [2m([22m[2m14 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-gate-governance-journal.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-parse-diagnostics.edge.test.js [2m([22m[2m13 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-primary-evidence-validator.edge.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-corpus-backfill.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-risk-heatmap.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/edge/done-transition-guard.edge.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-verdict-microcopy-catalog.edge.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-history.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-wcag-contrast-conformity.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-ingestion-pipeline.edge.test.js [2m([22m[2m20 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/command-allowlist-catalog.edge.test.js [2m([22m[2m21 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-guards-orchestrator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-dependency-matrix.edge.test.js [2m([22m[2m18 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-progression-alert.edge.test.js [2m([22m[2m19 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/role-personalized-dashboards.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-state-projection.test.js [2m([22m[2m10 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-contextual-glossary-integration.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/artifact-metadata-validator.edge.test.js [2m([22m[2m15 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-sla-alert.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-verdict-microcopy-catalog.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-guards-orchestrator.edge.test.js [2m([22m[2m17 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-dependency-matrix.test.js [2m([22m[2m11 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-prerequisites-validator.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-progression-alert.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-design-token-rogue-lint.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-state-projection.edge.test.js [2m([22m[2m22 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-readiness-rules.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-design-token-rogue-lint.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-responsive-decision-continuity-contract.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-snapshot-comparisons.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-risk-register.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-verdict-trends-table.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-override.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-responsive-decision-continuity-contract.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/role-personalized-dashboards.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-readiness-rules.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-contextual-glossary-integration.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-pre-submit-simulation.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-debt-reduction-lane.edge.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/g4-ux-evidence-bridge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/aqcd-scoreboard.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-keyboard-focus-visible.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-wcag-contrast-conformity.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-debt-reduction-lane.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-transition-validator.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/phase-sla-alert.test.js [2m([22m[2m7 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/phase-transition-validator.edge.test.js [2m([22m[2m8 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-report-export.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-keyboard-focus-visibility-contract.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/ux-critical-widget-state-contract.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-verdict-trends-table.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-keyboard-focus-visibility-contract.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-snapshot-comparisons.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-pre-submit-simulation.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/gate-simulation-trends.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/aqcd-scoreboard.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-keyboard-focus-visible.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-report-export.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/edge/core.edge.test.js [2m([22m[2m6 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/edge/g4-ux-evidence-bridge.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/edge/gate-simulation-trends.edge.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/core.test.js [2m([22m[2m9 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/edge/ux-critical-widget-state-contract.edge.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m119 passed[39m[22m[90m (119)[39m
+[2m      Tests [22m [1m[32m1118 passed[39m[22m[90m (1118)[39m
+[2m   Start at [22m 15:59:56
+[2m   Duration [22m 11.29s[2m (transform 2.07s, setup 0ms, import 14.24s, tests 2.81s, environment 19ms)[22m
+
+▶ e2e tests (isolated output: /root/.openclaw/workspace/projects/dashboard-openclaw/app/test-results/e2e-gates-1772726407-1582318)
+
+> bmad-total-app@0.1.0 test:e2e
+> playwright test --output=${PLAYWRIGHT_OUTPUT_DIR:-test-results}
+
+
+Running 119 tests using 2 workers
+
+  ✓    1 [chromium] › tests/e2e/aqcd-baseline-roi-instrumentation.spec.js:450:1 › aqcd baseline roi demo remains readable without horizontal overflow on mobile/tablet/desktop (952ms)
+  ✓    2 [chromium] › tests/e2e/aqcd-baseline-roi-instrumentation.spec.js:405:1 › aqcd baseline roi demo covers empty/loading/error/success with visible TCD/ROI factors (2.4s)
+  ✓    3 [chromium] › tests/e2e/aqcd-mitigation-closure-links.spec.js:331:1 › aqcd mitigation closure links demo covers empty/loading/error/success with linkage + heatmap details (2.0s)
+  ✓    4 [chromium] › tests/e2e/aqcd-mitigation-closure-links.spec.js:377:1 › aqcd mitigation closure links demo remains readable without horizontal overflow on mobile/tablet/desktop (800ms)
+  ✓    6 [chromium] › tests/e2e/aqcd-readiness-rules.spec.js:326:1 › aqcd readiness v1 demo remains readable without horizontal overflow on mobile/tablet/desktop (764ms)
+  ✓    5 [chromium] › tests/e2e/aqcd-readiness-rules.spec.js:284:1 › aqcd readiness v1 demo covers empty/loading/error/success with readiness factors and recommendations (1.9s)
+  ✓    8 [chromium] › tests/e2e/aqcd-retro-closure-tracker.spec.js:367:1 › aqcd retro closure demo remains readable without horizontal overflow on mobile/tablet/desktop (873ms)
+  ✓    7 [chromium] › tests/e2e/aqcd-retro-closure-tracker.spec.js:328:1 › aqcd retro closure demo covers empty/loading/error/success with H21/H22/H23 tracking (2.1s)
+  ✓   10 [chromium] › tests/e2e/aqcd-risk-heatmap.spec.js:395:1 › aqcd risk heatmap demo remains readable without horizontal overflow on mobile/tablet/desktop (793ms)
+  ✓    9 [chromium] › tests/e2e/aqcd-risk-heatmap.spec.js:348:1 › aqcd risk heatmap demo covers empty/loading/error/success with heatmap evolution + validated decision cost (2.0s)
+  ✓   12 [chromium] › tests/e2e/aqcd-scoreboard.spec.js:296:1 › aqcd scoreboard demo remains readable without horizontal overflow on mobile/tablet/desktop (732ms)
+  ✓   11 [chromium] › tests/e2e/aqcd-scoreboard.spec.js:254:1 › aqcd scoreboard demo covers empty/loading/error/success with formula and source transparency (1.7s)
+  ✓   14 [chromium] › tests/e2e/aqcd-snapshot-comparisons.spec.js:326:1 › aqcd snapshot comparisons demo remains readable without horizontal overflow on mobile/tablet/desktop (796ms)
+  ✓   13 [chromium] › tests/e2e/aqcd-snapshot-comparisons.spec.js:284:1 › aqcd snapshot comparisons demo covers empty/loading/error/success with comparative and readiness details (2.0s)
+  ✓   16 [chromium] › tests/e2e/aqcd-sponsor-executive-view.spec.js:442:1 › aqcd sponsor view demo remains readable without horizontal overflow on mobile/tablet/desktop (846ms)
+  ✓   15 [chromium] › tests/e2e/aqcd-sponsor-executive-view.spec.js:401:1 › aqcd sponsor view demo covers empty/loading/error/success and sponsor readability (2.0s)
+  ✓   18 [chromium] › tests/e2e/aqcd-validated-decision-cost.spec.js:403:1 › aqcd validated decision cost demo remains readable without horizontal overflow on mobile/tablet/desktop (781ms)
+  ✓   17 [chromium] › tests/e2e/aqcd-validated-decision-cost.spec.js:356:1 › aqcd validated decision cost demo covers empty/loading/error/success with waste ratio drift controls (2.0s)
+  ✓   19 [chromium] › tests/e2e/artifact-context-filter.spec.js:354:1 › artifact context filter demo covers empty/loading/error/success with reason, counters, filters, diffCandidates and correctiveActions (2.1s)
+  ✓   20 [chromium] › tests/e2e/artifact-context-filter.spec.js:427:1 › artifact context filter demo remains readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓   22 [chromium] › tests/e2e/artifact-corpus-backfill.spec.js:463:1 › artifact corpus backfill demo stays readable without horizontal overflow on mobile/tablet/desktop (1.7s)
+  ✓   21 [chromium] › tests/e2e/artifact-corpus-backfill.spec.js:371:1 › artifact corpus backfill demo covers empty/loading/error/success states with diagnostics and actions (2.6s)
