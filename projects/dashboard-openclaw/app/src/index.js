@@ -55,6 +55,7 @@ import { buildUxWcagContrastConformity } from './ux-wcag-contrast-conformity.js'
 import { buildUxResponsiveDecisionContinuityContract } from './ux-responsive-decision-continuity-contract.js';
 import { buildUxDebtReductionLane } from './ux-debt-reduction-lane.js';
 import { buildUxContextualGlossaryIntegration } from './ux-contextual-glossary-integration.js';
+import { buildUxDesignTokenRogueLint } from './ux-design-token-rogue-lint.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -107,6 +108,7 @@ export {
   buildUxResponsiveDecisionContinuityContract,
   buildUxDebtReductionLane,
   buildUxContextualGlossaryIntegration,
+  buildUxDesignTokenRogueLint,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,

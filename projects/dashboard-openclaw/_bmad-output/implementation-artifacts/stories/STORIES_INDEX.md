@@ -69,7 +69,7 @@
 | S065 | E06 | Liaison captures UX et verdicts G4-UX | DONE |
 | S066 | E06 | UX debt lane et plan de réduction | DONE |
 | S067 | E06 | Glossaire BMAD contextuel intégré | DONE |
-| S068 | E06 | Lint design tokens anti-style rogue | TODO |
+| S068 | E06 | Lint design tokens anti-style rogue | DONE |
 | S069 | E06 | Catalogue microcopie PASS/CONCERNS/FAIL | TODO |
 | S070 | E06 | Préférences motion (prefers-reduced-motion) | TODO |
 | S071 | E06 | Harnais de tests usability rapides | TODO |
