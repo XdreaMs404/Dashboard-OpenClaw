@@ -57,6 +57,7 @@ import { buildUxDebtReductionLane } from './ux-debt-reduction-lane.js';
 import { buildUxContextualGlossaryIntegration } from './ux-contextual-glossary-integration.js';
 import { buildUxDesignTokenRogueLint } from './ux-design-token-rogue-lint.js';
 import { buildUxVerdictMicrocopyCatalog } from './ux-verdict-microcopy-catalog.js';
+import { buildUxMotionPreferenceContract } from './ux-motion-preference-contract.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -111,6 +112,7 @@ export {
   buildUxContextualGlossaryIntegration,
   buildUxDesignTokenRogueLint,
   buildUxVerdictMicrocopyCatalog,
+  buildUxMotionPreferenceContract,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
