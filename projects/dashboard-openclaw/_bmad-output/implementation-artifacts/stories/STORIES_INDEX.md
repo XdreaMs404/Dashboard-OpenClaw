@@ -75,7 +75,7 @@
 | S071 | E06 | Harnais de tests usability rapides | DONE |
 | S072 | E06 | Tableau de bord régressions UX | DONE |
 | S073 | E07 | Dashboards personnalisés par rôle | DONE |
-| S074 | E07 | File d’actions priorisées contextualisées | TODO |
+| S074 | E07 | File d’actions priorisées contextualisées | DONE |
 | S075 | E07 | Notification center multisévérité | TODO |
 | S076 | E07 | Throttling/dedup anti-fatigue | TODO |
 | S077 | E07 | Mesure SLA phase complete -> notify | TODO |

@@ -61,6 +61,7 @@ import { buildUxMotionPreferenceContract } from './ux-motion-preference-contract
 import { buildUxRapidUsabilityHarness } from './ux-rapid-usability-harness.js';
 import { buildUxRegressionDashboard } from './ux-regression-dashboard.js';
 import { buildRolePersonalizedDashboards } from './role-personalized-dashboards.js';
+import { buildRolePrioritizedContextualQueue } from './role-prioritized-contextual-queue.js';
 
 export {
   BMAD_PHASE_ORDER,
@@ -119,6 +120,7 @@ export {
   buildUxRapidUsabilityHarness,
   buildUxRegressionDashboard,
   buildRolePersonalizedDashboards,
+  buildRolePrioritizedContextualQueue,
   normalizeEmail,
   normalizeUserName,
   orchestratePhaseGuards,
